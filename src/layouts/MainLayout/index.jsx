@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 // project imports
 import Drawer from './Drawer';
 import Header from './Header';
+import Footer from './Footer';
 import Breadcrumbs from 'components/Breadcrumbs';
 
 import { DRAWER_WIDTH } from 'config';
@@ -32,10 +33,11 @@ export default function MainLayout() {
   const drawer = useMemo(() => <Drawer />, [drawerOpen]);
 
   return (
+    <>
     <Stack direction="row" width={1}>
       <Header />
       {drawer}
-      <Box
+       <Box
         component="main"
         sx={{
           width: { xs: 1, lg: drawerOpen ? `calc(100% - ${DRAWER_WIDTH}px)` : 1 },
@@ -48,5 +50,8 @@ export default function MainLayout() {
         <Outlet />
       </Box>
     </Stack>
+    {/* <Footer /> */}
+    
+    </>
   );
 }
