@@ -6,9 +6,9 @@ import MainLayout from 'layouts/MainLayout';
 import AuthGuard from './AuthGuard';
 import HomeN from '../views/auth/work-N/HomeN/HomeN';
 // pages
-const DashboardDefault = Loadable(lazy(() => import('views/dashboard/default')));
-const UserReport = Loadable(lazy(() => import('views/userReport/index')));
-const Specification = Loadable(lazy(() => import('views/specification/index')));
+const DashboardDefault = Loadable(lazy(() => import('views/dashboard/index')));
+
+
 
 // ==============================|| MAIN ROUTES ||============================== //
 
@@ -21,21 +21,13 @@ const MainRoutes = {
   ),
   children: [
     {
-      path: '/home',
+      path: '/',
       element: <HomeN />
     },
     {
       path: '/dashboard/default',
       element: <DashboardDefault />
-    },
-    {
-      path: '/user_report',
-      element: <UserReport />
-    },
-    {
-      path: '/specifications',
-      element: <Specification />
-    },
+    }
   ]
 };
 
