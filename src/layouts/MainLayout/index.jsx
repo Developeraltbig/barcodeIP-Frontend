@@ -34,24 +34,9 @@ export default function MainLayout() {
 
   return (
     <>
-    <Stack direction="row" width={1}>
-      <Header />
-      {drawer}
-       <Box
-        component="main"
-        sx={{
-          width: { xs: 1, lg: drawerOpen ? `calc(100% - ${DRAWER_WIDTH}px)` : 1 },
-          p: { xs: 2, sm: 3, md: 5 },
-          ml: { xs: 0, lg: 'auto' }
-        }}
-      >
-        <Toolbar />
-        <Breadcrumbs />
-        <Outlet />
-      </Box>
-    </Stack>
-    {/* <Footer /> */}
-    
+    <Header />
+    <Outlet />
+    <Footer />
     </>
   );
 }

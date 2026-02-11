@@ -4,7 +4,7 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import MainLayout from 'layouts/MainLayout';
 import AuthGuard from './AuthGuard';
-
+import HomeN from '../views/auth/work-N/HomeN/HomeN';
 // pages
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/default')));
 const UserReport = Loadable(lazy(() => import('views/userReport/index')));
@@ -21,8 +21,8 @@ const MainRoutes = {
   ),
   children: [
     {
-      path: '/',
-      element: <DashboardDefault />
+      path: '/home',
+      element: <HomeN />
     },
     {
       path: '/dashboard/default',

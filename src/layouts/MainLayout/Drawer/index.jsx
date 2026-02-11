@@ -23,27 +23,28 @@ export default function MainDrawer({ window }) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box component="nav" sx={{ flexShrink: { md: 0 } }} aria-label="layout drawer">
-      <Drawer
-        container={container}
-        variant={downLG ? 'temporary' : 'persistent'}
-        open={drawerOpen}
-        onClose={() => handlerDrawerOpen(false)}
-        slotProps={{
-          paper: {
-            sx: (theme) => ({
-              boxSizing: 'border-box',
-              width: DRAWER_WIDTH,
-              backgroundImage: 'none',
-              boxShadow: `0 0.15rem 1.75rem 0 ${alpha(theme.palette.common.black, 0.15)}`,
-              borderRight: 'none'
-            })
-          }
-        }}
-      >
-        <DrawerContent />
-      </Drawer>
-    </Box>
+    <></>
+    // <Box component="nav" sx={{ flexShrink: { md: 0 } }} aria-label="layout drawer">
+    //   <Drawer
+    //     container={container}
+    //     variant={downLG ? 'temporary' : 'persistent'}
+    //     open={drawerOpen}
+    //     onClose={() => handlerDrawerOpen(false)}
+    //     slotProps={{
+    //       paper: {
+    //         sx: (theme) => ({
+    //           boxSizing: 'border-box',
+    //           width: DRAWER_WIDTH,
+    //           backgroundImage: 'none',
+    //           boxShadow: `0 0.15rem 1.75rem 0 ${alpha(theme.palette.common.black, 0.15)}`,
+    //           borderRight: 'none'
+    //         })
+    //       }
+    //     }}
+    //   >
+    //     <DrawerContent />
+    //   </Drawer>
+    // </Box>
   );
 }
 
