@@ -1,0 +1,168 @@
+.datatable-wrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.datatable-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.search-input,
+.filter-select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.table-container {
+  max-height: 550px;
+  overflow: auto;
+}
+
+.datatable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;   /* 🔥 THIS IS REQUIRED */
+}
+
+
+.datatable thead th {
+  position: sticky;
+  top: 0;
+  background: #f8f9fc;
+  cursor: pointer;
+  padding: 12px;
+  text-align: left;
+}
+
+.datatable tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.datatable tbody tr:hover {
+  background: #f1f5ff;
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.pagination button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+
+
+
+/* Base Button */
+.btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+/* View Button */
+.btn-view {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: #fff;
+}
+
+.btn-view:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(79, 172, 254, 0.4);
+}
+
+/* Edit Button */
+.btn-edit {
+  background: linear-gradient(135deg, #f6d365, #fda085);
+  color: #fff;
+}
+
+.btn-edit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(253, 160, 133, 0.4);
+}
+
+/* Delete Button */
+.btn-delete {
+  background: linear-gradient(135deg, #ff4e50, #f44336);
+  color: #fff;
+}
+
+.btn-delete:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(244, 67, 54, 0.4);
+}
+
+/* Table cell alignment */
+.actions-cell {
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+}
+
+/* wrapper that actually centers */
+.actions {
+  display: inline-flex;
+  align-items: center;     /* vertical center */
+  justify-content: center; /* horizontal center */
+  gap: 1px;
+  line-height: 1;          /* 🔥 removes baseline offset */
+}
+
+/* Buttons consistent height */
+.btn {
+  min-height: 32px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .actions {
+    flex-direction: column;
+  }
+
+}
+
+
