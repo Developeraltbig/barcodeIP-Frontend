@@ -4,9 +4,10 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import MainLayout from 'layouts/MainLayout';
 import AuthGuard from './AuthGuard';
-import HomeN from '../views/auth/work-N/HomeN/HomeN';
+
 // pages
-const DashboardDefault = Loadable(lazy(() => import('views/dashboard/index')));
+const Home = Loadable(lazy(() => import('../views/Home/index')));
+const Result = Loadable(lazy(() => import('../views/Result/index')));
 
 
 
@@ -22,11 +23,11 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <HomeN />
+      element: <Home />
     },
     {
-      path: '/dashboard/default',
-      element: <DashboardDefault />
+      path: '/result',
+      element: <Result />
     }
   ]
 };

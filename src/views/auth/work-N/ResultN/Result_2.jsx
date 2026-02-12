@@ -105,7 +105,7 @@ const Result_2 = () => {
   const tabs = ["Patent", "Publication", "Products", "Provisional Specification", "Non-Provisional Specification"];
 
   return (
-    <Box sx={{ bgcolor: COLORS.surface, minHeight: '100vh', py: 5 }}>
+    <Box sx={{ bgcolor: COLORS.surface, minHeight: '100vh', py: 5 , marginTop:'50px' }}>
       <Container maxWidth="lg">
         
         {/* Top Header Section */}

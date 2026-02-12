@@ -46,7 +46,7 @@ export default function Header() {
 
   // Common header content
   const mainHeader = (
-     <AppBar >
+     <AppBar sx={{ backgroundColor:'#fffafa' }} >
               <Toolbar sx={{ justifyContent: 'space-between', minHeight: '70px !important' }}>
                 {/* Left Side: Logo & Nav Links */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -55,10 +55,10 @@ export default function Header() {
                     <Typography variant="h5" sx={{ fontWeight: 800, color: '#444' }}>
                       barcode
                     </Typography>
-                    <Typography variant="h5" sx={{ fontWeight: 800, color: 'primary.main' }}>
+                    <Typography variant="h5" sx={{ fontWeight: 800, color: '#E94E34' }}>
                       IP
                     </Typography>
-                    <Box component="span" sx={{ width: 5, height: 5, bgcolor: 'primary.main', borderRadius: '50%', ml: 0.5, mb: 1 }} />
+                    <Box component="span" sx={{ width: 5, height: 5, bgcolor: '#E94E34', borderRadius: '50%', ml: 0.5, mb: 1 }} />
                   </Box>
     
                   {/* Navigation Links (Hidden on small mobile) */}
@@ -117,7 +117,7 @@ export default function Header() {
                   </Menu>
                 </Box>
               </Toolbar>
-            </AppBar>
+      </AppBar>
   );
 
   return <AppBar {...appBar}>{mainHeader}</AppBar>;

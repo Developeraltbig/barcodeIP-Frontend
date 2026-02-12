@@ -30,7 +30,7 @@ export default function MainLayout() {
 
   // drawer toggle handler on resize window
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const drawer = useMemo(() => <Drawer />, [drawerOpen]);
+  // const drawer = useMemo(() => <Drawer />, [drawerOpen]);
 
   return (
     <>

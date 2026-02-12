@@ -12,11 +12,11 @@ import logo from 'assets/images/logo.svg';
 // ==============================|| DRAWER - CONTENT ||============================== //
 
 export default function DrawerContent() {
-  const contentHeight = `calc(100vh - 64px)`;
+  // const contentHeight = `calc(100vh - 64px)`;
 
   return (
     <>
-      <AppBar sx={{ position: 'absolute', display: { xs: 'block', lg: 'none' } }}>
+      {/* <AppBar sx={{ position: 'absolute', display: { xs: 'block', lg: 'none' } }}>
         <Toolbar sx={{ justifyContent: 'center' }}>
           <CardMedia component="img" image={logo} alt="logo" sx={{ width: 138 }} />
         </Toolbar>
@@ -26,7 +26,7 @@ export default function DrawerContent() {
         <Stack sx={{ minHeight: contentHeight, p: 1.25, justifyContent: 'space-between' }}>
           <NavigationDrawer />
         </Stack>
-      </SimpleBar>
+      </SimpleBar> */}
     </>
   );
 }
