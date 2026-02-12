@@ -10,9 +10,7 @@ const index = () => {
     <>
      
      <TopSection/>
-     
- 
-    <PatentList/>
+     <PatentList/>
     </>
   )
 }
