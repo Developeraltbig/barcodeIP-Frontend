@@ -4,6 +4,10 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import MainLayout from 'layouts/MainLayout';
 import AuthGuard from './AuthGuard';
+import RecentSearch from '../views/search/RecentSearch';
+import UserProfile from '../views/profile/UserProfile';
+import AccountPage from '../views/account/AccountPage';
+import OverlapMatrix from '../views/components/OverlapMatrix';
 
 // pages
 const Home = Loadable(lazy(() => import('../views/Home/index')));
@@ -28,6 +32,22 @@ const MainRoutes = {
     {
       path: '/result',
       element: <Result />
+    },
+    {
+      path: '/recent-search',
+      element: <RecentSearch/>
+    },
+    {
+      path: '/profile',
+      element: <UserProfile/>
+    },
+    {
+      path: '/account',
+      element: <AccountPage/>
+    },
+    {
+      path: '/overlap',
+      element: <OverlapMatrix/>
     }
   ]
 };

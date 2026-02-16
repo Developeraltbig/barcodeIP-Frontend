@@ -15,7 +15,7 @@ const PatentCard = ({ data }) => (
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     whileHover={{ y: -5, boxShadow: '0 12px 30px rgba(0,0,0,0.08)' }}
-    sx={{ p: 3, borderRadius: '16px', border: '1px solid #b1b9c0', height: '100%', display: 'flex', flexDirection: 'column', maxWidth:'650px', '&:hover': { border: '1px solid #b1b9c0'  }  }}
+    sx={{ p: 3, borderRadius: '16px', border: '1px solid #b1b9c0', height: '100%', display: 'flex', flexDirection: 'column', maxWidth:'500px', '&:hover': { border: '1px solid #b1b9c0'  }  }}
   >
     <Typography variant="h6" sx={{ fontWeight: 800, color: '#1e293b', mb: 2, fontSize: '1.1rem', lineHeight: 1.3 }}>
       {data.title}
@@ -42,7 +42,7 @@ const PatentCard = ({ data }) => (
     </Typography>
 
     <Grid container spacing={1.5}>
-      <Grid item xs={4}><Button fullWidth variant="outlined" startIcon={<VisibilityIcon />} sx={filledBtnStyle}>Overlap</Button></Grid>
+      <Grid item xs={4}><Button  fullWidth variant="outlined" startIcon={<VisibilityIcon />} sx={filledBtnStyle}>Overlap</Button></Grid>
     </Grid>
   </Card>
 );
