@@ -8,6 +8,8 @@ import RecentSearch from '../views/search/RecentSearch';
 import UserProfile from '../views/profile/UserProfile';
 import AccountPage from '../views/account/AccountPage';
 import OverlapMatrix from '../views/components/OverlapMatrix';
+import DraftMasterResult from '../views/Result/non_provisional/DraftMasterResult';
+import ProvisionalDraftResult from '../views/Result/provisional/ProvisionalDraftResult';
 
 // pages
 const Home = Loadable(lazy(() => import('../views/Home/index')));
@@ -48,6 +50,14 @@ const MainRoutes = {
     {
       path: '/overlap',
       element: <OverlapMatrix/>
+    },
+    {
+      path: '/n-editor',
+      element: <DraftMasterResult />
+    },
+    {
+      path: '/p-editor',
+      element: <ProvisionalDraftResult />
     }
   ]
 };

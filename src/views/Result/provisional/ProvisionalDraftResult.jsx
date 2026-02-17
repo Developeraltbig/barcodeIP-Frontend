@@ -19,13 +19,63 @@ import { toast } from "react-toastify";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import useAuthStore from "../../store/authStore";
-import DraftSection from "../Shared/DraftSection";
+// Ensure these paths match your project structure
+// import useAuthStore from "../../../store/authStore"; 
+// import DraftSection from "../Shared/DraftSection";
 // import CustomLoader from "../Shared/CustomLoader";
-import { getSafeFilename } from "../../utils/formatUtils";
-import { htmlToDocxParagraphs } from "../../utils/docxUtils";
+import { getSafeFilename } from "../../../utils/formatUtils";
+import { htmlToDocxParagraphs } from "../../../utils/docxUtils";
 
-import "../../assets/css/Draft.css";
+import "../../../assets/css/style.css";
+import useAuthStore from "../../../store/authStore";
+import DraftSection from "../non_provisional/DraftSection";
+
+// --- STATIC DATA ---
+const STATIC_INVENTION_DATA = {
+  project_title: "Smart Agricultural Drone System",
+  pdf_text: "Text extracted from uploaded PDF regarding agricultural drones...",
+};
+
+const STATIC_PROVISIONAL_DATA = {
+  "_id": {
+    "$oid": "698da9f7a049d678208e9f72"
+  },
+  "project_id": {
+    "$oid": "698da9f6a049d678208e9f5b"
+  },
+  "u_id": {
+    "$oid": "698d9ec60facefb740a85469"
+  },
+  "title_of_invention": "<p>A Small Molecule Estrogen Receptor Blocker for Breast Cancer Treatment</p>",
+  "title_of_invention_generating": false,
+  "background_of_invention": "<p>The&nbsp;present&nbsp;disclosure&nbsp;relates&nbsp;generally&nbsp;to&nbsp;the&nbsp;field&nbsp;of&nbsp;oncology&nbsp;and&nbsp;more&nbsp;specifically&nbsp;to&nbsp;therapeutic&nbsp;compounds&nbsp;for&nbsp;treating&nbsp;hormone-responsive&nbsp;cancers.&nbsp;Breast&nbsp;cancer&nbsp;is&nbsp;a&nbsp;prevalent&nbsp;and&nbsp;serious&nbsp;disease,&nbsp;representing&nbsp;a&nbsp;significant&nbsp;cause&nbsp;of&nbsp;cancer-related&nbsp;mortality&nbsp;in&nbsp;women&nbsp;globally.&nbsp;The&nbsp;high&nbsp;incidence&nbsp;of&nbsp;this&nbsp;disease&nbsp;highlights&nbsp;the&nbsp;ongoing&nbsp;need&nbsp;for&nbsp;the&nbsp;development&nbsp;of&nbsp;new&nbsp;and&nbsp;effective&nbsp;treatment&nbsp;options&nbsp;to&nbsp;improve&nbsp;patient&nbsp;outcomes&nbsp;and&nbsp;manage&nbsp;the&nbsp;progression&nbsp;of&nbsp;the&nbsp;disease.</p><p>A&nbsp;majority&nbsp;of&nbsp;breast&nbsp;cancer&nbsp;cases&nbsp;are&nbsp;characterized&nbsp;as&nbsp;hormone&nbsp;receptor-positive,&nbsp;wherein&nbsp;the&nbsp;growth&nbsp;of&nbsp;cancer&nbsp;cells&nbsp;is&nbsp;stimulated&nbsp;by&nbsp;hormones&nbsp;such&nbsp;as&nbsp;estrogen.&nbsp;In&nbsp;these&nbsp;types&nbsp;of&nbsp;cancers,&nbsp;estrogen&nbsp;binds&nbsp;to&nbsp;and&nbsp;activates&nbsp;estrogen&nbsp;receptors&nbsp;(ER)&nbsp;located&nbsp;within&nbsp;the&nbsp;tumor&nbsp;cells.&nbsp;This&nbsp;interaction&nbsp;triggers&nbsp;a&nbsp;signaling&nbsp;pathway&nbsp;that&nbsp;promotes&nbsp;cell&nbsp;proliferation&nbsp;and&nbsp;tumor&nbsp;growth.&nbsp;The&nbsp;dysregulation&nbsp;of&nbsp;this&nbsp;hormonal&nbsp;pathway&nbsp;is&nbsp;a&nbsp;key&nbsp;driver&nbsp;in&nbsp;the&nbsp;development&nbsp;and&nbsp;progression&nbsp;of&nbsp;a&nbsp;large&nbsp;percentage&nbsp;of&nbsp;breast&nbsp;tumors,&nbsp;making&nbsp;the&nbsp;estrogen&nbsp;receptor&nbsp;a&nbsp;primary&nbsp;target&nbsp;for&nbsp;therapeutic&nbsp;intervention.</p><p>While&nbsp;various&nbsp;treatments&nbsp;targeting&nbsp;the&nbsp;estrogen&nbsp;signaling&nbsp;pathway&nbsp;currently&nbsp;exist,&nbsp;they&nbsp;are&nbsp;often&nbsp;associated&nbsp;with&nbsp;significant&nbsp;and&nbsp;debilitating&nbsp;side&nbsp;effects.&nbsp;Conventional&nbsp;therapies&nbsp;can&nbsp;lead&nbsp;to&nbsp;adverse&nbsp;events&nbsp;such&nbsp;as&nbsp;an&nbsp;increased&nbsp;risk&nbsp;of&nbsp;blood&nbsp;clots,&nbsp;joint&nbsp;pain,&nbsp;osteoporosis,&nbsp;and&nbsp;menstrual&nbsp;irregularities,&nbsp;which&nbsp;can&nbsp;negatively&nbsp;impact&nbsp;a&nbsp;patient&#39;s&nbsp;quality&nbsp;of&nbsp;life.&nbsp;Therefore,&nbsp;a&nbsp;need&nbsp;exists&nbsp;in&nbsp;the&nbsp;art&nbsp;for&nbsp;new&nbsp;therapeutic&nbsp;agents&nbsp;for&nbsp;treating&nbsp;hormone-responsive&nbsp;breast&nbsp;cancer&nbsp;that&nbsp;offer&nbsp;a&nbsp;more&nbsp;favorable&nbsp;safety&nbsp;profile&nbsp;and&nbsp;minimize&nbsp;the&nbsp;burden&nbsp;of&nbsp;treatment-related&nbsp;side&nbsp;effects.</p>",
+  "background_of_invention_generating": false,
+  "summary_of_invention": "<p>The present disclosure provides a novel small molecule designed to treat breast cancer, particularly estrogen receptor-positive cases. This molecule specifically targets and binds to estrogen receptors alpha and beta, effectively blocking the estrogen hormone signal. This mechanism helps control tumor growth and offers a promising therapeutic alternative with potentially reduced side effects compared to existing treatments.</p>\n<ul>\n  <li>Optionally, the small molecule has a molecular weight of 222.328 g/mol.</li>\n  <li>Optionally, the small molecule specifically binds to estrogen receptors alpha and beta.</li>\n  <li>Optionally, the small molecule blocks the signal of the estrogen hormone.</li>\n  <li>Optionally, the small molecule is for controlling breast tumor growth.</li>\n  <li>Optionally, the small molecule has fewer or no side effects compared to existing breast cancer treatments.</li>\n</ul>",
+  "summary_of_invention_generating": false,
+  "fields_of_invention": "<p>The invention belongs to the field of\npharmaceutical chemistry,\nmolecular biology, and\noncology, specifically relating to novel compounds and methods for treating breast cancer. More particularly, it concerns small molecules designed to modulate estrogen receptor activity for controlling tumor growth with reduced side effects.</p>",
+  "fields_of_invention_generating": false,
+  "detailed_description": "<p>The present disclosure relates generally to the field of medicinal chemistry and oncology. More specifically, it pertains to novel small molecule compounds that act as antagonists of estrogen receptors, pharmaceutical compositions comprising these compounds, and methods for their use in the treatment of hormone-sensitive diseases, particularly estrogen receptor-positive (ER-positive) breast cancer.</p>\n<p>Breast cancer remains a significant global health challenge, representing one of the most common malignancies diagnosed in women. A substantial subset of breast cancers, estimated to be between 70% and 80% of all cases, are classified as ER-positive. The growth and proliferation of these cancer cells are driven by the hormone estrogen. The biological pathway involves estrogen binding to and activating estrogen receptors (ER-alpha and ER-beta), which are ligand-activated transcription factors. Upon activation, these receptors promote the expression of genes that are critical for cell division and survival. Consequently, blocking this signaling pathway has become a cornerstone of therapy for ER-positive breast cancer. Current treatments, such as selective estrogen receptor modulators (SERMs) like tamoxifen and aromatase inhibitors, aim to disrupt this pathway either by competing with estrogen at the receptor level or by reducing systemic estrogen production. While effective for many patients, these existing therapies are often associated with a range of debilitating side effects, including an increased risk of blood clots, endometrial changes, joint pain, bone density loss (osteoporosis), and severe allergic reactions. Furthermore, many patients eventually develop resistance to these treatments, leading to disease progression. Thus, there is a persistent and urgent need for new therapeutic agents with improved efficacy, a more favorable safety profile, and the ability to overcome existing mechanisms of drug resistance.</p>\n<p>The disclosed invention addresses this need by providing a novel small molecule compound, and its pharmaceutically acceptable derivatives, designed to function as a potent and specific antagonist of both estrogen receptor alpha (ER-alpha) and estrogen receptor beta (ER-beta). The compound is characterized by a molecular weight of approximately 222.328 g/mol. By binding with high affinity to the ligand-binding domain of the estrogen receptors, this molecule effectively blocks the binding of endogenous estrogen, thereby preventing receptor activation and subsequent downstream signaling that leads to cancer cell proliferation. This targeted mechanism of action is anticipated to result in robust anti-tumor activity specifically in ER-positive breast cancer cells. A key advantage of the disclosed compound is its unique chemical structure, which has been designed to maximize receptor antagonism while minimizing off-target effects. This specificity is expected to translate into a significantly improved side-effect profile compared to current standards of care, potentially eliminating or reducing adverse events such as thromboembolic events and osteoporosis, thereby improving patient quality of life and treatment compliance.</p>\n<h3>System and Method Embodiments</h3>\n<p>Referring now to the drawings, which are for illustrative purposes only and not intended to limit the scope of the invention. FIG. 1 provides a simplified schematic of the conventional estrogen-mediated signaling pathway in a cancer cell. As shown, the estrogen hormone 102, a steroid molecule, circulates in the bloodstream and can passively diffuse across the cell membrane 104 into the cytoplasm of a breast cancer cell 100. Inside the cell, the estrogen 102 binds to an unoccupied estrogen receptor (ER) 106, which may reside in the cytoplasm or the nucleus. This binding event induces a conformational change in the ER 106, causing it to dimerize with another ER-ligand complex, forming an activated dimer 108. This activated dimer 108 then translocates into the nucleus 110 (if not already present) and binds to specific DNA sequences known as Estrogen Response Elements (EREs) 112 located in the promoter region of target genes. This binding event recruits a complex of co-activator proteins 114, which in turn initiates the transcription of genes 116 responsible for cell proliferation, growth, and survival. This cascade of events ultimately leads to uncontrolled cell division 118 and tumor growth.</p>\n<p>FIG. 2 illustrates the mechanism of action of the disclosed therapeutic compound in accordance with an embodiment of the invention. The therapeutic compound 202, a small molecule antagonist, is administered to the patient and enters the breast cancer cell 100. Due to its high binding affinity for the estrogen receptor 106, the compound 202 effectively competes with and displaces endogenous estrogen 102. The compound 202 binds to the ligand-binding pocket of the estrogen receptor 106. This binding event induces a distinct conformational change in the receptor, resulting in an antagonist-receptor complex 208. This altered conformation prevents the receptor from adopting the active state required for proper dimerization and/or effective binding to the Estrogen Response Elements 112 on the DNA. Furthermore, the antagonist-bound conformation may instead promote the recruitment of co-repressor proteins 214 rather than co-activators. The net result is the complete blockage of the transcriptional activation of estrogen-responsive genes 116. By disrupting this critical signaling pathway at its source, the compound 202 effectively halts estrogen-driven cell proliferation 220, leading to the inhibition of tumor growth and potentially inducing apoptosis (programmed cell death) in the cancer cells.</p>\n<h3>The Therapeutic Compound</h3>\n<p>In various embodiments, the therapeutic agent is a small molecule compound having a molecular weight of approximately 222.328 g/mol. The term \"compound\" as used herein is intended to encompass not only the specific molecule but also any of its pharmaceutically acceptable salts, solvates (including hydrates), polymorphs, isomers, tautomers, and prodrugs. Pharmaceutically acceptable salts can be formed with a variety of inorganic and organic acids and bases. The specific chemical structure of the compound is designed to fit snugly within the ligand-binding domain of both ER-alpha and ER-beta, providing a dual-antagonist activity that may offer a more comprehensive blockade of estrogen signaling than agents selective for a single receptor subtype. The compound's physiochemical properties are optimized for good oral bioavailability, metabolic stability, and a favorable pharmacokinetic profile, allowing for convenient administration and sustained therapeutic concentrations in the body.</p>\n<h3>Pharmaceutical Compositions and Administration</h3>\n<p>For therapeutic use, the disclosed compound is typically formulated into a pharmaceutical composition. Such compositions comprise a therapeutically effective amount of the active compound along with one or more pharmaceutically acceptable carriers, excipients, or diluents. The choice of carrier is largely determined by the intended route of administration and standard pharmaceutical practice.\nThe compositions may be formulated for various routes of administration, including:\n<ul>\n<li>Oral administration: Formulations can be in the form of tablets, capsules, powders, granules, solutions, or suspensions. These formulations may include excipients such as binders (e.g., starch, gelatin), fillers (e.g., lactose, microcrystalline cellulose), lubricants (e.g., magnesium stearate), and disintegrants (e.g., croscarmellose sodium). Tablets may be coated to delay disintegration and absorption in the gastrointestinal tract.</li>\n<li>Parenteral administration: Formulations for intravenous, subcutaneous, or intramuscular injection may be prepared as sterile aqueous or non-aqueous solutions or suspensions. Such formulations may include agents to adjust tonicity (e.g., sodium chloride, mannitol) and pH (e.g., citrate or phosphate buffers), as well as stabilizers and preservatives.</li>\n<li>Topical administration: Formulations such as creams, gels, or patches may also be developed for localized delivery.</li>\n</ul>\n<p>A therapeutically effective amount is an amount of the compound sufficient to ameliorate or inhibit the progression of the disease. This amount will vary depending on factors such as the patient's age, weight, the severity of the cancer, the specific formulation, and the route of administration. A typical dosage regimen might involve oral administration of the compound once or twice daily, with a total daily dose ranging from about 10 mg to 500 mg, although the final determination of the appropriate dose is within the judgment of the treating physician.</p>\n<h3>Method of Treatment</h3>\n<p>FIG. 3 presents a flowchart illustrating an exemplary method for treating a subject with ER-positive breast cancer. The process begins at step 302, where a subject, such as a human female, is diagnosed with breast cancer. This diagnosis typically involves imaging studies and a biopsy, followed by immunohistochemical staining of the tumor tissue to confirm its ER-positive status. Once the subject is identified as a suitable candidate for hormone therapy (step 304), a treatment regimen is initiated. At step 306, a therapeutically effective amount of the pharmaceutical composition containing the disclosed compound is administered to the subject. The administration is continued for a prescribed period, as determined by the oncologist. During the course of treatment, the subject is monitored for therapeutic response (step 308). Monitoring may involve periodic imaging (e.g., MRI, CT scans) to assess changes in tumor size, as well as blood tests to measure tumor markers. The patient is also monitored for any potential side effects. Based on this monitoring, the dosage or frequency of administration may be adjusted (step 310) to optimize efficacy and minimize toxicity. The treatment continues as long as a clinical benefit is observed and the treatment is well-tolerated by the patient.</p>\n<h3>Exemplary Data</h3>\n<p>The efficacy of the disclosed compound can be demonstrated through pre-clinical studies. FIG. 4 shows a hypothetical graph from an in-vitro cell proliferation assay. In this type of experiment, an ER-positive human breast cancer cell line (e.g., MCF-7) is cultured. The cells are treated with a control vehicle, a known standard-of-care drug (e.g., tamoxifen), and varying concentrations of the disclosed compound. As depicted in the graph 400, the y-axis represents cell viability or proliferation 402, while the x-axis represents the concentration of the drug 404. The results show that the disclosed compound 406 causes a dose-dependent decrease in cell proliferation, demonstrating potent anti-cancer activity. Notably, the inhibitory concentration (IC50) of the disclosed compound may be lower than that of the standard drug 408, indicating greater potency. Furthermore, in animal xenograft models where human ER-positive tumors are grown in immunodeficient mice, oral administration of the compound would be expected to lead to a significant reduction in tumor volume compared to a control group, with minimal signs of toxicity, further supporting its potential as a safe and effective therapeutic agent for the treatment of ER-positive breast cancer.</p>",
+  "detailed_description_generating": false,
+  "advantages_of_invention": "<ul>\n    <li><strong>Improved Safety Profile:</strong> The designed small molecule may have fewer or no side effects, presenting a better option for treating breast cancer compared to existing medications that cause serious side effects such as vaginal discharge, menstrual irregularities, increased risk of blood clots, joint pain, severe allergic reactions, and osteoporosis.</li>\n    <li><strong>Specific Mechanism of Action for Tumor Control:</strong> The invention specifically binds with estrogen receptors alpha and beta and blocks the signal of the estrogen hormone, which actively helps in controlling tumor growth.</li>\n</ul>",
+  "advantages_of_invention_generating": false,
+  "add_embodiments": "<ol>\n    <li>A small molecule designed for treating breast cancer.</li>\n    <li>The small molecule has a molecular weight of 222.328 g/mol.</li>\n    <li>The small molecule specifically binds with estrogen receptors alpha and beta.</li>\n    <li>The small molecule blocks the signal of the estrogen hormone.</li>\n    <li>The small molecule helps in tumor growth control.</li>\n    <li>The small molecule may have fewer or no side effects.</li>\n    <li>The small molecule is a better option for treating breast cancer.</li>\n</ol>",
+  "add_embodiments_generating": false,
+  "add_few_claims": "<ol>\n    <li>A small molecule, characterized by a molecular weight of 222.328 g/mol, wherein the small molecule specifically binds to estrogen receptors alpha (ERα) and beta (ERβ) and blocks estrogen hormone signaling.</li>\n    <li>A method for treating breast cancer in a subject, the method comprising administering to the subject a therapeutically effective amount of the small molecule of claim 1.</li>\n    <li>The small molecule of claim 1, wherein the binding to estrogen receptors alpha (ERα) and beta (ERβ) inhibits estrogen-induced cell division.</li>\n    <li>The small molecule of claim 1, wherein the blocking of estrogen hormone signaling controls tumor growth.</li>\n    <li>The method of claim 2, wherein the breast cancer is estrogen receptor-positive (ER+) breast cancer.</li>\n    <li>The method of claim 2, wherein the administering of the small molecule provides reduced side effects compared to existing breast cancer treatments.</li>\n    <li>A pharmaceutical composition for treating breast cancer, the composition comprising:\n        <ul>\n            <li>the small molecule of claim 1; and</li>\n            <li>a pharmaceutically acceptable carrier.</li>\n        </ul>\n    </li>\n    <li>The pharmaceutical composition of claim 7, further comprising at least one pharmaceutically acceptable excipient selected from the group consisting of diluents, binders, disintegrants, lubricants, and coatings.</li>\n</ol>",
+  "add_few_claims_generating": false,
+  "add_key_features": "",
+  "add_key_features_generating": false,
+  "add_abstract": "",
+  "add_abstract_generating": false,
+  "add_custom_paragraph": "",
+  "createdAt": {
+    "$date": "2026-02-12T10:22:47.830Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-16T13:20:10.461Z"
+  },
+  "__v": 0
+};
+// -------------------
 
 const ProvisionalDraftResult = () => {
   const navigate = useNavigate();
@@ -46,11 +96,11 @@ const ProvisionalDraftResult = () => {
     fields_of_invention: true,
     detailed_description: true,
     advantages_of_invention: true,
-    // add_embodiments: false,
-    // add_few_claims: false,
-    // add_key_features: false,
-    // add_abstract: false,
-    // add_custom_paragraph: false,
+    add_embodiments: false,
+    add_few_claims: false,
+    add_key_features: false,
+    add_abstract: false,
+    add_custom_paragraph: false,
   });
 
   const sectionsConfig = [
@@ -60,10 +110,10 @@ const ProvisionalDraftResult = () => {
     { key: "fields_of_invention", label: "Field of Invention" },
     { key: "detailed_description", label: "Detailed Description" },
     { key: "advantages_of_invention", label: "Advantages" },
-    // { key: "add_embodiments", label: "Embodiments", isOptional: true },
-    // { key: "add_few_claims", label: "Claims", isOptional: true },
-    // { key: "add_key_features", label: "Key Features", isOptional: true },
-    // { key: "add_abstract", label: "Abstract", isOptional: true },
+    { key: "add_embodiments", label: "Embodiments", isOptional: true },
+    { key: "add_few_claims", label: "Claims", isOptional: true },
+    { key: "add_key_features", label: "Key Features", isOptional: true },
+    { key: "add_abstract", label: "Abstract", isOptional: true },
     {
       key: "add_custom_paragraph",
       label: "Custom Paragraph",
@@ -75,13 +125,13 @@ const ProvisionalDraftResult = () => {
     try {
       setIsLoading(true);
 
-      const response = await axios.get(`/api/provisionaldraft/${projectId}`);
+      // --- MOCKED DATA FETCH ---
+      // const response = await axios.get(`/api/provisionaldraft/${projectId}`);
+      await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate delay
 
-      if (response.data.inventionData) {
-        setInventionData(response.data.inventionData);
-      }
-
-      const incomingDraft = response.data.provisionalData;
+      const incomingDraft = STATIC_PROVISIONAL_DATA;
+      setInventionData(STATIC_INVENTION_DATA);
+      // -------------------------
 
       if (incomingDraft) {
         setDraftData(incomingDraft);
@@ -111,17 +161,13 @@ const ProvisionalDraftResult = () => {
       } else {
         setDraftData((prev) => ({
           ...prev,
-          title_of_invention: response.data.inventionData.project_title,
+          title_of_invention: STATIC_INVENTION_DATA.project_title,
         }));
         triggerInitialGeneration();
       }
     } catch (error) {
-      if (!import.meta.env.PROD) {
-        console.log("Draft fetch error:", error);
-      }
-      toast.error(
-        "Provisional draft not found. It may have been deleted or you do not have permission to view it.",
-      );
+      console.log("Draft fetch error:", error);
+      toast.error("Error loading data.");
       navigate("/dashboard");
     } finally {
       setIsLoading(false);
@@ -139,82 +185,89 @@ const ProvisionalDraftResult = () => {
         advantages_of_invention: true,
       }));
 
-      await axios.get(`/api/provisionaldraft/generateall/${projectId}`);
+      // --- MOCKED GENERATION ---
+      // await axios.get(`/api/provisionaldraft/generateall/${projectId}`);
+      setTimeout(() => {
+        setGeneratingSections({});
+        setDraftData(STATIC_PROVISIONAL_DATA);
+        toast.success("Generation Complete (Mock)");
+      }, 2000);
+      // ------------------------
+
     } catch (error) {
-      if (!import.meta.env.PROD) {
-        console.error("Generation Trigger Error:", error);
-      }
-
-      setGeneratingSections((prev) => ({
-        ...prev,
-        background_of_invention: false,
-        summary_of_invention: false,
-        fields_of_invention: false,
-        detailed_description: false,
-        advantages_of_invention: false,
-      }));
-
-      toast.error("Generation failed. Please refresh the page to try again!");
+      console.error("Generation Trigger Error:", error);
+      setGeneratingSections({});
+      toast.error("Generation failed.");
     }
   };
 
-  // const handleSaveSection = async (
-  //   sectionKey,
-  //   newContent,
-  //   showModal = true,
-  // ) => {
-  //   const currentContent = draftData[sectionKey];
-  //   try {
-  //     setDraftData((prev) => ({ ...prev, [sectionKey]: newContent }));
-  //     await axios.put(`/api/provisionaldraft/update/${projectId}`, {
-  //       field: sectionKey,
-  //       content: newContent,
-  //     });
-  //     if (showModal) {
-  //       toast.success("Section updated!");
-  //     }
-  //   } catch (error) {
-  //     if (!import.meta.env.PROD) {
-  //       console.error("Section updation error:", error);
-  //     }
-  //     setDraftData((prev) => ({ ...prev, [sectionKey]: currentContent }));
-  //     if (showModal) {
-  //       toast.error("Failed to save section. Please try again!");
-  //     }
-  //   }
-  // };
+  const handleSaveSection = async (
+    sectionKey,
+    newContent,
+    showModal = true,
+  ) => {
+    const currentContent = draftData[sectionKey];
+    try {
+      setDraftData((prev) => ({ ...prev, [sectionKey]: newContent }));
+      
+      // --- MOCKED SAVE ---
+      // await axios.put(`/api/provisionaldraft/update/${projectId}`, {
+      //   field: sectionKey,
+      //   content: newContent,
+      // });
+      // -------------------
 
-  // const handleRegenerate = async (sectionKey) => {
-  //   if (sectionKey === "add_custom_paragraph") {
-  //     return;
-  //   }
+      if (showModal) {
+        toast.success("Section updated (Local Only)!");
+      }
+    } catch (error) {
+      console.error("Section updation error:", error);
+      setDraftData((prev) => ({ ...prev, [sectionKey]: currentContent }));
+      if (showModal) {
+        toast.error("Failed to save section.");
+      }
+    }
+  };
 
-  //   setGeneratingSections((prev) => ({ ...prev, [sectionKey]: true }));
-  //   try {
-  //     await axios.post(`/api/provisionaldraft/regenerate/${projectId}`, {
-  //       field: sectionKey,
-  //     });
-  //   } catch (error) {
-  //     if (!import.meta.env.PROD) {
-  //       console.error("Regeneration error:", error);
-  //     }
-  //     setGeneratingSections((prev) => ({ ...prev, [sectionKey]: false }));
-  //     toast.error("Failed to regenerate section. Please try again!");
-  //   }
-  // };
+  const handleRegenerate = async (sectionKey) => {
+    if (sectionKey === "add_custom_paragraph") {
+      return;
+    }
 
-  // const toggleSection = async (key) => {
-  //   const isVisible = sectionVisibility[key];
-  //   setSectionVisibility((prev) => ({ ...prev, [key]: !isVisible }));
-  //   if (!isVisible && key !== "add_custom_paragraph") {
-  //     handleRegenerate(key);
-  //   } else {
-  //     setDraftData((prev) => ({ ...prev, [key]: "" }));
-  //     if (draftData[key]) {
-  //       handleSaveSection(key, "", false);
-  //     }
-  //   }
-  // };
+    setGeneratingSections((prev) => ({ ...prev, [sectionKey]: true }));
+    try {
+      // --- MOCKED REGENERATE ---
+      // await axios.post(`/api/provisionaldraft/regenerate/${projectId}`, {
+      //   field: sectionKey,
+      // });
+      setTimeout(() => {
+         setGeneratingSections((prev) => ({ ...prev, [sectionKey]: false }));
+         setDraftData((prev) => ({
+            ...prev,
+            [sectionKey]: prev[sectionKey] + " (Regenerated)"
+         }));
+         toast.success("Section Regenerated (Mock)");
+      }, 1500);
+      // -------------------------
+    } catch (error) {
+      console.error("Regeneration error:", error);
+      setGeneratingSections((prev) => ({ ...prev, [sectionKey]: false }));
+      toast.error("Failed to regenerate section.");
+    }
+  };
+
+  const toggleSection = async (key) => {
+    const isVisible = sectionVisibility[key];
+    setSectionVisibility((prev) => ({ ...prev, [key]: !isVisible }));
+    if (!isVisible && key !== "add_custom_paragraph") {
+      handleRegenerate(key);
+    } else {
+      setDraftData((prev) => ({ ...prev, [key]: "" }));
+      if (draftData[key]) {
+        handleSaveSection(key, "", false);
+      }
+    }
+  };
 
   const handleDownloadDocx = () => {
     const docChildren = [];
@@ -364,35 +417,14 @@ const ProvisionalDraftResult = () => {
   };
 
   const handleDownloadPDF = async () => {
-    toast.info("Preparing PDF...");
+    toast.info("Preparing PDF (Mock)...");
     setShowDownloadOptions(false);
 
-    try {
-      const response = await axios.get(
-        `/api/provisionaldraft/download-pdf/${projectId}`,
-        {
-          responseType: "blob",
-        },
-      );
-
-      const contentDisposition = response.headers["content-disposition"];
-      let filename = `Provisional Draft - ${projectId}.pdf`; // Fallback
-      if (contentDisposition) {
-        const filenameMatch = contentDisposition.match(/filename="(.+)"/);
-        if (filenameMatch.length > 1) {
-          filename = filenameMatch[1];
-        }
-      }
-
-      saveAs(new Blob([response.data]), filename);
-
-      toast.success("PDF Downloaded!");
-    } catch (error) {
-      if (!import.meta.env.PROD) {
-        console.error("PDF Download Error:", error);
-      }
-      toast.error("Failed to download PDF. Please try again.");
-    }
+    // --- MOCKED PDF DOWNLOAD ---
+    setTimeout(() => {
+      toast.warning("PDF Download requires backend connection.");
+    }, 500);
+    // -------------------------
   };
 
   useEffect(() => {
@@ -415,133 +447,40 @@ const ProvisionalDraftResult = () => {
     };
   }, [showDownloadOptions]);
 
+  // --- COMMENTED OUT SOCKET LOGIC ---
+  /*
   useEffect(() => {
     if (!socket) {
       return;
     }
-
     const handleFieldGenerated = (data) => {
-      if (projectId === data.projectId) {
-        setDraftData((prev) => ({
-          ...prev,
-          [data.field]: data.content,
-        }));
-
-        setGeneratingSections((prev) => ({
-          ...prev,
-          [data.field]: false,
-        }));
-      }
+      // ...
     };
-
     const handleFieldError = (data) => {
-      if (projectId === data.projectId) {
-        setGeneratingSections((prev) => ({
-          ...prev,
-          [data.field]: false,
-        }));
-
-        if (!import.meta.env.PROD) {
-          console.error(`Error generation ${data.field}:`, data.error);
-        }
-
-        const sectionConfig = sectionsConfig.find((s) => s.key === data.field);
-
-        const label = sectionConfig
-          ? sectionConfig.label
-          : data.field?.replace(/_/g, " ") || "Section";
-
-        toast.error(`Failed to generate ${label}`);
-      }
+      // ...
     };
-
     socket.on("provisional_field_generated", handleFieldGenerated);
     socket.on("provisional_field_error", handleFieldError);
-
     return () => {
       socket.off("provisional_field_generated", handleFieldGenerated);
       socket.off("provisional_field_error", handleFieldError);
     };
   }, [socket]);
+  */
+  // ----------------------------------
 
   return (
     <>
-      <div className="draft-container container-fluid">
+      <div className="draft-container container">
         {/* Header */}
         <div className="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
-          <div>
-            <h1 className="page-title">Provisional Draft</h1>
+          <div className="title-container">
+            <h1 className="page-title mb-2">Provisional Draft</h1>
             <p className="page-subtitle">
               Generate a comprehensive provisional patent specification
             </p>
           </div>
-          <div>
-            <button
-              className="btn btn-outline-secondary me-2"
-              onClick={() =>
-                navigate(`/provisiodraft/${projectId}`, {
-                  state: {
-                    pdfText: inventionData.pdf_text,
-                  },
-                })
-              }
-            >
-              Edit Invention Text
-            </button>
-          </div>
-        </div>
-
-        <div className="row g-4">
-          {/* Main Content */}
-          <div className="col-lg-7 col-xl-8">
-            <div className="draft-content-wrapper">
-              {sectionsConfig.map((section) => {
-                const isGenerating = generatingSections[section.key];
-
-                return (
-                  <DraftSection
-                    key={section.key}
-                    sectionKey={section.key}
-                    title={section.label}
-                    content={draftData[section.key] || ""}
-                    isVisible={sectionVisibility[section.key]}
-                    isRegenerating={isGenerating}
-                    onSave={handleSaveSection}
-                    onRegenerate={handleRegenerate}
-                  />
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="col-lg-5 col-xl-4">
-            <div className="sidebar-sticky">
-              <div className="sidebar-card">
-                <h6 className="sidebar-title">Manage Sections</h6>
-                <div className="sidebar-btn-grid">
-                  {sectionsConfig
-                    .filter((s) => s.isOptional)
-                    .map((s) => (
-                      <button
-                        key={s.key}
-                        className={`sidebar-action-btn ${
-                          sectionVisibility[s.key] ? "active" : ""
-                        }`}
-                        onClick={() => toggleSection(s.key)}
-                        disabled={generatingSections[s.key]}
-                      >
-                        {sectionVisibility[s.key] ? <FaTimes /> : <FaPlus />}
-                        {s.label}
-                      </button>
-                    ))}
-                </div>
-              </div>
-
-              <div className="sidebar-card">
-                <h6 className="sidebar-title">Export & Actions</h6>
-                <div className="d-flex flex-column gap-2">
-                  <div className="position-relative" ref={dropdownRef}>
+            <div className="position-relative" ref={dropdownRef}>
                     <button
                       className="btn-sidebar-primary"
                       onClick={() =>
@@ -573,38 +512,36 @@ const ProvisionalDraftResult = () => {
                         </button>
                       </div>
                     )}
-                  </div>
+             </div>
+        </div>
 
-                  <button
-                    className="btn-sidebar-outline mt-2"
-                    onClick={() => navigate(`/search-report/${projectId}`)}
-                  >
-                    Inno Check <FaArrowRight className="ms-1" />
-                  </button>
+        <div className="container">
+          {/* Main Content */}
+          <div>
+            <div className="draft-content-wrapper">
+              {sectionsConfig.map((section) => {
+                const isGenerating = generatingSections[section.key];
 
-                  <button
-                    className="btn-sidebar-outline mt-2"
-                    onClick={() =>
-                      navigate(`/non-provisional-draft/${projectId}`)
-                    }
-                  >
-                    Non Provisional Draft <FaArrowRight className="ms-1" />
-                  </button>
-
-                  <button
-                    className="btn-sidebar-dark mt-2"
-                    onClick={() => toggleConsultModal(projectId)}
-                  >
-                    Consult Expert
-                  </button>
-                </div>
-              </div>
+                return (
+                  <DraftSection
+                    key={section.key}
+                    sectionKey={section.key}
+                    title={section.label}
+                    content={draftData[section.key] || ""}
+                    isVisible={sectionVisibility[section.key]}
+                    isRegenerating={isGenerating}
+                    onSave={handleSaveSection}
+                    onRegenerate={handleRegenerate}
+                  />
+                );
+              })}
             </div>
           </div>
+
         </div>
       </div>
 
-      {isLoading && <CustomLoader loaderText="Retrieving data..." />}
+      {/* {isLoading && <CustomLoader loaderText="Retrieving data..." />} */}
     </>
   );
 };
