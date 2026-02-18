@@ -22,6 +22,7 @@ import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 import { AppBar, Box, Toolbar, Typography, Button, IconButton, Avatar, Menu, MenuItem, CssBaseline, GlobalStyles } from '@mui/material';
 import { KeyboardArrowDown, Person } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -43,6 +44,9 @@ export default function Header() {
     const handleMenuClose = () => {
       setAnchorEl(null);
     };
+  
+
+    const navigate = useNavigate();
 
   // Common header content
   const mainHeader = (
@@ -51,7 +55,7 @@ export default function Header() {
                 {/* Left Side: Logo & Nav Links */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                   {/* Logo */}
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', cursor: 'pointer' }}>
+                  <Box sx={{ display: 'flex', alignItems: 'baseline', cursor: 'pointer' }} onClick={() => navigate(`/`)}>
                     <Typography variant="h5" sx={{ fontWeight: 800, color: '#444' }}>
                       barcode
                     </Typography>
@@ -63,10 +67,14 @@ export default function Header() {
     
                   {/* Navigation Links (Hidden on small mobile) */}
                   <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-                    <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }}>
+                    <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }}  
+                    onClick={() => navigate(`/profile/`)}
+                    >
                       Profile
                     </Button>
-                    <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }}>
+                    <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} 
+                    onClick={() => navigate(`/recent-search/`)}
+                    >
                       Recent Searches
                     </Button>
                   </Box>
@@ -109,11 +117,14 @@ export default function Header() {
                       sx: { mt: 1, minWidth: 150 }
                     }}
                   >
-                    <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
+                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/account/`)}} >My Account</MenuItem>
                     <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/recent-search/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>recent Search</MenuItem>
+                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/profile/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>Profile</MenuItem>
                     <MenuItem onClick={handleMenuClose} sx={{ color: 'primary.main' }}>
                       Logout
                     </MenuItem>
+                    
                   </Menu>
                 </Box>
               </Toolbar>

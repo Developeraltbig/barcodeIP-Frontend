@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { DUMMY_PATENTS, TABS } from '../mockData';
 import PatentCard from './PatentCard';
 import TabComponent from '../TabComponent';
+import { useNavigate } from 'react-router-dom';
 
 const PatentList = () => {
   const [activeTab, setActiveTab] = useState('patents');
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ bgcolor: '#F4F7F9', minHeight: '100vh', pb: 10 }}>

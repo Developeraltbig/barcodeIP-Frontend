@@ -8,8 +8,14 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { BRAND_RED, outlineBtnStyle, filledBtnStyle } from '../constants';
+import { useNavigate } from 'react-router-dom';
 
-const PatentCard = ({ data }) => (
+
+const PatentCard = ({data}) => {
+  const navigate = useNavigate();
+  
+  return (
+  
   <Card 
     component={motion.div}
     initial={{ opacity: 0, y: 20 }}
@@ -42,9 +48,10 @@ const PatentCard = ({ data }) => (
     </Typography>
 
     <Grid container spacing={1.5}>
-      <Grid item xs={4}><Button  fullWidth variant="outlined" startIcon={<VisibilityIcon />} sx={filledBtnStyle}>Overlap</Button></Grid>
+      <Grid item xs={4}><Button  fullWidth variant="outlined" startIcon={<VisibilityIcon />} sx={filledBtnStyle} onClick={() => navigate(`/overlap`)}>Overlap</Button></Grid>
     </Grid>
   </Card>
-);
+  )
+}
 
-export default PatentCard;
+export default PatentCard

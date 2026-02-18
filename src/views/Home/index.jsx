@@ -12,7 +12,7 @@ function Home() {
       <Banner3D/>
       <InputSectionN />
       <DashboardWidgets />
-      <AdvanceSearch />
+      {/* <AdvanceSearch /> */}
       <KeyFeatures />
       <RecentArticles/>
     </div>

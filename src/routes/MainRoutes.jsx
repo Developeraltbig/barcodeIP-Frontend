@@ -10,6 +10,7 @@ import AccountPage from '../views/account/AccountPage';
 import OverlapMatrix from '../views/components/OverlapMatrix';
 import DraftMasterResult from '../views/Result/non_provisional/DraftMasterResult';
 import ProvisionalDraftResult from '../views/Result/provisional/ProvisionalDraftResult';
+import Product from '../views/Result/product';
 
 // pages
 const Home = Loadable(lazy(() => import('../views/Home/index')));
@@ -58,6 +59,10 @@ const MainRoutes = {
     {
       path: '/p-editor',
       element: <ProvisionalDraftResult />
+    },
+    {
+      path: '/product',
+      element: <Product />
     }
   ]
 };
