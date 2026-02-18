@@ -22,9 +22,9 @@ export default function AnalysisView({ product }) {
   };
 
   return (
-    <Card sx={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.08)' }}>
+    <Card sx={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.08)' , border: '1px solid #ef4444', paddingBottom:'40px'}}>
       {/* Top Part: Summary */}
-      <Box sx={{ p: 5 , borderRadius:'10px', marginBottom:'25px' , borderTop: '1px solid #ced3d8ff' }}>
+      <Box sx={{ p: 5 , borderRadius:'10px', marginBottom:'25px'  }}>
         <div className="row g-5">
           <div className="col-lg-7">
             <Typography variant="h4" sx={{ fontWeight: 800, color: '#0f172a', mb: 0.5 }}>
@@ -89,7 +89,7 @@ export default function AnalysisView({ product }) {
         {/* EXISTING DYNAMIC ROWS */}
         {product.features.map((feature) => (
           <Box key={feature.id} className="row g-0 border-bottom">
-            <div className="col-lg-3 p-4 border-end" style={{ position: 'relative' }}>
+            <div className="col-lg-3 p-2 border-end" style={{ position: 'relative' }}>
               <Box
                 sx={{
                   position: 'absolute',
@@ -104,7 +104,7 @@ export default function AnalysisView({ product }) {
               <Typography sx={{ fontWeight: 700, fontSize: '0.9rem' }}>{feature.title}</Typography>
             </div>
 
-            <div className="col-lg-4 p-4 border-end">
+            <div className="col-lg-4 p-2 border-end">
               <Chip
                 label={feature.status}
                 size="small"
@@ -120,18 +120,13 @@ export default function AnalysisView({ product }) {
               </Typography>
             </div>
 
-            <div className="col-lg-3 p-4 border-end" style={{ bgcolor: '#fafafa' }}>
-              <Typography
-                sx={{ fontSize: '0.65rem', fontWeight: 800, color: '#94a3b8', display: 'flex', alignItems: 'center', gap: 0.5, mb: 1 }}
-              >
-                EVIDENCE
-              </Typography>
+            <div className="col-lg-3 p-2 border-end" style={{ bgcolor: '#fafafa' }}>
               <Typography variant="body2" sx={{ fontStyle: 'italic', fontSize: '0.85rem' }}>
                 "{feature.evidence}"
               </Typography>
             </div>
 
-            <div className="col-lg-2 p-4 d-flex flex-wrap gap-1 align-content-center justify-content-end">
+            <div className="col-lg-2 p-2 d-flex flex-wrap gap-1 align-content-center justify-content-end">
               {feature.sources.map((s) => (
                 <Paper
                   key={s}

@@ -17,7 +17,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
     <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%', mb: 4 }}>
       
       {/* Left Navigation Arrow */}
-      <IconButton 
+      {/* <IconButton 
         onClick={() => handleScroll('left')}
         sx={{ 
           position: 'absolute', left: -20, zIndex: 5, 
@@ -26,7 +26,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
         }}
       >
         <IoIosArrowBack size={20} />
-      </IconButton>
+      </IconButton> */}
 
       {/* The Scrollable Tab Container */}
       <Box
@@ -38,7 +38,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
           scrollBehavior: 'smooth',
           px: 1,
           py: 2,
-          '&::-webkit-scrollbar': { display: 'none' }, // Hide scrollbar for clean UI
+          '&::-webkit-scrollbar': { display: 'none' },
           msOverflowStyle: 'none',
           scrollbarWidth: 'none',
         }}
@@ -55,10 +55,10 @@ const TabComponent = ({ items, activeId, onSelect }) => {
               <Paper
                 elevation={0}
                 sx={{
-                  width: 250,
+                  maxWidth: 230,
                   p: '12px 16px',
                   borderRadius: 3,
-                  border: '2px solid',
+                  border: '1px solid',
                   alignContent:'start',
                   // Using your #ef4444 color for the active state
                   borderColor: isActive ? '#ef4444' : '#e2e8f0',
@@ -114,7 +114,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
                </Box>
 
                 {/* 3. Stats Section (Found / Partial / Not Found) */}
-                <Box sx={{ ml: 2, whiteSpace: 'nowrap', textAlign:'end' }}>
+                {/* <Box sx={{ ml: 2, whiteSpace: 'nowrap', textAlign:'end' }}>
                   <Typography 
                     variant="caption" 
                     sx={{ 
@@ -125,7 +125,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
                   >
                     {item.stats.found}F / {item.stats.partial}P / {item.stats.notFound}N
                   </Typography>
-                </Box>
+                </Box> */}
               </Paper>
             </ButtonBase>
           );
@@ -133,7 +133,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
       </Box>
 
       {/* Right Navigation Arrow */}
-      <IconButton 
+      {/* <IconButton 
         onClick={() => handleScroll('right')}
         sx={{ 
           position: 'absolute', right: -20, zIndex: 5, 
@@ -142,7 +142,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
         }}
       >
         <IoIosArrowForward size={20} />
-      </IconButton>
+      </IconButton> */}
     </Box>
   );
 };

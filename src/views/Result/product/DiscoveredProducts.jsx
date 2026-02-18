@@ -44,7 +44,7 @@ export default function DiscoveredProducts() {
           <Typography variant="h5" sx={{ fontWeight: 800, color: '#1e293b', display: 'flex', alignItems: 'center', gap: 1.5 }}>
             <MdOutlineExplore color="#64748b" /> Additional Products Discovered
           </Typography>
-          <Typography variant="body2" sx={{ color: '#94a3b8', mt: 0.5 }}>
+          <Typography variant="body2" sx={{ color: '#94a3b8', mt: 3 }}>
             15 more products identified during discovery — not deeply analyzed
           </Typography>
         </Box>

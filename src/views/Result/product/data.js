@@ -44,7 +44,22 @@ export const PRODUCTS_DATA = [
   },
   {
     id: 4,
-    name: "Whoop 5.3",
+    name: "Samsung Galaxy Watch 6",
+    brand: "Whoop",
+    icon: "W",
+    stats: { found: 3, partial: 1, notFound: 2 },
+    color: "#6366f1",
+    priority: "Low Risk Alternative",
+    summary: "Whoop 4.0 excels in biosensor integration but lacks any self-powering thermal capabilities defined in the patent.",
+    features: [
+      { id: "01", title: "Flexible Thermoelectric Module", status: "PARTIAL", analysis: "Battery is strictly chemical-based.", evidence: "Proprietary battery pack required for daily charging.", sources: [1, 4, 8] },
+      { id: "03", title: "Multiple Biosensors", status: "FOUND", analysis: "Industry-leading heart rate and skin temp monitoring.", evidence: "5 LED, 4 photodiode sensor array.", sources: [1, 5] },
+      { id: "04", title: "Multiple Biosensors", status: "NOT FOUND", analysis: "Industry-leading heart rate and skin temp monitoring.", evidence: "5 LED, 4 photodiode sensor array.", sources: [1, 5] }
+    ]
+  },
+  {
+    id: 5,
+    name: "Samsung Galaxy Watch 6",
     brand: "Whoop",
     icon: "W",
     stats: { found: 3, partial: 1, notFound: 2 },
