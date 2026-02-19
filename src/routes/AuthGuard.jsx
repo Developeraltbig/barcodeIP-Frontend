@@ -6,7 +6,7 @@ export default function AuthGuard({ children }) {
     (state) => state.auth.isAuthenticated
   );
 
-  if (!isAuthenticated) {
+  if (isAuthenticated) {
     return <Navigate to="/pages/auth/login" replace />;
   }
 

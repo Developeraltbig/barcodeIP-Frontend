@@ -59,6 +59,7 @@ const KeyFeaturesModal = ({ open, onClose }) => {
         px: { xs: 3, sm: 4 },
         pb: 4,
         maxHeight: '70vh',
+         maxWidth: '70vh',
         '&::-webkit-scrollbar': { width: '4px' },
         '&::-webkit-scrollbar-thumb': { backgroundColor: '#e2e8f0', borderRadius: '10px' }
       }}>

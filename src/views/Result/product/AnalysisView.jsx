@@ -31,7 +31,8 @@ export default function AnalysisView({ product }) {
               {product.name}
             </Typography>
             <Typography sx={{ color: '#64748b', mb: 3 }}>
-              Manufacturer: <strong>{product.brand}</strong>
+              Manufac
+              turer: <strong>{product.brand}</strong>
             </Typography>
             <Box sx={{ p: 3, bgcolor: '#f8fafc' }}>
               <Typography sx={{ color: '#334155', lineHeight: 1.8 }}>{product.summary}</Typography>

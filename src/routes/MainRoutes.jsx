@@ -2,19 +2,19 @@ import { lazy } from 'react';
 
 // project imports
 import Loadable from 'components/Loadable';
-import MainLayout from 'layouts/MainLayout';
 import AuthGuard from './AuthGuard';
-import RecentSearch from '../views/search/RecentSearch';
-import UserProfile from '../views/profile/UserProfile';
-import AccountPage from '../views/account/AccountPage';
-import OverlapMatrix from '../views/components/OverlapMatrix';
-import DraftMasterResult from '../views/Result/non_provisional/DraftMasterResult';
-import ProvisionalDraftResult from '../views/Result/provisional/ProvisionalDraftResult';
-import Product from '../views/Result/product';
 
 // pages
 const Home = Loadable(lazy(() => import('../views/Home/index')));
 const Result = Loadable(lazy(() => import('../views/Result/index')));
+const MainLayout = Loadable(lazy(() => import('layouts/MainLayout')));
+const RecentSearch = Loadable(lazy(() => import('../views/search/RecentSearch')));
+const UserProfile = Loadable(lazy(() => import('../views/profile/UserProfile')));
+const AccountPage = Loadable(lazy(() => import('../views/account/index')));
+const OverlapMatrix = Loadable(lazy(() => import('../views/components/OverlapMatrix')));
+const DraftMasterResult = Loadable(lazy(() => import('../views/Result/non_provisional/DraftMasterResult')));
+const ProvisionalDraftResult = Loadable(lazy(() => import('../views/Result/provisional/ProvisionalDraftResult')));
+const Product = Loadable(lazy(() => import('../views/Result/product')));
 
 
 
@@ -53,11 +53,11 @@ const MainRoutes = {
       element: <OverlapMatrix/>
     },
     {
-      path: '/n-editor',
+      path: '/non-provisional',
       element: <DraftMasterResult />
     },
     {
-      path: '/p-editor',
+      path: '/provisional',
       element: <ProvisionalDraftResult />
     },
     {

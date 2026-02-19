@@ -7,8 +7,8 @@ import ThemeCustomization from './themes';
 import router from 'routes';
 
 // auth imports
-import { useCheckAuthQuery } from '../src/features/auth/authApi';
-import { setAuth, clearAuth } from '../src/features/auth/authSlice';
+import { useCheckAuthQuery } from './features/slice/auth/authApi';
+import { setAuth, clearAuth } from './features/slice/auth/authSlice';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FullPageLoader from './components/FullPageLoader';

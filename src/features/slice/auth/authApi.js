@@ -1,11 +1,11 @@
-import { baseApi } from '../../services/baseApi';
+import { baseApi } from '../../../services/baseApi';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
     login: builder.mutation({
       query: (data) => ({
-        url: '/api/v1/auth/admin-user/login',
+        url: '/api/v1/auth/login',
         method: 'POST',
         body: data
       }),
@@ -14,7 +14,7 @@ export const authApi = baseApi.injectEndpoints({
 
     register: builder.mutation({
       query: (data) => ({
-        url: '/api/v1/auth/admin-user/register',
+        url: '/api/v1/auth/register',
         method: 'POST',
         body: data
       })
@@ -26,13 +26,13 @@ export const authApi = baseApi.injectEndpoints({
     // }),
 
     logout: builder.query({
-      query: () => '/api/v1/auth/admin-user/logout',
+      query: () => '/api/v1/auth/logout',
       providesTags: ['Auth']
     }),
 
     forgotPassword: builder.mutation({
       query: (data) => ({
-        url: '/api/v1/auth/admin-user/forgot-password',
+        url: '/api/v1/auth/forgot-password',
         method: 'POST',
         body: data
       })
@@ -40,7 +40,7 @@ export const authApi = baseApi.injectEndpoints({
 
     resetPassword: builder.mutation({
       query: (data) => ({
-        url: '/api/v1/auth/admin-user/reset-password',
+        url: '/api/v1/auth/reset-password',
         method: 'POST',
         body: data
       })
