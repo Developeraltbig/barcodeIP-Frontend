@@ -5,6 +5,7 @@ import { DUMMY_PATENTS, TABS } from '../mockData';
 import PatentCard from './PatentCard';
 import TabComponent from '../TabComponent';
 import { useNavigate } from 'react-router-dom';
+import DraftMasterResult from '../non_provisional/DraftMasterResult';
 
 const PatentList = () => {
   const [activeTab, setActiveTab] = useState('patents');
@@ -36,11 +37,12 @@ const PatentList = () => {
                 ))}
               </Grid>
             ) : (
-              <Box sx={{ py: 15, textAlign: 'center', bgcolor: '#fff', borderRadius: '20px', border: '2px dashed #cbd5e1' }}>
-                <Typography variant="h6" color="text.secondary">
-                  No files found for <b>{TABS.find(t => t.id === activeTab)?.label}</b>
-                </Typography>
-              </Box>
+              //  <Box sx={{ py: 15, textAlign: 'center', bgcolor: '#fff', borderRadius: '20px', border: '2px dashed #cbd5e1' }}>
+              //   <Typography variant="h6" color="text.secondary">
+              //     No files found for <b>{TABS.find(t => t.id === activeTab)?.label}</b>
+              //   </Typography>
+              // </Box>
+                <DraftMasterResult />
             )}
           </motion.div>
         </AnimatePresence>

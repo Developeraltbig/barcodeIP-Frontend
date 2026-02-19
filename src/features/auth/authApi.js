@@ -20,10 +20,10 @@ export const authApi = baseApi.injectEndpoints({
       })
     }),
 
-    checkAuth: builder.query({
-      query: () => '/api/v1/auth/admin-user/check',
-      providesTags: ['Auth']
-    }),
+    // checkAuth: builder.query({
+    //   query: () => '/api/v1/auth/admin-user/check',
+    //   providesTags: ['Auth']
+    // }),
 
     logout: builder.query({
       query: () => '/api/v1/auth/admin-user/logout',

@@ -8,10 +8,8 @@ const index = () => {
 
   return (
     <>
-     
      <TopSection/>
      <PatentList/>
-
     </>
   )
 }
