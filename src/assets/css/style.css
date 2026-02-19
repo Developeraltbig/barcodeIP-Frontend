@@ -15,7 +15,7 @@
 .draft-container {
   background-color: var(--bg-main);
   min-height: 100vh;
-  padding: 100px 25px 60px 25px;
+  padding: 10px 25px 60px 25px;
 }
 
 .page-header {

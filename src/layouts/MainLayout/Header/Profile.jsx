@@ -24,9 +24,9 @@ import LockOpenTwoTone from '@mui/icons-material/LockOpenTwoTone';
 import MeetingRoomTwoToneIcon from '@mui/icons-material/MeetingRoomTwoTone';
 import PersonTwoToneIcon from '@mui/icons-material/PersonTwoTone';
 import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
-import { useLazyLogoutQuery } from 'features/auth/authApi';
+// import { useLazyLogoutQuery } from '../../../features/slice/auth/authSlice';
 import { useDispatch } from 'react-redux';
-import { clearAuth } from 'features/auth/authSlice';
+import { clearAuth } from '../../../features/slice/auth/authSlice';
 
 const menuItems = [
   { icon: <SettingsTwoToneIcon />, label: 'Settings' },
@@ -45,7 +45,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const [logout] = useLazyLogoutQuery();
+  // const [logout] = useLazyLogoutQuery();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

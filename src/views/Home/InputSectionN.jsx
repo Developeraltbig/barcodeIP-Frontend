@@ -152,7 +152,7 @@ const InputSectionN = () => {
             '&:hover': { bgcolor: '#d65f50' }
           }}
         >
-          Generate Key Strings
+          Generate
         </Button>
 
         {/* Advance Search Toggle */}

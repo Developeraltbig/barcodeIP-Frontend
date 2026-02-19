@@ -8,6 +8,7 @@ import HomeN from '../views/auth/work-N/HomeN/HomeN';
 import Footer from '../views/auth/work-N/Footer/Footer';
 import ResultN from '../views/auth/work-N/ResultN/ResultN';
 import Result_2 from '../views/auth/work-N/ResultN/Result_2';
+import Register from 'views/auth/work-N/Register';
 
 // pages
 // const LoginPage = Loadable(lazy(() => import('views/auth/Login')));
@@ -29,6 +30,10 @@ const PagesRoutes = {
         {
           path: 'login',
           element: <LoginN />
+        },
+        {
+          path: 'register',
+          element: <Register />
         },
         {
           path: 'HomeN',

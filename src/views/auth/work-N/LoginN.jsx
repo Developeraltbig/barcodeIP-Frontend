@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff, Circle } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 
 // 1. Theme Configuration
 const theme = createTheme({
@@ -246,9 +247,9 @@ const LoginPage = () => {
               <Box sx={{ textAlign: 'center' }}>
                 <Typography variant="body2" color="text.secondary">
                   New to BarcodeIP?{' '}
-                  <Link href="#" sx={{ fontWeight: 700, textDecoration: 'none', color: 'primary.main' }}>
-                    Create Account
-                  </Link>
+                  <Link component={RouterLink} to="/pages/auth/register" sx={{ fontWeight: 700, textDecoration: 'none', color: 'primary.main' }}>
+                     Create Account
+                    </Link>
                 </Typography>
               </Box>
             </Box>

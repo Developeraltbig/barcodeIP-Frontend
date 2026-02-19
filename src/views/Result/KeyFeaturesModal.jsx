@@ -26,8 +26,7 @@ const KeyFeaturesModal = ({ open, onClose }) => {
     <Dialog
       open={open}
       onClose={onClose}
-      fullWidth
-      maxWidth="sm"
+      width="sm" 
       fullScreen={fullScreen} // Optional: Make it full screen on mobile
       TransitionComponent={Fade}
       PaperProps={{
@@ -37,6 +36,8 @@ const KeyFeaturesModal = ({ open, onClose }) => {
           margin: { xs: 0, sm: 2 } // Full bleed on mobile
         }
       }}
+
+    
     >
       <DialogTitle sx={{ 
         display: 'flex', 
@@ -59,7 +60,6 @@ const KeyFeaturesModal = ({ open, onClose }) => {
         px: { xs: 3, sm: 4 },
         pb: 4,
         maxHeight: '70vh',
-         maxWidth: '70vh',
         '&::-webkit-scrollbar': { width: '4px' },
         '&::-webkit-scrollbar-thumb': { backgroundColor: '#e2e8f0', borderRadius: '10px' }
       }}>
