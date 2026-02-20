@@ -5,6 +5,8 @@ import Loadable from 'components/Loadable';
 import AuthGuard from './AuthGuard';
 import ForgotPassword from '../views/auth/work-N/ForgotPassword';
 import ResetPassword from '../views/auth/work-N/ResetPassword';
+import MyProject from '../views/my-project/MyProject';
+import ProjectDetails from '../views/my-project/ProjectDetails';
 
 // pages
 const Home = Loadable(lazy(() => import('../views/Home/index')));
@@ -65,6 +67,14 @@ const MainRoutes = {
     {
       path: '/product',
       element: <Product />
+    },
+    {
+      path: '/project',
+      element: <MyProject />
+    },
+    {
+      path: '/project-details/:id',
+      element: <ProjectDetails />
     }
   ]
 };

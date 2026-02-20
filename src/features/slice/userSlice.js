@@ -1,18 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  // Original State
   recentProjects: [],
   latestContent: null,
   articles: [],
-  selectedProject: null, // Useful for tracking which project the user is working on
+  allProjects: [],
+  selectedProject: null,
   loading: false,
+
+  // Remaining State fields based on your API list
+  projectPatent: null,
+  projectProvisional: null,
+  projectNonProvisional: null,
+  projectProduct: null,
+  projectPublication: null,
+  analystConnection: null,
 };
 
 const userSlice = createSlice({
   name: 'user-dashboard',
   initialState,
   reducers: {
-    // specific reducers for your API data
+    // Existing Reducers
     setRecentProjects: (state, action) => {
       state.recentProjects = action.payload;
     },
@@ -22,8 +32,9 @@ const userSlice = createSlice({
     setArticles: (state, action) => {
       state.articles = action.payload;
     },
-    
-    // UI state reducers
+    setAllProjects: (state, action) => {
+      state.allProjects = action.payload;
+    },
     setSelectedProject: (state, action) => {
       state.selectedProject = action.payload;
     },
@@ -31,13 +42,29 @@ const userSlice = createSlice({
       state.loading = action.payload;
     },
 
-    // Clear data (useful when user logs out, called alongside clearAuth)
+    // New Reducers for the remaining endpoints
+    setProjectPatent: (state, action) => {
+      state.projectPatent = action.payload;
+    },
+    setProjectProvisional: (state, action) => {
+      state.projectProvisional = action.payload;
+    },
+    setProjectNonProvisional: (state, action) => {
+      state.projectNonProvisional = action.payload;
+    },
+    setProjectProduct: (state, action) => {
+      state.projectProduct = action.payload;
+    },
+    setProjectPublication: (state, action) => {
+      state.projectPublication = action.payload;
+    },
+    setAnalystConnection: (state, action) => {
+      state.analystConnection = action.payload;
+    },
+
+    // Updated Clear Data
     clearUserData: (state) => {
-      state.recentProjects = [];
-      state.latestContent = null;
-      state.articles = [];
-      state.selectedProject = null;
-      state.loading = false;
+      return initialState; // Resets everything to the default state
     }
   }
 });
@@ -45,9 +72,16 @@ const userSlice = createSlice({
 export const { 
   setRecentProjects, 
   setLatestContent, 
-  setArticles, 
+  setArticles,
+  setAllProjects,
   setSelectedProject, 
   setLoading, 
+  setProjectPatent,
+  setProjectProvisional,
+  setProjectNonProvisional,
+  setProjectProduct,
+  setProjectPublication,
+  setAnalystConnection,
   clearUserData 
 } = userSlice.actions;
 

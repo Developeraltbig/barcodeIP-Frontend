@@ -87,6 +87,11 @@ export default function Header() {
                     >
                       Recent Searches
                     </Button>
+                    <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} 
+                    onClick={() => navigate(`/project/`)}
+                    >
+                      My Project
+                    </Button>
                   </Box>
                 </Box>
     
@@ -129,8 +134,9 @@ export default function Header() {
                   >
                     <MenuItem onClick={()=>{handleMenuClose(); navigate(`/account/`)}} >My Account</MenuItem>
                     <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/recent-search/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>recent Search</MenuItem>
+                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/recent-search/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>Recent Search</MenuItem>
                     <MenuItem onClick={()=>{handleMenuClose(); navigate(`/profile/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>Profile</MenuItem>
+                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/project/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>My Project</MenuItem>
                     <MenuItem onClick={() => handleLogout()} sx={{ color: 'primary.main' }}>
                       Logout
                     </MenuItem>
