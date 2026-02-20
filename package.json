@@ -34,6 +34,7 @@
     "react-device-detect": "2.2.3",
     "react-dom": "19.1.0",
     "react-hook-form": "7.56.4",
+    "react-hot-toast": "^2.6.0",
     "react-icons": "^5.5.0",
     "react-loader-spinner": "^8.0.2",
     "react-quill-new": "^3.8.3",

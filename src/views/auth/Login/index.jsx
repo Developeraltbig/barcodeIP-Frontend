@@ -42,7 +42,7 @@ const LoginPage = () => {
       // localStorage.setItem('token', result.token);
       
       console.log('Login success', result);
-      navigate('/user-dashboard'); // Redirect to dashboard
+      navigate('/'); // Redirect to dashboard
     } catch (err) {
       console.error('Login failed', err);
     }
@@ -98,7 +98,7 @@ const LoginPage = () => {
         {/* RIGHT SIDE */}
         <Grid
           item xs={12} sm={8} md={6}
-          sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', bgcolor: '#fff' }}
+          sx={{ backgroundColor:'red', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', bgcolor: '#fff' }}
         >
           <Box sx={{ width: '100%', maxWidth: '450px', px: { xs: 3, sm: 6 }, display: 'flex', flexDirection: 'column' }}>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>Welcome to</Typography>

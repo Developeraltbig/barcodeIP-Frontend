@@ -23,6 +23,9 @@ import { AppBar, Box, Toolbar, Typography, Button, IconButton, Avatar, Menu, Men
 import { KeyboardArrowDown, Person } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useLazyLogoutQuery } from '../../../features/slice/auth/authApi';
+import { logout, setCredentials } from '../../../features/slice/auth/authSlice';
 
 
 
@@ -37,6 +40,8 @@ export default function Header() {
     // State for User Dropdown Menu
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const [Logout] = useLazyLogoutQuery();
+    const dispatch = useDispatch();
   
     const handleMenuClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -44,7 +49,12 @@ export default function Header() {
     const handleMenuClose = () => {
       setAnchorEl(null);
     };
-  
+    
+    const handleLogout = async () => {
+     await Logout();
+    dispatch(logout());
+};
+
 
     const navigate = useNavigate();
 
@@ -121,7 +131,7 @@ export default function Header() {
                     <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
                     <MenuItem onClick={()=>{handleMenuClose(); navigate(`/recent-search/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>recent Search</MenuItem>
                     <MenuItem onClick={()=>{handleMenuClose(); navigate(`/profile/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>Profile</MenuItem>
-                    <MenuItem onClick={handleMenuClose} sx={{ color: 'primary.main' }}>
+                    <MenuItem onClick={() => handleLogout()} sx={{ color: 'primary.main' }}>
                       Logout
                     </MenuItem>
                     

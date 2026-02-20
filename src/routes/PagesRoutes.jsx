@@ -9,6 +9,8 @@ import Footer from '../views/auth/work-N/Footer/Footer';
 import ResultN from '../views/auth/work-N/ResultN/ResultN';
 import Result_2 from '../views/auth/work-N/ResultN/Result_2';
 import Register from 'views/auth/work-N/Register';
+import ForgotPassword from '../views/auth/work-N/ForgotPassword';
+import ResetPassword from '../views/auth/work-N/ResetPassword';
 
 // pages
 // const LoginPage = Loadable(lazy(() => import('views/auth/Login')));
@@ -34,6 +36,13 @@ const PagesRoutes = {
         {
           path: 'register',
           element: <Register />
+        },{
+          path: 'forgot-password',
+          element: <ForgotPassword />
+        },
+        {
+          path: 'reset-password',
+          element: <ResetPassword />
         },
         {
           path: 'HomeN',
@@ -41,18 +50,17 @@ const PagesRoutes = {
         },
         {
           path: 'footer',
-          element: <Footer/>
+          element: <Footer />
         },
         {
           path: 'result',
-          element: <ResultN/>
+          element: <ResultN />
         },
         {
           path: 'result2',
-          element: <Result_2/>
-        }
-
-
+          element: <Result_2 />
+        },
+        
 
         // {
         //   path: 'register',

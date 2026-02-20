@@ -26,7 +26,7 @@ import PersonTwoToneIcon from '@mui/icons-material/PersonTwoTone';
 import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 // import { useLazyLogoutQuery } from '../../../features/slice/auth/authSlice';
 import { useDispatch } from 'react-redux';
-import { clearAuth } from '../../../features/slice/auth/authSlice';
+import { useLazyLogoutQuery } from '../../../features/slice/auth/authApi';
 
 const menuItems = [
   { icon: <SettingsTwoToneIcon />, label: 'Settings' },
@@ -45,7 +45,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  // const [logout] = useLazyLogoutQuery();
+  const [logout] = useLazyLogoutQuery();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -62,7 +62,7 @@ export default function Profile() {
 
 const handleLogout = async () => {
   await logout();
-  dispatch(clearAuth());
+  dispatch(logout);
 };
 
   const handleMenuItemClick = (index, item) => {

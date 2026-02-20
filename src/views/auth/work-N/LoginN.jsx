@@ -1,263 +1,213 @@
 import React, { useState } from 'react';
 import {
-  Grid,
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Link,
-  InputAdornment,
-  IconButton,
-  CssBaseline,
-  GlobalStyles
+  Grid, Box, Typography, TextField, Button, Checkbox,
+  FormControlLabel, Link, InputAdornment, IconButton,
+  CssBaseline, GlobalStyles, Alert, CircularProgress
 } from '@mui/material';
 import { Visibility, VisibilityOff, Circle } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-// 1. Theme Configuration
+import { useLoginMutation } from '../../../features/slice/auth/authApi';
+import { setCredentials } from '../../../features/slice/auth/authSlice';
+import { toast } from 'react-toastify';
+import FullPageLoader from '../../../components/FullPageLoader';
+
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#E94E34' // Brand Red/Orange
-    },
-    text: {
-      primary: '#1A1A1A',
-      secondary: '#666666'
-    }
+    primary: { main: '#E94E34', contrastText: '#fff' },
+    text: { primary: '#1A1A1A', secondary: '#666666' },
+    background: { default: '#F9FAFB' }
   },
-  typography: {
-    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif'
+  typography: { 
+    fontFamily: '"Inter", sans-serif',
+    h3: { fontWeight: 800, letterSpacing: '-0.02em' },
+    h4: { fontWeight: 700, letterSpacing: '-0.01em' }
   },
   components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: '6px',
-          textTransform: 'none',
-          fontSize: '1rem',
-          fontWeight: 600,
-          padding: '12px 0'
-        }
-      }
+    MuiButton: { 
+      styleOverrides: { 
+        root: { 
+          borderRadius: '8px', textTransform: 'none', fontWeight: 600, 
+          padding: '12px 0', boxShadow: 'none',
+          '&:hover': { boxShadow: '0px 4px 12px rgba(233, 78, 52, 0.2)', bgcolor: '#d8432c' }
+        } 
+      } 
     },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-          borderRadius: '6px'
-        }
-      }
+    MuiOutlinedInput: { 
+      styleOverrides: { 
+        root: { borderRadius: '8px', '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#E94E34' } } 
+      } 
     }
   }
 });
 
-const LoginPage = () => {
+const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [login, { isLoading, error: apiError }] = useLoginMutation();
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
+  const [validationError, setValidationError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (validationError) setValidationError('');
+  };
+
   const handleClickShowPassword = () => setShowPassword(!showPassword);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.email || !formData.password) {
+      setValidationError('Please enter both email and password.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const userData = await login({ email: formData.email, password: formData.password }).unwrap();
+      dispatch(setCredentials(userData.data)); 
+      toast.success('Successfully logged in!'); 
+      navigate('/'); 
+    } catch (err) {
+      console.error('Login failed:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getErrorMessage = () => {
+    if (validationError) return validationError;
+    if (apiError) {
+      if ('data' in apiError) return apiError.data?.message || 'Invalid credentials.';
+      if ('error' in apiError) return apiError.error;
+    }
+    return null;
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {/* 
-         CRITICAL FIX: 
-         This GlobalStyles component overrides Vite's default CSS constraints 
-         on the #root and body elements to ensure full-screen width.
-      */}
-      <GlobalStyles
-        styles={{
-          html: { margin: 0, padding: 0, width: '100%', height: '100%' },
-          body: { margin: 0, padding: 0, width: '100%', height: '100%' },
-          '#root': { width: '100%', height: '100%', maxWidth: '100% !important', margin: '0 !important', padding: '0 !important' }
-        }}
-      />
+      <GlobalStyles styles={{ 'html, body, #root': { width: '100%', height: '100%', margin: 0, padding: 0 } }} />
 
-      {/* Main Container */}
-      <Grid container sx={{ height: '100vh', width: '100vw', m: 0 }}>
-        {/* --- LEFT SIDE (Image) --- */}
-        <Grid
-          item
-          xs={false} // Hidden on extra small screens (mobile)
-          sm={4} // 33% width on tablet
-          md={6} // 50% width on desktop
-          sx={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301&auto=format&fit=crop)', // Modern office glass view
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) => t.palette.grey[50],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            position: 'relative',
-            display: { xs: 'none', sm: 'flex' }, // Hide strictly on mobile
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            p: 8
-          }}
-        >
-          {/* Dark Overlay for text readability */}
-          <Box
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'rgba(0,0,0,0.4)', // Slightly darker for contrast
-              zIndex: 1
-            }}
-          />
+      {(isLoading || isSubmitting) && (
+        <FullPageLoader colors={["#e06a50", "#33FF57", "#3357FF"]} label="Starting Dashboard..." />
+      )}
 
-          {/* Text Content over Image */}
-          <Box sx={{ position: 'relative', zIndex: 2, color: '#fff', maxWidth: '480px' }}>
-            <Circle sx={{ color: '#E94E34', fontSize: 64, mb: 2 }} />
-            <Typography variant="h3" sx={{ fontWeight: 700, mb: 2 }}>
-              Grow with us
-            </Typography>
-            <Typography variant="h6" sx={{ fontWeight: 400, opacity: 0.9, lineHeight: 1.6 }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis maximus nunc, ac rhoncus odio congue quis. Sed ac
-              semper orci, eu porttitor lacus.
-            </Typography>
-          </Box>
-        </Grid>
+      {/* Bootstrap 'container-fluid' for full width and 'row' for flex grid */}
+      <div className="container-fluid p-0 overflow-hidden">
+        <div className="row g-0 min-vh-100">
+          
+          {/* LEFT SIDE - Hidden on mobile, visible on small+ */}
+          <div className="col-sm-5 col-md-5 d-none d-md-flex flex-column justify-content-center p-5 position-relative"
+            style={{
+              backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url(https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301&auto=format&fit=crop)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              color: 'white'
+            }}>
+            <div className="position-relative z-2" style={{ maxWidth: '500px' }}>
+              <div className="mb-4 d-inline-block p-3 rounded-4 shadow-sm" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', backdropFilter: 'blur(10px)' }}>
+                <Circle sx={{ color: '#E94E34', fontSize: 48 }} />
+              </div>
+              <h1 className="display-4 fw-bold mb-3">Experience smarter IP management.</h1>
+              <p className="fs-5 fw-light opacity-75">Secure, fast, and reliable access to your data with barcodeIP.</p>
+            </div>
+          </div>
 
-        {/* --- RIGHT SIDE (Form) --- */}
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          md={6}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            bgcolor: '#fff'
-          }}
-        >
-          <Box
-            sx={{
-              width: '100%',
-              maxWidth: '450px', // Limits form width on huge screens
-              px: { xs: 3, sm: 6 }, // Padding adjustments for mobile vs desktop
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            {/* Header */}
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
-              Welcome to
-            </Typography>
+          {/* RIGHT SIDE - Full width on mobile */}
+          <div className="col-12 col-md-7  d-flex flex-column justify-content-center   bg-light p-4">
+            
+            {/* Form Card with Bootstrap Shadow and Padding */}
+            <div className="card border-0  p-4 p-md-5 w-100 rounded-5" style={{ maxWidth: '520px' }}>
+              
+              <div className=" mb-5">
+                <small className="text-muted text-uppercase fw-semibold">Welcome to</small>
+                <div className="d-flex mt-1">
+                  <h2 className="fw-bolder mb-0" style={{ color: '#222' }}>barcode</h2>
+                  <h2 className="fw-bolder mb-0 text-danger">IP</h2>
+                </div>
+              </div>
 
-            <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 3 }}>
-              <Typography variant="h4" sx={{ fontWeight: 800, color: '#222' }}>
-                barcode
-              </Typography>
-              <Typography variant="h4" sx={{ fontWeight: 800, color: 'primary.main' }}>
-                IP
-              </Typography>
-              <Box component="span" sx={{ width: 6, height: 6, bgcolor: 'primary.main', borderRadius: '50%', ml: 0.5 }} />
-            </Box>
+              <h3 className="fw-bold mb-1">Log in</h3>
+              <p className="text-muted mb-4 small">Enter your credentials to access your account.</p>
 
-            <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, color: '#111' }}>
-              Log in
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-              Welcome back! Please enter your details.
-            </Typography>
+              {getErrorMessage() && (
+                <Alert severity="error" className="mb-4 rounded-3 animate__animated animate__shakeX">
+                  {getErrorMessage()}
+                </Alert>
+              )}
 
-            {/* Input Form */}
-            <Box component="form" noValidate>
-              {/* Email Field */}
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1 }}>
-                Email
-              </Typography>
-              <TextField required fullWidth id="email" placeholder="Enter Email" name="email" autoComplete="email" sx={{ mb: 3 }} />
+              <form onSubmit={handleSubmit} noValidate>
+                <div className="mb-4">
+                  <label className="form-label small fw-bold text-muted text-uppercase mb-2">Email Address</label>
+                  <TextField 
+                    required fullWidth name="email" 
+                    placeholder="name@company.com" 
+                    variant="outlined"
+                    value={formData.email} 
+                    onChange={handleChange} 
+                  />
+                </div>
 
-              {/* Password Field */}
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1 }}>
-                Password
-              </Typography>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                placeholder="Enter password"
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                autoComplete="current-password"
-                sx={{ mb: 1 }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={handleClickShowPassword} edge="end">
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
-              />
+                <div className="mb-3">
+                  <label className="form-label small fw-bold text-muted text-uppercase mb-2">Password</label>
+                  <TextField
+                    required fullWidth name="password" placeholder="••••••••"
+                    type={showPassword ? 'text' : 'password'}
+                    value={formData.password}
+                    onChange={handleChange}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleClickShowPassword} edge="end">
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </div>
 
-              {/* Options Row */}
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <FormControlLabel
-                  control={<Checkbox value="remember" sx={{ color: '#D0D5DD', '&.Mui-checked': { color: 'primary.main' } }} />}
-                  label={
-                    <Typography variant="body2" color="text.secondary">
-                      Remember Me
-                    </Typography>
-                  }
-                />
-                <Link href="#" variant="body2" sx={{ fontWeight: 600, textDecoration: 'none', color: 'primary.main' }}>
-                  Forgot password
-                </Link>
-              </Box>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <FormControlLabel
+                    control={<Checkbox size="small" />}
+                    label={<span className="small text-muted">Remember for 30 days</span>}
+                  />
+                  <Link component={RouterLink} to="/pages/auth/forgot-password" variant="body2" className="fw-bold text-decoration-none">
+                    Forgot password?
+                  </Link>
+                </div>
 
-              {/* Terms Row */}
-              <FormControlLabel
-                sx={{ mb: 3, alignItems: 'flex-start', mx: 0 }}
-                control={
-                  <Checkbox value="agree" sx={{ color: '#D0D5DD', p: 0, mr: 1, mt: 0.3, '&.Mui-checked': { color: 'primary.main' } }} />
-                }
-                label={
-                  <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.3 }}>
-                    I Agree with{' '}
-                    <Link href="#" sx={{ fontWeight: 600, textDecoration: 'none', color: 'primary.main' }}>
-                      Privacy Policy
-                    </Link>{' '}
-                    and{' '}
-                    <Link href="#" sx={{ fontWeight: 600, textDecoration: 'none', color: 'primary.main' }}>
-                      Terms & Conditions
+                <Button 
+                  type="submit" 
+                  fullWidth 
+                  variant="contained" 
+                  disabled={isLoading} 
+                  className="py-3 fs-6"
+                >
+                  {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Sign In to Dashboard'}
+                </Button>
+
+                <div className="text-center mt-4">
+                  <p className="small text-muted">
+                    Don't have an account?{' '}
+                    <Link component={RouterLink} to="/pages/auth/register" className="fw-bold text-decoration-none">
+                      Sign up for free
                     </Link>
-                  </Typography>
-                }
-              />
-
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mb: 4, bgcolor: 'primary.main', '&:hover': { bgcolor: '#c93e26' } }}
-              >
-                Log In
-              </Button>
-
-              {/* Create Account Link */}
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="body2" color="text.secondary">
-                  New to BarcodeIP?{' '}
-                  <Link component={RouterLink} to="/pages/auth/register" sx={{ fontWeight: 700, textDecoration: 'none', color: 'primary.main' }}>
-                     Create Account
-                    </Link>
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-        </Grid>
-      </Grid>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+          
+        </div>
+      </div>
     </ThemeProvider>
   );
 };
 
-export default LoginPage;
+export default Login;

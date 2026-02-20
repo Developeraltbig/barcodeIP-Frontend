@@ -3,6 +3,8 @@ import { lazy } from 'react';
 // project imports
 import Loadable from 'components/Loadable';
 import AuthGuard from './AuthGuard';
+import ForgotPassword from '../views/auth/work-N/ForgotPassword';
+import ResetPassword from '../views/auth/work-N/ResetPassword';
 
 // pages
 const Home = Loadable(lazy(() => import('../views/Home/index')));

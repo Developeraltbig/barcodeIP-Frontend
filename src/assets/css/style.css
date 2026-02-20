@@ -1,7 +1,7 @@
 :root {
   --primary: #E94E34;
   --primary-light: #e0f2fe;
-  --primary-hover: #a8311c;
+  --primary-hover: hsl(9, 71%, 38%);
   --bg-main: #f8fafc;
   --bg-card: #ffffff;
   --text-main: #0f172a;

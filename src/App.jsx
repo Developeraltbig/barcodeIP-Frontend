@@ -8,7 +8,7 @@ import router from 'routes';
 
 // auth imports
 import { useCheckAuthQuery } from './features/slice/auth/authApi';
-import { setAuth, clearAuth } from './features/slice/auth/authSlice';
+// import { setAuth, clearAuth } from './features/slice/auth/authSlice';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FullPageLoader from './components/FullPageLoader';
@@ -21,8 +21,9 @@ function App() {
       <ToastContainer
         position="top-right"
         autoClose={3000}
-        limit={3}
-        pauseOnFocusLoss={false}
+        // limit={3}
+        // pauseOnFocusLoss={false}
+        reverseOrder={false}
         theme="colored"
         style={{ zIndex: 999999 }} // 🔹 Set higher than your modals (99999)
       />
@@ -35,3 +36,45 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

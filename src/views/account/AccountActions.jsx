@@ -2,8 +2,25 @@ import React from 'react';
 import { Box, Typography, Button, Stack, alpha, Paper } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/ExitToApp';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
+import { useDispatch } from 'react-redux';
+import { useLazyLogoutQuery } from '../../features/slice/auth/authApi';
+import { logout } from '../../features/slice/auth/authSlice';
 
 const AccountActions = () => {
+
+  const dispatch = useDispatch();
+  const [Logout] = useLazyLogoutQuery();
+
+const handleLogout = async () => {
+  await Logout();
+  dispatch(logout());
+};
+
+// const handleDelete = async () => {
+//   await Logout();
+//   dispatch(logout());
+// };
+
   // Common style for the buttons with hover animation
   const actionButtonStyle = {
     justifyContent: 'flex-start', // Keep text/icon left-aligned
@@ -28,6 +45,8 @@ const AccountActions = () => {
       transition: 'transform 0.2s ease',
     }
   };
+
+
 
   return (
     <Box sx={{ mt: 8, textAlign: 'left' }}>
@@ -61,6 +80,7 @@ const AccountActions = () => {
           <Button
             startIcon={<LogoutIcon sx={{ color: '#F59E0B' ,  }} />} // Orange Logout
             sx={actionButtonStyle}
+            onClick={() => handleLogout()}
           >
             Log out
           </Button>
