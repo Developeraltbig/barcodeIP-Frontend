@@ -3,32 +3,33 @@ import { baseApi } from "../services/baseApi";
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     
-    // Existing endpoints remain unchanged...
+    // --- Dashboard Content ---
     getLatestContent: builder.query({
-      query: () => ({ url: "/api/v1/user/Dashboard/content/get", method: "GET" }),
+      query: () => ({ 
+        url: "/api/v1/user/Dashboard/content/get", 
+        method: "GET" 
+      }),
       providesTags: ["UserContent"],
     }),
 
     getRecentThreeProjects: builder.query({
-      query: () => ({ url: "/api/v1/user/Dashboard/project/recent/get", method: "GET" }),
+      query: () => ({ 
+        url: "/api/v1/user/Dashboard/project/recent/get", 
+        method: "GET" 
+      }),
       providesTags: ["UserProject"],
     }),
 
+    // --- Project Management ---
     createProject: builder.mutation({
-      query: (data) => ({ url: "/api/v1/user/Dashboard/upload", method: "POST", body: data }),
+      query: (data) => ({ 
+        url: "/api/v1/user/Dashboard/upload", 
+        method: "POST", 
+        body: data 
+      }),
       invalidatesTags: ["UserProject", "AllProjects"],
     }),
 
-    getAllArticles: builder.query({
-      query: ({ page, limit, search, category }) => ({
-        url: "/api/v1/user/articles/all",
-        method: "GET",
-        params: { page, limit, ...(search && { search }), ...(category && { category }) },
-      }),
-      providesTags: ["Articles"],
-    }),
-
-    // GET: Fetch All Project
     fetchAllProjects: builder.query({
       query: () => ({
         url: "/api/v1/projects/fetchallproject",
@@ -37,7 +38,22 @@ export const userApi = baseApi.injectEndpoints({
       providesTags: ["AllProjects"],
     }),
 
-    // GET: getPatentByProjectId
+    // --- Articles ---
+    getAllArticles: builder.query({
+      query: ({ page, limit, search, category }) => ({
+        url: "/api/v1/user/articles/all",
+        method: "GET",
+        params: { 
+            page, 
+            limit, 
+            ...(search && { search }), 
+            ...(category && { category }) 
+        },
+      }),
+      providesTags: ["Articles"],
+    }),
+
+    // --- Specific Project Details (Lazy-ready) ---
     getPatentByProjectId: builder.query({
       query: (projectId) => ({
         url: `/api/v1/user/Dashboard/get/patent/${projectId}`,
@@ -45,7 +61,6 @@ export const userApi = baseApi.injectEndpoints({
       }),
     }),
 
-    // GET: getProvisionalByProjectId
     getProvisionalByProjectId: builder.query({
       query: (projectId) => ({
         url: `/api/v1/user/Dashboard/get/provisional/${projectId}`,
@@ -53,15 +68,13 @@ export const userApi = baseApi.injectEndpoints({
       }),
     }),
 
-    // GET: getNonProvisionalByProjectId
     getNonProvisionalByProjectId: builder.query({
       query: (projectId) => ({
-        url: `//api/v1/user/Dashboard/get/non-provisional/${projectId}`,
+        url: `/api/v1/user/Dashboard/get/non-provisional/${projectId}`,
         method: "GET",
       }),
     }),
 
-    // GET: getProductByProjectId
     getProductByProjectId: builder.query({
       query: (projectId) => ({
         url: `/api/v1/user/Dashboard/get/product/${projectId}`,
@@ -69,7 +82,6 @@ export const userApi = baseApi.injectEndpoints({
       }),
     }),
 
-    // GET: getPublicationByProjectId
     getPublicationByProjectId: builder.query({
       query: (projectId) => ({
         url: `/api/v1/user/Dashboard/get/publication/${projectId}`,
@@ -77,7 +89,6 @@ export const userApi = baseApi.injectEndpoints({
       }),
     }),
 
-    // GET: connectAnalyst
     connectAnalyst: builder.query({
       query: (projectId) => ({
         url: `/api/v1/user/Dashboard/project/connect-analyst/${projectId}`,
@@ -89,17 +100,31 @@ export const userApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
+// Exporting both standard and Lazy versions
 export const {
   useGetLatestContentQuery,
   useGetRecentThreeProjectsQuery,
   useCreateProjectMutation,
   useGetAllArticlesQuery,
-  // New exported hooks
   useFetchAllProjectsQuery,
+  
+  // These specific detail hooks should be used as 'useLazy...' in your components
+  // to allow manual triggering on button clicks.
   useGetPatentByProjectIdQuery,
+  useLazyGetPatentByProjectIdQuery,
+  
   useGetProvisionalByProjectIdQuery,
+  useLazyGetProvisionalByProjectIdQuery,
+  
   useGetNonProvisionalByProjectIdQuery,
+  useLazyGetNonProvisionalByProjectIdQuery,
+  
   useGetProductByProjectIdQuery,
+  useLazyGetProductByProjectIdQuery, // <-- This is the one for your "View More" button
+  
   useGetPublicationByProjectIdQuery,
-  useConnectAnalystQuery
+  useLazyGetPublicationByProjectIdQuery,
+  
+  useConnectAnalystQuery,
+  useLazyConnectAnalystQuery
 } = userApi;

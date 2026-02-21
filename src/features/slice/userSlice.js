@@ -41,8 +41,6 @@ const userSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-
-    // New Reducers for the remaining endpoints
     setProjectPatent: (state, action) => {
       state.projectPatent = action.payload;
     },

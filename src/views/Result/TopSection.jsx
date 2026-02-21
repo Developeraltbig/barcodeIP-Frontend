@@ -5,6 +5,8 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import KeyFeaturesModal from './KeyFeaturesModal';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const BRAND_RED = "#E94E34";
 
@@ -12,6 +14,21 @@ const TopSection = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const navigate = useNavigate(); 
+  
+  // 1. Get the Project ID from the URL
+  const { project_id } = useParams();
+
+  // 2. Get the current result list from Redux to show the count
+  // Note: Adjust the state key if your slice is named differently
+  const dashboard = useSelector((state) => state["user-dashboard"] || {});
+  
+  // Logic to determine which results are currently showing to get the length
+  // This looks at patents, products, or publications based on what is active
+  const resultCount = 
+    (dashboard.projectPatent?.length) || 
+    (dashboard.projectProduct?.length) || 
+    (dashboard.projectPublication?.length) || 0;
 
   return (
     <>
@@ -20,20 +37,24 @@ const TopSection = () => {
         borderBottom: '1px solid #e0e6ed', 
         pt: { xs: 2, sm: 3 }, 
         pb: { xs: 2, sm: 3 }, 
-        marginTop: { xs: '60px', sm: '80px' } // Less margin on mobile
+        marginTop: { xs: '60px', sm: '80px' } 
       }}>
         <Container maxWidth="xl">
-          {/* Main Layout: Stacks on mobile, Side-by-side on tablet+ */}
           <Stack 
             direction={{ xs: 'column', sm: 'row' }} 
             justifyContent="space-between" 
             alignItems={{ xs: 'flex-start', sm: 'flex-start' }}
             spacing={2}
           >
-            
             {/* Left Side Info */}
             <Box>
-              <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: { xs: 1, sm: 2 } }}>
+              <Stack 
+                direction="row" 
+                alignItems="center" 
+                spacing={1} 
+                sx={{ mb: { xs: 1, sm: 2 }, cursor: 'pointer' }} 
+                onClick={() => navigate('/my-projects')}
+              >
                 <IconButton size="small" sx={{ color: '#64748b' }}>
                   <ArrowBackIcon fontSize="small" />
                 </IconButton>
@@ -44,7 +65,7 @@ const TopSection = () => {
 
               <Box sx={{ pl: { xs: 1, sm: 1 } }}>
                 <Typography 
-                  variant={isMobile ? "h5" : "h4"} // Smaller font on mobile
+                  variant={isMobile ? "h5" : "h4"} 
                   sx={{ fontWeight: 800, color: '#1e293b', display: 'flex', alignItems: 'center', gap: 1.5 }}
                 >
                   Case ID : 
@@ -53,7 +74,8 @@ const TopSection = () => {
                     variant={isMobile ? "h5" : "h4"} 
                     sx={{ color: BRAND_RED, fontWeight: 900, fontFamily: 'Monospace' }}
                   >
-                    003
+                    {/* Display last 3 digits or full ID */}
+                    {project_id}
                   </Typography>
                 </Typography>
                 
@@ -70,17 +92,18 @@ const TopSection = () => {
                     mt: 0.5 
                   }}
                 >
-                  <Box component="span" sx={{ fontSize: '10px' }}>●</Box> Showing top 10 results
+                  <Box component="span" sx={{ fontSize: '10px' }}>●</Box> 
+                  Showing top {resultCount} results
                 </Typography>
               </Box>
             </Box>
 
-            {/* Right Side Button: Full width on mobile */}
+            {/* Right Side Button */}
             <Button
               variant="outlined"
               onClick={() => setModalOpen(true)}
               startIcon={<AutoAwesomeIcon />}
-              fullWidth={isMobile} // Button takes full width on mobile for better thumb reach
+              fullWidth={isMobile}
               sx={{
                 mt: { xs: 1, sm: 1 },
                 px: 3,
@@ -93,7 +116,7 @@ const TopSection = () => {
                 '&:hover': {
                   borderColor: BRAND_RED,
                   bgcolor: alpha(BRAND_RED, 0.05),
-                  transform: { sm: 'translateY(-2px)' } // Disable hover lift on mobile
+                  transform: { sm: 'translateY(-2px)' }
                 },
                 transition: 'all 0.2s ease-in-out'
               }}

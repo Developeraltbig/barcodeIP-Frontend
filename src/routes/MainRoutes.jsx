@@ -37,7 +37,7 @@ const MainRoutes = {
       element: <Home />
     },
     {
-      path: '/result',
+      path: '/result/:id',
       element: <Result />
     },
     {

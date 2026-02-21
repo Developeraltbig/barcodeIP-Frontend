@@ -8,7 +8,7 @@ const index = () => {
 
   return (
     <>
-     <TopSection/>
+     {/* <TopSection/> */}
      <PatentList/>
     </>
   )

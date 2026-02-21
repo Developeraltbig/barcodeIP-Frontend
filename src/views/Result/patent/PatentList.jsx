@@ -1,52 +1,103 @@
-import React, { useState } from 'react';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // To read the URL ID
+import { useSelector, useDispatch } from 'react-redux';
+import { Box, Container, Grid, Typography, CircularProgress } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DUMMY_PATENTS, TABS } from '../mockData';
+
+import { 
+  useLazyGetProductByProjectIdQuery,
+  useLazyGetPatentByProjectIdQuery,
+  useLazyGetPublicationByProjectIdQuery,
+  useLazyGetProvisionalByProjectIdQuery,
+  useLazyGetNonProvisionalByProjectIdQuery
+} from '../../../features/userApi';
+import { 
+  setProjectProduct, setProjectPatent, 
+  setProjectPublication, setProjectProvisional, 
+  setProjectNonProvisional 
+} from '../../../features/slice/userSlice';
 import PatentCard from './PatentCard';
 import TabComponent from '../TabComponent';
-import { useNavigate } from 'react-router-dom';
-import DraftMasterResult from '../non_provisional/DraftMasterResult';
+import TopSection from '../TopSection';
 
 const PatentList = () => {
+  const { id } = useParams(); // URL: /result/65d1... grab 'id'
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState('patents');
-  const navigate = useNavigate();
+
+  // Selectors
+  const dashboard = useSelector((state) => state["user-dashboard"] || {});
+  
+  // Lazy Hooks
+  const [getPatents, { isLoading: pLoad }] = useLazyGetPatentByProjectIdQuery();
+  const [getProducts, { isLoading: prodLoad }] = useLazyGetProductByProjectIdQuery();
+  const [getPubs, { isLoading: pubLoad }] = useLazyGetPublicationByProjectIdQuery();
+  const [getProv, { isLoading: provLoad }] = useLazyGetProvisionalByProjectIdQuery();
+  const [getNonProv, { isLoading: nonProvLoad }] = useLazyGetNonProvisionalByProjectIdQuery();
+
+  // Mapping Tab ID to API Trigger and Redux Action
+  const tabConfigs = {
+    patents: { trigger: getPatents, action: setProjectPatent, stateKey: 'projectPatent' },
+    publications: { trigger: getPubs, action: setProjectPublication, stateKey: 'projectPublication' },
+    products: { trigger: getProducts, action: setProjectProduct, stateKey: 'projectProduct' },
+    provisional: { trigger: getProv, action: setProjectProvisional, stateKey: 'projectProvisional' },
+    nonProvisional: { trigger: getNonProv, action: setProjectNonProvisional, stateKey: 'projectNonProvisional' },
+  };
+
+  useEffect(() => {
+    if (!id) return;
+
+    const loadData = async () => {
+      try {
+        const config = tabConfigs[activeTab];
+        if (config) {
+          const response = await config.trigger(id).unwrap();
+          dispatch(config.action(response));
+        }
+      } catch (err) {
+        console.error(`Error fetching ${activeTab}:`, err);
+      }
+    };
+
+    loadData();
+  }, [id, activeTab]);
+
+  const rawData = dashboard[tabConfigs[activeTab]?.stateKey] || [];
+  const displayData = Array.isArray(rawData) ? rawData : [rawData];
+  const isLoading = pLoad || prodLoad || pubLoad || provLoad || nonProvLoad;
 
   return (
     <Box sx={{ bgcolor: '#F4F7F9', minHeight: '100vh', pb: 10 }}>
+
+      <TopSection />
+
       <Container maxWidth="xl" sx={{ mt: 4 }}>
-        
-        {/* Navigation Component */}
+
         <TabComponent activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Dynamic Content Section */}
         <AnimatePresence mode="wait">
-          <motion.div
-            
-            key={activeTab}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            {activeTab === 'patents' ? (
-              <Grid container spacing={3}>
-                {DUMMY_PATENTS.map((item) => (
-                  <Grid item xs={12} md={6} key={item.id}>
-                    <PatentCard data={item} />
-                  </Grid>
-                ))}
-              </Grid>
+          <motion.div key={activeTab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            {isLoading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}><CircularProgress /></Box>
             ) : (
-              //  <Box sx={{ py: 15, textAlign: 'center', bgcolor: '#fff', borderRadius: '20px', border: '2px dashed #cbd5e1' }}>
-              //   <Typography variant="h6" color="text.secondary">
-              //     No files found for <b>{TABS.find(t => t.id === activeTab)?.label}</b>
-              //   </Typography>
-              // </Box>
-                <DraftMasterResult />
+              <Grid container spacing={3}>
+                {displayData.length > 0 && displayData[0] !== null ? (
+                  displayData.map((item, index) => (
+                    <Grid item xs={12} md={6} key={item.id || index}>
+                      <PatentCard data={item} />
+                    </Grid>
+                  ))
+                ) : (
+                  <Grid item xs={12}>
+                    <Box sx={{ py: 15, textAlign: 'center', bgcolor: '#fff', borderRadius: '20px', border: '2px dashed #cbd5e1' }}>
+                      <Typography variant="h6" color="text.secondary">No content found for this category.</Typography>
+                    </Box>
+                  </Grid>
+                )}
+              </Grid>
             )}
           </motion.div>
         </AnimatePresence>
-        
       </Container>
     </Box>
   );
