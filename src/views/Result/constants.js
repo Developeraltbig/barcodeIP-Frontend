@@ -22,3 +22,14 @@ export const filledBtnStyle = {
   borderColor: 'white',
   '&:hover': { bgcolor: '#c53d29' } 
 };
+
+export const COLORS = { 
+  textTransform: 'none', 
+  borderRadius: '10px', 
+  fontWeight: 700, 
+  fontSize: '0.75rem', 
+  bgcolor: BRAND_RED, 
+  color: 'white',
+  borderColor: 'white',
+  '&:hover': { bgcolor: '#c53d29' } 
+};
