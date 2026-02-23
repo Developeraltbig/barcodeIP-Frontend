@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Container, Grid, CircularProgress } from '@mui/material';
@@ -18,14 +18,17 @@ import {
   setProjectNonProvisional 
 } from '../../../features/slice/userSlice';
 
+import Loadable from 'components/Loadable';
+
 // Components
-import PatentCard from './PatentCard';
-import TabComponent from '../TabComponent';
-import TopSection from '../TopSection';
-import DraftMasterResult from '../non_provisional/DraftMasterResult';
-import PublicationCard from '../publication/PublicationCard';
-import ProvisionalDraftResult from '../provisional/ProvisionalDraftResult';
-import Product from '../product';
+
+const PatentCard = Loadable(lazy(() => import('./PatentCard')));
+const TabComponent = Loadable(lazy(() => import('../TabComponent')));
+const TopSection = Loadable(lazy(() => import('../TopSection')));
+const DraftMasterResult = Loadable(lazy(() => import('../non_provisional/DraftMasterResult')));
+const PublicationCard = Loadable(lazy(() => import('../publication/PublicationCard')));
+const ProvisionalDraftResult = Loadable(lazy(() => import('../provisional/ProvisionalDraftResult')));
+const Product = Loadable(lazy(() => import('../product')));
 
 const PatentList = () => {
   const { id } = useParams();

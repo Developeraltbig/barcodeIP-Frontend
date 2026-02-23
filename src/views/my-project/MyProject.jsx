@@ -1,13 +1,12 @@
-import React, { useMemo } from 'react';
-import { 
-  Box, Typography, Button, Card, Divider, 
-  useMediaQuery, useTheme, CircularProgress 
+import React, { lazy, useMemo } from 'react';
+import {Box, Typography, Button, Card, Divider, useMediaQuery, useTheme, CircularProgress 
 } from '@mui/material';
+import Loadable from 'components/Loadable';
 import { ChevronRight, CalendarMonth, AssignmentOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setSelectedProject } from '../../features/slice/userSlice';
 import { useFetchAllProjectsQuery } from '../../features/userApi';
+import { setSelectedProject } from '../../features/slice/userSlice';
 
 // Import your API hooks and Slice actions
 
@@ -60,6 +59,7 @@ const MyProject = () => {
 
   return (
     <Box sx={{ bgcolor: '#F8FAFC', minHeight: '100vh', pt: { xs: 10, md: 12 }, pb: 6 }}>
+      
       <div className="container">
         {/* Header Section */}
         <Box sx={{ mb: 4, display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', md: 'flex-end' }, gap: 2 }}>

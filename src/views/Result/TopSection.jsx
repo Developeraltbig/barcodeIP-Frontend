@@ -51,7 +51,7 @@ const TopSection = () => {
                 alignItems="center" 
                 spacing={1} 
                 sx={{ mb: { xs: 1, sm: 2 }, cursor: 'pointer' }} 
-                onClick={() => navigate('/my-projects')}
+                onClick={() => navigate('/project')}
               >
                 <IconButton size="small" sx={{ color: '#64748b' }}>
                   <ArrowBackIcon fontSize="small" />

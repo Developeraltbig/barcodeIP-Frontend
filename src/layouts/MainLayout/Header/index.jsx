@@ -78,17 +78,17 @@ export default function Header() {
                   {/* Navigation Links (Hidden on small mobile) */}
                   <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
                     <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }}  
-                    onClick={() => navigate(`/profile/`)}
+                    onClick={() => navigate(`/profile`)}
                     >
                       Profile
                     </Button>
                     <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} 
-                    onClick={() => navigate(`/recent-search/`)}
+                    onClick={() => navigate(`/recent-search`)}
                     >
                       Recent Searches
                     </Button>
                     <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} 
-                    onClick={() => navigate(`/project/`)}
+                    onClick={() => navigate(`/project`)}
                     >
                       My Project
                     </Button>
@@ -134,9 +134,9 @@ export default function Header() {
                   >
                     <MenuItem onClick={()=>{handleMenuClose(); navigate(`/account/`)}} >My Account</MenuItem>
                     <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/recent-search/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>Recent Search</MenuItem>
-                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/profile/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>Profile</MenuItem>
-                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/project/`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>My Project</MenuItem>
+                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/recent-search`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>Recent Search</MenuItem>
+                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/profile`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>Profile</MenuItem>
+                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/project`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>My Project</MenuItem>
                     <MenuItem onClick={() => handleLogout()} sx={{ color: 'primary.main' }}>
                       Logout
                     </MenuItem>

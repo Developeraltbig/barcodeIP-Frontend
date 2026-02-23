@@ -53,7 +53,7 @@ const MainRoutes = {
       element: <AccountPage/>
     },
     {
-      path: '/overlap',
+      path: '/overlap/:id',
       element: <OverlapMatrix/>
     },
     {

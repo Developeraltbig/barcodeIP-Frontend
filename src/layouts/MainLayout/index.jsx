@@ -35,8 +35,27 @@ export default function MainLayout() {
   return (
     <>
     <Header />
-    <Outlet />
-    <Footer />
+   
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '200vh', // Critical: ensures the page is at least screen-height
+      }}
+    >
+      {/* Main Content Area */}
+      <Box component="main" sx={{ flexGrow: 1 }}>
+        <Outlet />
+      </Box>
+
+      {/* Footer stays at the bottom because of flex-grow above */}
+      <Footer />
+    </Box>
+  
     </>
+
+
+
+     
   );
 }
