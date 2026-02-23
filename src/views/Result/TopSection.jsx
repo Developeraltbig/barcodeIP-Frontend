@@ -14,14 +14,12 @@ const TopSection = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const navigate = useNavigate(); 
-  
-  // 1. Get the Project ID from the URL
   const { project_id } = useParams();
-
-  // 2. Get the current result list from Redux to show the count
-  // Note: Adjust the state key if your slice is named differently
-  const dashboard = useSelector((state) => state["user-dashboard"] || {});
+  const navigate = useNavigate(); 
+    // Selectors
+    const dashboard = useSelector((state) => state.userDashboard || {});
+    console.log('check --11', dashboard?.selectedProject?.project_id);
+  // 1. Get the Project ID from the URL
   
   // Logic to determine which results are currently showing to get the length
   // This looks at patents, products, or publications based on what is active
@@ -75,7 +73,7 @@ const TopSection = () => {
                     sx={{ color: BRAND_RED, fontWeight: 900, fontFamily: 'Monospace' }}
                   >
                     {/* Display last 3 digits or full ID */}
-                    {project_id}
+                    {dashboard?.selectedProject?.project_id}
                   </Typography>
                 </Typography>
                 

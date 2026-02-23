@@ -31,6 +31,7 @@ const MyProject = () => {
   // 3. Navigation Logic with URL Params
   const handleViewMore = (project) => {
     const projectId = project._id ;
+    const caseId = project.project_id ;
     
     // Store selected project info in Redux for global access
     dispatch(setSelectedProject(project));

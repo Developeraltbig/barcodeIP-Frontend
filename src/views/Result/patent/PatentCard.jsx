@@ -11,8 +11,9 @@ import { BRAND_RED, outlineBtnStyle, filledBtnStyle } from '../constants';
 import { useNavigate } from 'react-router-dom';
 
 
-const PatentCard = ({item}) => {
+const PatentCard = ({data}) => {
   const navigate = useNavigate();
+  console.log('item===', data)
   
   return (
   
@@ -24,27 +25,27 @@ const PatentCard = ({item}) => {
     sx={{ p: 3, borderRadius: '16px', border: '1px solid #b1b9c0', height: '100%', display: 'flex', flexDirection: 'column', maxWidth:'500px', '&:hover': { border: '1px solid #b1b9c0'  }  }}
   >
     <Typography variant="h6" sx={{ fontWeight: 800, color: '#1e293b', mb: 2, fontSize: '1.1rem', lineHeight: 1.3 }}>
-      {item.title}
+      {data.title_of_invention}
     </Typography>
 
     <Stack direction="row" flexWrap="wrap" gap={1.5} sx={{ mb: 2 }}>
       <Chip 
-        label={item.id} 
+        label={data._id} 
         icon={<OpenInNewIcon sx={{ fontSize: '14px !important' }} />}
         sx={{ bgcolor: `${BRAND_RED}10`, color: BRAND_RED, fontWeight: 800, borderRadius: '8px', cursor: 'pointer' }} 
       />
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#64748b' }}>
         <CalendarTodayIcon sx={{ fontSize: 16 }} />
-        <Typography variant="caption" sx={{ fontWeight: 600 }}>{item.date}</Typography>
+        <Typography variant="caption" sx={{ fontWeight: 600 }}>{data.createdAt}</Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#64748b' }}>
         <PersonOutlineIcon sx={{ fontSize: 18 }} />
-        <Typography variant="caption" sx={{ fontWeight: 600 }}>{item.author}</Typography>
+        <Typography variant="caption" sx={{ fontWeight: 600 }}>{data.user_id}</Typography>
       </Box>
     </Stack>
 
     <Typography variant="body2" sx={{ color: '#475569', mb: 4, lineHeight: 1.6, flexGrow: 1 }}>
-      {item.desc}
+      {data.user_id}
     </Typography>
 
     <Grid container spacing={1.5}>

@@ -3,7 +3,7 @@ export const TABS = [
   { id: 'publications', label: 'Publication' },
   { id: 'products', label: 'Products' },
   { id: 'provisional', label: 'Provisional Specification' },
-  { id: 'non-provisional', label: 'Non-Provisional Specification' },
+  { id: 'nonProvisional', label: 'Non-Provisional Specification' },
 ];
 
 export const DUMMY_PATENTS = [

@@ -19,7 +19,7 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: 'user-dashboard',
+  name: 'userDashboard',
   initialState,
   reducers: {
     // Existing Reducers

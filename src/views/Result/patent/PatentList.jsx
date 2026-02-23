@@ -24,16 +24,18 @@ const PatentList = () => {
   const { id } = useParams(); // URL: /result/65d1... grab 'id'
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState('patents');
-
-  // Selectors
-  const dashboard = useSelector((state) => state["user-dashboard"] || {});
-  
   // Lazy Hooks
   const [getPatents, { isLoading: pLoad }] = useLazyGetPatentByProjectIdQuery();
   const [getProducts, { isLoading: prodLoad }] = useLazyGetProductByProjectIdQuery();
   const [getPubs, { isLoading: pubLoad }] = useLazyGetPublicationByProjectIdQuery();
   const [getProv, { isLoading: provLoad }] = useLazyGetProvisionalByProjectIdQuery();
   const [getNonProv, { isLoading: nonProvLoad }] = useLazyGetNonProvisionalByProjectIdQuery();
+
+  // Selectors
+  const dashboard = useSelector((state) => state.userDashboard || {});
+  console.log('check --', dashboard);
+  console.log('check --11', dashboard?.selectedProject?.project_id);
+   
 
   // Mapping Tab ID to API Trigger and Redux Action
   const tabConfigs = {
@@ -64,6 +66,8 @@ const PatentList = () => {
 
   const rawData = dashboard[tabConfigs[activeTab]?.stateKey] || [];
   const displayData = Array.isArray(rawData) ? rawData : [rawData];
+
+  console.log('displayData --', displayData)
   const isLoading = pLoad || prodLoad || pubLoad || provLoad || nonProvLoad;
 
   return (
@@ -81,10 +85,10 @@ const PatentList = () => {
               <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}><CircularProgress /></Box>
             ) : (
               <Grid container spacing={3}>
-                {displayData.length > 0 && displayData[0] !== null ? (
+                <PatentCard data={displayData[0]?.data} />
+                {/* {displayData.length > 0 && displayData[0] !== null ? (
                   displayData.map((item, index) => (
-                    <Grid item xs={12} md={6} key={item.id || index}>
-                      <PatentCard data={item} />
+                    <Grid item xs={12} md={6} key={item._id || index}>
                     </Grid>
                   ))
                 ) : (
@@ -93,7 +97,7 @@ const PatentList = () => {
                       <Typography variant="h6" color="text.secondary">No content found for this category.</Typography>
                     </Box>
                   </Grid>
-                )}
+                )} */}
               </Grid>
             )}
           </motion.div>
