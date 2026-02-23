@@ -13,8 +13,8 @@ import { useNavigate } from 'react-router-dom';
 
 const PatentCard = ({data}) => {
   const navigate = useNavigate();
-  console.log('item===', data)
-  console.log('item===', data.novelty_analysis.comparisons)
+  // console.log('item===', data)
+  // console.log('item===', data.novelty_analysis.comparisons)
 
   const truncateWords = (text, limit) => {
   if (!text) return '';

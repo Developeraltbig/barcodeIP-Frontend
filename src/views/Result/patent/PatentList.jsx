@@ -19,6 +19,7 @@ import {
 } from '../../../features/slice/userSlice';
 
 import Loadable from 'components/Loadable';
+// import Product from '../product/Product';
 
 // Components
 
@@ -28,7 +29,7 @@ const TopSection = Loadable(lazy(() => import('../TopSection')));
 const DraftMasterResult = Loadable(lazy(() => import('../non_provisional/DraftMasterResult')));
 const PublicationCard = Loadable(lazy(() => import('../publication/PublicationCard')));
 const ProvisionalDraftResult = Loadable(lazy(() => import('../provisional/ProvisionalDraftResult')));
-const Product = Loadable(lazy(() => import('../product')));
+const Product = Loadable(lazy(() => import('../product/Product')));
 
 const PatentList = () => {
   const { id } = useParams();
@@ -81,7 +82,6 @@ const PatentList = () => {
   // 4. Component Mapping Strategy
   const renderActiveComponent = () => {
     const data = displayData[0]?.data || displayData[0]; // Adjust based on your API structure
-
     switch (activeTab) {
       case 'patents': return <PatentCard data={data} />;
       case 'publications': return <PublicationCard data={data} />;

@@ -1,149 +1,79 @@
-import React from 'react';
-import { Card, Box, Typography, LinearProgress, Stack, Chip, Paper, Container } from '@mui/material';
-// import { FileText, Search } from 'lucide-react';
+import { Card, Chip, Paper } from "@mui/material";
+import { Box, Container, Typography, Fade } from '@mui/material';
 
-const Metric = ({ label, count, color }) => (
-  <Box sx={{ mb: 2 }}>
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
-      <Typography sx={{ fontSize: '0.7rem', fontWeight: 800, color: '#64748b' }}>{label}</Typography>
-      <Typography sx={{ fontSize: '0.8rem', fontWeight: 800, color: color }}>{count}/11</Typography>
-    </Box>
-    <LinearProgress variant="determinate" value={(count / 11) * 100} sx={{ 
-      height: 6, borderRadius: 3, bgcolor: '#f1f5f9', '& .MuiLinearProgress-bar': { bgcolor: color }
-    }} />
-  </Box>
-);
-
-export default function AnalysisView({ product }) {
-  const stats = {
-    found: product.features.filter(f => f.status === "FOUND").length,
-    partial: product.features.filter(f => f.status === "PARTIAL").length,
-    gap: product.features.filter(f => f.status === "NOT FOUND").length
-  };
+export default function AnalysisView({ product , item}) {
+  // Ensure we have features to map over
+  const features = product?.features || [];
+  console.log("analysis - item",item);
+  console.log("analysis - product",product)
+  
+  // Calculate stats based on the passed props
+  // const stats = {
+  //   found: features.filter(f => f.status === "FOUND").length,
+  //   partial: features.filter(f => f.status === "PARTIAL").length,
+  //   gap: features.filter(f => f.status === "NOT FOUND").length,
+  //   total: features.length || 11
+  // };
 
   return (
-    <Card sx={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.08)' , border: '1px solid #ef4444', paddingBottom:'40px'}}>
-      {/* Top Part: Summary */}
-      <Box sx={{ p: 5 , borderRadius:'10px', marginBottom:'25px'  }}>
+    <Card sx={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.08)', border: '1px solid #ef4444', pb: 4 }}>
+      <Box sx={{ p: 5 }}>
         <div className="row g-5">
           <div className="col-lg-7">
-            <Typography variant="h4" sx={{ fontWeight: 800, color: '#0f172a', mb: 0.5 }}>
-              {product.name}
+            <Typography variant="h4" fontWeight={800}>{product.name}</Typography>
+            <Typography color="text.secondary" sx={{ mb: 3 }}>
+              Brand: <strong>{product.brand || product.company}</strong>
             </Typography>
-            <Typography sx={{ color: '#64748b', mb: 3 }}>
-              Manufac
-              turer: <strong>{product.brand}</strong>
-            </Typography>
-            <Box sx={{ p: 3, bgcolor: '#f8fafc' }}>
-              <Typography sx={{ color: '#334155', lineHeight: 1.8 }}>{product.summary}</Typography>
-            </Box>
+            <Paper sx={{ p: 3, bgcolor: '#f8fafc', elevation: 0 }}>
+              {/* <Typography sx={{ lineHeight: 1.8 }}>{item.productCharts.finalChart.summary}</Typography> */}
+            </Paper>
           </div>
+          
           <div className="col-lg-5">
-            <Paper variant="outlined" sx={{ p: 4, borderRadius: 5, bgcolor: '#fff' ,border:'1px  dashed #ef4444' }}>
-              <Metric label="FULL ALIGNMENT" count={stats.found} color="#10b981" />
-              <Metric label="FULL ALIGNMENT" count={stats.partial} color="#a5a314ff" />
-              <Metric label="TECHNOLOGY GAPS" count={stats.gap} color="#ef4444" />
-              <Box sx={{ mt: 3, p: 1, bgcolor: '#fef2f2', color: '#ef4444', textAlign: 'center', borderTop:'1px solid #ced2d6ff' }}>
-                <Typography sx={{ fontWeight: 900, fontSize: '0.75rem', }}>PRIORITY: {product.priority}</Typography>
-              </Box>
+            <Paper variant="outlined" sx={{ p: 4, borderRadius: 5, border: '1px dashed #ef4444' }}>
+              {/* <Metric label="FOUND" count={stats.found} total={stats.total} color="#10b981" />
+              <Metric label="PARTIAL" count={stats.partial} total={stats.total} color="#a5a314" />
+              <Metric label="GAPS" count={stats.gap} total={stats.total} color="#ef4444" /> */}
             </Paper>
           </div>
         </div>
       </Box>
 
-      {/* Bottom Part: The Table */}
-      <Container sx={{ borderTop: '1px solid #f1f5f9' }}>
-        {/* --- TABLE HEADER START --- */}
-        <Box
-          className="row g-0 d-none d-lg-flex"
-          sx={{
-            py: 2,
-            borderTop: '1px solid #d7d9dbff',
-            borderBottom: '1px solid #d7d9dbff',
-            borderRadius:'2px',
-            bgcolor: '#fcfcfd' // Subtle background to differentiate header
-          }}
-        >
-          <div className="col-lg-3 px-4">
-            <Typography variant="caption" sx={{ fontWeight: 800, color: '#94a3b8', letterSpacing: '0.05em' }}>
-              KEY FEATURES
-            </Typography>
-          </div>
-          <div className="col-lg-4 px-4">
-            <Typography variant="caption" sx={{ fontWeight: 800, color: '#94a3b8', letterSpacing: '0.05em' }}>
-              ANALYSIS
-            </Typography>
-          </div>
-          <div className="col-lg-3 px-4">
-            <Typography variant="caption" sx={{ fontWeight: 800, color: '#94a3b8', letterSpacing: '0.05em' }}>
-              EVIDENCE
-            </Typography>
-          </div>
-          <div className="col-lg-2 px-4 text-end">
-            <Typography variant="caption" sx={{ fontWeight: 800, color: '#94a3b8', letterSpacing: '0.05em' }}>
-              SOURCES
-            </Typography>
-          </div>
+      <Container>
+        {/* Table Header */}
+        <Box className="row g-0 d-none d-lg-flex" sx={{ py: 2, bgcolor: '#fcfcfd', borderY: '1px solid #e2e8f0' }}>
+           <div className="col-lg-3 px-4"><Typography variant="caption" fontWeight={900}>KEY FEATURES</Typography></div>
+           <div className="col-lg-4 px-4"><Typography variant="caption" fontWeight={900}>ANALYSIS</Typography></div>
+           <div className="col-lg-5 px-4"><Typography variant="caption" fontWeight={900}>EVIDENCE</Typography></div>
+           <div className="col-lg-6 px-4"><Typography variant="caption" fontWeight={900}>SOURCES</Typography></div>
         </Box>
-        {/* --- TABLE HEADER END --- */}
 
-        {/* EXISTING DYNAMIC ROWS */}
-        {product.features.map((feature) => (
-          <Box key={feature.id} className="row g-0 border-bottom">
-            <div className="col-lg-3 p-2 border-end" style={{ position: 'relative' }}>
-              <Box
-                sx={{
-                  position: 'absolute',
-                  left: 0,
-                  top: 0,
-                  bottom: 0,
-                  width: 4,
-                  bgcolor: feature.status === 'FOUND' ? '#10b981' : '#ef4444'
-                }}
-              />
-              <Typography sx={{ fontWeight: 800, color: feature.status === 'FOUND' ? '#10b981' : '#ef4444' }}>{feature.id}</Typography>
-              <Typography sx={{ fontWeight: 700, fontSize: '0.9rem' }}>{feature.title}</Typography>
-            </div>
-
-            <div className="col-lg-4 p-2 border-end">
-              <Chip
-                label={feature.status}
-                size="small"
-                sx={{
-                  mb: 1.5,
-                  fontWeight: 900,
-                  bgcolor: feature.status === 'FOUND' ? '#ecfdf5' : '#fef2f2',
-                  color: feature.status === 'FOUND' ? '#10b981' : '#ef4444'
-                }}
-              />
-              <Typography variant="body2" sx={{ color: '#64748b' }}>
-                {feature.analysis}
+        {/* 6. Important: Map over the features array from props */}
+        {item.productCharts.map((feature, index) => (
+          <Box key={index} className="row g-0 border-bottom">
+            <div className="col-lg-3 p-3 border-end">
+              <Typography variant="caption" sx={{ fontWeight: 900, color: '#ef4444' }}>
+                {feature.feature_id || `F0${index + 1}`}
               </Typography>
+              <Typography fontWeight={700}>{feature.title}</Typography>
+            </div>
+            
+            <div className="col-lg-4 p-3 border-end">
+              <Chip 
+                label={feature.status} 
+                size="small" 
+                sx={{ mb: 1, fontWeight: 900, bgcolor: feature.status === 'FOUND' ? '#ecfdf5' : '#fef2f2', color: feature.status === 'FOUND' ? '#10b981' : '#ef4444' }} 
+              />
+              <Typography variant="body2" color="text.secondary">{feature.analysis}</Typography>
             </div>
 
-            <div className="col-lg-3 p-2 border-end" style={{ bgcolor: '#fafafa' }}>
-              <Typography variant="body2" sx={{ fontStyle: 'italic', fontSize: '0.85rem' }}>
-                "{feature.evidence}"
-              </Typography>
-            </div>
-
-            <div className="col-lg-2 p-2 d-flex flex-wrap gap-1 align-content-center justify-content-end">
-              {feature.sources.map((s) => (
-                <Paper
-                  key={s}
-                  sx={{
-                    px: 1,
-                    py: 0.5,
-                    fontSize: '0.7rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    transition: '0.2s',
-                    '&:hover': { bgcolor: '#ef4444', color: '#fff' }
-                  }}
-                >
-                  [{s}]
-                </Paper>
-              ))}
+            <div className="col-lg-5 p-3 flex-column d-flex justify-content-center">
+              <Typography variant="body2" sx={{ fontStyle: 'italic', mb: 1 }}>"{feature.evidence}"</Typography>
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                {feature.sources?.map(s => (
+                  <Chip key={s} label={`[${s}]`} size="small" variant="outlined" sx={{ fontSize: '0.65rem' }} />
+                ))}
+              </Box>
             </div>
           </Box>
         ))}

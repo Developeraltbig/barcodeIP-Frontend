@@ -92,7 +92,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
                     mr: 2
                   }}
                 >
-                  {item.icon}
+                  {/* {item.icon} */}
                 </Avatar>
 
                 {/* 2. Text Content (Matches Image Layout) */}
@@ -108,7 +108,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
                     variant="caption" 
                     sx={{ color: '#94a3b8', fontWeight: 500 }}
                   >
-                    {item.brand}
+                    {item.company}
                   </Typography>
                 </Box>
                </Box>

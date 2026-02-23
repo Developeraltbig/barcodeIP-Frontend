@@ -18,7 +18,6 @@ const TopSection = () => {
   const navigate = useNavigate(); 
     // Selectors
     const dashboard = useSelector((state) => state.userDashboard || {});
-    console.log('check --11', dashboard?.selectedProject?.project_id);
   // 1. Get the Project ID from the URL
   
   // Logic to determine which results are currently showing to get the length
