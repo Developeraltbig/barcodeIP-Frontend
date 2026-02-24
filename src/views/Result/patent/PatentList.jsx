@@ -35,8 +35,9 @@ const PatentList = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState('patents');
+  const [isWideMode, setIsWideMode] = useState(true);
 
-  // Lazy Hooks
+//   // Lazy Hooks
   const [getPatents, { isLoading: pLoad }] = useLazyGetPatentByProjectIdQuery();
   const [getProducts, { isLoading: prodLoad }] = useLazyGetProductByProjectIdQuery();
   const [getPubs, { isLoading: pubLoad }] = useLazyGetPublicationByProjectIdQuery();
@@ -83,8 +84,8 @@ const PatentList = () => {
   const renderActiveComponent = () => {
     const data = displayData[0]?.data || displayData[0]; // Adjust based on your API structure
     switch (activeTab) {
-      case 'patents': return <PatentCard data={data} />;
-      case 'publications': return <PublicationCard data={data} />;
+      case 'patents': return <PatentCard data={data} wideMode={isWideMode} />;
+      case 'publications': return <PublicationCard data={data} wideMode={isWideMode} />;
       case 'nonProvisional': return <DraftMasterResult data={data} />;
       case 'provisional': return <ProvisionalDraftResult data={data} />;
       case 'products': return <Product data={data} />;
@@ -98,7 +99,7 @@ const PatentList = () => {
     <Box sx={{ bgcolor: '#F4F7F9', minHeight: '100vh', pb: 10 }}>
       <TopSection />
       <Container maxWidth="xl" sx={{ mt: 4 }}>
-        <TabComponent activeTab={activeTab} setActiveTab={setActiveTab} />
+        <TabComponent activeTab={activeTab} setActiveTab={setActiveTab} onToggleLayout={() => setIsWideMode(!isWideMode)} isWideMode={isWideMode} />
 
         <AnimatePresence mode="wait">
           <motion.div 
@@ -113,7 +114,7 @@ const PatentList = () => {
                 <CircularProgress color="primary" />
               </Box>
             ) : (
-              <Grid container spacing={3}>
+              <Grid container spacing={3} sx={{ alignItems:'center' , justifyContent:'center' }}>
                 {renderActiveComponent()}
               </Grid>
             )}
@@ -123,5 +124,8 @@ const PatentList = () => {
     </Box>
   );
 };
+
+
+
 
 export default PatentList;

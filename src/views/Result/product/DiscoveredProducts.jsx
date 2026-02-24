@@ -3,25 +3,7 @@ import { Box, Typography, Card, Collapse, IconButton, Stack, Paper, Container } 
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'; // React Icons
 import { MdOutlineExplore } from 'react-icons/md';
 
-const DISCOVERED_PRODUCTS = [
-  { name: "Apple Watch Ultra 2", brand: "Apple",  desc: "Premium smartwatch with advanced ECG, SpO2, and temperature sensors." },
-  { name: "Withings ScanWatch 2", brand: "Withings",  desc: "Hybrid smartwatch with medical-grade ECG and SpO2 sensors." },
-  { name: "Garmin Fenix 7 Pro Solar", brand: "Garmin", desc: "Solar-charging watch with ECG and advanced performance metrics." },
-  { name: "Myant Skiin Connected", brand: "Myant", desc: "Smart textile system for continuous ECG and temperature monitoring." },
-  { name: "Empatica EmbracePlus", brand: "Empatica", desc: "Medical-grade smartwatch for clinical research and patient monitoring." },
-  { name: "Oura Ring Gen3", brand: "Oura", desc: "Finger-worn device with temperature, SpO2 sensing, and data analysis." },
-  { name: "BioIntelliSense BioSticker", brand: "BioIntelliSense",desc: "On-body patch for continuous remote patient vital sign monitoring." },
-  { name: "iRhythm Zio Patch", brand: "iRhythm",  desc: "Wearable patch for multi-day continuous ECG monitoring and analysis." },
-  { name: "Catapult Vector Elite", brand: "Catapult", desc: "Athlete vest with integrated GPS and heart rate sensors." },
-  { name: "Polar Team Pro Shirt", brand: "Polar",  desc: "Sleeveless base layer with integrated heart rate textile sensors." },
-  { name: "Masimo W1", brand: "Masimo", desc: "Medical-grade watch for continuous, accurate SpO2 monitoring." },
-  { name: "Xenoma e-skin", brand: "Xenoma",  desc: "Smart shirt with textile ECG and motion capture sensors." },
-  { name: "Current Health Platform", brand: "Current Health",  desc: "Remote patient monitoring kit with wearable biosensors." },
-  { name: "Sensoria Fitness Socks", brand: "Sensoria", desc: "Smart socks with textile pressure sensors for gait analysis." },
-  { name: "Gentherm Climate Seat", brand: "Gentherm", desc: "Automotive seat using thermoelectric modules for climate control." },
-];
-
-export default function DiscoveredProducts() {
+export default function DiscoveredProducts({item}) {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -56,7 +38,7 @@ export default function DiscoveredProducts() {
       {/* Collapsible Content */}
       <Collapse in={isOpen} timeout="auto">
         <div className="row g-4">
-          {DISCOVERED_PRODUCTS.map((product, index) => {
+          {item.additionalProducts.map((product, index) => {
             return (
               <div key={index} className="col-12 col-md-6 col-lg-3">
                 <Card 
@@ -83,11 +65,11 @@ export default function DiscoveredProducts() {
                   </Stack>
 
                   <Typography sx={{ color: '#94a3b8', fontSize: '0.75rem', fontWeight: 600, mb: 1.5 }}>
-                    {product.brand}
+                    {product.company}
                   </Typography>
 
                   <Typography sx={{ color: '#64748b', fontSize: '0.85rem', lineHeight: 1.5 }}>
-                    {product.desc}
+                    {product.description}
                   </Typography>
                 </Card>
               </div>

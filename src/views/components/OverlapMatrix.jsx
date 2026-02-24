@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Box, Typography, Chip, Paper, IconButton, Button, Container } from '@mui/material';
+import { Box, Typography, Chip, Paper, IconButton, Button, Container, Stack } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -69,6 +69,21 @@ const OverlapMatrix = () => {
       <div className="container">
         {/* HEADER SECTION */}
         <div className="row align-items-center mb-4">
+           <Stack 
+                direction="row" 
+                alignItems="center" 
+                spacing={1} 
+                sx={{ mb: { xs: 1, sm: 2 }, cursor: 'pointer' }} 
+                onClick={() => navigate(-1)}
+              >
+                <IconButton size="small" sx={{ color: '#64748b' }}>
+                  <ArrowBackIcon fontSize="small" />
+                </IconButton>
+                <Typography variant="body2" sx={{ color: '#64748b', fontWeight: 500 }}>
+                  Back to Result
+                </Typography>
+              </Stack>
+
           <div className="col-md-8">
             <Typography variant="h4" fontWeight="800" sx={{ color: '#1e293b', mb: 1 }}>
               Analysis <span style={{ color: PATENT_ORANGE }}>Report</span>

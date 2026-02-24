@@ -521,70 +521,7 @@ const DraftMasterResult = ({data}) => {
     <>
       <div className="draft-container container">
         {/* Header */}
-        <div className="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
-          <div>
-            <h1 className="page-title mb-2">Non Provisional Draft</h1>
-            <p className="page-subtitle">Generate a detailed non-provisional patent application. with description and claims</p>
-          </div>
-          <div className="position-relative" ref={dropdownRef}>
-            {/* Main Trigger Button - Icon Only */}
-            <button
-              className="btn-sidebar-primary d-flex align-items-center justify-content-center"
-              onClick={() => setShowDownloadOptions(!showDownloadOptions)}
-              disabled={isAnyGenerating}
-              title="Download Draft"
-              aria-label="Download Draft"
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '10px',
-                padding: '0',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              <FaDownload size={18} />
-            </button>
-
-            {/* Styled Dropdown Menu */}
-            {showDownloadOptions && (
-              <div
-                className="dropdown-menu show mt-2 border-0 p-2"
-                style={{
-                  position: 'absolute',
-                  right: '0', // Aligns dropdown to the right edge of the button (optional)
-                  zIndex: 1000,
-                  minWidth: '160px',
-                  borderRadius: '12px',
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.15)', // Softer, modern shadow
-                  backgroundColor: '#ffffff',
-                  animation: 'fadeIn 0.2s ease-out'
-                }}
-              >
-                <small className="text-muted px-3 py-1 d-block" style={{ fontSize: '0.75rem', fontWeight: 600 }}>
-                  EXPORT AS
-                </small>
-
-                <button
-                  className="dropdown-item d-flex align-items-center gap-3 py-2 px-3 rounded"
-                  onClick={handleDownloadDocx}
-                  style={{ cursor: 'pointer', transition: 'background 0.2s' }}
-                >
-                  <FaFileWord className="text-primary" size={18} />
-                  <span style={{ fontWeight: 500 }}>DOCX</span>
-                </button>
-
-                <button
-                  className="dropdown-item d-flex align-items-center gap-3 py-2 px-3 rounded mt-1"
-                  onClick={handleDownloadPDF}
-                  style={{ cursor: 'pointer', transition: 'background 0.2s' }}
-                >
-                  <FaFilePdf className="text-danger" size={18} />
-                  <span style={{ fontWeight: 500 }}>PDF</span>
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
+      
 
         <div className="container">
           {/* Main Content */}

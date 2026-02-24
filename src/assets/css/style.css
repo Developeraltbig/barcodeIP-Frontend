@@ -207,7 +207,7 @@
 .content-view h3 {
   font-size: 1.1rem !important;
   font-weight: 700 !important;
-  color: var(--primary) !important;
+  color: black !important;
   margin-top: 1.5rem !important;
   margin-bottom: 0.75rem !important;
   line-height: 1.4 !important;
@@ -269,7 +269,7 @@
 .ql-editor b,
 .content-view strong,
 .content-view b {
-  color: var(--primary);
+  color: black;
   font-weight: 700;
 }
 
@@ -460,6 +460,14 @@
 }
 
 @media (max-width: 991px) {
+  .draft-content-wrapper {
+    gap: 20px;
+  }
+}
+
+
+
+@media (max-width: 1410px) {
   .draft-content-wrapper {
     gap: 20px;
   }

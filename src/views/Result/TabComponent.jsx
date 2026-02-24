@@ -5,8 +5,9 @@ import GetAppIcon from '@mui/icons-material/GetApp';
 import MenuIcon from '@mui/icons-material/Menu';
 import { BRAND_RED, BRAND_AMBER } from './constants';
 import { TABS } from './mockData';
+import DownloadButton from '../components/DownloadButton';
 
-const TabComponent = ({ activeTab, setActiveTab }) => {
+const TabComponent = ({ activeTab, setActiveTab ,onToggleLayout }) => {
   return (
     <Stack direction={{ xs: 'column', lg: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', lg: 'center' }} spacing={3} sx={{ mb: 4 }}>
       <Box sx={{ display: 'flex', gap: 1, overflowX: 'auto', width: { xs: '100%', lg: 'auto' }, py: 1, '&::-webkit-scrollbar': { display: 'none' } }}>
@@ -37,13 +38,8 @@ const TabComponent = ({ activeTab, setActiveTab }) => {
       </Box>
 
       <Stack direction="row" spacing={2}>
-        <Button 
-          variant="contained" startIcon={<GetAppIcon />}
-          sx={{ bgcolor: BRAND_AMBER, fontWeight: 700, textTransform: 'none', px: 4, py: 1.2, borderRadius: '12px', boxShadow: `0 8px 20px -6px ${BRAND_AMBER}`, '&:hover': { bgcolor: '#e6951d' } }}
-        >
-          Download Report
-        </Button>
-        <IconButton sx={{ bgcolor: '#fff', border: '1px solid #e2e8f0', borderRadius: '12px', p: 1.5 }}>
+         <DownloadButton/>
+        <IconButton sx={{ bgcolor: '#fff', border: '1px solid #e2e8f0', borderRadius: '12px', p: 1.5 }} onClick={onToggleLayout}>
           <MenuIcon />
         </IconButton>
       </Stack>

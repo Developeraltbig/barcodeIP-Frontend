@@ -47,10 +47,10 @@ const Product = ({ data }) => {
         )}
 
           {/* Collapsible Section */}
-        <SourcesSection />
+        <SourcesSection  />
 
         {/* Footer Sources */}
-        <DiscoveredProducts />
+        <DiscoveredProducts item={data.results} />
       </Container>
     </Box>
   );

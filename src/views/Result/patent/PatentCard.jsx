@@ -11,7 +11,7 @@ import { BRAND_RED, outlineBtnStyle, filledBtnStyle } from '../constants';
 import { useNavigate } from 'react-router-dom';
 
 
-const PatentCard = ({data}) => {
+const PatentCard = ({data ,  wideMode}) => {
   const navigate = useNavigate();
   // console.log('item===', data)
   // console.log('item===', data.novelty_analysis.comparisons)
@@ -30,8 +30,12 @@ const PatentCard = ({data}) => {
         component={motion.div}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        lg={{maxWidth:'100%',}}  
         whileHover={{ y: -5, boxShadow: '0 12px 30px rgba(0,0,0,0.08)' }}
-        sx={{ p: 3, borderRadius: '16px', border: '1px solid #b1b9c0', height: '100%', display: 'flex', flexDirection: 'column', maxWidth:'500px', '&:hover': { border: '1px solid #b1b9c0'  }  }}
+        sx={{ p: 3, borderRadius: '5px', border: '1px solid #b1b9c0', height: '100%', display: 'flex', flexDirection: 'column', width:'100%', '&:hover': { border: '1px solid #b1b9c0'  } ,
+        '@media (min-width: 1410px)': {
+          maxWidth: wideMode ? '650px' : '100%', 
+        },  }}
       >
         <Typography variant="h6" sx={{ fontWeight: 800, color: '#1e293b', mb: 2, fontSize: '1.1rem', lineHeight: 1.3 }}>
           {data?.details?.title}

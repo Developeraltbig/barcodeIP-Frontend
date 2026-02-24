@@ -473,47 +473,7 @@ const ProvisionalDraftResult = ({data}) => {
     <>
       <div className="draft-container container">
         {/* Header */}
-        <div className="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
-          <div className="title-container">
-            <h1 className="page-title mb-2">Provisional Draft</h1>
-            <p className="page-subtitle">
-              Generate a comprehensive provisional patent specification
-            </p>
-          </div>
-            <div className="position-relative" ref={dropdownRef}>
-                    <button
-                      className="btn-sidebar-primary"
-                      onClick={() =>
-                        setShowDownloadOptions(!showDownloadOptions)
-                      }
-                      disabled={isAnyGenerating}
-                    >
-                      Download Draft <span>▼</span>
-                    </button>
-                    {showDownloadOptions && (
-                      <div
-                        className="dropdown-menu show w-100 mt-1 border-0"
-                        style={{
-                          boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
-                          borderRadius: "12px",
-                        }}
-                      >
-                        <button
-                          className="dropdown-item d-flex align-items-center gap-2"
-                          onClick={handleDownloadDocx}
-                        >
-                          <FaFileWord className="text-primary" /> As DOCX
-                        </button>
-                        <button
-                          className="dropdown-item d-flex align-items-center gap-2"
-                          onClick={handleDownloadPDF}
-                        >
-                          <FaFilePdf className="text-danger" /> As PDF
-                        </button>
-                      </div>
-                    )}
-             </div>
-        </div>
+
 
         <div className="container">
           {/* Main Content */}
