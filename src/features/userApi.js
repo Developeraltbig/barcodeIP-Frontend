@@ -27,7 +27,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "POST", 
         body: data 
       }),
-      invalidatesTags: ["UserProject", "AllProjects"],
+      invalidatesTags: ["UserProject"],
     }),
 
     fetchAllProjects: builder.query({

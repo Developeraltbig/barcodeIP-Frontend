@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box, Typography, Link, Stack, Paper, Divider, Container } from '@mui/material';
-// import { ExternalLink, Link2 } from 'lucide-react';
 import { FaLink } from "react-icons/fa6";
 
-const SOURCES = [
-  { id: 1, url: "https://semiconductor.samsung.com/processor/wearable-processor/exynos-w930/", domain: "samsung.com" },
-  { id: 2, url: "https://www.gsmarena.com/samsung_galaxy_watch6_classic-12438.php", domain: "gsmarena.com" },
-  { id: 3, url: "https://www.dcrainmaker.com/2023/08/samsung-galaxy-watch6-and-watch6-classic-in-depth-review-is-it-finally-accurate.html", domain: "dcrainmaker.com" },
-  { id: 4, url: "https://www.notebookcheck.net/S6-vs-Exynos-W920-vs-Exynos-W930_12834_13823_15094.247596.0.html", domain: "notebookcheck.net" }
-];
+export default function SourcesSection({ item }) { // Destructure item from props
 
-export default function SourcesSection() {
+
+  // 1. Transform the urlMapping object into an array
+  const sources = useMemo(() => {
+   
+    const mapping = item?.urlMapping || item?.finalChart?.urlMapping || {};
+
+    return Object.entries(mapping).map(([id, url]) => {
+      // 2. Helper to extract domain name cleanly (e.g., "www.google.com" -> "google.com")
+      let domain = '';
+      try {
+        const hostname = new URL(url).hostname;
+        domain = hostname.replace('www.', '');
+      } catch (e) {
+        domain = 'External Source';
+      }
+
+      return { id, url, domain };
+    });
+  }, [item]);
+
+  // Hide section if no sources exist
+  if (!sources || sources.length === 0) return null;
+
   return (
     <Container sx={{ mt: 6, mb: 10 }}>
       {/* Header with Divider */}
@@ -36,7 +52,7 @@ export default function SourcesSection() {
         }}
       >
         <Stack spacing={0.5}>
-          {SOURCES.map((source) => (
+          {sources.map((source) => (
             <Box 
               key={source.id}
               sx={{ 
@@ -47,7 +63,7 @@ export default function SourcesSection() {
                 transition: 'all 0.2s',
                 '&:hover': { 
                   bgcolor: '#f8fafc',
-                  '& .link-text': { color: '#ef4444' }, // Hover effect using your color
+                  '& .link-text': { color: '#ef4444' }, 
                   '& .source-index': { bgcolor: '#ef4444', color: 'white' }
                 }
               }}
@@ -79,6 +95,7 @@ export default function SourcesSection() {
                 <Link 
                   href={source.url} 
                   target="_blank" 
+                  rel="noopener noreferrer" // Security best practice
                   underline="none"
                   className="link-text"
                   sx={{ 
@@ -95,24 +112,27 @@ export default function SourcesSection() {
                     whiteSpace: 'nowrap', 
                     overflow: 'hidden', 
                     textOverflow: 'ellipsis',
-                    maxWidth: '85%'
+                    maxWidth: '85%',
+                    display: 'block'
                   }}>
                     {source.url}
                   </span>
-                  < FaLink size={14} style={{ opacity: 0.5 }} />
+                  <FaLink size={14} style={{ opacity: 0.5, flexShrink: 0 }} />
                 </Link>
               </Box>
 
               {/* Muted Domain Label (Desktop only) */}
               <Typography 
                 variant="caption" 
-                className="d-none d-md-block"
+                // Hide on small screens if using standard MUI breakpoints, otherwise remove class
                 sx={{ 
+                  display: { xs: 'none', md: 'block' },
                   fontWeight: 700, 
                   color: '#94a3b8', 
                   textTransform: 'uppercase',
                   fontSize: '0.65rem',
-                  ml: 2 
+                  ml: 2,
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {source.domain}
@@ -121,11 +141,6 @@ export default function SourcesSection() {
           ))}
         </Stack>
       </Paper>
-      
-      {/* Footer Disclaimer */}
-      {/* <Typography sx={{ mt: 3, textAlign: 'center', color: '#94a3b8', fontSize: '0.75rem' }}>
-        Data verified as of February 2024. All technical specifications sourced from official manufacturer documentation and verified third-party analysis.
-      </Typography> */}
     </Container>
   );
 }

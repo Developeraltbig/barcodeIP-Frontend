@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 const PatentCard = ({data ,  wideMode}) => {
   const navigate = useNavigate();
   // console.log('item===', data)
-  // console.log('item===', data.novelty_analysis.comparisons)
+  // console.log('item===', data?.novelty_analysis?.comparisons)
 
   const truncateWords = (text, limit) => {
   if (!text) return '';
@@ -25,7 +25,7 @@ const PatentCard = ({data ,  wideMode}) => {
   
   return (
     <>
-    {data.novelty_analysis.comparisons?.map((data, index) => (
+    {data?.novelty_analysis?.comparisons?.map((data, index) => (
       <Card 
         component={motion.div}
         initial={{ opacity: 0, y: 20 }}

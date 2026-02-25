@@ -132,14 +132,14 @@ const DraftSection = ({
                     </button>
                   )} */}
 
-                <button
+                {/* <button
                   className="icon-btn text-danger"
                   onClick={() => setIsEditing(true)}
                   title="Edit"
                 >
                   <FaPen />
 
-                </button>
+                </button> */}
               </>
             )
           )}

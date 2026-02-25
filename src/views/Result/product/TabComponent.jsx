@@ -17,16 +17,16 @@ const TabComponent = ({ items, activeId, onSelect }) => {
     <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%', mb: 4 }}>
       
       {/* Left Navigation Arrow */}
-      {/* <IconButton 
+      <IconButton 
         onClick={() => handleScroll('left')}
         sx={{ 
-          position: 'absolute', left: -20, zIndex: 5, 
+          position: 'absolute', left: -30, zIndex: 5, 
           bgcolor: 'white', boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
           '&:hover': { bgcolor: '#f8fafc' } 
         }}
       >
         <IoIosArrowBack size={20} />
-      </IconButton> */}
+      </IconButton>
 
       {/* The Scrollable Tab Container */}
       <Box
@@ -82,7 +82,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
                 <Avatar
                   variant="rounded"
                   sx={{
-                    width: 55,
+                    width: 45,
                     height: 60,
                     bgcolor: '#cbe2ddff', // Light teal background
                     color: '#0d9488',    // Dark teal text
@@ -133,16 +133,16 @@ const TabComponent = ({ items, activeId, onSelect }) => {
       </Box>
 
       {/* Right Navigation Arrow */}
-      {/* <IconButton 
+      <IconButton 
         onClick={() => handleScroll('right')}
         sx={{ 
-          position: 'absolute', right: -20, zIndex: 5, 
+          position: 'absolute', right: -40, zIndex: 5, 
           bgcolor: 'white', boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-          '&:hover': { bgcolor: '#f8fafc' } 
+          '&:hover': { bgcolor: '#d0d7dfff' } 
         }}
       >
         <IoIosArrowForward size={20} />
-      </IconButton> */}
+      </IconButton>
     </Box>
   );
 };

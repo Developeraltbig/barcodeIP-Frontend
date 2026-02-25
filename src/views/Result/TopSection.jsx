@@ -18,6 +18,9 @@ const TopSection = () => {
   const navigate = useNavigate(); 
     // Selectors
     const dashboard = useSelector((state) => state.userDashboard || {});
+    const features = dashboard?.projectPatent?.data.key_features;
+
+    console.log("tabs--features",features)
   // 1. Get the Project ID from the URL
   
   // Logic to determine which results are currently showing to get the length
@@ -101,6 +104,8 @@ const TopSection = () => {
               onClick={() => setModalOpen(true)}
               startIcon={<AutoAwesomeIcon />}
               fullWidth={isMobile}
+             
+
               sx={{
                 mt: { xs: 1, sm: 1 },
                 px: 3,
@@ -124,7 +129,7 @@ const TopSection = () => {
         </Container>
       </Box>
 
-      <KeyFeaturesModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <KeyFeaturesModal open={modalOpen} onClose={() => setModalOpen(false)}  feature={features} />
     </>
   );
 };

@@ -49,7 +49,11 @@ const OverlapMatrix = () => {
     return parseMarkdownTable(rawMatrix);
   }, [passedData]);
 
+  console.log("passed data",passedData)
+
   const excerpts = passedData?.excerpts || 'No relevant excerpts available.';
+
+  console.log("excerptspassed data", excerpts)
 
   if (!passedData) {
     return (
