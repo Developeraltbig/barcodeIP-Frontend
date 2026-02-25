@@ -4,7 +4,7 @@ import { useForgotPasswordMutation } from '../../../features/slice/auth/authApi'
 import { toast } from 'react-toastify';
 import { Link as RouterLink } from 'react-router-dom';
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ onBack }) => {
   const [email, setEmail] = useState('');
   const [forgotPassword, { isLoading, error: apiError }] = useForgotPasswordMutation();
   const [isSent, setIsSent] = useState(false);
@@ -48,12 +48,11 @@ const ForgotPassword = () => {
 
   return (
     <div className="container-fluid bg-light min-vh-100 d-flex align-items-center justify-content-center p-3">
-      <Box 
-        className="card border-0 shadow-lg p-4 p-md-5 rounded-5 w-100"
-        sx={{ maxWidth: '500px', bgcolor: '#fff' }}
-      >
+      <Box className="card border-0 shadow-lg p-4 p-md-5 rounded-5 w-100" sx={{ maxWidth: '500px', bgcolor: '#fff' }}>
         <div className="text-center mb-4">
-          <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>Forgot Password?</Typography>
+          <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>
+            Forgot Password?
+          </Typography>
           <Typography variant="body2" color="text.secondary">
             Enter your email to receive a password reset link.
           </Typography>
@@ -71,7 +70,7 @@ const ForgotPassword = () => {
             <Alert severity="success" className="mb-4">
               Reset link send to <b>{email}</b>, you will receive an email shortly.
             </Alert>
-            <Button component={RouterLink} to="/pages/auth/login" fullWidth variant="outlined" className="py-2">
+            <Button component={RouterLink} to="/pages/auth/login" fullWidth variant="outlined" className="py-2" onClick={onBack}>
               Back to Login
             </Button>
           </div>
@@ -95,17 +94,22 @@ const ForgotPassword = () => {
               variant="contained"
               disabled={isLoading}
               className="py-3 fw-bold"
-              sx={{ height: '52px' }}
+              sx={{ height: '52px', backgroundColor: '#E94E34' }}
             >
-              {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Send Reset Link'}
+              {isLoading ? <CircularProgress size={24} color="#E94E34" /> : 'Send Reset Link'}
             </Button>
 
             <div className="text-center mt-4">
-              <Link 
-                component={RouterLink} 
-                to="/pages/auth/login" 
-                className="text-decoration-none fw-bold small"
-                sx={{ color: 'primary.main' }}
+              <Link
+                component="button" // Change from RouterLink to button
+                type="button"
+                onClick={onBack} // This triggers the card swap
+                className="text-decoration-none fw-bold small border-0 bg-transparent"
+                sx={{
+                  color: '#E94E34',
+                  cursor: 'pointer',
+                  verticalAlign: 'middle'
+                }}
               >
                 ← Back to Login
               </Link>

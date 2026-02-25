@@ -63,7 +63,7 @@ const ResetPassword = () => {
           fullWidth
           variant="contained"
           disabled={isLoading}
-          sx={{ height: '48px', bgcolor: 'primary.main' }}
+          sx={{ height: '48px', bgcolor: '#E94E34' }}
         >
           {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Reset Password'}
         </Button>

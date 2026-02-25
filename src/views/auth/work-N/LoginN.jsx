@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import {
   Grid, Box, Typography, TextField, Button, Checkbox,
   FormControlLabel, Link, InputAdornment, IconButton,
-  CssBaseline, GlobalStyles, Alert, CircularProgress
+  CssBaseline, GlobalStyles, Alert, CircularProgress,
+  CardMedia
 } from '@mui/material';
 import { Visibility, VisibilityOff, Circle } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -13,6 +14,12 @@ import { useLoginMutation } from '../../../features/slice/auth/authApi';
 import { setCredentials } from '../../../features/slice/auth/authSlice';
 import { toast } from 'react-toastify';
 import FullPageLoader from '../../../components/FullPageLoader';
+
+// assets
+import Logo from 'assets/images/barcodeip-logo.png';
+import Icon from '../../../../public/favicon.ico';
+import ForgotPassword from './ForgotPassword';
+import LeftSideImageSection from './LeftSideImageSection';
 
 const theme = createTheme({
   palette: {
@@ -51,6 +58,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [validationError, setValidationError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [view, setView] = useState('login');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -93,42 +101,26 @@ const Login = () => {
       <CssBaseline />
       <GlobalStyles styles={{ 'html, body, #root': { width: '100%', height: '100%', margin: 0, padding: 0 } }} />
 
-      {(isLoading || isSubmitting) && (
-        <FullPageLoader colors={["#e06a50", "#33FF57", "#3357FF"]} label="Starting Dashboard..." />
-      )}
+      {(isLoading || isSubmitting) && <FullPageLoader colors={['#e06a50', '#33FF57', '#3357FF']} label="Starting Dashboard..." />}
 
       {/* Bootstrap 'container-fluid' for full width and 'row' for flex grid */}
       <div className="container-fluid p-0 overflow-hidden">
         <div className="row g-0 min-vh-100">
-          
           {/* LEFT SIDE - Hidden on mobile, visible on small+ */}
-          <div className="col-sm-5 col-md-5 d-none d-md-flex flex-column justify-content-center p-5 position-relative"
-            style={{
-              backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url(https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301&auto=format&fit=crop)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              color: 'white'
-            }}>
-            <div className="position-relative z-2" style={{ maxWidth: '500px' }}>
-              <div className="mb-4 d-inline-block p-3 rounded-4 shadow-sm" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', backdropFilter: 'blur(10px)' }}>
-                <Circle sx={{ color: '#E94E34', fontSize: 48 }} />
-              </div>
-              <h1 className="display-4 fw-bold mb-3">Experience smarter IP management.</h1>
-              <p className="fs-5 fw-light opacity-75">Secure, fast, and reliable access to your data with barcodeIP.</p>
-            </div>
-          </div>
+          <LeftSideImageSection/>
 
           {/* RIGHT SIDE - Full width on mobile */}
-          <div className="col-12 col-md-7  d-flex flex-column justify-content-center   bg-light p-4">
-            
+          <div className="row col-md-6 justify-content-center align-items-center  bg-light p-4">
             {/* Form Card with Bootstrap Shadow and Padding */}
-            <div className="card border-0  p-4 p-md-5 w-100 rounded-5" style={{ maxWidth: '520px' }}>
-              
+
+            {view === 'login' ? (
+            <div className="card border-0  p-4 p-md-5 w-100 rounded-5  " style={{ maxWidth: '520px ' }}>
               <div className=" mb-5">
                 <small className="text-muted text-uppercase fw-semibold">Welcome to</small>
                 <div className="d-flex mt-1">
-                  <h2 className="fw-bolder mb-0" style={{ color: '#222' }}>barcode</h2>
-                  <h2 className="fw-bolder mb-0 text-danger">IP</h2>
+                  <CardMedia component="img" image={Logo} alt="logo" sx={{ width: 160 }} />
+                  {/* <h2 className="fw-bolder mb-0" style={{ color: '#222' }}>barcode</h2>
+                  <h2 className="fw-bolder mb-0 text-danger">IP</h2> */}
                 </div>
               </div>
 
@@ -143,20 +135,25 @@ const Login = () => {
 
               <form onSubmit={handleSubmit} noValidate>
                 <div className="mb-4">
-                  <label className="form-label small fw-bold text-muted text-uppercase mb-2">Email Address</label>
-                  <TextField 
-                    required fullWidth name="email" 
-                    placeholder="name@company.com" 
+                  <label className="form-label small fw-bold text-muted text-uppercase mb-2">Email </label>
+                  <TextField
+                    required
+                    fullWidth
+                    name="email"
+                    placeholder="name@company.com"
                     variant="outlined"
-                    value={formData.email} 
-                    onChange={handleChange} 
+                    value={formData.email}
+                    onChange={handleChange}
                   />
                 </div>
 
                 <div className="mb-3">
                   <label className="form-label small fw-bold text-muted text-uppercase mb-2">Password</label>
                   <TextField
-                    required fullWidth name="password" placeholder="••••••••"
+                    required
+                    fullWidth
+                    name="password"
+                    placeholder="••••••••"
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={handleChange}
@@ -173,22 +170,23 @@ const Login = () => {
                 </div>
 
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     control={<Checkbox size="small" />}
                     label={<span className="small text-muted">Remember for 30 days</span>}
-                  />
-                  <Link component={RouterLink} to="/pages/auth/forgot-password" variant="body2" className="fw-bold text-decoration-none">
+                  /> */}
+                  {/* Replace your current Forgot Password Link with this */}
+                  <Link
+                    component="button"
+                    type="button"
+                    onClick={() => setView('forgot')}
+                    variant="body2"
+                    className="fw-bold text-decoration-none border-0 bg-transparent"
+                  >
                     Forgot password?
                   </Link>
                 </div>
 
-                <Button 
-                  type="submit" 
-                  fullWidth 
-                  variant="contained" 
-                  disabled={isLoading} 
-                  className="py-3 fs-6"
-                >
+                <Button type="submit" fullWidth variant="contained" disabled={isLoading} className="py-3 fs-6">
                   {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Sign In to Dashboard'}
                 </Button>
 
@@ -201,9 +199,15 @@ const Login = () => {
                   </p>
                 </div>
               </form>
+
+              {/* Ensure the link inside calls setView('forgot') */}
+              {/* <Link component="button" onClick={() => setView('forgot')}>Forgot password?</Link> */}
             </div>
+
+            ) : (
+              <ForgotPassword onBack={() => setView('login')} />
+            )}
           </div>
-          
         </div>
       </div>
     </ThemeProvider>
