@@ -11,7 +11,7 @@ function Home() {
     <div style={{marginTop:'30px',}}>
       <Banner3D/>
       <InputSectionN />
-      <DashboardWidgets />
+      {/* <DashboardWidgets /> */}
       {/* <AdvanceSearch /> */}
       {/* <KeyFeatures /> */}
       <RecentArticles/>

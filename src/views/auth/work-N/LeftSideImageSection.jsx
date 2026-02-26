@@ -19,7 +19,7 @@ function LeftSideImageSection() {
     >
       <div className="position-relative z-2" style={{ maxWidth: '550px' }}>
         <div className="mb-2 d-inline-block rounded-4 shadow-sm">
-          <CardMedia component="img" image={Logo} alt="logo" sx={{ width: 180 }} />
+          {/* <CardMedia component="img" image={Logo} alt="logo" sx={{ width: 180 }} /> */}
         </div>
         <h1 className="display-4 fw-bold mb-3">Idea to IP</h1>
         <p className="fs-5 fw-light opacity-75">AI-powered patent search, drafting, and infringement analysis in one.</p>

@@ -14,12 +14,10 @@ import { useLoginMutation } from '../../../features/slice/auth/authApi';
 import { setCredentials } from '../../../features/slice/auth/authSlice';
 import { toast } from 'react-toastify';
 import FullPageLoader from '../../../components/FullPageLoader';
-
+import LeftSideImageSection from './LeftSideImageSection';
 // assets
 import Logo from 'assets/images/barcodeip-logo.png';
-import Icon from '../../../../public/favicon.ico';
 import ForgotPassword from './ForgotPassword';
-import LeftSideImageSection from './LeftSideImageSection';
 
 const theme = createTheme({
   palette: {
@@ -58,7 +56,9 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [validationError, setValidationError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [view, setView] = useState('login');
+  const [rememberMe, setRememberMe] = useState(false); // Checkbox state
+  // Initialize with 'login'
+const [view, setView] = useState('login');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,13 +77,20 @@ const Login = () => {
     setIsSubmitting(true);
     try {
       const userData = await login({ email: formData.email, password: formData.password }).unwrap();
-      dispatch(setCredentials(userData.data)); 
+      console.log(userData)
+      dispatch(setCredentials({...userData.data}));
+      localStorage.setItem("rememberMe", rememberMe); 
+      // Pass the rememberMe flag to the slice
+      // dispatch(setCredentials({ 
+      //   ...userData, 
+      //   rememberMe 
+      // }));
       toast.success('Successfully logged in!'); 
       navigate('/'); 
     } catch (err) {
       console.error('Login failed:', err);
     } finally {
-      setIsSubmitting(false);
+      // setIsSubmitting(false);
     }
   };
 
@@ -101,109 +108,102 @@ const Login = () => {
       <CssBaseline />
       <GlobalStyles styles={{ 'html, body, #root': { width: '100%', height: '100%', margin: 0, padding: 0 } }} />
 
-      {(isLoading || isSubmitting) && <FullPageLoader colors={['#e06a50', '#33FF57', '#3357FF']} label="Starting Dashboard..." />}
+      {isLoading && <FullPageLoader colors={['#e6664aff', '#e6664aff', '#e6664aff']} label="Starting Dashboard..." />}
 
       {/* Bootstrap 'container-fluid' for full width and 'row' for flex grid */}
       <div className="container-fluid p-0 overflow-hidden">
         <div className="row g-0 min-vh-100">
           {/* LEFT SIDE - Hidden on mobile, visible on small+ */}
-          <LeftSideImageSection/>
+          <LeftSideImageSection />
 
           {/* RIGHT SIDE - Full width on mobile */}
           <div className="row col-md-6 justify-content-center align-items-center  bg-light p-4">
-            {/* Form Card with Bootstrap Shadow and Padding */}
+            {/* Card wrapper for a cleaner, modern look */}
 
             {view === 'login' ? (
-            <div className="card border-0  p-4 p-md-5 w-100 rounded-5  " style={{ maxWidth: '520px ' }}>
-              <div className=" mb-5">
-                <small className="text-muted text-uppercase fw-semibold">Welcome to</small>
-                <div className="d-flex mt-1">
-                  <CardMedia component="img" image={Logo} alt="logo" sx={{ width: 160 }} />
-                  {/* <h2 className="fw-bolder mb-0" style={{ color: '#222' }}>barcode</h2>
-                  <h2 className="fw-bolder mb-0 text-danger">IP</h2> */}
-                </div>
-              </div>
-
-              <h3 className="fw-bold mb-1">Log in</h3>
-              <p className="text-muted mb-4 small">Enter your credentials to access your account.</p>
-
-              {getErrorMessage() && (
-                <Alert severity="error" className="mb-4 rounded-3 animate__animated animate__shakeX">
-                  {getErrorMessage()}
-                </Alert>
-              )}
-
-              <form onSubmit={handleSubmit} noValidate>
-                <div className="mb-4">
-                  <label className="form-label small fw-bold text-muted text-uppercase mb-2">Email </label>
-                  <TextField
-                    required
-                    fullWidth
-                    name="email"
-                    placeholder="name@company.com"
-                    variant="outlined"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
+              <div className="card border-0 p-4 p-md-5 w-100 rounded-5" style={{ maxWidth: '520px', backgroundColor: '#ffffff' }}>
+                <div className=" mb-5">
+                  <small className="text-muted text-uppercase fw-semibold">Welcome to</small>
+                  <div className="d-flex mt-1">
+                    <CardMedia component="img" image={Logo} alt="logo" sx={{ width: 160 }} />
+                  </div>
                 </div>
 
-                <div className="mb-3">
-                  <label className="form-label small fw-bold text-muted text-uppercase mb-2">Password</label>
-                  <TextField
-                    required
-                    fullWidth
-                    name="password"
-                    placeholder="••••••••"
-                    type={showPassword ? 'text' : 'password'}
-                    value={formData.password}
-                    onChange={handleChange}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton onClick={handleClickShowPassword} edge="end">
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                </div>
+                <h3 className="fw-bold mb-1">Log in</h3>
+                <p className="text-muted mb-4 small">Enter your credentials to access your account.</p>
 
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  {/* <FormControlLabel
-                    control={<Checkbox size="small" />}
-                    label={<span className="small text-muted">Remember for 30 days</span>}
-                  /> */}
-                  {/* Replace your current Forgot Password Link with this */}
-                  <Link
-                    component="button"
-                    type="button"
-                    onClick={() => setView('forgot')}
-                    variant="body2"
-                    className="fw-bold text-decoration-none border-0 bg-transparent"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
+                {getErrorMessage() && (
+                  <Alert severity="error" className="mb-4 rounded-3 animate__animated animate__shakeX">
+                    {getErrorMessage()}
+                  </Alert>
+                )}
 
-                <Button type="submit" fullWidth variant="contained" disabled={isLoading} className="py-3 fs-6">
-                  {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Sign In to Dashboard'}
-                </Button>
+                <form onSubmit={handleSubmit} noValidate>
+                  <div className="mb-4">
+                    <label className="form-label small fw-bold text-muted text-uppercase mb-2">Email Address</label>
+                    <TextField
+                      required
+                      fullWidth
+                      name="email"
+                      placeholder="name@company.com"
+                      variant="outlined"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                  </div>
 
-                <div className="text-center mt-4">
-                  <p className="small text-muted">
-                    Don't have an account?{' '}
-                    <Link component={RouterLink} to="/pages/auth/register" className="fw-bold text-decoration-none">
-                      Sign up for free
+                  <div className="mb-3">
+                    <label className="form-label small fw-bold text-muted text-uppercase mb-2">Password</label>
+                    <TextField
+                      required
+                      fullWidth
+                      name="password"
+                      placeholder="••••••••"
+                      type={showPassword ? 'text' : 'password'}
+                      value={formData.password}
+                      onChange={handleChange}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={handleClickShowPassword} edge="end">
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  </div>
+
+                  <div className="d-flex justify-content-between align-items-center mb-4">
+                    <FormControlLabel
+                      control={<Checkbox size="small" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />}
+                      label={<span className="small text-muted">Remember for 7 days</span>}
+                    />
+                    <Link
+                      component="button"
+                      type="button"
+                      onClick={() => setView('forgot')}
+                      variant="body2"
+                      className="fw-bold text-decoration-none border-0 bg-transparent"
+                    >
+                      Forgot password?
                     </Link>
-                  </p>
-                </div>
-              </form>
+                  </div>
 
-              {/* Ensure the link inside calls setView('forgot') */}
-              {/* <Link component="button" onClick={() => setView('forgot')}>Forgot password?</Link> */}
-            </div>
+                  <Button type="submit" fullWidth variant="contained" disabled={isLoading} className="py-3 fs-6">
+                    {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Sign In to Dashboard'}
+                  </Button>
 
+                  <div className="text-center mt-4">
+                    <p className="small text-muted">
+                      Don't have an account?{' '}
+                      <Link component={RouterLink} to="/pages/auth/register" className="fw-bold text-decoration-none">
+                        Sign up for free
+                      </Link>
+                    </p>
+                  </div>
+                </form>
+              </div>
             ) : (
               <ForgotPassword onBack={() => setView('login')} />
             )}

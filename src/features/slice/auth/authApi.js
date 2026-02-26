@@ -19,7 +19,13 @@ export const authApi = baseApi.injectEndpoints({
         body: data
       })
     }),
-
+    refreshToken: builder.mutation({
+      query: (data) => ({
+        url: '/api/v1/auth/refresh-token',
+        method: 'POST',
+        body: data
+      })
+    }),
     // checkAuth: builder.query({
     //   query: () => '/api/v1/auth/admin-user/check',
     //   providesTags: ['Auth']
@@ -52,6 +58,7 @@ export const authApi = baseApi.injectEndpoints({
 export const {
   useLoginMutation,
   useRegisterMutation,
+  useRefreshTokenMutation,
   useCheckAuthQuery,
   useLazyLogoutQuery,
   useForgotPasswordMutation,

@@ -89,11 +89,12 @@ export const userApi = baseApi.injectEndpoints({
       }),
     }),
 
-    connectAnalyst: builder.query({
+      getAnalystConnections: builder.query({
       query: (projectId) => ({
-        url: `/api/v1/user/Dashboard/project/connect-analyst/${projectId}`,
-        method: "GET",
+        url: `/api/v1/user/Dashboard/project/connect-analyst/${projectId}`, 
+        method: "GET"
       }),
+      providesTags: ["AnalystConnection"],
     }),
 
   }),
@@ -103,7 +104,6 @@ export const userApi = baseApi.injectEndpoints({
 // Exporting both standard and Lazy versions
 export const {
   useGetLatestContentQuery,
-  useGetRecentThreeProjectsQuery,
   useCreateProjectMutation,
   useGetAllArticlesQuery,
   useFetchAllProjectsQuery,
@@ -125,6 +125,7 @@ export const {
   useGetPublicationByProjectIdQuery,
   useLazyGetPublicationByProjectIdQuery,
   
-  useConnectAnalystQuery,
-  useLazyConnectAnalystQuery
+  useGetRecentThreeProjectsQuery, // For Search History
+  useGetAnalystConnectionsQuery,
+  
 } = userApi;

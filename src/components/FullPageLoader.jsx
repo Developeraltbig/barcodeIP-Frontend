@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FullPageLoader = ({ colors = ['#2563eb', '#7c3aed', '#db2777'], label = 'Loading...' }) => {
+const FullPageLoader = ({ colors = ['#f05a1fff', '#f05a1fff', '#f05a1fff'], label = 'Loading...' }) => {
   return (
     <div style={overlayStyle}>
       <div style={centerContainer}>
