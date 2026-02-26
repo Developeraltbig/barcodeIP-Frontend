@@ -12,12 +12,16 @@ const CaseCard = ({ item, onSave, onDownload }) => {
           <MoreVertIcon fontSize="small" color="disabled" />
         </IconButton>
 
-        <Typography variant="subtitle2" color="primary" sx={{ fontWeight: 'bold', mb: 1 }}>
-          Case ID : {item.id}
+         <Typography variant="subtitle2" sx={{fontWeight:'bold', marginBottom:"15px", color: '#777' }}>
+          Case ID : <span style={{ color: '#D34335', fontWeight: 'bold' }}> {item.project_id} </span>
+        </Typography>
+
+        <Typography variant="subtitle2" color="black" sx={{  fontWeight: 'bold', lineHeight: 1.5, mb: 1  }}>
+          {item.project_title}
         </Typography>
 
         <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.5 }}>
-          {item.content}
+          {item.pdf_text}
         </Typography>
       </Box>
 
@@ -25,7 +29,7 @@ const CaseCard = ({ item, onSave, onDownload }) => {
 
       <Box sx={{ p: 2, px: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="caption" sx={{ color: '#777' }}>
-          Searched on <span style={{ color: '#D34335', fontWeight: 'bold' }}>{item.date}</span>
+          Searched on <span style={{ color: '#D34335', fontWeight: 'bold' }}>{item.updatedAt.match(/^[^T]*/)?.[0]}</span>
         </Typography>
 
         <Stack direction="row" spacing={1}>

@@ -2,6 +2,26 @@ import { Card, Chip, Paper } from "@mui/material";
 import { Box, Container, Typography, Fade } from '@mui/material';
 import PerformanceStats from '../product/PerformanceStats'; 
 
+const NoDataFound = ({ tabName }) => (
+  <Box sx={{ 
+    display: 'flex', 
+    flexDirection: 'column', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    py: 10, 
+    width: '100%',
+    opacity: 0.6 
+  }}>
+    {/* <InboxIcon sx={{ fontSize: 60, mb: 2, color: 'text.secondary' }} /> */}
+    <Typography variant="h5" gutterBottom>
+      No {tabName} Found
+    </Typography>
+    <Typography variant="body2" color="text.secondary">
+      There is currently no data available for this section.
+    </Typography>
+  </Box>
+);
+
 export default function AnalysisView({ product , item}) {
   // Ensure we have features to map over
   const features = product?.features || [];
@@ -26,7 +46,7 @@ export default function AnalysisView({ product , item}) {
               Brand: <strong>{product.brand || product.company}</strong>
             </Typography>
             <Paper sx={{ p: 3, bgcolor: '#f8fafc', elevation: 0 }}>
-              <Typography sx={{ lineHeight: 1.8 }}>{item?.finalChart?.summary || 'NA'}</Typography>
+              <Typography sx={{ lineHeight: 1.8 }}>{item?.finalChart?.summary || <NoDataFound/> }</Typography>
             </Paper>
           </div>
 

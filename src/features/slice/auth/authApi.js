@@ -50,12 +50,30 @@ export const authApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data
       })
-    })
+    }),
+
+    // ... existing code in authApi.js
+    getProfile: builder.query({
+      query: () => '/api/v1/auth/me', // Adjust this URL to your actual backend profile route
+      providesTags: ['User']
+    }),
+
+    // Also add a mutation for updating the profile if you want "Save Changes" to work
+    updateProfile: builder.mutation({
+      query: (data) => ({
+        url: '/api/v1/auth/update-profile',
+        method: 'PATCH',
+        body: data
+      }),
+      invalidatesTags: ['User']
+    }),
 
   })
 });
 
 export const {
+  useGetProfileQuery, // Export this
+  useUpdateProfileMutation,
   useLoginMutation,
   useRegisterMutation,
   useRefreshTokenMutation,

@@ -52,6 +52,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     
   // If the error is 401, try to refresh
   if (result.error && result.error.status === 401) {
+    console.log("1")
     let refresh_token = localStorage.getItem("rememberMe");
     // PREVENT LOOP: Check if the failed request was actually the refresh request itself
     // Adjust the URL string to match your refresh endpoint exactly

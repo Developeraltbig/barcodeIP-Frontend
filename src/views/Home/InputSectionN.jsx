@@ -94,40 +94,9 @@ const InputSectionN = () => {
   };
 
   // --- Form Submission Handler ---
-  // const handleGenerate = async () => {
-  //   const formData = new FormData();
-  //   console.log("text search", searchValue);
-    
-  //   // 1. text key as string
-  //   formData.append('text', searchValue);
-    
-  //   // 2. checked key as array 
-  //   // Note: FormData usually handles arrays by appending multiple times 
-  //   // or passing a stringified JSON. Here is the standard way:
-  //   selectedFilters.forEach(item => {
-  //     formData.append('checked', item); 
-  //   });
-    
-  //   // Logging for verification
-    
-  //   for (let [key, value] of formData.entries()) {
-  //     console.log(`${key}: ${value}`);
-  //   }
-  //   console.log("Payload Prepared:", formData);
-   
-  //     // const result = await createProject(formData).unwrap();
-  //     console.log('Create Project Success:', result);
- 
-  // };
-
-
   const handleGenerate = async () => {
-      
-      setIsSubmitting(true);
-
-      // try {
-        const formData = new FormData();
-     console.log("text search", searchValue);
+    const formData = new FormData();
+    console.log("text search", searchValue);
     
     // 1. text key as string
     formData.append('text', searchValue);
@@ -148,21 +117,52 @@ const InputSectionN = () => {
    
       const result = await createProject(formData).unwrap();
       console.log('Create Project Success:', result);
-        // navigate('/result'); 
-      // } catch (err) {
-      //   console.error('fetch failed', err);
-      // } finally {
-      //   setIsSubmitting(false);
-      // }
-    };
+ 
+  };
+
+
+  // const handleGenerate = async () => {
+      
+  //     setIsSubmitting(true);
+
+  //     // try {
+  //       const formData = new FormData();
+  //    console.log("text search", searchValue);
+    
+  //   // 1. text key as string
+  //   formData.append('text', searchValue);
+    
+  //   // 2. checked key as array 
+  //   // Note: FormData usually handles arrays by appending multiple times 
+  //   // or passing a stringified JSON. Here is the standard way:
+  //   selectedFilters.forEach(item => {
+  //     formData.append('checked', item); 
+  //   });
+    
+  //   // Logging for verification
+    
+  //   for (let [key, value] of formData.entries()) {
+  //     console.log(`${key}: ${value}`);
+  //   }
+  //   console.log("Payload Prepared:", formData);
+   
+  //     const result = await createProject(formData).unwrap();
+  //     console.log('Create Project Success:', result);
+  //       // navigate('/result'); 
+  //     // } catch (err) {
+  //     //   console.error('fetch failed', err);
+  //     // } finally {
+  //     //   setIsSubmitting(false);
+  //     // }
+  //   };
   
-    // const getErrorMessage = () => {
-    //   if (validationError) return validationError;
-    //   if (apiError) {
-    //     if ('error' in apiError) return apiError.error;
-    //   }
-    //   return null;
-    // };
+    const getErrorMessage = () => {
+      if (validationError) return validationError;
+      if (apiError) {
+        if ('error' in apiError) return apiError.error;
+      }
+      return null;
+    };
 
 
   return (

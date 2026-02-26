@@ -17,7 +17,7 @@ export const userApi = baseApi.injectEndpoints({
         url: "/api/v1/user/Dashboard/project/recent/get", 
         method: "GET" 
       }),
-      providesTags: ["UserProject"],
+      providesTags: ["RecentProject"],
     }),
 
     // --- Project Management ---

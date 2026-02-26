@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Grid, Paper, Typography, Divider, CircularProgress } from '@mui/material';
 import { History as HistoryIcon, Link as LinkIcon, ChevronRight } from '@mui/icons-material';
-// import { useConnectAnalystQuery, useGetRecentThreeProjectsQuery, useConnectAnalystQuery } from '../../features/userApi';
+import { useGetRecentThreeProjectsQuery } from '../../features/userApi';
 
 // --- Helper: Date Formatter ---
 const formatDate = (dateString) => {
@@ -53,7 +53,7 @@ const ListItemRow = ({ item, isLastItem }) => (
 // --- Reusable Sub-Component: WidgetCard ---
 const WidgetCard = ({ title, icon: Icon, data, isLoading, error }) => {
 
-  console.log(data)
+  // console.log(data)
   return (
     <Paper
       elevation={0}
@@ -101,7 +101,7 @@ const WidgetCard = ({ title, icon: Icon, data, isLoading, error }) => {
             <ListItemRow 
               key={item._id || item.id || index} 
               item={item} 
-              isLastItem={index === data.length - 1} 
+              isLastItem={index} 
             />
           ))}
         </Box>
@@ -113,14 +113,14 @@ const WidgetCard = ({ title, icon: Icon, data, isLoading, error }) => {
 // --- Main Component ---
 const DashboardWidgets = () => {
   // 1. Fetch "Search History" using Recent Projects API
-  // const { 
-  //   data: recentProjects, 
-  //   isLoading: loadingProjects, 
-  //   error: errorProjects 
-  // } = useGetRecentThreeProjectsQuery();
+  const { 
+    data: recentProjects, 
+    isLoading: loadingProjects, 
+    error: errorProjects 
+  } = useGetRecentThreeProjectsQuery();
 
-  // // // 2. Fetch "Analyst Connections" 
-  // // // (Using the new hook created in userApi, or reusing another if stricture allows)
+  // // 2. Fetch "Analyst Connections" 
+  // // (Using the new hook created in userApi, or reusing another if stricture allows)
   // const { 
   //   data: analystConnections, 
   //   isLoading: loadingAnalyst, 
@@ -130,7 +130,7 @@ const DashboardWidgets = () => {
   // Note: If your API response is nested (e.g., response.data.projects), 
   // you might need to access `recentProjects?.data` below.
 
-  console.log(data)
+  console.log(recentProjects)
 
   return (
     <Box sx={{ bgcolor: '#F3F4F6', py: 5 }}>

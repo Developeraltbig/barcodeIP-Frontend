@@ -5,10 +5,13 @@ import TabComponent from './TabComponent';
 import AnalysisView from './AnalysisView';
 import SourcesSection from './SourcesSection';
 import DiscoveredProducts from './DiscoveredProducts';
+import NotFound from '../../../components/NotFound';
 
 const Product = ({ data }) => {
   // 1. Normalize the list of products from props
+  
   const displayList = data?.results?.selectedTop5;
+
 
   // 2. State to track which product tab is clicked
   const [activeProduct, setActiveProduct] = useState(displayList[0]);
@@ -19,7 +22,7 @@ const Product = ({ data }) => {
   useEffect(() => {
     if (displayList.length > 0) {
       setActiveProduct(displayList[0]);
-    }
+    } 
   }, [data]);
 
   return (

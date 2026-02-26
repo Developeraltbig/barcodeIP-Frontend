@@ -161,7 +161,7 @@ const ProvisionalDraftResult = ({data}) => {
       } else {
         setDraftData((prev) => ({
           ...prev,
-          title_of_invention: STATIC_INVENTION_DATA.project_title,
+          // title_of_invention: STATIC_INVENTION_DATA.project_title,
         }));
         triggerInitialGeneration();
       }
@@ -187,11 +187,11 @@ const ProvisionalDraftResult = ({data}) => {
 
       // --- MOCKED GENERATION ---
       // await axios.get(`/api/provisionaldraft/generateall/${projectId}`);
-      setTimeout(() => {
-        setGeneratingSections({});
-        setDraftData(STATIC_PROVISIONAL_DATA);
-        toast.success("Generation Complete (Mock)");
-      }, 2000);
+      // setTimeout(() => {
+      //   setGeneratingSections({});
+      //   // setDraftData(STATIC_PROVISIONAL_DATA);
+      //   toast.success("Generation Complete (Mock)");
+      // }, 2000);
       // ------------------------
 
     } catch (error) {

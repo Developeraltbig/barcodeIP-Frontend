@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Container, Grid, CircularProgress } from '@mui/material';
+import { Box, Container, Grid, CircularProgress, Typography } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { 
@@ -30,6 +30,26 @@ const DraftMasterResult = Loadable(lazy(() => import('../non_provisional/DraftMa
 const PublicationCard = Loadable(lazy(() => import('../publication/PublicationCard')));
 const ProvisionalDraftResult = Loadable(lazy(() => import('../provisional/ProvisionalDraftResult')));
 const Product = Loadable(lazy(() => import('../product/Product')));
+
+const NoDataFound = ({ tabName }) => (
+  <Box sx={{ 
+    display: 'flex', 
+    flexDirection: 'column', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    py: 10, 
+    width: '100%',
+    opacity: 0.6 
+  }}>
+    {/* <InboxIcon sx={{ fontSize: 60, mb: 2, color: 'text.secondary' }} /> */}
+    <Typography variant="h5" gutterBottom>
+      No {tabName} Found
+    </Typography>
+    <Typography variant="body2" color="text.secondary">
+      There is currently no data available for this section.
+    </Typography>
+  </Box>
+);
 
 const PatentList = () => {
   const { id } = useParams();
@@ -81,8 +101,30 @@ const PatentList = () => {
   }, [loadTabData]);
 
   // 4. Component Mapping Strategy
+  // const renderActiveComponent = () => {
+  //   const data = displayData[0]?.data || displayData[0]; // Adjust based on your API structure
+  //   switch (activeTab) {
+  //     case 'patents': return <PatentCard data={data} wideMode={isWideMode} />;
+  //     case 'publications': return <PublicationCard data={data} wideMode={isWideMode} />;
+  //     case 'nonProvisional': return <DraftMasterResult data={data} />;
+  //     case 'provisional': return <ProvisionalDraftResult data={data} />;
+  //     case 'products': return <Product data={data} />;
+  //     default: return null;
+  //   }
+  // };
+
+
   const renderActiveComponent = () => {
-    const data = displayData[0]?.data || displayData[0]; // Adjust based on your API structure
+    const rawData = displayData[0];
+    const data = rawData?.data ; 
+    
+    // Checks if data is null, undefined, an empty array, or an empty string
+    const hasNoData = !data || (Array.isArray(data) && data.length === 0);
+
+    if (hasNoData) {
+      return <NoDataFound tabName={activeTab} />;
+    } else {
+
     switch (activeTab) {
       case 'patents': return <PatentCard data={data} wideMode={isWideMode} />;
       case 'publications': return <PublicationCard data={data} wideMode={isWideMode} />;
@@ -91,7 +133,16 @@ const PatentList = () => {
       case 'products': return <Product data={data} />;
       default: return null;
     }
+    }
+  
+  
   };
+
+
+
+
+
+
 
   const isLoading = pLoad || prodLoad || pubLoad || provLoad || nonProvLoad;
 

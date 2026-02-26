@@ -18,17 +18,19 @@ const TopSection = () => {
   const navigate = useNavigate(); 
     // Selectors
     const dashboard = useSelector((state) => state.userDashboard || {});
-    const features = dashboard?.projectPatent?.data.key_features;
+    const features = dashboard?.projectPatent?.data?.key_features;
 
-    console.log("tabs--features",features)
   // 1. Get the Project ID from the URL
   
   // Logic to determine which results are currently showing to get the length
   // This looks at patents, products, or publications based on what is active
   const resultCount = 
-    (dashboard.projectPatent?.length) || 
+    (dashboard?.projectPatent?.data?.novelty_analysis?.comparisons?.length) || 
     (dashboard.projectProduct?.length) || 
     (dashboard.projectPublication?.length) || 0;
+
+    // console.log("resultt count---" ,resultCount);
+    console.log("resultt count---" , dashboard?.projectPatent?.data?.scholarResults)
 
   return (
     <>

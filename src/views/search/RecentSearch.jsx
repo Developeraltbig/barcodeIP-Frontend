@@ -224,45 +224,45 @@ import { ReplayCircleFilled } from "@mui/icons-material";
 
 
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ThemeProvider, CssBaseline, Box, Container, Typography, Paper, TextField, InputAdornment, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { theme } from './theme';
 // import { downloadCasePDF } from './pdfUtils';
 import CaseCard from './CaseCard';
 import AnalystModal from './AnalystModal';
-
-const mockData = [
-  {
-    id: '003',
-    content: '1. Field of Invention The invention falls within the field of bioelectronic neural interfaces, specifically focusing on minimally invasive endovascular implants for neuromodulation for autonomic disorder treatment...',
-    date: 'December 03 at 9:52 AM',
-    user: 'developeraltbig@gmail.com'
-  },
-  {
-    id: '002',
-    content: 'State machine methods and apparatus improve computer network functionality relating to natural language communication. In one example, a state machine implements an instance of a workflow...',
-    date: 'November 28 at 9:51 AM',
-    user: 'developeraltbig@gmail.com'
-  }
-];
+import { useGetRecentThreeProjectsQuery } from "../../features/userApi";
 
 function RecentSearch() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCase, setSelectedCase] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const {data: getRecentThreeProjects}=   useGetRecentThreeProjectsQuery();
+
+
+   // 2. Safe Data Extraction: Prevents ".length of undefined" error
+    const projects = useMemo(() => {
+      if (!getRecentThreeProjects) return [];
+      // Handles different API structures: { projects: [] } or { data: [] } or raw []
+      return getRecentThreeProjects.projects || getRecentThreeProjects.data || (Array.isArray(getRecentThreeProjects) ? getRecentThreeProjects: []);
+    }, [getRecentThreeProjects]);
 
   const handleOpenModal = (item) => {
     setSelectedCase(item);
     setModalOpen(true);
   };
 
+  
+
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: '100vh', py: 6 , marginTop:'70px' }}>
+      <Box sx={{ minHeight: '100vh', py: 6, marginTop: '70px' }}>
         <Container maxWidth="lg">
-          <Typography variant="h5" sx={{ mb: 3, fontWeight: 500 }}>Recent Search</Typography>
+          <Typography variant="h5" sx={{ mb: 3, fontWeight: 500 }}>
+            Recent Search
+          </Typography>
 
           <Paper elevation={0} sx={{ p: 4, borderRadius: '8px', border: '1px solid #dddbdbff' }}>
             <TextField
@@ -272,32 +272,31 @@ function RecentSearch() {
               onChange={(e) => setSearchTerm(e.target.value)}
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start"><SearchIcon fontSize="small" /></InputAdornment>
-                ),
+                  <InputAdornment position="start">
+                    <SearchIcon fontSize="small" />
+                  </InputAdornment>
+                )
               }}
             />
-
             <Stack spacing={3}>
-              {mockData
-                .filter(c => c.id.includes(searchTerm))
+              {projects
+                // Filter logic: Only keep items where the ID contains the search string
+                .filter((item) => {
+                  // If searchTerm is empty, show everything
+                  if (!searchTerm) return true;
+
+                  // Safety check: ensure item and item.id exist, then compare
+                  return item.project_id?.toString().toLowerCase().includes(searchTerm.toLowerCase());
+                })
                 .map((item) => (
-                  <CaseCard 
-                    key={item.id} 
-                    item={item} 
-                    onSave={handleOpenModal} 
-                    // onDownload={downloadCasePDF} 
-                  />
+                  <CaseCard key={item.id} item={item} onSave={handleOpenModal} />
                 ))}
             </Stack>
           </Paper>
         </Container>
       </Box>
 
-      <AnalystModal 
-        open={modalOpen} 
-        onClose={() => setModalOpen(false)} 
-        caseData={selectedCase} 
-      />
+      <AnalystModal open={modalOpen} onClose={() => setModalOpen(false)} caseData={selectedCase} />
     </ThemeProvider>
   );
 }
