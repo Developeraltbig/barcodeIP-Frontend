@@ -1,131 +1,134 @@
-import { baseApi } from "../services/baseApi";
+import { baseApi } from '../services/baseApi';
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    
     // --- Dashboard Content ---
     getLatestContent: builder.query({
-      query: () => ({ 
-        url: "/api/v1/user/Dashboard/content/get", 
-        method: "GET" 
+      query: () => ({
+        url: '/api/v1/user/Dashboard/content/get',
+        method: 'GET'
       }),
-      providesTags: ["UserContent"],
+      providesTags: ['UserContent']
     }),
 
     getRecentThreeProjects: builder.query({
-      query: () => ({ 
-        url: "/api/v1/user/Dashboard/project/recent/get", 
-        method: "GET" 
+      query: () => ({
+        url: '/api/v1/user/Dashboard/project/recent/get',
+        method: 'GET'
       }),
-      providesTags: ["RecentProject"],
+      providesTags: ['RecentProject']
     }),
 
     // --- Project Management ---
     createProject: builder.mutation({
-      query: (data) => ({ 
-        url: "/api/v1/user/Dashboard/upload", 
-        method: "POST", 
-        body: data 
+      query: (data) => ({
+        url: '/api/v1/user/Dashboard/upload',
+        method: 'POST',
+        body: data
       }),
-      invalidatesTags: ["UserProject"],
+      invalidatesTags: ['UserProject']
     }),
 
     fetchAllProjects: builder.query({
       query: () => ({
-        url: "/api/v1/projects/fetchallproject",
-        method: "GET",
+        url: '/api/v1/projects/fetchallproject',
+        method: 'GET'
       }),
-      providesTags: ["AllProjects"],
+      providesTags: ['AllProjects']
     }),
 
     // --- Articles ---
     getAllArticles: builder.query({
-      query: ({ page, limit, search, category }) => ({
-        url: "/api/v1/user/articles/all",
-        method: "GET",
-        params: { 
-            page, 
-            limit, 
-            ...(search && { search }), 
-            ...(category && { category }) 
-        },
+      query: () => ({
+        url: '/api/v1/user/Dashboard/all/article/get',
+        method: 'GET'
       }),
-      providesTags: ["Articles"],
+      providesTags: ['Articles']
     }),
 
     // --- Specific Project Details (Lazy-ready) ---
     getPatentByProjectId: builder.query({
       query: (projectId) => ({
         url: `/api/v1/user/Dashboard/get/patent/${projectId}`,
-        method: "GET",
-      }),
+        method: 'GET'
+      })
     }),
 
     getProvisionalByProjectId: builder.query({
       query: (projectId) => ({
         url: `/api/v1/user/Dashboard/get/provisional/${projectId}`,
-        method: "GET",
-      }),
+        method: 'GET'
+      })
     }),
 
     getNonProvisionalByProjectId: builder.query({
       query: (projectId) => ({
         url: `/api/v1/user/Dashboard/get/non-provisional/${projectId}`,
-        method: "GET",
-      }),
+        method: 'GET'
+      })
     }),
 
     getProductByProjectId: builder.query({
       query: (projectId) => ({
         url: `/api/v1/user/Dashboard/get/product/${projectId}`,
-        method: "GET",
-      }),
+        method: 'GET'
+      })
     }),
 
     getPublicationByProjectId: builder.query({
       query: (projectId) => ({
         url: `/api/v1/user/Dashboard/get/publication/${projectId}`,
-        method: "GET",
-      }),
+        method: 'GET'
+      })
     }),
 
-      getAnalystConnections: builder.query({
+    getAnalystConnections: builder.query({
       query: (projectId) => ({
-        url: `/api/v1/user/Dashboard/project/connect-analyst/${projectId}`, 
-        method: "GET"
+        url: `/api/v1/user/Dashboard/project/connect-analyst/${projectId}`,
+        method: 'POST'
       }),
-      providesTags: ["AnalystConnection"],
+      providesTags: ['AnalystConnection']
     }),
 
+    // --- Support Analysts ---
+    getSupportAnalysts: builder.query({
+      query: ({ page = 1, limit = 10 } = {}) => ({
+        url: '/api/v1/user/Dashboard/support-analyst/get',
+        method: 'GET',
+        params: { page, limit }
+      }),
+      providesTags: ['SupportAnalysts']
+    })
   }),
-  overrideExisting: false,
+  overrideExisting: false
 });
 
 // Exporting both standard and Lazy versions
 export const {
   useGetLatestContentQuery,
   useCreateProjectMutation,
+  useAnalystConnectionsMutation,
   useGetAllArticlesQuery,
+  useGetSupportAnalystsQuery,
   useFetchAllProjectsQuery,
-  
+
   // These specific detail hooks should be used as 'useLazy...' in your components
   // to allow manual triggering on button clicks.
   useGetPatentByProjectIdQuery,
   useLazyGetPatentByProjectIdQuery,
-  
+
   useGetProvisionalByProjectIdQuery,
   useLazyGetProvisionalByProjectIdQuery,
-  
+
   useGetNonProvisionalByProjectIdQuery,
   useLazyGetNonProvisionalByProjectIdQuery,
-  
+
   useGetProductByProjectIdQuery,
   useLazyGetProductByProjectIdQuery, // <-- This is the one for your "View More" button
-  
+
   useGetPublicationByProjectIdQuery,
   useLazyGetPublicationByProjectIdQuery,
-  
+
   useGetRecentThreeProjectsQuery, // For Search History
-  useGetAnalystConnectionsQuery,
   
 } = userApi;

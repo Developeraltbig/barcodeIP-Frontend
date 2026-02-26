@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box, Typography, Container, Card, CardContent, CardMedia, Link, Stack, IconButton } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -11,6 +11,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { useGetAllArticlesQuery } from '../../features/userApi';
 
 // --- Styled Components ---
 
@@ -41,19 +42,20 @@ const NavButton = styled(IconButton)(({ theme }) => ({
 
 // --- Sub-Components ---
 
-const ArticleCard = ({ article }) => (
+const ArticleCard = ({ article,strip }) => (
   <StyledCard elevation={0} style={{boxShadow:'0 4px 12px rgba(0,0,0,0.1)'}}>
     <CardMedia
       component="img"
       height="220"
-      image={article.image}
+      // image={article.image}
+      image='https://media.istockphoto.com/id/902787158/photo/woman-hands-with-pen-writing-on-notebook-in-the-office.jpg?s=612x612&w=0&k=20&c=AFrTZ8bU1XrEifN4GU57k9PK8HYd3a3whGB_0pFp29E='
       alt={article.title}
       sx={{ bgcolor: '#fff', objectFit: 'cover'  }}
     />
     <CardContent sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>{article.title}</Typography>
       <Typography variant="body2" sx={{ color: '#666', mb: 4, height: '40px', overflow: 'hidden' }}>
-        {article.description}
+        {strip(article.description)}
       </Typography>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography variant="caption" sx={{ color: '#999', fontWeight: 600 }}>{article.date}</Typography>
@@ -66,63 +68,102 @@ const ArticleCard = ({ article }) => (
 );
 
 const RecentArticles = () => {
-  const articlesData = [
-    { id: 1, title: 'Article 1', description: 'Insights into patent trends for 2025.', date: 'Nov 28, 2025', image: 'https://www.popoptiq.com/wp-content/uploads/2018/08/articles-lead-image-082418-min.jpg' },
-    { id: 2, title: 'Article 2', description: 'Selective nerve stimulation breakthroughs.', date: 'Dec 05, 2025', image: 'https://www.popoptiq.com/wp-content/uploads/2018/08/articles-lead-image-082418-min.jpg' },
-    { id: 3, title: 'Article 3', description: 'Understanding global IP protection.', date: 'Dec 12, 2025', image: 'https://www.popoptiq.com/wp-content/uploads/2018/08/articles-lead-image-082418-min.jpg' },
-    { id: 4, title: 'Article 4', description: 'Future of AI in legal documentation.', date: 'Jan 02, 2026', image: 'https://www.popoptiq.com/wp-content/uploads/2018/08/articles-lead-image-082418-min.jpg' },
-  ];
+  // 1. Fetch data from API (passing default pagination if needed)
+    const { data: ArticleData, isLoading, isError } = useGetAllArticlesQuery();
+  
+
+  // 2. Safe Data Extraction
+  const articles = useMemo(() => {
+    if (!ArticleData) return [];
+    // Matches your API structure: { Articles: [...] }
+    return ArticleData.data || ArticleData.article || (Array.isArray(ArticleData) ? ArticleData : []);
+  }, [ArticleData]);
+
+  console.log(articles)
+
+  // 3. Loading State
+  if (isLoading) {
+    return (
+      <Box sx={{ py: 10, textAlign: 'center', bgcolor: '#f0ecec' }}>
+        <Typography>Loading latest articles...</Typography>
+      </Box>
+    );
+  }
+
+   const stripHtml = (html) => {
+        return html?.replace(/<[^>]*>?/gm, '') || "";
+      }; 
 
   return (
     <Box sx={{ bgcolor: '#f0ecec', py: 10, position: 'relative' }}>
       <Container maxWidth="lg">
         {/* Section Header */}
         <Box sx={{ mb: 5 }}>
-          <Typography variant="h5" sx={{ fontWeight: 800, color: '#333' , fontSize:'40px'}}>Our Recent Articles</Typography>
-          <Typography variant="body2" sx={{ color: '#666' }}>Stay informed with our latest insights</Typography>
+          <Typography variant="h5" sx={{ fontWeight: 800, color: '#333', fontSize: '40px' }}>
+            Our Recent Articles
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#666' }}>
+            Stay informed with our latest insights
+          </Typography>
         </Box>
 
-        {/* Swiper Carousel */}
-        <Box sx={{ position: 'relative', px: { md: 6, xs: 0 }, paddingTop:'20px'}}>
-          <Swiper
-            modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={30}
-            slidesPerView={1} // Mobile default
-            autoplay={{ delay: 5000 }}
-            navigation={{
-              nextEl: '.next-btn',
-              prevEl: '.prev-btn',
-            }}
-            pagination={{ clickable: true, dynamicBullets: true }}
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 }, // Desktop: 3 cards in a row
-            }}
-            style={{ paddingBottom: '50px', paddingTop:'10px' }}
-          >
-            {articlesData.map((article) => (
-              <SwiperSlide key={article.id}>
-                <ArticleCard article={article} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        {/* 4. Conditional Rendering: Show Swiper ONLY if articles exist */}
+        {articles.length > 0 ? (
+          <Box sx={{ position: 'relative', px: { md: 6, xs: 0 }, paddingTop: '20px' }}>
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              spaceBetween={30}
+              slidesPerView={1}
+              autoplay={{ delay: 5000 }}
+              navigation={{
+                nextEl: '.next-btn',
+                prevEl: '.prev-btn',
+              }}
+              pagination={{ clickable: true, dynamicBullets: true }}
+              breakpoints={{
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+              }}
+              style={{ paddingBottom: '50px', paddingTop: '10px' }}
+            >
+              {articles.map((article) => (
+                <SwiperSlide key={article._id || article.id}>
+                  <ArticleCard article={article} strip={stripHtml} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
-          {/* Custom Navigation Arrows */}
-          <NavButton className="prev-btn" sx={{ left: -20 }}>
-            <ArrowBackIosNewIcon fontSize="small" />
-          </NavButton>
-          <NavButton className="next-btn" sx={{ right: -20 }}>
-            <ArrowForwardIosIcon fontSize="small" />
-          </NavButton>
-        </Box>
+            {/* Custom Navigation Arrows */}
+            <NavButton className="prev-btn" sx={{ left: -20 }}>
+              <ArrowBackIosNewIcon fontSize="small" />
+            </NavButton>
+            <NavButton className="next-btn" sx={{ right: -20 }}>
+              <ArrowForwardIosIcon fontSize="small" />
+            </NavButton>
+          </Box>
+        ) : (
+          /* 5. No Data Found State */
+          <Box sx={{ 
+            p: 5, 
+            textAlign: 'center', 
+            border: '1px dashed #ccc', 
+            borderRadius: '16px',
+            bgcolor: 'rgba(255,255,255,0.5)' 
+          }}>
+            <Typography variant="h6" color="textSecondary">
+              No articles found at the moment.
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Check back soon for new updates!
+            </Typography>
+          </Box>
+        )}
       </Container>
 
-      {/* CSS Override for Swiper Pagination Color */}
       <style dangerouslySetInnerHTML={{ __html: `
         .swiper-pagination-bullet-active { background: #E94E34 !important; }
       `}} />
     </Box>
   );
 };
-
 export default RecentArticles;

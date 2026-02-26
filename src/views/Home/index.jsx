@@ -1,17 +1,17 @@
 import React from 'react';
-import InputSectionN from './inputSectionN';
 import DashboardWidgets from './DashboardWidgets';
 import AdvanceSearch from './AdvanceSearch';
 import KeyFeatures from './KeyFeatures';
 import Banner3D from './Banner';
 import RecentArticles from './RecentArticles';
+import InputSectionN from './InputSectionN';
 
 function Home() {
   return (
     <div style={{marginTop:'30px',}}>
       <Banner3D/>
       <InputSectionN />
-      {/* <DashboardWidgets /> */}
+      <DashboardWidgets />
       {/* <AdvanceSearch /> */}
       {/* <KeyFeatures /> */}
       <RecentArticles/>

@@ -136,7 +136,7 @@ const PatentCard = ({data ,  wideMode}) => {
 
         <Stack direction="row" flexWrap="wrap" gap={1.5} sx={{ mb: 2 }}>
           <Chip 
-            label={item?.details?.patent_id} 
+            label={item?.details?.patent_id.match(/(?<=\/)[A-Z0-9]+(?=\/)/)}
             icon={<OpenInNewIcon sx={{ fontSize: '14px !important' }} />}
             sx={{ bgcolor: `${BRAND_RED}10`, color: BRAND_RED, fontWeight: 800, borderRadius: '8px', cursor: 'pointer' }} 
           />

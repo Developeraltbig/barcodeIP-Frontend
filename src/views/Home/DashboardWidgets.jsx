@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box, Grid, Paper, Typography, Divider, CircularProgress } from '@mui/material';
 import { History as HistoryIcon, Link as LinkIcon, ChevronRight } from '@mui/icons-material';
-import { useGetRecentThreeProjectsQuery } from '../../features/userApi';
+import { useGetRecentThreeProjectsQuery, useGetSupportAnalystsQuery } from '../../features/userApi';
+import { Container } from 'react-bootstrap';
 
 // --- Helper: Date Formatter ---
 const formatDate = (dateString) => {
@@ -18,7 +19,7 @@ const ListItemRow = ({ item, isLastItem }) => (
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        gap: 2,
+        gap: 15,
         py: 2.5,
         cursor: 'pointer',
         transition: 'background-color 0.2s',
@@ -28,10 +29,10 @@ const ListItemRow = ({ item, isLastItem }) => (
       <Box>
         <Typography variant="body1" sx={{ fontWeight: 600, color: '#374151', mb: 0.5, lineHeight: 1.4 }}>
           {/* Fallback to 'Project Name' if title is missing */}
-          {item.projectName || item.title || 'Untitled Project'}
+          {item.project_title || item.title || 'Untitled Project'}
         </Typography>
         <Typography variant="body2" sx={{ color: '#E94E34', fontWeight: 500 }}>
-          Case ID: {item.caseId || 'N/A'}
+          Case ID: {item.project_id || 'N/A'}
         </Typography>
         {item.message && (
           <Typography variant="body2" sx={{ color: '#6B7280', mt: 0.5 }}>
@@ -53,7 +54,7 @@ const ListItemRow = ({ item, isLastItem }) => (
 // --- Reusable Sub-Component: WidgetCard ---
 const WidgetCard = ({ title, icon: Icon, data, isLoading, error }) => {
 
-  // console.log(data)
+  console.log(data)
   return (
     <Paper
       elevation={0}
@@ -62,8 +63,7 @@ const WidgetCard = ({ title, icon: Icon, data, isLoading, error }) => {
         borderRadius: '12px',
         border: '1px solid #E5E7EB',
         height: '100%',
-        bgcolor: '#fff',
-        minHeight: '200px' // Ensure height for loader
+        minHeight: '200px', // Ensure height for loader
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
@@ -110,31 +110,66 @@ const WidgetCard = ({ title, icon: Icon, data, isLoading, error }) => {
   );
 };
 
+// Inside your WidgetCard.js
+// const WidgetCard = ({ data, isLoading, title, icon: Icon }) => {
+//   return (
+//     <Paper sx={{ p: 3, borderRadius: 3 }}>
+//       <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+//         <Icon sx={{ color: '#ef4444' }} />
+//         <Typography variant="h6">{title}</Typography>
+//       </Stack>
+
+//       {isLoading ? (
+//         <CircularProgress size={24} />
+//       ) : data && data.length > 0 ? (
+//         data.map((item) => (
+//           <Box key={item._id || item.id}>
+//              {/* Render your item content */}
+//              <Typography>{item.name || item.title}</Typography>
+//           </Box>
+//         ))
+//       ) : (
+//         <Box sx={{ py: 2, textAlign: 'center', opacity: 0.5 }}>
+//           <Typography variant="body2">No data found</Typography>
+//         </Box>
+//       )}
+//     </Paper>
+//   );
+// };
+
 // --- Main Component ---
+
+
 const DashboardWidgets = () => {
-  // 1. Fetch "Search History" using Recent Projects API
-  const { 
-    data: recentProjects, 
-    isLoading: loadingProjects, 
-    error: errorProjects 
-  } = useGetRecentThreeProjectsQuery();
+  // 1. Hook Calls
+  const { data: getRecentThreeProjects, isLoading: loadingProjects } = useGetRecentThreeProjectsQuery();
+  
+  // Notice the syntax -> { data: YOUR_ALIAS_NAME }
+  const { data: AnalystData, isLoading: loadingAnalysts, isError } = useGetSupportAnalystsQuery({ 
+      page: 1, 
+      limit: 10 
+  });
 
-  // // 2. Fetch "Analyst Connections" 
-  // // (Using the new hook created in userApi, or reusing another if stricture allows)
-  // const { 
-  //   data: analystConnections, 
-  //   isLoading: loadingAnalyst, 
-  //   error: errorAnalyst 
-  // } = useConnectAnalystQuery (); 
+  // 2. Memoized Project Data
+  const projects = useMemo(() => {
+    if (!getRecentThreeProjects) return [];
+    // Adjust based on your backend response key
+    return getRecentThreeProjects.projects || getRecentThreeProjects.data || (Array.isArray(getRecentThreeProjects) ? getRecentThreeProjects : []);
+  }, [getRecentThreeProjects]);
 
-  // Note: If your API response is nested (e.g., response.data.projects), 
-  // you might need to access `recentProjects?.data` below.
+  // 3. Memoized Analyst Data
+  const latestAnalyst = useMemo(() => {
+    if (!AnalystData) return [];
+    return AnalystData.data || AnalystData.analysts || (Array.isArray(AnalystData) ? AnalystData : []);
+  }, [AnalystData]);
 
-  console.log(recentProjects)
+  // 4. Debugging
+  console.log("Analyst API Response:", AnalystData);
+  // console.log("Processed Analyst List:", latestAnalyst);
 
   return (
     <Box sx={{ bgcolor: '#F3F4F6', py: 5 }}>
-      <Box>
+      <Container maxWidth="xl">
         <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
           
           {/* SEARCH HISTORY WIDGET */}
@@ -142,9 +177,8 @@ const DashboardWidgets = () => {
             <WidgetCard 
               title="Search History" 
               icon={HistoryIcon} 
-              data={recentProjects} // Pass the API data directly
+              data={projects} 
               isLoading={loadingProjects}
-              error={errorProjects}
             />
           </Grid>
 
@@ -153,16 +187,15 @@ const DashboardWidgets = () => {
             <WidgetCard 
               title="Connected with an Analyst" 
               icon={LinkIcon} 
-              data={analystConnections} 
-              isLoading={loadingAnalyst}
-              error={errorAnalyst}
+              data={latestAnalyst} 
+              isLoading={loadingAnalysts}
+              error={isError}
             />
           </Grid>
 
         </Grid>
-      </Box>
+      </Container>
     </Box>
   );
 };
-
 export default DashboardWidgets;
