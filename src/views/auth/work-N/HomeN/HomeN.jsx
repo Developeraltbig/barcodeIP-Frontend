@@ -1,10 +1,10 @@
 import React from 'react';
-import InputSectionN from './inputSectionN';
+import InputSectionN from './inputSectionN.jsx';
 import HeaderN from './headerN';
-import DashboardWidgets from './DashboardWidgets';
-import AdvanceSearch from './AdvanceSearch';
-import KeyFeatures from './KeyFeatures';
-import Footer from '../Footer/Footer';
+import DashboardWidgets from './DashboardWidgets.jsx';
+import AdvanceSearch from './AdvanceSearch.jsx';
+import KeyFeatures from './KeyFeatures.jsx';
+import Footer from '../Footer/Footer.jsx';
 
 function HomeN() {
   return (
@@ -14,7 +14,7 @@ function HomeN() {
       <DashboardWidgets />
       <AdvanceSearch />
       <KeyFeatures />
-      <Footer/>
+      <Footer />
     </div>
   );
 }
