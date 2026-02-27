@@ -23,7 +23,7 @@ import { AppBar, Box, Toolbar, Typography, Button, IconButton, Avatar, Menu, Men
 import { KeyboardArrowDown, Person } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLazyLogoutQuery } from '../../../features/slice/auth/authApi';
 import { logout, setCredentials } from '../../../features/slice/auth/authSlice';
 
@@ -42,6 +42,8 @@ export default function Header() {
     const open = Boolean(anchorEl);
     const [Logout] = useLazyLogoutQuery();
     const dispatch = useDispatch();
+
+    const user = useSelector((state) => state.auth.user);
   
     const handleMenuClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -55,97 +57,149 @@ export default function Header() {
     dispatch(logout());
 };
 
-
     const navigate = useNavigate();
 
   // Common header content
   const mainHeader = (
-     <AppBar sx={{ backgroundColor:'#fffafa' }} >
-              <Toolbar sx={{ justifyContent: 'space-between', minHeight: '70px !important' }}>
-                {/* Left Side: Logo & Nav Links */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                  {/* Logo */}
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', cursor: 'pointer' }} onClick={() => navigate(`/`)}>
-                    <Typography variant="h5" sx={{ fontWeight: 800, color: '#444' }}>
-                      barcode
-                    </Typography>
-                    <Typography variant="h5" sx={{ fontWeight: 800, color: '#E94E34' }}>
-                      IP
-                    </Typography>
-                    <Box component="span" sx={{ width: 5, height: 5, bgcolor: '#E94E34', borderRadius: '50%', ml: 0.5, mb: 1 }} />
-                  </Box>
-    
-                  {/* Navigation Links (Hidden on small mobile) */}
-                  <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-                    <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }}  
-                    onClick={() => navigate(`/profile`)}
-                    >
-                      Profile
-                    </Button>
-                    <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} 
-                    onClick={() => navigate(`/recent-search`)}
-                    >
-                      Recent Searches
-                    </Button>
-                    <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} 
-                    onClick={() => navigate(`/project`)}
-                    >
-                      My Project
-                    </Button>
-                  </Box>
-                </Box>
-    
-                {/* Right Side: User Profile */}
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Button
-                    onClick={handleMenuClick}
-                    endIcon={<KeyboardArrowDown />}
-                    sx={{
-                      color: '#333',
-                      '&:hover': { backgroundColor: 'transparent' }
-                    }}
-                  >
-                    <Avatar
-                      sx={{
-                        width: 32,
-                        height: 32,
-                        bgcolor: '#FFDbd6', // Light pink/red bg
-                        color: '#E94E34', // Brand red icon
-                        mr: 1
-                      }}
-                    >
-                      <Person fontSize="small" />
-                    </Avatar>
-                    <Typography variant="body1" sx={{ fontWeight: 600, display: { xs: 'none', sm: 'block' } }}>
-                      Tester
-                    </Typography>
-                  </Button>
-    
-                  {/* Dropdown Menu */}
-                  <Menu
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleMenuClose}
-                    MenuListProps={{ 'aria-labelledby': 'basic-button' }}
-                    PaperProps={{
-                      elevation: 3,
-                      sx: { mt: 1, minWidth: 150 }
-                    }}
-                  >
-                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/account/`)}} >My Account</MenuItem>
-                    <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/recent-search`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>Recent Search</MenuItem>
-                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/profile`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>Profile</MenuItem>
-                    <MenuItem onClick={()=>{handleMenuClose(); navigate(`/project`)}}  sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>My Project</MenuItem>
-                    <MenuItem onClick={() => handleLogout()} sx={{ color: 'primary.main' }}>
-                      Logout
-                    </MenuItem>
-                    
-                  </Menu>
-                </Box>
-              </Toolbar>
-      </AppBar>
+    <AppBar sx={{ backgroundColor: '#fffafa' }}>
+      <Toolbar sx={{ justifyContent: 'space-between', minHeight: '70px !important' }}>
+        {/* Left Side: Logo & Nav Links */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          {/* Logo */}
+          <Box sx={{ display: 'flex', alignItems: 'baseline', cursor: 'pointer' }} onClick={() => navigate(`/`)}>
+            <Typography variant="h5" sx={{ fontWeight: 800, color: '#444' }}>
+              barcode
+            </Typography>
+            <Typography variant="h5" sx={{ fontWeight: 800, color: '#E94E34' }}>
+              IP
+            </Typography>
+            <Box component="span" sx={{ width: 5, height: 5, bgcolor: '#E94E34', borderRadius: '50%', ml: 0.5, mb: 1 }} />
+          </Box>
+
+          {/* Navigation Links (Hidden on small mobile) */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+            <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/profile`)}>
+              Profile
+            </Button>
+            <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/recent-search`)}>
+              Recent Searches
+            </Button>
+            <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/project`)}>
+              My Project
+            </Button>
+          </Box>
+        </Box>
+
+        {/* Right Side: User Profile */}
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Button onClick={handleMenuClick} endIcon={<KeyboardArrowDown />}>
+            <Avatar sx={{ width: 32, height: 32, bgcolor: '#FFDbd6', color: '#E94E34', mr: 1 }}>
+              <Person fontSize="small" />
+            </Avatar>
+
+            {/* 3. Make the text dynamic */}
+            <Typography variant="body1" sx={{ fontWeight: 600, display: { xs: 'none', sm: 'block' } }}>
+              {user?.email || 'Guest'}
+            </Typography>
+          </Button>
+
+          {/* Dropdown Menu */}
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleMenuClose}
+            MenuListProps={{ 'aria-labelledby': 'basic-button' }}
+            PaperProps={{
+              elevation: 3,
+              sx: { mt: 1, minWidth: 150 }
+            }}
+          >
+            <MenuItem
+              onClick={() => {
+                handleMenuClose();
+                navigate(`/account/`);
+              }}
+            >
+              My Account
+            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleMenuClose();
+                navigate(`/recent-search`);
+              }}
+              sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
+            >
+              Recent Search
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleMenuClose();
+                // Pass the user object as 'state'
+                navigate(`/profile`, { state: { userData: user } });
+              }}
+              sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
+            >
+              Profile
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleMenuClose();
+                navigate(`/project`);
+              }}
+              sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
+            >
+              My Project
+            </MenuItem>
+            <MenuItem onClick={() => handleLogout()} sx={{ color: 'primary.main' }}>
+              Logout
+            </MenuItem>
+          </Menu>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 
   return <AppBar {...appBar}>{mainHeader}</AppBar>;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

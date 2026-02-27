@@ -82,12 +82,14 @@ export const userApi = baseApi.injectEndpoints({
       })
     }),
 
-    getAnalystConnections: builder.query({
-      query: (projectId) => ({
-        url: `/api/v1/user/Dashboard/project/connect-analyst/${projectId}`,
-        method: 'POST'
+    createAnalystConnections: builder.mutation({
+      // Accept an object containing the ID and the actual data body
+      query: ({ projectId, body }) => ({
+        url: `/api/v1/user/Dashboard/support-analyst/${projectId}`,
+        method: 'POST',
+        body: body 
       }),
-      providesTags: ['AnalystConnection']
+      invalidatesTags: ['AnalystConnection']
     }),
 
     // --- Support Analysts ---
@@ -107,7 +109,7 @@ export const userApi = baseApi.injectEndpoints({
 export const {
   useGetLatestContentQuery,
   useCreateProjectMutation,
-  useAnalystConnectionsMutation,
+  useCreateAnalystConnectionsMutation,
   useGetAllArticlesQuery,
   useGetSupportAnalystsQuery,
   useFetchAllProjectsQuery,
@@ -129,6 +131,5 @@ export const {
   useGetPublicationByProjectIdQuery,
   useLazyGetPublicationByProjectIdQuery,
 
-  useGetRecentThreeProjectsQuery, // For Search History
-  
+  useGetRecentThreeProjectsQuery // For Search History
 } = userApi;

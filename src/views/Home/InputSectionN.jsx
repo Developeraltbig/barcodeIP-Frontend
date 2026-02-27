@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Paper, InputBase, IconButton, Grid, Checkbox, Button, FormControlLabel, Switch, Typography, Container } from '@mui/material';
+import { Box, Paper, InputBase, IconButton, Grid, Checkbox, Button, FormControlLabel, Switch, Typography, Container, Collapse, TextField } from '@mui/material';
 import { Search as SearchIcon, CloudUploadOutlined, CheckCircle } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 import { useCreateProjectMutation, useLazyGetNonProvisionalByProjectIdQuery } from '../../features/userApi';
 import FullPageLoader from '../../components/FullPageLoader';
+import AdvanceSearch from './AdvanceSearch';
 
 // --- Sub-Component: Custom Filter Card ---
 const FilterCard = ({ label, checked, onChange }) => (
@@ -15,8 +16,8 @@ const FilterCard = ({ label, checked, onChange }) => (
       alignItems: 'center',
       p: 1.5,
       border: '1px solid',
-      borderColor: checked ? '#E94E34' : 'transparent', // Brand color border when checked
-      borderRadius: 2,
+      borderColor: checked ? '#E94E34' : '#e9d2cfff', // Brand color border when checked
+      borderRadius: 0.8,
       cursor: 'pointer',
       transition: 'all 0.2s ease-in-out',
       backgroundColor: '#fff',
@@ -75,6 +76,7 @@ const InputSectionN = () => {
    const dispatch = useDispatch();
    const [createProject, { isLoading, error: apiError }] = useCreateProjectMutation();
 
+
   // Updated Filter List to match your required 5 keys exactly
   const filters = [
     { label: 'Patent', value: 'patent' },
@@ -123,83 +125,60 @@ const InputSectionN = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: -4, mb: 10, position: 'relative', zIndex: 10 }}>
-
-       {(isLoading ) && (
-              <FullPageLoader colors={["#e06a50", "#33FF57", "#3357FF"]} label="Starting Dashboard..." />
-            )}
-      
-      
       {/* 1. Main Search Bar */}
       <Paper
         elevation={2}
         sx={{
           p: '8px 16px',
           display: 'flex',
-          alignItems: 'center',
-          width: '100%',
           borderRadius: '12px',
           border: '1px solid #E5E7EB',
           mb: 3,
-          height: '60px'
+          height: '130px'
         }}
       >
-        <SearchIcon sx={{ color: '#9CA3AF', mr: 2, fontSize: '1.5rem' }} />
-
+        <SearchIcon sx={{ color: '#9CA3AF', mr: 2 ,marginTop:'12px' }} />
         <InputBase
-          sx={{ flex: 1, fontSize: '1rem', color: '#374151' }}
+          sx={{ flex: 1 , marginTop:'30px' }}
+          placeholder="Search here"
+          value={searchValue}
+          multiline
+          rows={6}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+
+        {/* <TextField
+          fullWidth
+          multiline
+          rows={6}
           placeholder="Search here"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          inputProps={{ 'aria-label': 'search bar' }}
-        />
-
-        <IconButton
-          sx={{
-            bgcolor: '#FEF2F2',
-            color: '#E94E34',
-            borderRadius: '8px',
-            p: 1,
-            '&:hover': { bgcolor: '#FEE2E2' }
-          }}
-          aria-label="upload"
-        >
-          <CloudUploadOutlined fontSize="small" />
+          sx={{ flex: 1, border:'none' }}
+          
+        /> */}
+        <IconButton sx={{ bgcolor: '#FEF2F2', color: '#E94E34', borderRadius: '8px' }}>
+          <CloudUploadOutlined />
         </IconButton>
       </Paper>
 
-      {/* 2. Filter Cards Row */}
-      <Grid container spacing={2} sx={{ mb: 4 }}>
+      {/* 2. Filter Cards */}
+      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 10 }} sx={{ mb: 4  }}>
         {filters.map((f) => (
-          <Grid item xs={12} sm={6} md={2.4} key={f.value}>
-            {/* Assuming FilterCard is a custom component you have */}
-            <FilterCard 
-              label={f.label} 
-              checked={selectedFilters.includes(f.value)} 
-              onChange={() => toggleFilter(f.value)} 
-            />
+          <Grid item size={{ xs: 2, sm: 2, md: 2}} key={f.value} >
+            <FilterCard label={f.label} checked={selectedFilters.includes(f.value)} onChange={() => toggleFilter(f.value)} />
           </Grid>
         ))}
       </Grid>
 
       {/* 3. Action Area */}
-      <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 3 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
         <Button
           variant="contained"
           onClick={handleGenerate}
-          disableElevation
-          sx={{
-            bgcolor: '#E07B6F',
-            color: '#fff',
-            px: 4,
-            py: 1.5,
-            textTransform: 'none',
-            fontSize: '1rem',
-            fontWeight: 600,
-            borderRadius: '8px',
-            '&:hover': { bgcolor: '#d65f50' }
-          }}
+          sx={{ bgcolor: '#E07B6F', px: 4, py: 1.5, textTransform: 'none', fontWeight: 600, borderRadius: '8px' }}
         >
-          Generate
+          Generate Key String
         </Button>
 
         <FormControlLabel
@@ -219,9 +198,13 @@ const InputSectionN = () => {
             </Typography>
           }
           labelPlacement="start"
-          sx={{ ml: 0 }}
         />
       </Box>
+
+      {/* 4. Sliding Advance Search Section */}
+      <Collapse in={advanceSearch} timeout="auto">
+        <AdvanceSearch onClear={() => console.log('Clear fields')} />
+      </Collapse>
     </Container>
   );
 };

@@ -16,7 +16,7 @@ import { useGetAllArticlesQuery } from '../../features/userApi';
 // --- Styled Components ---
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  borderRadius: '16px',
+  borderRadius: '6px',
   overflow: 'hidden',
   transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
   border: '1px solid #E5E7EB',

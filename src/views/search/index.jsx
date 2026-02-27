@@ -23,13 +23,15 @@ const mockData = [
 
 function index() {
   const [searchTerm, setSearchTerm] = useState('');
-  // const [selectedCase, setSelectedCase] = useState(null);
+  const [selectedCase, setSelectedCase] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleOpenModal = (item) => {
     setSelectedCase(item);
     setModalOpen(true);
+    
   };
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -67,11 +69,11 @@ function index() {
         </Container>
       </Box>
 
-      {/* <AnalystModal 
+      <AnalystModal 
         open={modalOpen} 
         onClose={() => setModalOpen(false)} 
         caseData={selectedCase} 
-      /> */}
+      />
     </ThemeProvider>
   );
 }
