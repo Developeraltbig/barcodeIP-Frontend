@@ -23,7 +23,7 @@ jobs:
             
       - name: Build and Push Frontendclient
         run: |
-          docker build -t 864387741702.dkr.ecr.us-east-1.amazonaws.com/barcodeip-frontend:latest
+          docker build -t 864387741702.dkr.ecr.us-east-1.amazonaws.com/barcodeip-frontend:latest .
           docker push 864387741702.dkr.ecr.us-east-1.amazonaws.com/barcodeip-frontend:latest
 
       - name: Deploy on EC2
