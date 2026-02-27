@@ -1,6 +1,6 @@
 import React from 'react';
 import InputSectionN from './InputSectionN.jsx';
-import HeaderN from './headerN';
+import HeaderN from './HeaderN.jsx';
 import DashboardWidgets from './DashboardWidgets.jsx';
 import AdvanceSearch from './AdvanceSearch.jsx';
 import KeyFeatures from './KeyFeatures.jsx';
