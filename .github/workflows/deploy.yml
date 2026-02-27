@@ -1,0 +1,39 @@
+name: Deploy Client Frontend
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v1
+            
+      - name: Build and Push Frontendclient
+        run: |
+          docker build -t 864387741702.dkr.ecr.us-east-1.amazonaws.com/barcodeip-frontend:latest
+          docker push 864387741702.dkr.ecr.us-east-1.amazonaws.com/barcodeip-frontend:latest
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd barcodeIp-app
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 864387741702.dkr.ecr.us-east-1.amazonaws.com
+            docker-compose pull frontendclient
+            docker-compose up -d frontendclient

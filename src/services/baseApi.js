@@ -34,9 +34,11 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { logout, setCredentials } from '../features/slice/auth/authSlice';
 import { useSelector } from 'react-redux';
 
+let api_url = "http://54.146.252.18:5000";
+
 // A basic fetchBaseQuery instance
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_API_URL,
+  baseUrl: api_url,
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
@@ -49,7 +51,7 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-    
+
   // If the error is 401, try to refresh
   if (result.error && result.error.status === 401) {
     console.log("1")
@@ -60,34 +62,33 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       api.dispatch(logout());
       return result;
     }
-    console.log('refresh_token ---', refresh_token);
 
 
-    if(refresh_token === true) {
-    console.log('ddd');
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/auth/refresh-token`, {
+    if (refresh_token === true) {
+      console.log('ddd');
+      const response = await axios.post(`${api_url}/api/v1/auth/refresh-token`, {
         refreshToken: api.getState().auth.refreshToken
       })
-  
+
       if (response.status === 200) {
         // Refresh worked!
-        api.dispatch(setCredentials({ 
+        api.dispatch(setCredentials({
           user: api.getState().auth.user,
           refreshToken: api.getState().auth.refreshToken,
-          accessToken: response.data.data.accessToken, 
+          accessToken: response.data.data.accessToken,
           // rememberMe: !!localStorage.getItem('token') 
         }));
-        
+
         // Retry the original request
         result = await baseQuery(args, api, extraOptions);
 
-    }
+      }
 
-  } else {
-    console.log('ddd 333');
-    
-    api.dispatch(logout());
-    return;
+    } else {
+      console.log('ddd 333');
+
+      api.dispatch(logout());
+      return;
 
     }
   }

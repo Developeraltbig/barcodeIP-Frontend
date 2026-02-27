@@ -7,7 +7,7 @@ import PagesRoutes from './PagesRoutes';
 // ==============================|| ROUTING RENDER ||============================== //
 
 const router = createBrowserRouter([MainRoutes, PagesRoutes], {
-  basename: import.meta.env.VITE_APP_BASE_URL
+  basename: "/"
 });
 
 export default router;
