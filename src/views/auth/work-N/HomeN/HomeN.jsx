@@ -1,5 +1,5 @@
 import React from 'react';
-import InputSectionN from './inputSectionN.jsx';
+import InputSectionN from './InputSectionN.jsx';
 import HeaderN from './headerN';
 import DashboardWidgets from './DashboardWidgets.jsx';
 import AdvanceSearch from './AdvanceSearch.jsx';
