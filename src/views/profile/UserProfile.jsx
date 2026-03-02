@@ -5,6 +5,7 @@ import { Box, Container, Typography, Button, Stack, Divider, ThemeProvider, CssB
 import { theme } from './theme';
 import ProfileHeader from './ProfileHeader';
 import UserInfoForm from './UserInfoForm';
+import AccountPage from '../account/AccountPage';
 
 const UserProfile = () => {
   const location = useLocation();
@@ -82,6 +83,8 @@ const UserProfile = () => {
             </Stack>
           </Paper>
         </Container>
+
+        <AccountPage />
       </Box>
     </ThemeProvider>
   );

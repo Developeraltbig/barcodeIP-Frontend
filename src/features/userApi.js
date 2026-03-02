@@ -100,7 +100,8 @@ export const userApi = baseApi.injectEndpoints({
         params: { page, limit }
       }),
       providesTags: ['SupportAnalysts']
-    })
+    }),
+
   }),
   overrideExisting: false
 });
