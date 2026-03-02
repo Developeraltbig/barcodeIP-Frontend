@@ -15,7 +15,7 @@ const Result = Loadable(lazy(() => import('../views/Result/index')));
 const MainLayout = Loadable(lazy(() => import('layouts/MainLayout')));
 const RecentSearch = Loadable(lazy(() => import('../views/search/RecentSearch')));
 const UserProfile = Loadable(lazy(() => import('../views/profile/UserProfile')));
-const AccountPage = Loadable(lazy(() => import('../views/account/index')));
+const AccountPage = Loadable(lazy(() => import('../views/account/AccountPage')));
 const OverlapMatrix = Loadable(lazy(() => import('../views/components/OverlapMatrix')));
 const DraftMasterResult = Loadable(lazy(() => import('../views/Result/non_provisional/DraftMasterResult')));
 const ProvisionalDraftResult = Loadable(lazy(() => import('../views/Result/provisional/ProvisionalDraftResult')));

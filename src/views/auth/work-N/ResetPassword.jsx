@@ -33,7 +33,7 @@ const ResetPassword = () => {
   //   }
   // };
 
-
+console.log("hello")
   const handleSubmit = async (e) => {
   e.preventDefault();
   
@@ -66,7 +66,7 @@ const ResetPassword = () => {
     toast.error(err?.data?.message || "Reset failed");
   }
 
-  console.log("token--", token)
+   console.log("token--", token)
     console.log("pass--", newPassword);
     console.log("pass--", confirmPassword)
 };
