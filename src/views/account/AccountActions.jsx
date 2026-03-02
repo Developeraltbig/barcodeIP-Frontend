@@ -1,10 +1,11 @@
-import React from 'react';
-import { Box, Typography, Button, Stack, alpha, Paper } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, Button, Stack, alpha, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/ExitToApp';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import { useDispatch } from 'react-redux';
-import { useLazyLogoutQuery } from '../../features/slice/auth/authApi';
+import { useDeleteAccountMutation, useLazyLogoutQuery } from '../../features/slice/auth/authApi';
 import { logout } from '../../features/slice/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const AccountActions = () => {
 
@@ -16,10 +17,21 @@ const handleLogout = async () => {
   dispatch(logout());
 };
 
-// const handleDelete = async () => {
-//   await Logout();
-//   dispatch(logout());
-// };
+const navigate = useNavigate();
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
+  const [deleteAccount, { isLoading: isDeleting }] = useDeleteAccountMutation();
+
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteAccount().unwrap();
+      // Clear local storage/session if your app doesn't do it automatically on logout
+      navigate('/pages/auth/login'); 
+    } catch (err) {
+      console.error("Failed to delete account:", err);
+    }
+  };
+  
 
   // Common style for the buttons with hover animation
   const actionButtonStyle = {
@@ -51,11 +63,11 @@ const handleLogout = async () => {
   return (
     <Box sx={{ mt: 8, textAlign: 'left' }}>
       {/* Section Title */}
-      <Typography 
-        variant="h6" 
-        sx={{ 
-          fontWeight: 800, 
-          color: '#475569', 
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 800,
+          color: '#475569',
           mb: 2,
           fontSize: '1.1rem',
           ml: 1 // Slight margin to align with the box edge
@@ -70,7 +82,7 @@ const handleLogout = async () => {
         sx={{
           p: 2,
           maxWidth: '350px', // Restrict width so it stays on the left
-         
+
           borderRadius: '16px',
           bgcolor: 'white',
           boxShadow: '0 4px 12px rgba(0,0,0,0.03)'
@@ -78,7 +90,7 @@ const handleLogout = async () => {
       >
         <Stack spacing={1}>
           <Button
-            startIcon={<LogoutIcon sx={{ color: '#F59E0B' ,  }} />} // Orange Logout
+            startIcon={<LogoutIcon sx={{ color: '#F59E0B' }} />} // Orange Logout
             sx={actionButtonStyle}
             onClick={() => handleLogout()}
           >
@@ -87,12 +99,30 @@ const handleLogout = async () => {
 
           <Button
             startIcon={<DeleteIcon sx={{ color: '#EF4444' }} />} // Red Delete
-            sx={actionButtonStyle}
+            sx={actionButtonStyle} onClick={() => setOpenDeleteModal(true)}
           >
             Delete Account
           </Button>
         </Stack>
       </Paper>
+
+      {/* CONFIRMATION DIALOG */}
+      <Dialog open={openDeleteModal} onClose={() => setOpenDeleteModal(false)}>
+        <DialogTitle>Delete Account?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete your account? This action is permanent and will remove all your data from our servers.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ p: 3 }}>
+          <Button onClick={() => setOpenDeleteModal(false)} variant="outlined">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteAccount} variant="contained" color="error" disabled={isDeleting}>
+            {isDeleting ? 'Deleting...' : 'Yes, Delete My Account'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

@@ -2,7 +2,6 @@ import { baseApi } from '../../../services/baseApi';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-
     login: builder.mutation({
       query: (data) => ({
         url: '/api/v1/auth/login',
@@ -52,22 +51,40 @@ export const authApi = baseApi.injectEndpoints({
       })
     }),
 
-    // ... existing code in authApi.js
-    getProfile: builder.query({
-      query: () => '/api/v1/auth/me', // Adjust this URL to your actual backend profile route
-      providesTags: ['User']
-    }),
-
     // Also add a mutation for updating the profile if you want "Save Changes" to work
     updateProfile: builder.mutation({
       query: (data) => ({
-        url: '/api/v1/auth/update-profile',
+        url: 'api/v1/user/Dashboard/update/userProfile',
         method: 'PATCH',
         body: data
       }),
       invalidatesTags: ['User']
     }),
 
+    updateImage: builder.mutation({
+      query: (data) => ({
+        url: '/api/v1/user/Dashboard/update-profile-image',
+        method: 'PATCH',
+        body: data
+      }),
+      invalidatesTags: ['User']
+    }),
+
+    changePassword: builder.mutation({
+      query: (credentials) => ({
+        url: 'api/v1/user/Dashboard/change-password',
+        method: 'PATCH',
+        body: credentials 
+      })
+    }),
+
+    deleteAccount: builder.mutation({
+      query: () => ({
+        url: '/api/v1/user/Dashboard/deleteUser',
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['User']
+    })
   })
 });
 
@@ -80,5 +97,8 @@ export const {
   useCheckAuthQuery,
   useLazyLogoutQuery,
   useForgotPasswordMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useDeleteAccountMutation,
+  useChangePasswordMutation,
+  useUpdateImageMutation
 } = authApi;
