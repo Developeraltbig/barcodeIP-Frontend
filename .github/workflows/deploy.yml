@@ -34,6 +34,28 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd barcodeIp-app
+
+            echo "Login to ECR"
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 864387741702.dkr.ecr.us-east-1.amazonaws.com
+
+            echo "Stop old containers"
+            docker-compose stop frontendclient
+
+            echo "Remove old containers"
+            docker-compose rm -f frontendclient
+
+            
+            echo "Remove unused Docker images"
+            docker image prune -a -f
+
+            echo "Remove unused Docker volumes"
+            docker volume prune -f
+
+            echo "Remove Docker build cache"
+            docker builder prune -a -f
+            
+            echo "Pull latest image"
             docker-compose pull frontendclient
+
+            echo "Start frontend container"
             docker-compose up -d frontendclient
