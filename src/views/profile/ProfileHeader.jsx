@@ -57,6 +57,7 @@ const ProfileHeader = ({ name, email, currentImage, onImageChange, isUpdating })
               width: 32, height: 32 
             }}
           >
+       
             <input 
               hidden 
               accept="image/*" 

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Box, Typography, TextField, InputAdornment, IconButton, alpha } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-const PasswordInput = ({ label, placeholder }) => {
+// 1. Destructure 'value' from props here
+const PasswordInput = ({ label, placeholder, onChange, value }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -10,6 +11,11 @@ const PasswordInput = ({ label, placeholder }) => {
       <Typography variant="label" sx={{ mb: 1, display: 'block', ml: 0.5 }}>{label}</Typography>
       <TextField
         fullWidth
+        // 2. Pass the value from the parent so the input is "Controlled"
+        value={value} 
+        // 3. Pass the onChange handler so the parent knows when typing happens
+        onChange={onChange}
+        
         type={showPassword ? 'text' : 'password'}
         placeholder={placeholder}
         variant="outlined"

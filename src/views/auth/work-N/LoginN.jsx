@@ -92,7 +92,7 @@ const Login = () => {
     if (validationError) return validationError;
     if (apiError) {
       if ('data' in apiError) return apiError.data?.message || 'Invalid credentials.';
-      return 'An unexpected error occurred.';
+      return 'User not Register';
     }
     return null;
   };

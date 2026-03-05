@@ -74,7 +74,7 @@ export const authApi = baseApi.injectEndpoints({
       query: (credentials) => ({
         url: 'api/v1/user/Dashboard/change-password',
         method: 'PATCH',
-        body: credentials 
+        body: credentials
       })
     }),
 
@@ -84,6 +84,15 @@ export const authApi = baseApi.injectEndpoints({
         method: 'DELETE'
       }),
       invalidatesTags: ['User']
+    }),
+
+    // GET: Fetch User Details by ID
+    getUserDetails: builder.query({
+      query: (id) => ({
+        url: `/api/v1/auth/get-userDetails/${id}`,
+        method: 'GET'
+      }),
+      providesTags: ['User'] // Mark this data with the 'User' tag
     })
   })
 });
@@ -100,5 +109,6 @@ export const {
   useResetPasswordMutation,
   useDeleteAccountMutation,
   useChangePasswordMutation,
-  useUpdateImageMutation
+  useUpdateImageMutation,
+   useGetUserDetailsQuery,
 } = authApi;

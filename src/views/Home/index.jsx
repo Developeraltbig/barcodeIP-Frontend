@@ -12,30 +12,19 @@ import Banner from './Banner';
 function Home() {
   
    // 1. Fetch data from API (passing default pagination if needed)
-      const { LatestContent, isLoading, isError } = useGetLatestContentQuery();
+      const { data: LatestContent} = useGetLatestContentQuery();
     
   
     // 2. Safe Data Extraction
-    const articles = useMemo(() => {
+    const content = useMemo(() => {
       if (!LatestContent) return [];
       // Matches your API structure: { Articles: [...] }
       return LatestContent.data || LatestContent.article || (Array.isArray(LatestContent) ? LatestContent : []);
     }, [LatestContent]);
-  
-    console.log(articles)
-  
-    // 3. Loading State
-    if (isLoading) {
-      return (
-        <Box sx={{ py: 10, textAlign: 'center', bgcolor: '#f0ecec' }}>
-          <Typography>Loading latest Content...</Typography>
-        </Box>
-      );
-    }
-  
+
   return (
     <div style={{marginTop:'30px',}}>
-      <Banner />
+      <Banner content={content} />
       <InputSectionN />
       <DashboardWidgets />
       {/* <AdvanceSearch /> */}

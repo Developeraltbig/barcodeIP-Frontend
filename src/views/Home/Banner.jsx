@@ -3,7 +3,7 @@ import { Box, Typography, Container, Stack, Button } from '@mui/material';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import ExploreIcon from '@mui/icons-material/Explore';
 
-const LandingHero = () => {
+const LandingHero = ({content}) => {
   // Motion values for mouse tracking
   // const mouseX = useMotionValue(0);
   // const mouseY = useMotionValue(0);
@@ -25,12 +25,13 @@ const LandingHero = () => {
   //   mouseY.set(0);
   // };
 
+  console.log(content.image)
   return (
     <Box
       // onMouseMove={handleMouseMove}
       // onMouseLeave={handleMouseLeave}
       component="img"
-      src="https://t3.ftcdn.net/jpg/03/16/91/28/360_F_316912806_RCeHVmUx5LuBMi7MKYTY5arkE4I0DcpU.jpg" 
+      src={ content.images|| "https://t3.ftcdn.net/jpg/03/16/91/28/360_F_316912806_RCeHVmUx5LuBMi7MKYTY5arkE4I0DcpU.jpg" }
       sx={{
         width: '100%',
         height: '80vh',
