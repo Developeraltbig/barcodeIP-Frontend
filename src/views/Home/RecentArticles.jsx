@@ -42,7 +42,7 @@ const NavButton = styled(IconButton)(({ theme }) => ({
 
 // --- Sub-Components ---
 
-const ArticleCard = ({ article,strip }) => (
+const ArticleCard = ({ article, strip }) => (
   <StyledCard elevation={0} style={{boxShadow:'0 4px 12px rgba(0,0,0,0.1)'}}>
     <CardMedia
       component="img"
@@ -54,7 +54,7 @@ const ArticleCard = ({ article,strip }) => (
     />
     <CardContent sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>{article.title}</Typography>
-      <Typography variant="body2" sx={{ color: '#666', mb: 4, height: '40px', overflow: 'hidden' }}>
+      <Typography variant="body2" sx={{ color: '#666', mb: 4, height: '40px' }}>
         {strip(article.description)}
       </Typography>
       <Stack direction="row" justifyContent="space-between" alignItems="center">

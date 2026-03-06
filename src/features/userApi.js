@@ -94,10 +94,9 @@ export const userApi = baseApi.injectEndpoints({
 
     // --- Support Analysts ---
     getSupportAnalysts: builder.query({
-      query: ({ page = 1, limit = 10 } = {}) => ({
-        url: '/api/v1/user/Dashboard/support-analyst/get',
+      query: () => ({
+        url: '/api/v1/user/Dashboard/support-analyst/getAll',
         method: 'GET',
-        params: { page, limit }
       }),
       providesTags: ['SupportAnalysts']
     }),

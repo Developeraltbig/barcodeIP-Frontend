@@ -392,12 +392,12 @@ const UserProfile = () => {
     }
   }, [apiUser, reduxUser]);
 
-  useEffect(() => {
-  if (apiUser) {
-    console.log("Full API Response:", apiUser);
-    console.log("Extracted Phone:", apiUser?.data?.userDetail?.phone_number);
-  }
-}, [apiUser]);
+//   useEffect(() => {
+//   if (apiUser) {
+//     console.log("Full API Response:", apiUser);
+//     console.log("Extracted Phone:", apiUser?.data?.userDetail?.phone_number);
+//   }
+// }, [apiUser]);
 
   // 5. Input Change Handler
   const handleChange = (e) => {

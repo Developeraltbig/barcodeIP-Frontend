@@ -85,7 +85,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       }
 
     } else {
-      console.log('ddd 333');
 
       api.dispatch(logout());
       return;

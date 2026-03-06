@@ -31,7 +31,7 @@ const LandingHero = ({content}) => {
       // onMouseMove={handleMouseMove}
       // onMouseLeave={handleMouseLeave}
       component="img"
-      src={ content.images|| "https://t3.ftcdn.net/jpg/03/16/91/28/360_F_316912806_RCeHVmUx5LuBMi7MKYTY5arkE4I0DcpU.jpg" }
+      src={ content.image }
       sx={{
         width: '100%',
         height: '80vh',

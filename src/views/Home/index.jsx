@@ -28,7 +28,7 @@ function Home() {
       <InputSectionN />
       <DashboardWidgets />
       {/* <AdvanceSearch /> */}
-      <KeyFeatures />
+      {/* <KeyFeatures /> */}
       <RecentArticles/>
     </div>
   );
