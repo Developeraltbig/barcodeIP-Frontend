@@ -480,7 +480,6 @@ const UserProfile = () => {
               onImageChange={handleImageChange}
               isUpdating={isImageUpdating}
             />
-            
             <Divider sx={{ mb: 5 }} />
 
             {/* CRITICAL CHANGE: Pass formData (local state) here, NOT apiUser */}

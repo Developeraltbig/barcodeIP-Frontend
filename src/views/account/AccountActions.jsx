@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useDeleteAccountMutation, useLazyLogoutQuery } from '../../features/slice/auth/authApi';
 import { logout } from '../../features/slice/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { persistor } from '../../app/store';
 
 const AccountActions = () => {
 
@@ -13,8 +14,22 @@ const AccountActions = () => {
   const [Logout] = useLazyLogoutQuery();
 
 const handleLogout = async () => {
-  await Logout();
-  dispatch(logout());
+  try {
+    // 1. Call your API logout endpoint
+    await axios.get("/api/auth/logout");
+  } catch (error) {
+    console.error("Logout error", error);
+  } finally {
+    // 2. PURGE the persistent storage (Deletes stored data from browser)
+    await persistor.purge();
+    
+    // 3. Optional: Clear specific keys just in case
+    localStorage.removeItem('persist:auth');
+    localStorage.removeItem('persist:userDashboard');
+    
+    // 4. Force a hard refresh to clear the Redux state in memory
+    window.location.href = '/pages/auth/login'; 
+  }
 };
 
 const navigate = useNavigate();

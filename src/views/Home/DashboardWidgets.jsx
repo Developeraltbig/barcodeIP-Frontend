@@ -228,8 +228,11 @@ const ListItemRow = ({ item, isLastItem, showAnalystMessage }) => (
     <Box
       sx={{
         display: 'flex',
+        // Sets column for mobile, row for tablet/desktop
+        flexDirection: { xs: 'column', sm: 'row' },
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        // Aligns items to the start in column mode, or centers them in row mode if preferred
+        alignItems: { xs: 'flex-start', sm: 'center' },
         gap: 2,
         py: 2.5,
         cursor: 'pointer',
@@ -241,9 +244,10 @@ const ListItemRow = ({ item, isLastItem, showAnalystMessage }) => (
         <Typography variant="body1" sx={{ fontWeight: 600, color: '#374151', mb: 0.5, lineHeight: 1.4 }}>
           {item.project_title || item.title || 'Untitled Project'}
         </Typography>
-        
+
         <Typography variant="body2" sx={{ color: '#E94E34', fontWeight: 500 }}>
           Case ID: {item.project_id || 'N/A'}
+          {console.log("kgjhfj",item)}
         </Typography>
 
         {/* LOGIC: Only show message if:
@@ -251,10 +255,12 @@ const ListItemRow = ({ item, isLastItem, showAnalystMessage }) => (
            2. The analyst_record and message actually exist (using Optional Chaining ?.)
         */}
         {showAnalystMessage && item.analyst_record?.message && (
-          <Typography variant="body2" sx={{ color: '#6B7280', mt: 0.5, }}>
-             {item.analyst_record.message} 
+          <Typography variant="body2" sx={{ color: '#6B7280', mt: 0.5 }}>
+            {item.analyst_record.message} 
+            
           </Typography>
         )}
+        
       </Box>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, pt: 0.5 }}>
@@ -338,58 +344,42 @@ const DashboardWidgets = () => {
 
   return (
     <Box sx={{ bgcolor: '#F3F4F6', py: 5 }}>
-      <Container maxWidth="md">
-        <Grid 
-  container 
-  spacing={4} 
-  sx={{ 
-    justifyContent: 'center', 
-    alignItems: 'stretch', // Ensures both cards have equal height if content differs
-    py: 4, // Adds some vertical padding
-    px: { xs: 2, md: 0 } // Padding on mobile, none on desktop
-  }}
->
-  
-  {/* SEARCH HISTORY WIDGET */}
-  <Grid 
-    item 
-    xs={12}    // Full width on mobile
-    sm={10}    // Slightly narrower on tablets
-    md={6}     // 50% width on small desktops
-    lg={5}     // Fixed relative size on large screens to keep it elegant
-  >
-    <WidgetCard 
-      title="Search History" 
-      icon={HistoryIcon} 
-      data={projects} 
-      isLoading={loadingProjects}
-      isAnalystWidget={false}
-    />
-  </Grid>
+      <Container maxWidth="xl">
+        <Grid
+          container
+          columns={{ xs: 4, sm: 8, md: 12 }}
+          spacing={4}
+          sx={{
+            justifyContent: 'center',
+            alignItems: 'stretch', // Ensures both cards have equal height if content differs
+            py: 4, // Adds some vertical padding
+            px: { xs: 2, md: 0 }, // Padding on mobile, none on desktop
+            flexWrap:'wrap'
+          }}
+        >
+          {/* SEARCH HISTORY WIDGET */}
+          <Grid
+            item
+            size={{ xs: 6, md: 6 }}
+          >
+            <WidgetCard title="Search History" icon={HistoryIcon} data={projects} isLoading={loadingProjects} isAnalystWidget={false} />
+          </Grid>
 
-  {/* ANALYST CONNECTIONS WIDGET */}
-  <Grid 
-    item 
-    xs={12} 
-    sm={10} 
-    md={6} 
-    lg={5}
-  >
-    <WidgetCard 
-      title="Connected with an Analyst" 
-      icon={LinkIcon} 
-      data={projects} 
-      isLoading={loadingProjects}
-      isAnalystWidget={true}
-    />
-  </Grid>
-
-</Grid>
+          {/* ANALYST CONNECTIONS WIDGET */}
+          <Grid item size={{ xs: 6, md: 6 }} >
+            
+            <WidgetCard
+              title="Connected with an Analyst"
+              icon={LinkIcon}
+              data={projects}
+              isLoading={loadingProjects}
+              isAnalystWidget={true}
+            />
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );
 };
 
 export default DashboardWidgets;
-
-

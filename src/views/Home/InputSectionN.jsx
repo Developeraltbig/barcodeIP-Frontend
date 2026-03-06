@@ -118,7 +118,7 @@ const InputSectionN = () => {
     console.log("Payload Prepared:", formData);
    
       const result = await createProject(formData).unwrap();
-      console.log('Create Project Success:', result);
+      // console.log('Create Project Success:', result);
  
   };
 
@@ -139,7 +139,7 @@ const InputSectionN = () => {
       >
         <SearchIcon sx={{ color: '#9CA3AF', mr: 2 ,marginTop:'12px' }} />
         <InputBase
-          sx={{ flex: 1 , marginTop:'30px' }}
+          sx={{ flex: 1 }}
           placeholder="Search here"
           value={searchValue}
           multiline

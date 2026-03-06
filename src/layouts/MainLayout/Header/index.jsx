@@ -26,6 +26,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLazyLogoutQuery } from '../../../features/slice/auth/authApi';
 import { logout, setCredentials } from '../../../features/slice/auth/authSlice';
+import { persistor } from '../../../app/store';
 
 
 
@@ -52,9 +53,28 @@ export default function Header() {
       setAnchorEl(null);
     };
     
-    const handleLogout = async () => {
-     await Logout();
-    dispatch(logout());
+//     const handleLogout = async () => {
+//      await Logout();
+//     dispatch(logout());
+// };
+
+const handleLogout = async () => {
+  try {
+    // 1. Call your API logout endpoint
+    await axios.get("/api/auth/logout");
+  } catch (error) {
+    console.error("Logout error", error);
+  } finally {
+    // 2. PURGE the persistent storage (Deletes stored data from browser)
+    await persistor.purge();
+    
+    // 3. Optional: Clear specific keys just in case
+    localStorage.removeItem('persist:auth');
+    localStorage.removeItem('persist:userDashboard');
+    
+    // 4. Force a hard refresh to clear the Redux state in memory
+    window.location.href = '/pages/auth/login'; 
+  }
 };
 
     const navigate = useNavigate();

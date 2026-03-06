@@ -42,30 +42,96 @@ const NavButton = styled(IconButton)(({ theme }) => ({
 
 // --- Sub-Components ---
 
+// const ArticleCard = ({ article, strip }) => (
+//   <StyledCard elevation={0} style={{boxShadow:'0 4px 12px rgba(0,0,0,0.1)'}}>
+//     <CardMedia
+//       component="img"
+//       height="220"
+//       image={article.image}
+//       // image='https://media.istockphoto.com/id/902787158/photo/woman-hands-with-pen-writing-on-notebook-in-the-office.jpg?s=612x612&w=0&k=20&c=AFrTZ8bU1XrEifN4GU57k9PK8HYd3a3whGB_0pFp29E='
+//       alt={article.title}
+//       sx={{ bgcolor: '#fff', objectFit: 'cover'  }}
+//     />
+//     <CardContent sx={{ p: 3 }}>
+//       <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>{article.title}</Typography>
+//       <Typography variant="body2" sx={{ color: '#666', mb: 4, height: '40px' }}>
+//         {strip(article.description)}
+//       </Typography>
+//       <Stack direction="row" justifyContent="space-between" alignItems="center">
+//         <Typography variant="caption" sx={{ color: '#999', fontWeight: 600 }}>{article.date}</Typography>
+//         <Link href="#" sx={{ color: '#E94E34', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 0.5, textDecoration: 'none' }}>
+//           View more <ArrowForwardIcon sx={{ fontSize: 16 }} />
+//         </Link>
+//       </Stack>
+//     </CardContent>
+//   </StyledCard>
+// );
+
+const stripHtml = (html) => {
+  if (!html) return "";
+  // 1. Remove HTML tags and replace &nbsp; with a standard space
+  const cleanText = html.replace(/&nbsp;/g, ' ').replace(/<[^>]*>?/gm, '');
+  
+  // 2. Split by spaces, take 30 words, and join them
+  const words = cleanText.split(/\s+/).filter(word => word.length > 0);
+  
+  if (words.length > 30) {
+    return words.slice(0, 30).join(' ') + '...';
+  }
+  
+  return cleanText;
+};
+
 const ArticleCard = ({ article, strip }) => (
-  <StyledCard elevation={0} style={{boxShadow:'0 4px 12px rgba(0,0,0,0.1)'}}>
-    <CardMedia
-      component="img"
-      height="220"
-      // image={article.image}
-      image='https://media.istockphoto.com/id/902787158/photo/woman-hands-with-pen-writing-on-notebook-in-the-office.jpg?s=612x612&w=0&k=20&c=AFrTZ8bU1XrEifN4GU57k9PK8HYd3a3whGB_0pFp29E='
-      alt={article.title}
-      sx={{ bgcolor: '#fff', objectFit: 'cover'  }}
-    />
+  <StyledCard elevation={0} style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+    <CardMedia component="img" height="220"
+    image='https://media.istockphoto.com/id/1177502660/photo/young-woman-reading-the-news-on-a-modern-tablet-computer-while-sitting-in-her-living-room.jpg?s=612x612&w=0&k=20&c=oEfXfMaKkgAVfshd7yk_bxGk2iQncWueLVlTL__gWWg='
+    //  image={article.image}
+     alt={article.title}
+    sx={{ bgcolor: '#fff', objectFit: 'cover' }} />
     <CardContent sx={{ p: 3 }}>
-      <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>{article.title}</Typography>
-      <Typography variant="body2" sx={{ color: '#666', mb: 4, height: '40px' }}>
+      <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>
+        {article.title}
+      </Typography>
+
+      {/* Remove height: '40px' so the card can adapt to the 30-word limit */}
+      <Typography
+        variant="body2"
+        sx={{
+          color: '#666',
+          mb: 4,
+          // This forces the description to exactly 3 lines
+          display: '-webkit-box',
+          overflow: 'hidden',
+          WebkitBoxOrient: 'vertical',
+          WebkitLineClamp: 3
+        }}
+      >
         {strip(article.description)}
       </Typography>
+
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography variant="caption" sx={{ color: '#999', fontWeight: 600 }}>{article.date}</Typography>
-        <Link href="#" sx={{ color: '#E94E34', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 0.5, textDecoration: 'none' }}>
+        <Typography variant="caption" sx={{ color: '#999', fontWeight: 600 }}>
+          {article.date}
+        </Typography>
+        <Link
+          href="#"
+          sx={{
+            color: '#E94E34',
+            fontWeight: 700,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 0.5,
+            textDecoration: 'none'
+          }}
+        >
           View more <ArrowForwardIcon sx={{ fontSize: 16 }} />
         </Link>
       </Stack>
     </CardContent>
   </StyledCard>
 );
+
 
 const RecentArticles = () => {
   // 1. Fetch data from API (passing default pagination if needed)
@@ -89,10 +155,6 @@ const RecentArticles = () => {
       </Box>
     );
   }
-
-   const stripHtml = (html) => {
-        return html?.replace(/<[^>]*>?/gm, '') || "";
-      }; 
 
   return (
     <Box sx={{ bgcolor: '#f0ecec', py: 10, position: 'relative' }}>
