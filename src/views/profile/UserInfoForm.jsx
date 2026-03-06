@@ -24,6 +24,8 @@ const FormField = ({ label, name, value, onChange, placeholder }) => (
 
 const UserInfoForm = ({ formData, handleChange }) => (
   <Grid container spacing={3}>
+
+    {console.log("user info - " , formData)}
     <Grid item xs={12} md={6}>
       <FormField label="Full Name" name="name" value={formData.name} onChange={handleChange} placeholder="Tester" />
     </Grid>
@@ -31,7 +33,7 @@ const UserInfoForm = ({ formData, handleChange }) => (
       <FormField label="Email Address" name="email" value={formData.email} onChange={handleChange} placeholder="example@gmail.com" />
     </Grid>
     <Grid item xs={12} md={6}>
-      <FormField label="Phone Number" name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 00000 00000" />
+      <FormField  label="Phone Number" name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 00000 00000" />
     </Grid>
   </Grid>
 );
