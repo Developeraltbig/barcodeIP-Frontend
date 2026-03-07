@@ -169,7 +169,7 @@ const PatentCard = ({data ,  wideMode}) => {
     <Box sx={{ 
       textAlign: 'center', 
       py: 8, 
-      bgcolor: '#fff', 
+      bgcolor: 'transparent', 
       borderRadius: '8px', 
       // border: '1px dashed #b1b9c0' 
     }}>
