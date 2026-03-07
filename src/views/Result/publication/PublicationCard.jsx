@@ -25,48 +25,6 @@ const PatentCard = ({data, wideMode }) => {
   
   return (
     <>
-    {/* {data.scholarResults?.map((data, index) => (
-     <Card 
-             component={motion.div}
-             initial={{ opacity: 0, y: 20 }}
-             animate={{ opacity: 1, y: 0 }}
-             lg={{maxWidth:'100%',}}  
-             whileHover={{ y: -5, boxShadow: '0 12px 30px rgba(0,0,0,0.08)' }}
-             sx={{ p: 3, borderRadius: '5px', border: '1px solid #b1b9c0', height: '100%', display: 'flex', flexDirection: 'column', width:'100%', '&:hover': { border: '1px solid #b1b9c0'  } ,
-             '@media (min-width: 1410px)': {
-               maxWidth: wideMode ? '650px' : '100%', 
-             },  }}
-           >
-
-        <Typography variant="h6" sx={{ fontWeight: 800, color: '#1e293b', mb: 2, fontSize: '1.1rem', lineHeight: 1.3 }}>
-          {data?.snippet}
-        </Typography>
-
-        <Stack direction="row" flexWrap="wrap" gap={1.5} sx={{ mb: 2 }}>
-          <Chip 
-            onClick={() => window.open(`${data?.scholar_link}`, '_blank', 'noopener,noreferrer')}
-            label= "View more" 
-            icon={<OpenInNewIcon sx={{ fontSize: '14px !important' }} />}
-            sx={{ bgcolor: `${BRAND_RED}10`, color: BRAND_RED, fontWeight: 800, borderRadius: '8px', cursor: 'pointer' }} 
-          />
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#64748b' }}>
-            <CalendarTodayIcon sx={{ fontSize: 16 }} />
-            <Typography variant="caption" sx={{ fontWeight: 600 }}>{data?.publication_date}</Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#64748b' }}>
-            <PersonOutlineIcon sx={{ fontSize: 18 }} />
-            <Typography variant="caption" sx={{ fontWeight: 600 }}>{data?.author}</Typography>
-          </Box>
-        </Stack>
-
-        <Typography variant="body2" sx={{ color: '#475569', mb: 4, lineHeight: 1.6, flexGrow: 1 }}>
-          {truncateWords(data?.title, 20)}
-        </Typography>
-      </Card>
-
-    ))} */}
-
-
 
     <>
   {/* 1. Check if scholarResults exists and has items */}
@@ -92,7 +50,10 @@ const PatentCard = ({data, wideMode }) => {
           },
         }}
       >
-        <Typography variant="h6" sx={{ fontWeight: 800, color: '#1e293b', mb: 2, fontSize: '1.1rem', lineHeight: 1.3 }}>
+        <Typography variant="h6" sx={{ fontWeight: 800, color: '#1e293b', mb: 2, fontSize: '1.1rem', lineHeight: 1.3, display: '-webkit-box',
+                  WebkitLineClamp: 1,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden' }}>
           {scholar?.snippet}
         </Typography>
 
@@ -113,7 +74,10 @@ const PatentCard = ({data, wideMode }) => {
           </Box>
         </Stack>
 
-        <Typography variant="body2" sx={{ color: '#475569', mb: 4, lineHeight: 1.6, flexGrow: 1 }}>
+        <Typography variant="body2" sx={{ color: '#475569', mb: 4, lineHeight: 1.6, flexGrow: 1 ,  display: '-webkit-box',
+                  WebkitLineClamp: 1,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden'}}>
           {truncateWords(scholar?.title, 20)}
         </Typography>
       </Card>

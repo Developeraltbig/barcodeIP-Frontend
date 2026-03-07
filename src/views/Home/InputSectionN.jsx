@@ -157,7 +157,7 @@
 
 //       <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 10 }} sx={{ mb: 4 }}>
 //         {filters.map((f) => (
-//           <Grid item xs={2} sm={2} md={2} key={f.value}>
+//           <Grid item xs={2} sm={2} md={2} size={2} key={f.value}>
 //             <FilterCard label={f.label} checked={selectedFilters.includes(f.value)} onChange={() => toggleFilter(f.value)} />
 //           </Grid>
 //         ))}
@@ -284,8 +284,8 @@ const InputSectionN = () => {
     { label: 'Patent', value: 'patent' },
     { label: 'Publication', value: 'publish' },
     { label: 'Products', value: 'product' },
-    { label: 'Provisional Specification', value: 'provisional' },
-    { label: 'Non-Provisional Specification', value: 'non-provisional' }
+    { label: 'Provisional ', value: 'provisional' },
+    { label: 'Non-Provisional ', value: 'non-provisional' }
   ];
 
   const handleGenerate = async () => {
@@ -337,10 +337,10 @@ const InputSectionN = () => {
         </IconButton>
       </Paper>
 
-      <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 10 }} sx={{ mb: 4 }}>
+      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 10 }} sx={{mb:'20px'}}>
         {filters.map((f) => (
-          <Grid item xs={2} sm={2} md={2} key={f.value}>
-            <Box onClick={() => setSelectedFilters(prev => prev.includes(f.value) ? prev.filter(v => v !== f.value) : [...prev, f.value])} sx={{ cursor: 'pointer', p: 1.5, border: '1px solid', borderColor: selectedFilters.includes(f.value) ? '#E94E34' : '#E5E7EB', borderRadius: 1, display: 'flex', alignItems: 'center', bgcolor: '#fff' }}>
+          <Grid item xs={2} sm={2} md={4} size={{ xs: 2, sm: 2, md: 2}}  key={f.value}  >
+            <Box onClick={() => setSelectedFilters(prev => prev.includes(f.value) ? prev.filter(v => v !== f.value) : [...prev, f.value])} sx={{ cursor: 'pointer', p: 1.2, border: '1px solid', borderColor: selectedFilters.includes(f.value) ? '#E94E34' : '#E5E7EB', borderRadius: 1, display: 'flex', alignItems: 'center', bgcolor: '#fff' }}>
                 <Checkbox checked={selectedFilters.includes(f.value)} sx={{ color: '#E94E34', '&.Mui-checked': { color: '#E94E34' } }} />
                 <Typography variant="body2">{f.label}</Typography>
             </Box>
@@ -363,3 +363,23 @@ const InputSectionN = () => {
 };
 
 export default InputSectionN;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
