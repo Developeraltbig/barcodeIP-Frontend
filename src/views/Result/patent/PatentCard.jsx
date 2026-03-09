@@ -10,17 +10,18 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import { BRAND_RED, outlineBtnStyle, filledBtnStyle } from '../constants';
 import { useNavigate } from 'react-router-dom';
 
-
 const NoDataFound = ({ tabName }) => (
-  <Box sx={{ 
-    display: 'flex', 
-    flexDirection: 'column', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    py: 10, 
-    width: '100%',
-    opacity: 0.6 
-  }}>
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      py: 10,
+      width: '100%',
+      opacity: 0.6
+    }}
+  >
     {/* <InboxIcon sx={{ fontSize: 60, mb: 2, color: 'text.secondary' }} /> */}
     <Typography variant="h5" gutterBottom>
       No {tabName} Found
@@ -31,22 +32,27 @@ const NoDataFound = ({ tabName }) => (
   </Box>
 );
 
-
-
-const PatentCard = ({data ,  wideMode}) => {
+const PatentCard = ({ data, wideMode }) => {
   const navigate = useNavigate();
 
   const truncateWords = (text, limit) => {
-  if (!text) return '';
-  const words = text.split(' ');
-  if (words.length <= limit) return text;
-  return words.slice(0, limit).join(' ') + '...';
-};
+    if (!text) return '';
+    const words = text.split(' ');
+    if (words.length <= limit) return text;
+    return words.slice(0, limit).join(' ') + '...';
+  };
+
+  const handlePatentRedirect = (rawId) => {
+    if (!rawId) return;
+
+    // Optional: Clean the ID (remove spaces or dots if your API sends them messy)
+    const cleanId = rawId.trim().replace(/\s/g, '');
+    const url = `https://patents.google.com/${cleanId}`;
+
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
 
 
-
-
-  
   return (
     <>
       {/* Check if the comparisons array exists and has items */}
@@ -86,11 +92,12 @@ const PatentCard = ({data ,  wideMode}) => {
                   overflow: 'hidden'
                 }}
               >
-                {item?.details?.title || "There is no description present here! ".repeat(50)}
+                {item?.details?.title || 'There is no description present here! '.repeat(50)}
               </Typography>
 
               <Stack direction="row" flexWrap="wrap" gap={1.5} sx={{ mb: 2 }}>
                 <Chip
+                  onClick={() => handlePatentRedirect(item?.details?.patent_id)} disabled={!item?.details?.patent_id}
                   label={item?.details?.patent_id.match(/(?<=\/)[A-Z0-9]+(?=\/)/)}
                   icon={<OpenInNewIcon sx={{ fontSize: '14px !important' }} />}
                   sx={{ bgcolor: `${BRAND_RED}10`, color: BRAND_RED, fontWeight: 800, borderRadius: '8px', cursor: 'pointer' }}
@@ -103,12 +110,21 @@ const PatentCard = ({data ,  wideMode}) => {
                 </Box>
               </Stack>
 
-              <Typography variant="body2" sx={{ color: '#475569', mb: 4, lineHeight: 1.6, flexGrow: 1,display: '-webkit-box',
+              <Typography
+                variant="body2"
+                sx={{
+                  color: '#475569',
+                  mb: 4,
+                  lineHeight: 1.6,
+                  flexGrow: 1,
+                  display: '-webkit-box',
                   WebkitLineClamp: 1,
                   WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden' }}>
+                  overflow: 'hidden'
+                }}
+              >
                 {/* {truncateWords(item?.details?.abstract, 20)} */}
-                {item?.details?.abstract || "There is no description present here! ".repeat(50)}
+                {item?.details?.abstract || 'There is no description present here! '.repeat(50)}
               </Typography>
 
               <Box sx={{ mt: 'auto' }}>
@@ -126,24 +142,26 @@ const PatentCard = ({data ,  wideMode}) => {
         ))
       ) : (
         /* 2. Fallback UI when no scholar results are found */
-            <Box sx={{ 
-              width: '100%', 
-              p: 5, 
-              textAlign: 'center', 
-              border: '1px dashed #b1b9c0', 
-              borderRadius: '8px',
-              bgcolor: 'rgba(0,0,0,0.02)'
-            }}>
-              <Typography variant="h6" color="textSecondary">
-                No Patent Results Found
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                Try adjusting your search or checking back later.
-              </Typography>
-            </Box>
+        <Box
+          sx={{
+            width: '100%',
+            p: 5,
+            textAlign: 'center',
+            border: '1px dashed #b1b9c0',
+            borderRadius: '8px',
+            bgcolor: 'rgba(0,0,0,0.02)'
+          }}
+        >
+          <Typography variant="h6" color="textSecondary">
+            No Patent Results Found
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Try adjusting your search or checking back later.
+          </Typography>
+        </Box>
       )}
     </>
   );
-}
+};
 
-export default PatentCard
+export default PatentCard;

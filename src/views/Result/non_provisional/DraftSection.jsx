@@ -50,7 +50,7 @@ const DraftSection = ({
     } else if (sectionKey === "detailed_descriptions") {
       return "<i>Waiting for Brief Description...</i>";
     }
-    return "<i>No content generated yet.</i>";
+    return "<i>Generating your content.</i>";
   };
 
   const quillModules = {
@@ -166,7 +166,7 @@ const DraftSection = ({
         <div
           className="content-view"
           dangerouslySetInnerHTML={{
-            __html: localContent || getPlaceholder(),
+            __html: localContent || getPlaceholder()
           }}
         />
       )}

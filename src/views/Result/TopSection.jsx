@@ -55,7 +55,7 @@ const TopSection = () => {
                 alignItems="center" 
                 spacing={1} 
                 sx={{ mb: { xs: 1, sm: 2 }, cursor: 'pointer' }} 
-                onClick={() => navigate('/project')}
+                onClick={() => navigate(-1)}
               >
                 <IconButton size="small" sx={{ color: '#64748b' }}>
                   <ArrowBackIcon fontSize="small" />
@@ -104,7 +104,7 @@ const TopSection = () => {
             <Button
               variant="outlined"
               onClick={() => setModalOpen(true)}
-              startIcon={<AutoAwesomeIcon />}
+              // startIcon={<AutoAwesomeIcon />}
               fullWidth={isMobile}
              
 

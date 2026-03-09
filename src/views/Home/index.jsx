@@ -29,7 +29,7 @@ function Home() {
       <DashboardWidgets />
       {/* <AdvanceSearch /> */}
       {/* <KeyFeatures /> */}
-      <RecentArticles/>
+      {/* <RecentArticles/> */}
     </div>
   );
 }

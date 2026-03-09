@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
 
 // material-ui
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -34,6 +34,7 @@ export default function MainLayout() {
 
   return (
     <>
+    <ScrollRestoration />
     <Header />
    
     <Box
