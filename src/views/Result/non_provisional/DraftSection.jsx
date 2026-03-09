@@ -110,7 +110,7 @@ const DraftSection = ({
                   </button>
                 )}
 
-                {/* {sectionKey !== "add_custom_paragraph" &&
+                {sectionKey !== "add_custom_paragraph" &&
                   sectionKey !== "custom_paragraphs" &&
                   sectionKey !== "sequence_listing" && (
                     <button
@@ -130,16 +130,16 @@ const DraftSection = ({
                     >
                       <FaRedo />
                     </button>
-                  )} */}
+                  )}
 
-                {/* <button
+                <button
                   className="icon-btn text-danger"
                   onClick={() => setIsEditing(true)}
                   title="Edit"
                 >
                   <FaPen />
 
-                </button> */}
+                </button>
               </>
             )
           )}

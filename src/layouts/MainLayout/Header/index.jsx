@@ -101,11 +101,11 @@ const handleLogout = async () => {
             <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/profile`)}>
               Profile
             </Button>
-            <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/recent-search`)}>
+            {/* <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/recent-search`)}>
               Recent Searches
-            </Button>
+            </Button> */}
             <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/project`)}>
-              My Project
+              My Projects
             </Button>
           </Box>
         </Box>
@@ -134,16 +134,8 @@ const handleLogout = async () => {
               sx: { mt: 1, minWidth: 150 }
             }}
           >
-            <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                navigate(`/account/`);
-              }}
-            >
-              My Account
-            </MenuItem>
-            <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-            <MenuItem
+            {/* <MenuItem onClick={handleMenuClose}>Settings</MenuItem> */}
+            {/* <MenuItem
               onClick={() => {
                 handleMenuClose();
                 navigate(`/recent-search`);
@@ -151,7 +143,7 @@ const handleLogout = async () => {
               sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
             >
               Recent Search
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem
               onClick={() => {
                 handleMenuClose();

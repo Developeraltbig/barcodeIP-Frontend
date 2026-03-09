@@ -1,6 +1,5 @@
 
-
-// import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect, useCallback } from 'react';
 // import { useSelector } from 'react-redux';
 // import { 
 //   Box, Container, Typography, Button, Stack, Divider, 
@@ -10,218 +9,92 @@
 // import ProfileHeader from './ProfileHeader';
 // import UserInfoForm from './UserInfoForm';
 // import AccountPage from '../account/AccountPage';
-// import { useGetUserDetailsQuery, useUpdateImageMutation, useUpdateProfileMutation } from '../../features/slice/auth/authApi';
-
-// // 1. Import the mutation hook
-
-
-// const UserProfile = () => {
-//   const reduxUser = useSelector((state) => state.auth.user);
-//   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
-//   const [updateImage, { isLoading: isImageUpdating }] = useUpdateImageMutation();
-//    const [getUserDetails] = useGetUserDetailsQuery();
-  
-//   // State for success/error feedback
-//   const [feedback, setFeedback] = useState({ open: false, message: '', severity: 'success' });
-
-//   const [formData, setFormData] = useState({
-//     name: reduxUser?.first_name || '', // Use first_name from DB
-//     email: reduxUser?.email || '',
-//     phone: reduxUser?.phone_number || '', // Use phone_number from DB
-//   });
-
-//   // Sync state if Redux updates
-//   useEffect(() => {
-//   // Only update if reduxUser actually has data
-//   if (reduxUser && Object.keys(reduxUser).length > 0) {
-//     setFormData({
-//       name: reduxUser.first_name || '', // Use the DB key
-//       email: reduxUser.email || '',
-//       phone: reduxUser.phone_number || '', // Use the DB key
-//     });
-//   }
-// }, [reduxUser]); // This triggers as soon as Redux finishes loading from storage
-
-//   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-//   // 2. The API Integration Logic
-//   const handleSave = async () => {
-//     try {
-//       // Map local state to the Database format
-//       const payload = {
-//         first_name: formData.name,
-//         phone_number: formData.phone
-//       };
-
-//       await updateProfile(payload).unwrap();
-      
-//       setFeedback({ open: true, message: 'Profile updated successfully!', severity: 'success' });
-//     } catch (err) {
-//       setFeedback({ 
-//         open: true, 
-//         message: err?.data?.message || 'Failed to update profile', 
-//         severity: 'error' 
-//       });
-//     }
-//   };
-
-//   // Handle File Selection and Upload
-//   const handleImageChange = async (e) => {
-//     const file = e.target.files[0];
-//     if (!file) return;
-
-//     // Create FormData to match your Postman setup
-//     const formDataToSend = new FormData();
-//     formDataToSend.append('profile_image', file); // 'profile_image' matches your API key
-
-//     try {
-//       await updateImage(formDataToSend).unwrap();
-//       setFeedback({ open: true, message: 'Profile image updated!', severity: 'success' });
-//     } catch (err) {
-//       setFeedback({ 
-//         open: true, 
-//         message: err?.data?.message || 'Failed to upload image', 
-//         severity: 'error' 
-//       });
-//     }
-//   };
-
-//   return (
-//     <ThemeProvider theme={theme}>
-//       <CssBaseline />
-//       <Box sx={{ minHeight: '100vh', py: 8, bgcolor: 'background.default', marginTop: '70px' }}>
-//         <Container maxWidth="md">
-//           <Typography variant="h5" sx={{ mb: 4, px: 1 }}>
-//             User's Information
-//           </Typography>
-
-//           <Paper elevation={0} sx={{ p: { xs: 3, md: 6 }, borderRadius: 2, border: '1px solid #dbdee2ff' }}>
-//             <ProfileHeader
-//               name={formData.name}
-//               email={formData.email}
-//              currentImage={reduxUser?.profile_image} // Pass the current image URL
-//               onImageChange={handleImageChange}
-//               isUpdating={isImageUpdating}
-//             />
-            
-
-//             <Divider sx={{ mb: 5 }} />
-
-//             {/* Ensure UserInfoForm uses the correct name attributes: "name" and "phone" */}
-//             <UserInfoForm formData={formData} handleChange={handleChange} />
-
-//             <Stack direction="row" spacing={2} sx={{ mt: 8 }}>
-//               <Button
-//                 variant="outlined"
-//                 onClick={() =>
-//                   setFormData({
-//                     name: reduxUser?.first_name || '',
-//                     phone: reduxUser?.phone_number || ''
-//                   })
-//                 }
-//               >
-//                 Cancel
-//               </Button>
-
-//               <Button variant="contained" disabled={isLoading} onClick={handleSave} sx={{ minWidth: '150px' }}>
-//                 {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Save Changes'}
-//               </Button>
-//             </Stack>
-//           </Paper>
-//         </Container>
-
-//         <AccountPage />
-
-//         {/* Feedback Toast */}
-//         <Snackbar open={feedback.open} autoHideDuration={4000} onClose={() => setFeedback({ ...feedback, open: false })}>
-//           <Alert severity={feedback.severity} variant="filled">
-//             {feedback.message}
-//           </Alert>
-//         </Snackbar>
-//       </Box>
-//     </ThemeProvider>
-//   );
-// };
-
-// export default UserProfile;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
 // import { 
-//   Box, Container, Typography, Button, Stack, Divider, 
-//   ThemeProvider, CssBaseline, Paper, CircularProgress, Alert, Snackbar 
-// } from '@mui/material';
-// import { theme } from './theme';
-// import ProfileHeader from './ProfileHeader';
-// import UserInfoForm from './UserInfoForm';
-// import AccountPage from '../account/AccountPage';
-// import { useGetUserDetailsQuery, useUpdateImageMutation, useUpdateProfileMutation } from '../../features/slice/auth/authApi';
+//   useGetUserDetailsQuery, 
+//   useUpdateImageMutation, 
+//   useUpdateProfileMutation 
+// } from '../../features/slice/auth/authApi';
 
 // const UserProfile = () => {
-//   // We keep reduxUser as a backup, but we prioritize API data
-//    const { user: reduxUser } = useSelector((state) => state.auth);
-//    const userId = reduxUser?.id; // Access the ID
-//     console.log("user data--- line 185",userId);
+//   // 1. Get User ID from Redux
+//   const { user: reduxUser } = useSelector((state) => state.auth);
+//   const userId = reduxUser?.id || reduxUser?._id;
 
-//   // 2. Initialize the Query to fetch data immediately on load
-//   // const { data: apiUser, isLoading: isFetchingUser, refetch } = useGetUserDetailsQuery();
+//   // 2. API Hooks
 //   const { 
 //     data: apiUser, 
-//     isLoading: isFetchingUser, 
+//     isLoading: isApiLoading, // Use isLoading instead of isFetchingUser to prevent UI flashing
 //     refetch 
-//   } = useGetUserDetailsQuery(userId);
+//   } = useGetUserDetailsQuery(userId, { skip: !userId });
 
-//   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+//   const [updateProfile, { isLoading: isProfileUpdating }] = useUpdateProfileMutation();
 //   const [updateImage, { isLoading: isImageUpdating }] = useUpdateImageMutation();
+//     // const userId = reduxUser?.id || reduxUser?._id;
+
+//     console.log("-----------api",apiUser.data.userDetails)
+//     console.log("-----------new",reduxUser)
   
+//   // 3. Local State
 //   const [feedback, setFeedback] = useState({ open: false, message: '', severity: 'success' });
-
-
 //   const [formData, setFormData] = useState({
 //     name: '',
 //     email: '',
 //     phone: '',
 //   });
 
-//    useEffect(() => {
-//     // If apiUser exists, use it. If not, try reduxUser.
-//     const currentUser = apiUser?.data || apiUser || reduxUser; 
-
-//     console.log("current user line 212",currentUser);
-
-//     if (currentUser) {
-//       setFormData({
-//         name: currentUser.first_name || '', 
-//         email: currentUser.email || '',
-//         phone: currentUser.phone_number || '', 
-//       });
+//   // 4. Helper Function to Safely Extract and Merge User Data
+//   // This ensures that if the API response is weirdly shaped, it won't wipe out existing redux data.
+//   const getMergedUserData = useCallback(() => {
+//     let apiData = null;
+    
+//     // Safely hunt down the actual user object in the API response
+//     if (apiUser) {
+//       if (apiUser.userDetail) apiData = apiUser.userDetail;
+//       else if (apiUser.data?.userDetail) apiData = apiUser.data.userDetail;
+//       else if (apiUser.data && (apiUser.data.first_name || apiUser.data.email || apiUser.data.name)) apiData = apiUser.data;
+//       else apiData = apiUser; 
 //     }
+
+//     // Merge Redux data with API data (API data overwrites Redux data only if it exists)
+//     return {
+//       ...reduxUser,
+//       ...apiData
+//     };
 //   }, [apiUser, reduxUser]);
 
+//   // 5. Sync API/Redux data to Local State on Load
+//   useEffect(() => {
+//     const mergedUser = getMergedUserData();
 
-//   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+//     if (mergedUser) {
+//       setFormData(prev => ({
+//         // We use prev.name as a final fallback so typing isn't interrupted by background refetches
+//         name: mergedUser.first_name || mergedUser.name || prev.name || '',
+//         email: mergedUser.email || prev.email || '',
+//         phone: mergedUser.phone_number || mergedUser.phone || prev.phone || ''
+//       }));
+//     }
+//   }, [getMergedUserData]);
 
+//   // 6. Input Change Handler
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   // 7. Reset Form (Cancel Button)
+//   const handleReset = () => {
+//     const mergedUser = getMergedUserData();
+//     if (mergedUser) {
+//       setFormData({
+//         name: mergedUser.first_name || mergedUser.name || '',
+//         email: mergedUser.email || '',
+//         phone: mergedUser.phone_number || mergedUser.phone || ''
+//       });
+//     }
+//   };
+
+//   // 8. Save Logic
 //   const handleSave = async () => {
 //     try {
 //       const payload = {
@@ -230,20 +103,23 @@
 //       };
 
 //       await updateProfile(payload).unwrap();
-      
-//       // Optional: Manually refresh data to ensure everything is in sync
-//       refetch(); 
+//       await refetch(); 
 
-//       setFeedback({ open: true, message: 'Profile updated successfully!', severity: 'success' });
+//       setFeedback({ 
+//         open: true, 
+//         message: 'Profile updated successfully!', 
+//         severity: 'success' 
+//       });
 //     } catch (err) {
 //       setFeedback({ 
 //         open: true, 
-//         message: err?.data?.message || 'Failed to update profile', 
+//         message: err?.data?.message || err?.message || 'Failed to update profile', 
 //         severity: 'error' 
 //       });
 //     }
 //   };
 
+//   // 9. Image Upload Logic
 //   const handleImageChange = async (e) => {
 //     const file = e.target.files[0];
 //     if (!file) return;
@@ -253,7 +129,7 @@
 
 //     try {
 //       await updateImage(formDataToSend).unwrap();
-//       refetch(); // Refresh data to show new image immediately
+//       await refetch(); 
 //       setFeedback({ open: true, message: 'Profile image updated!', severity: 'success' });
 //     } catch (err) {
 //       setFeedback({ 
@@ -264,14 +140,17 @@
 //     }
 //   };
 
-//   // 4. (Optional) Show a loader while the initial user data is being fetched
-//   if (isFetchingUser) {
+//   // Only show full screen loader if we are loading the API for the first time AND we have absolutely no fallback Redux data
+//   if (isApiLoading && !reduxUser) {
 //     return (
 //       <Box sx={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 //         <CircularProgress />
 //       </Box>
 //     );
 //   }
+
+//   // Get current image safely from the merged data
+//   const currentImage = getMergedUserData()?.profile_image;
 
 //   return (
 //     <ThemeProvider theme={theme}>
@@ -283,40 +162,34 @@
 //           </Typography>
 
 //           <Paper elevation={0} sx={{ p: { xs: 3, md: 6 }, borderRadius: 2, border: '1px solid #dbdee2ff' }}>
-           
+            
 //             <ProfileHeader
-//               name={apiUser.data.userDetail.first_name}
-//               email={apiUser.data.userDetail.email}
-//               // Prioritize API image, fallback to Redux, fallback to empty
-//               currentImage={apiUser?.profile_image || reduxUser?.profile_image} 
+//               name={formData.name}
+//               email={formData.email}
+//               currentImage={currentImage} 
 //               onImageChange={handleImageChange}
 //               isUpdating={isImageUpdating}
 //             />
-            
 //             <Divider sx={{ mb: 5 }} />
 
-//             <UserInfoForm formData={apiUser.data.userDetail} handleChange={handleChange} />
-//            {console.log(apiUser.data.userDetail, "api user")}
+//             <UserInfoForm formData={formData} handleChange={handleChange} />
 
 //             <Stack direction="row" spacing={2} sx={{ mt: 8 }}>
 //               <Button
 //                 variant="outlined"
-//                 onClick={() => {
-//                    // Reset form to the latest API data
-//                    if(apiUser) {
-//                      setFormData({
-//                         name: apiUser.first_name || '',
-//                         email: apiUser.email || '',
-//                         phone: apiUser.phone_number || ''
-//                      })
-//                    }
-//                 }}
+//                 onClick={handleReset}
+//                 disabled={isProfileUpdating}
 //               >
 //                 Cancel
 //               </Button>
 
-//               <Button variant="contained" disabled={isLoading} onClick={handleSave} sx={{ minWidth: '150px' }}>
-//                 {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Save Changes'}
+//               <Button 
+//                 variant="contained" 
+//                 disabled={isProfileUpdating} 
+//                 onClick={handleSave} 
+//                 sx={{ minWidth: '150px' }}
+//               >
+//                 {isProfileUpdating ? <CircularProgress size={24} color="inherit" /> : 'Save Changes'}
 //               </Button>
 //             </Stack>
 //           </Paper>
@@ -324,7 +197,11 @@
 
 //         <AccountPage />
 
-//         <Snackbar open={feedback.open} autoHideDuration={4000} onClose={() => setFeedback({ ...feedback, open: false })}>
+//         <Snackbar 
+//           open={feedback.open} 
+//           autoHideDuration={4000} 
+//           onClose={() => setFeedback({ ...feedback, open: false })}
+//         >
 //           <Alert severity={feedback.severity} variant="filled">
 //             {feedback.message}
 //           </Alert>
@@ -339,8 +216,12 @@
 
 
 
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+
+
+
+
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux'; // 1. IMPORT useDispatch
 import { 
   Box, Container, Typography, Button, Stack, Divider, 
   ThemeProvider, CssBaseline, Paper, CircularProgress, Alert, Snackbar 
@@ -355,111 +236,152 @@ import {
   useUpdateProfileMutation 
 } from '../../features/slice/auth/authApi';
 
-const UserProfile = () => {
-  // 1. Get User ID from Redux
-  const { user: reduxUser } = useSelector((state) => state.auth);
-  const userId = reduxUser?.id;
+// 2. IMPORT YOUR REDUX ACTION (Change 'setUser' if your slice uses a different name like 'setCredentials')
+import { setCredentials } from '../../features/slice/auth/authSlice';
 
-  // 2. API Hooks
+const UserProfile = () => {
+  const dispatch = useDispatch(); // 3. INITIALIZE DISPATCH
+
+  const { user: reduxUser } = useSelector((state) => state.auth);
+  const userId = reduxUser?.id || reduxUser?._id;
+
   const { 
     data: apiUser, 
-    isLoading: isFetchingUser, 
+    isLoading: isApiLoading, 
     refetch 
-  } = useGetUserDetailsQuery(userId);
+  } = useGetUserDetailsQuery(userId, { skip: !userId });
 
-  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+
+  const [updateProfile, { isLoading: isProfileUpdating }] = useUpdateProfileMutation();
   const [updateImage, { isLoading: isImageUpdating }] = useUpdateImageMutation();
   
-  // 3. Local State for Form and Feedback
   const [feedback, setFeedback] = useState({ open: false, message: '', severity: 'success' });
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
 
-  // 4. Sync API data to Local State on Load
-  useEffect(() => {
-    // Navigate the nesting: apiUser?.data?.userDetail or apiUser?.data
-    const userData = apiUser?.data?.userDetail || apiUser?.data || reduxUser; 
-
-    if (userData) {
-      setFormData({
-        name: userData.first_name || '', 
-        email: userData.email || '',
-        phone: userData.phone_number || userData.phone || '',
-      });
+  // Helper Function to Safely Extract and Merge User Data
+  const getMergedUserData = useCallback(() => {
+    let apiData = null;
+    if (apiUser) {
+      if (apiUser.userDetail) apiData = apiUser.userDetail;
+      else if (apiUser.data?.userDetail) apiData = apiUser.data.userDetail;
+      else if (apiUser.data && (apiUser.data.first_name || apiUser.data.email || apiUser.data.name)) apiData = apiUser.data;
+      else apiData = apiUser; 
     }
+    return { ...reduxUser, ...apiData };
   }, [apiUser, reduxUser]);
 
-//   useEffect(() => {
-//   if (apiUser) {
-//     console.log("Full API Response:", apiUser);
-//     console.log("Extracted Phone:", apiUser?.data?.userDetail?.phone_number);
-//   }
-// }, [apiUser]);
+  // Sync API/Redux data to Local State on Load
+  useEffect(() => {
+    const mergedUser = getMergedUserData();
+    if (mergedUser) {
+      setFormData(prev => ({
+        name: mergedUser.first_name || mergedUser.name || prev.name || '',
+        email: mergedUser.email || prev.email || '',
+        phone: mergedUser.phone_number || mergedUser.phone || prev.phone || ''
+      }));
+    }
+  }, [getMergedUserData]);
 
-  // 5. Input Change Handler
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // 6. Save Logic
+  const handleReset = () => {
+    const mergedUser = getMergedUserData();
+    if (mergedUser) {
+      setFormData({
+        name: mergedUser.first_name || mergedUser.name || '',
+        email: mergedUser.email || '',
+        phone: mergedUser.phone_number || mergedUser.phone || ''
+      });
+    }
+  };
+
+  // --- FIXED SAVE LOGIC ---
   const handleSave = async () => {
     try {
-      // Ensure keys match exactly what your Backend expects
       const payload = {
         first_name: formData.name,
         phone_number: formData.phone
       };
 
+      // 1. Update backend API
       await updateProfile(payload).unwrap();
       
-      // Refresh the query to get the latest data from server
+      // 2. Fetch fresh data to ensure cache is clean
       await refetch(); 
 
-      setFeedback({ 
-        open: true, 
-        message: 'Profile updated successfully!', 
-        severity: 'success' 
-      });
+      // 3. CRITICAL: UPDATE REDUX STATE! 
+      // This immediately changes `state.auth.user` globally so your UI updates instantly!
+      // dispatch(setUser({
+      //   ...reduxUser,
+      //   first_name: payload.first_name,
+      //   phone_number: payload.phone_number
+      // }));
+
+      dispatch(setCredentials({ ...reduxUser, first_name: payload.first_name  , phone_number: payload.phone_number}));
+
+      setFeedback({ open: true, message: 'Profile updated successfully!', severity: 'success' });
     } catch (err) {
-      setFeedback({ 
-        open: true, 
-        message: err?.data?.message || 'Failed to update profile', 
-        severity: 'error' 
-      });
+      setFeedback({ open: true, message: err?.data?.message || err?.message || 'Failed to update profile', severity: 'error' });
     }
   };
 
+  // --- FIXED IMAGE UPLOAD LOGIC ---
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
+    // Create instant local URL so the UI doesn't have to wait for the API
+    const localImageUrl = URL.createObjectURL(file);
+    
+    // Optimistically update Redux so the profile picture changes everywhere instantly
+    // dispatch(setUser({
+    //   ...reduxUser,
+    //   profile_image: localImageUrl
+    // }));
+
+    dispatch(setCredentials({ ...reduxUser, first_name: payload.first_name  }));
 
     const formDataToSend = new FormData();
     formDataToSend.append('profile_image', file); 
 
     try {
-      await updateImage(formDataToSend).unwrap();
-      refetch(); 
+      // Send image to backend
+      const response = await updateImage(formDataToSend).unwrap();
+      await refetch(); 
+
+      // If backend returns the permanent S3/Cloud URL, update Redux one final time with the real URL
+      const finalImageUrl = response?.data?.profile_image || response?.profile_image;
+      if (finalImageUrl) {
+        // Appending a timestamp forces the browser to ignore cache and show the new picture
+        // dispatch(setUser({
+        //   ...reduxUser,
+        //   profile_image: `${finalImageUrl}?t=${Date.now()}` 
+        // }));
+
+      }
+
       setFeedback({ open: true, message: 'Profile image updated!', severity: 'success' });
     } catch (err) {
-      setFeedback({ 
-        open: true, 
-        message: err?.data?.message || 'Failed to upload image', 
-        severity: 'error' 
-      });
+      // Revert Redux to original image if upload fails
+      // dispatch(setUser({ ...reduxUser })); 
+      dispatch(setCredentials({ ...reduxUser, first_name: payload.first_name }));
+      
+      setFeedback({ open: true, message: err?.data?.message || 'Failed to upload image', severity: 'error' });
     }
-  }
+  };
 
-  if (isFetchingUser) {
+  if (isApiLoading && !reduxUser) {
     return (
       <Box sx={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CircularProgress />
       </Box>
     );
   }
+
+  const currentImage = getMergedUserData()?.profile_image;
 
   return (
     <ThemeProvider theme={theme}>
@@ -473,43 +395,23 @@ const UserProfile = () => {
           <Paper elevation={0} sx={{ p: { xs: 3, md: 6 }, borderRadius: 2, border: '1px solid #dbdee2ff' }}>
             
             <ProfileHeader
-              // Using formData for the name so it updates as the user types
               name={formData.name}
               email={formData.email}
-              currentImage={apiUser?.data?.profile_image || reduxUser?.profile_image} 
+              currentImage={currentImage} 
               onImageChange={handleImageChange}
               isUpdating={isImageUpdating}
             />
             <Divider sx={{ mb: 5 }} />
 
-            {/* CRITICAL CHANGE: Pass formData (local state) here, NOT apiUser */}
             <UserInfoForm formData={formData} handleChange={handleChange} />
 
             <Stack direction="row" spacing={2} sx={{ mt: 8 }}>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                   // Reset local state to match the last successful API fetch
-                   const userData = apiUser?.data?.userDetail || apiUser?.data;
-                   if(userData) {
-                     setFormData({
-                        name: userData.first_name || '',
-                        email: userData.email || '',
-                        phone: userData.phone_number || ''
-                     });
-                   }
-                }}
-              >
+              <Button variant="outlined" onClick={handleReset} disabled={isProfileUpdating}>
                 Cancel
               </Button>
 
-              <Button 
-                variant="contained" 
-                disabled={isLoading} 
-                onClick={handleSave} 
-                sx={{ minWidth: '150px' }}
-              >
-                {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Save Changes'}
+              <Button variant="contained" disabled={isProfileUpdating} onClick={handleSave} sx={{ minWidth: '150px' }}>
+                {isProfileUpdating ? <CircularProgress size={24} color="inherit" /> : 'Save Changes'}
               </Button>
             </Stack>
           </Paper>
@@ -517,14 +419,8 @@ const UserProfile = () => {
 
         <AccountPage />
 
-        <Snackbar 
-          open={feedback.open} 
-          autoHideDuration={4000} 
-          onClose={() => setFeedback({ ...feedback, open: false })}
-        >
-          <Alert severity={feedback.severity} variant="filled">
-            {feedback.message}
-          </Alert>
+        <Snackbar open={feedback.open} autoHideDuration={4000} onClose={() => setFeedback({ ...feedback, open: false })}>
+          <Alert severity={feedback.severity} variant="filled">{feedback.message}</Alert>
         </Snackbar>
       </Box>
     </ThemeProvider>
@@ -532,3 +428,42 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

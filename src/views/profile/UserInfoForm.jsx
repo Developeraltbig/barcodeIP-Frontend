@@ -25,7 +25,7 @@ const FormField = ({ label, name, value, onChange, placeholder }) => (
 const UserInfoForm = ({ formData, handleChange }) => (
   <Grid container spacing={3}>
 
-    {console.log("user info - " , formData)}
+    {/* {console.log("user info 28 - " , formData)} */}
     <Grid item xs={12} md={6}>
       <FormField label="Full Name" name="name" value={formData.name} onChange={handleChange} placeholder="Tester" />
     </Grid>

@@ -89,6 +89,7 @@ const ProfileHeader = ({ name, email, currentImage, onImageChange, isUpdating })
       </Badge>
       <Box>
         <Typography variant="h6" sx={{ fontWeight: 600 }}>{name}</Typography>
+        {console.log(name)}
         <Typography variant="body2" color="text.secondary">{email}</Typography>
       </Box>
     </Stack>
