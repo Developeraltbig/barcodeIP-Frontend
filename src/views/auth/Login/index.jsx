@@ -97,7 +97,7 @@ const LoginPage = () => {
 
         {/* RIGHT SIDE */}
         <Grid
-          item xs={12} sm={8} md={6}
+          item xs={12} size={{ sm: 8 }} md={6}
           sx={{ backgroundColor:'red', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', bgcolor: '#fff' }}
         >
           <Box sx={{ width: '100%', maxWidth: '450px', px: { xs: 3, sm: 6 }, display: 'flex', flexDirection: 'column' }}>

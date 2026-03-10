@@ -17,7 +17,7 @@ const Footer = () => {
         <Grid container spacing={4} alignItems="flex-start" justifyContent={"space-between"}>
           
           {/* 1. Brand/Logo Section */}
-          <Grid item xs={12} md={4}>
+          <Grid item size={{ xs: 12, md: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 2 }}>
               <Typography variant="h5" sx={{ fontWeight: 800, color: '#ffffff', fontSize:"30px" }}>
                 barcode
@@ -33,7 +33,7 @@ const Footer = () => {
           </Grid>
 
           {/* 2. Contact Us Section */}
-          <Grid item xs={12} sm={4} md={2.5}>
+          <Grid item size={{ xs: 12, md: 2.5 , sm:4 }}>
             <Typography variant="caption" sx={{ color: '#888', fontWeight: 700, letterSpacing: 1 }}>
               CONTACT US
             </Typography>
@@ -43,7 +43,7 @@ const Footer = () => {
           </Grid>
 
           {/* 3. Email Section */}
-          <Grid item xs={12} sm={4} md={3}>
+          <Grid item size={{ xs: 12, md: 3 , sm: 4 }}>
             <Typography variant="caption" sx={{ color: '#888', fontWeight: 700, letterSpacing: 1 }}>
               EMAIL
             </Typography>
@@ -53,7 +53,7 @@ const Footer = () => {
           </Grid>
 
           {/* 4. Address Section */}
-          <Grid item xs={12} sm={4} md={2.5}>
+          <Grid item size={{ xs: 12, md: 2.5 , sm:4 }}>
             <Typography variant="caption" sx={{ color: '#888', fontWeight: 700, letterSpacing: 1 }}>
               ADDRESS
             </Typography>

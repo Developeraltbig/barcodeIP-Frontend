@@ -27,7 +27,7 @@ export default function CommonAuthLayout({ title, subHeading, footerLink, childr
         background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
       }}
     >
-      <Grid item xs={11} sm={8} md={5} lg={4}>
+      <Grid item xs={11} size={{ sm: 8 }} md={5} lg={4}>
         {/* Logo */}
         <Box sx={{ textAlign: 'center', mb: 3 }}>
           <CardMedia

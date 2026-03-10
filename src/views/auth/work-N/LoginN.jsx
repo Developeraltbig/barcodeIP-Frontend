@@ -123,7 +123,7 @@ const Login = () => {
 
                     <Box className="mb-4">
                       <Typography variant="h4" color="text.primary" sx={{ mb: 1 }}>
-                        Sign in <AutoAwesomeOutlined sx={{ color: '#E94E34', fontSize: 28, verticalAlign: 'middle', ml: 1 }} />
+                        Sign In 
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Welcome back! Please enter your details.
@@ -139,7 +139,7 @@ const Login = () => {
                     <form onSubmit={handleSubmit} noValidate>
                       <Box className="mb-4">
                         <Typography variant="caption" sx={{ color: '#374151', fontWeight: 600, mb: 1, display: 'block' }}>
-                          Email Address
+                          Email
                         </Typography>
                         <TextField
                           fullWidth
@@ -204,7 +204,7 @@ const Login = () => {
                         <Typography variant="body2" color="text.secondary">
                           Don't have an account?{' '}
                           <Link component={RouterLink} to="/pages/auth/register" sx={{ color: '#E94E34', textDecoration: 'none', fontWeight: 700 }}>
-                            Sign up
+                            Sign Up
                           </Link>
                         </Typography>
                       </Box>

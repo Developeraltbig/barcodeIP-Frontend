@@ -165,7 +165,7 @@ const PatentList = () => {
                 <CircularProgress color="primary" />
               </Box>
             ) : (
-              <Grid container spacing={3} sx={{ alignItems:'center' , justifyContent:'center' }}>
+              <Grid container spacing={3} sx={{ alignItems:'center'  }}>
                 {renderActiveComponent()}
               </Grid>
             )}

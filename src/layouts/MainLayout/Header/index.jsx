@@ -28,56 +28,54 @@ import { useLazyLogoutQuery } from '../../../features/slice/auth/authApi';
 import { logout, setCredentials } from '../../../features/slice/auth/authSlice';
 import { persistor } from '../../../app/store';
 
-
-
 // AppBar props, including styles that vary based on drawer state and screen size
-const appBar = {  position: 'fixed', sx: { width: 1, zIndex: { xs: 1100, lg: 1201 } } };
+const appBar = { position: 'fixed', sx: { width: 1, zIndex: { xs: 1100, lg: 1201 } } };
 
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
 
 export default function Header() {
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;
-    // State for User Dropdown Menu
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const [Logout] = useLazyLogoutQuery();
-    const dispatch = useDispatch();
+  // State for User Dropdown Menu
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const [Logout] = useLazyLogoutQuery();
+  const dispatch = useDispatch();
 
-    const user = useSelector((state) => state.auth.user);
-  
-    const handleMenuClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleMenuClose = () => {
-      setAnchorEl(null);
-    };
-    
-//     const handleLogout = async () => {
-//      await Logout();
-//     dispatch(logout());
-// };
+  const user = useSelector((state) => state.auth.user);
 
-const handleLogout = async () => {
-  try {
-    // 1. Call your API logout endpoint
-    await axios.get("/api/auth/logout");
-  } catch (error) {
-    console.error("Logout error", error);
-  } finally {
-    // 2. PURGE the persistent storage (Deletes stored data from browser)
-    await persistor.purge();
-    
-    // 3. Optional: Clear specific keys just in case
-    localStorage.removeItem('persist:auth');
-    localStorage.removeItem('persist:userDashboard');
-    
-    // 4. Force a hard refresh to clear the Redux state in memory
-    window.location.href = '/pages/auth/login'; 
-  }
-};
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
-    const navigate = useNavigate();
+  //     const handleLogout = async () => {
+  //      await Logout();
+  //     dispatch(logout());
+  // };
+
+  const handleLogout = async () => {
+    try {
+      // 1. Call your API logout endpoint
+      await axios.get('/api/auth/logout');
+    } catch (error) {
+      console.error('Logout error', error);
+    } finally {
+      // 2. PURGE the persistent storage (Deletes stored data from browser)
+      await persistor.purge();
+
+      // 3. Optional: Clear specific keys just in case
+      localStorage.removeItem('persist:auth');
+      localStorage.removeItem('persist:userDashboard');
+
+      // 4. Force a hard refresh to clear the Redux state in memory
+      window.location.href = '/pages/auth/login';
+    }
+  };
+
+  const navigate = useNavigate();
 
   // Common header content
   const mainHeader = (
@@ -98,9 +96,9 @@ const handleLogout = async () => {
 
           {/* Navigation Links (Hidden on small mobile) */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-            <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/profile`)}>
+            {/* <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/profile`)}>
               Profile
-            </Button>
+            </Button> */}
             {/* <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/recent-search`)}>
               Recent Searches
             </Button> */}
@@ -118,8 +116,20 @@ const handleLogout = async () => {
             </Avatar>
 
             {/* 3. Make the text dynamic */}
-            <Typography variant="body1" sx={{ fontWeight: 600, display: { xs: 'none', sm: 'block' } }}>
-              {user?.email || 'Guest'}
+            <Typography
+              variant="body1"
+              sx={{
+                fontWeight: 600,
+                display: { xs: 'none', sm: 'block' },
+                textTransform: 'capitalize',
+                // Prevent layout breaking for massive emails
+                maxWidth: '200px',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              {user?.email ? user.email.split('@')[0].replace(/[._]/g, ' ') : 'Guest'}
             </Typography>
           </Button>
 
@@ -131,7 +141,12 @@ const handleLogout = async () => {
             MenuListProps={{ 'aria-labelledby': 'basic-button' }}
             PaperProps={{
               elevation: 3,
-              sx: { mt: 1, minWidth: 150 }
+              sx: {
+                mt: 1,
+                // This logic ensures the menu is at least as wide as the button
+                minWidth: anchorEl ? anchorEl.clientWidth : 0,
+                borderRadius: '8px'
+              }
             }}
           >
             {/* <MenuItem onClick={handleMenuClose}>Settings</MenuItem> */}
@@ -150,7 +165,7 @@ const handleLogout = async () => {
                 // Pass the user object as 'state'
                 navigate(`/profile`, { state: { userData: user } });
               }}
-              sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
+              // sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
             >
               Profile
             </MenuItem>
@@ -174,44 +189,3 @@ const handleLogout = async () => {
 
   return <AppBar {...appBar}>{mainHeader}</AppBar>;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

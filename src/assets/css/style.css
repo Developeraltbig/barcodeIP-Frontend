@@ -15,7 +15,8 @@
 .draft-container {
   background-color: var(--bg-main);
   min-height: 100vh;
-  padding: 10px 25px 60px 25px;
+    width: 100%;
+  /* padding: 10px 25px 60px 25px; */
 }
 
 .page-header {
@@ -45,6 +46,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+
 }
 
 .draft-section {
@@ -185,6 +187,7 @@
   line-height: 1.7;
   color: #334155;
   text-align: left;
+  
 }
 
 .ql-editor > *:first-child,

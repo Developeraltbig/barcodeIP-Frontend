@@ -49,11 +49,11 @@ const OverlapMatrix = () => {
     return parseMarkdownTable(rawMatrix);
   }, [passedData]);
 
-  console.log("passed data",passedData)
+  console.log("passed data", passedData)
 
   const excerpts = passedData?.excerpts || 'No relevant excerpts available.';
 
-  console.log("excerptspassed data", excerpts)
+  // console.log("excerptspassed data", excerpts)
 
   if (!passedData) {
     return (
@@ -68,32 +68,49 @@ const OverlapMatrix = () => {
     );
   }
 
+  const handlePatentRedirect = (rawId) => {
+    if (!rawId) return;
+
+    // Optional: Clean the ID (remove spaces or dots if your API sends them messy)
+    const cleanId = rawId.trim().replace(/\s/g, '');
+    const url = `https://patents.google.com/${cleanId}`;
+
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+
   return (
     <div className="container-fluid bg-light min-vh-100 py-5" style={{ marginTop: '60px' }}>
       <div className="container">
         {/* HEADER SECTION */}
         <div className="row align-items-center mb-4">
-           <Stack 
-                direction="row" 
-                alignItems="center" 
-                spacing={1} 
-                sx={{ mb: { xs: 1, sm: 2 }, cursor: 'pointer' }} 
-                onClick={() => navigate(-1)}
-              >
-                <IconButton size="small" sx={{ color: '#64748b' }}>
-                  <ArrowBackIcon fontSize="small" />
-                </IconButton>
-                <Typography variant="body2" sx={{ color: '#64748b', fontWeight: 500 }}>
-                  Back to Result
-                </Typography>
-              </Stack>
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            sx={{ mb: { xs: 1, sm: 2 }, cursor: 'pointer' }}
+            onClick={() => navigate(-1)}
+          >
+            <IconButton size="small" sx={{ color: '#64748b' }}>
+              <ArrowBackIcon fontSize="small" />
+            </IconButton>
+            <Typography variant="body2" sx={{ color: '#64748b', fontWeight: 500 }}>
+              Back to Result
+            </Typography>
+          </Stack>
 
           <div className="col-md-8">
             <Typography variant="h4" fontWeight="800" sx={{ color: '#1e293b', mb: 1 }}>
               Analysis <span style={{ color: PATENT_ORANGE }}>Report</span>
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Comparison Patent: <strong>{id}</strong>
+              Comparison Patent:{' '}
+              <strong
+                style={{ color: '#F04E23', cursor:'pointer' }}
+                 onClick={() => handlePatentRedirect(passedData?.patentId)} disabled={passedData?.patentId}
+              >
+                {passedData.patentId.match(/(?<=\/)[A-Z0-9]+(?=\/)/)}
+              </strong>
             </Typography>
           </div>
           <div className="col-md-4 d-flex justify-content-md-end">

@@ -300,12 +300,11 @@ const InputSectionN = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: -4, mb: 10, position: 'relative', zIndex: 10 }}>
-      
       {/* FULL PAGE LOADER */}
       <Backdrop
-        sx={{ 
-          color: '#fff', 
-          zIndex: (theme) => theme.zIndex.drawer + 9999, 
+        sx={{
+          color: '#fff',
+          zIndex: (theme) => theme.zIndex.drawer + 9999,
           backgroundColor: 'rgba(255, 255, 255, 0.55)', // Increased opacity for "Static" look
           flexDirection: 'column',
           backdropFilter: 'blur(4px)' // Adds a nice blur to the static background
@@ -315,13 +314,15 @@ const InputSectionN = () => {
         <Typography
           variant="h4"
           sx={{
-            fontWeight: 800, color: '#4B5563', fontStyle: 'italic',
+            fontWeight: 800,
+            color: '#4B5563',
+            fontStyle: 'italic',
             animation: 'pulse 1.5s infinite ease-in-out',
             '@keyframes pulse': {
               '0%': { opacity: 0.5, transform: 'scale(0.98)' },
               '50%': { opacity: 1, transform: 'scale(1)' },
-              '100%': { opacity: 0.5, transform: 'scale(0.98)' },
-            },
+              '100%': { opacity: 0.5, transform: 'scale(0.98)' }
+            }
           }}
         >
           {LOADING_MESSAGES[messageIndex]}
@@ -329,34 +330,100 @@ const InputSectionN = () => {
       </Backdrop>
 
       {/* Main UI */}
-      <Paper elevation={2} sx={{ p: '8px 16px', display: 'flex', borderRadius: '12px', border: '1px solid #E5E7EB', mb: 3, height: '130px' }}>
-        <SearchIcon sx={{ color: '#9CA3AF', mr: 2, mt: '12px' }} />
-        <InputBase sx={{ flex: 1 }} placeholder="Search here" value={searchValue} multiline rows={5} onChange={(e) => setSearchValue(e.target.value)} />
-        <IconButton sx={{ bgcolor: '#FEF2F2', color: '#E94E34', borderRadius: '8px', height: 'fit-content' }}>
-          <CloudUploadOutlined />
+      <Box sx={{ display: 'flex', gap: '10px' }}>
+        <Paper
+          elevation={2}
+          sx={{ p: '8px 16px', display: 'flex', borderRadius: '12px', border: '1px solid #E5E7EB', mb: 3, height: '130px', width: '100%' }}
+        >
+          <SearchIcon sx={{ color: '#9CA3AF', mr: 2, mt: '12px' }} />
+          <InputBase
+            sx={{ flex: 1 }}
+            placeholder="Describe your Invention in plain English"
+            value={searchValue}
+            multiline
+            rows={5}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </Paper>
+        <IconButton
+          sx={{
+            bgcolor: '#FEF2F2',
+            color: '#E94E34',
+            borderRadius: '8px',
+            height: '130px',
+            width: '10%',
+            border: '1px solid #E5E7EB',
+            // ADDED SHADOWS BELOW
+            boxShadow: '0px 1px 2px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
+            '&:hover': {
+              bgcolor: '#eee8e7ff',
+              boxShadow: 4 // Makes the shadow deeper on hover for a "lifted" effect
+            }
+          }}
+        >
+          <CloudUploadOutlined style={{ fontSize: '40px' }} />
         </IconButton>
-      </Paper>
+      </Box>
 
-      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 10 }} sx={{mb:'20px'}}>
+      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 10 }} sx={{ mb: '20px' }}>
         {filters.map((f) => (
-          <Grid item xs={2} sm={2} md={4} size={{ xs: 2, sm: 2, md: 2}}  key={f.value}  >
-            <Box onClick={() => setSelectedFilters(prev => prev.includes(f.value) ? prev.filter(v => v !== f.value) : [...prev, f.value])} sx={{ cursor: 'pointer', p: 1.2, border: '1px solid', borderColor: selectedFilters.includes(f.value) ? '#E94E34' : '#E5E7EB', borderRadius: 1, display: 'flex', alignItems: 'center', bgcolor: '#fff' }}>
-                <Checkbox checked={selectedFilters.includes(f.value)} sx={{ color: '#E94E34', '&.Mui-checked': { color: '#E94E34' } }} />
-                <Typography variant="body2">{f.label}</Typography>
+          <Grid item xs={2} sm={2} md={4} size={{ xs: 2, sm: 2, md: 2 }} key={f.value}>
+            <Box
+              onClick={() =>
+                setSelectedFilters((prev) => (prev.includes(f.value) ? prev.filter((v) => v !== f.value) : [...prev, f.value]))
+              }
+              sx={{
+                cursor: 'pointer',
+                p: 1.2,
+                border: '1px solid',
+                borderColor: selectedFilters.includes(f.value) ? '#E94E34' : '#E5E7EB',
+                borderRadius: 1,
+                display: 'flex',
+                alignItems: 'center',
+                bgcolor: '#fff'
+              }}
+            >
+              <Checkbox checked={selectedFilters.includes(f.value)} sx={{ color: '#E94E34', '&.Mui-checked': { color: '#E94E34' } }} />
+              <Typography variant="body2">{f.label}</Typography>
             </Box>
           </Grid>
         ))}
       </Grid>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-        <Button variant="contained" disabled={isLoading} onClick={handleGenerate} sx={{ bgcolor: '#A62A22', '&:hover': { bgcolor: '#8a221b' }, px: 4, py: 1.5, textTransform: 'none', fontWeight: 600, borderRadius: '8px' }}>
+        <Button
+          variant="contained"
+          disabled={isLoading}
+          onClick={handleGenerate}
+          sx={{
+            bgcolor: '#E94E34',
+            '&:hover': { bgcolor: '#e06b56ff' },
+            px: 4,
+            py: 1.5,
+            textTransform: 'none',
+            fontWeight: 600,
+            borderRadius: '8px'
+          }}
+        >
           Generate Key Strings
         </Button>
-        <FormControlLabel control={<Switch checked={advanceSearch} onChange={(e) => setAdvanceSearch(e.target.checked)} sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#E94E34' } }} />} label="Advance Search" labelPlacement="start" />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={advanceSearch}
+              onChange={(e) => setAdvanceSearch(e.target.checked)}
+              sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#E94E34' } }}
+            />
+          }
+          label="Advance Search"
+          labelPlacement="start"
+        />
       </Box>
 
       <Collapse in={advanceSearch} timeout="auto">
-        <Box sx={{ mt: 3 }}><AdvanceSearch onClear={() => console.log('Cleared')} /></Box>
+        <Box sx={{ mt: 3 }}>
+          <AdvanceSearch onClear={() => console.log('Cleared')} />
+        </Box>
       </Collapse>
     </Container>
   );

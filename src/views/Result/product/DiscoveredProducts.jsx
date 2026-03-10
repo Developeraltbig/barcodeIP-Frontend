@@ -14,25 +14,25 @@ export default function DiscoveredProducts({item}) {
         sx={{ 
           cursor: 'pointer', 
           display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center',
+          flexDirection:'column',
           mb: 3,
           p: 2,
           borderRadius: 3,
           '&:hover': { bgcolor: '#f8fafc' }
         }}
       >
-        <Box>
+        <Box sx={{ display:'flex', justifyContent: 'space-between', alignItems: 'center', width:'100%'}}>
           <Typography variant="h5" sx={{ fontWeight: 800, color: '#1e293b', display: 'flex', alignItems: 'center', gap: 1.5 }}>
             <MdOutlineExplore color="#64748b" /> Additional Products Discovered
-          </Typography>
-          <Typography variant="body2" sx={{ color: '#94a3b8', mt: 3 }}>
+           </Typography>
+            <IconButton sx={{ bgcolor: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+          {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+         </IconButton>
+        
+        </Box>
+        <Typography variant="body2" sx={{ color: '#94a3b8', mt: 3 }}>
             15 more products identified during discovery — not deeply analyzed
           </Typography>
-        </Box>
-        <IconButton sx={{ bgcolor: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-          {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
-        </IconButton>
       </Box>
 
       {/* Collapsible Content */}

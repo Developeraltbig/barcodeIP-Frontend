@@ -158,7 +158,7 @@ const RegisterPage = () => {
 
         {/* RIGHT SIDE - FORM */}
         <Grid
-          item xs={12} sm={8} md={6}
+          item xs={12} size={{ sm: 8 }} md={6}
           sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', bgcolor: '#fff' }}
         >
           <Box
