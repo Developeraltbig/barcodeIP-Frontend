@@ -188,7 +188,7 @@ const AdvanceSearch = ({ onGenerate }) => {
         {/* ROW 3: Inventor / Assignee / Office */}
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} sx={{ mb: 2 }} >
           {/* Inventor */}
-          <Grid item size={{ xs: 12, md: 4 }} sx={{ display: 'flex', gap: 1 }} size={{ xs: 4, sm: 4, md: 4}}>
+          <Grid item  sx={{ display: 'flex', gap: 1 }} size={{ xs: 4, sm: 4, md: 4}}>
             <TextField
               fullWidth
               placeholder="Inventor"
@@ -211,7 +211,7 @@ const AdvanceSearch = ({ onGenerate }) => {
           </Grid>
 
           {/* Assignee */}
-          <Grid item size={{ xs: 12, md: 4 }} sx={{ display: 'flex', gap: 1 }} size={{ xs: 4, sm: 4, md: 4}}>
+          <Grid item sx={{ display: 'flex', gap: 1 }} size={{ xs: 4, sm: 4, md: 4}}>
             <TextField
               fullWidth
               placeholder="Assignee"
@@ -234,7 +234,7 @@ const AdvanceSearch = ({ onGenerate }) => {
           </Grid>
 
           {/* Patent Office */}
-          <Grid item size={{ xs: 12, md: 4 }} size={{ xs: 4, sm: 4, md: 4}}>
+          <Grid item  size={{ xs: 4, sm: 4, md: 4}}>
             <CustomSelect value={formData.patentOffice} onChange={(val) => handleChange('patentOffice', val)} placeholder="Patent Office" />
           </Grid>
         </Grid>

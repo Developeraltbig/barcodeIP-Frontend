@@ -1,125 +1,3 @@
-// import React from 'react';
-// import { Box, Typography, Paper, IconButton, Button, Container } from '@mui/material';
-// import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import ShareIcon from '@mui/icons-material/Share';
-
-// const PatentDetail = () => {
-//   // Mock data for images
-//   const images = [
-//     { id: 1, url: 'https://patentimages.storage.googleapis.com/a3/d9/1f/4c1453aadf7f66/US3121601-drawings-page-1.png', alt: 'Figure 1' },
-//     { id: 2, url: 'https://patentimages.storage.googleapis.com/16/9c/61/fb8dc1ff52a843/US3121601-drawings-page-2.png', alt: 'Figure 2' },
-//     { id: 3, url: 'https://patentimages.storage.googleapis.com/52/fd/ee/69542ab4de5c04/US3121601-drawings-page-3.png', alt: 'Figure 3' },
-//     { id: 4, url: 'https://patentimages.storage.googleapis.com/52/fd/ee/69542ab4de5c04/US3121601-drawings-page-3.png', alt: 'Figure 4' },
-//     { id: 5, url: 'https://patentimages.storage.googleapis.com/52/fd/ee/69542ab4de5c04/US3121601-drawings-page-3.png', alt: 'Figure 5' },
-//     { id: 6, url: 'https://patentimages.storage.googleapis.com/52/fd/ee/69542ab4de5c04/US3121601-drawings-page-3.png', alt: 'Figure 6' },
-//     { id: 7, url: 'https://patentimages.storage.googleapis.com/52/fd/ee/69542ab4de5c04/US3121601-drawings-page-3.png', alt: 'Figure 6' },
-//     { id: 8, url: 'https://patentimages.storage.googleapis.com/52/fd/ee/69542ab4de5c04/US3121601-drawings-page-3.png', alt: 'Figure 6' },
-//     { id: 9, url: 'https://patentimages.storage.googleapis.com/52/fd/ee/69542ab4de5c04/US3121601-drawings-page-3.png', alt: 'Figure 6' },
-//     { id: 10, url: 'https://patentimages.storage.googleapis.com/52/fd/ee/69542ab4de5c04/US3121601-drawings-page-3.png', alt: 'Figure 6' },
-//   ];
-
-//   return (
-//     <Container maxWidth="lg" sx={{ mt: 4 , marginTop:'90px'}}>
-//       {/* Header Section */}
-//       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-//         <IconButton size="small" sx={{ mr: 1 }}>
-//           <ArrowBackIcon fontSize="small" />
-//         </IconButton>
-//         <Typography variant="body2" color="text.secondary">
-//           Back to results
-//         </Typography>
-//       </Box>
-
-//       <Typography variant="h6" sx={{ fontWeight: 600, mb: 3 }}>
-//         Implantable pulse generators and methods for selective nerve stimulation
-//       </Typography>
-
-//       {/* Scrollable Image Container */}
-//       <Paper 
-//         elevation={0} 
-//         sx={{ 
-//           p: 3, 
-//           bgcolor: '#f5f5f5', 
-//           borderRadius: 2,
-//           position: 'relative'
-//         }}
-//       >
-//         <Box
-//           sx={{
-//             display: 'flex',
-//             overflowX: 'auto',
-//             gap: 2,
-//             pb: 1, // Space for scrollbar
-//             '&::-webkit-scrollbar': {
-//               height: '8px',
-//             },
-//             '&::-webkit-scrollbar-thumb': {
-//               backgroundColor: '#bdbdbd',
-//               borderRadius: '10px',
-//             },
-//             '&::-webkit-scrollbar-track': {
-//               backgroundColor: '#e0e0e0',
-//             },
-//           }}
-//         >
-//           {images.map((image) => (
-//             <Box
-//               key={image.id}
-//               component="img"
-//               src={image.url}
-//               alt={image.alt}
-//               sx={{
-//                 height: { xs: 150, sm: 200 }, // Responsive height
-//                 width: 'auto',
-//                 bgcolor: '#fff',
-//                 p: 1,
-//                 border: '1px solid #e0e0e0',
-//                 borderRadius: 1,
-//                 flexShrink: 0,
-//               }}
-//             />
-//           ))}
-//         </Box>
-//       </Paper>
-
-//       {/* Description Header with Button */}
-//       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 4, mb: 2 }}>
-//         <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-//           Description
-//         </Typography>
-//         <Button 
-//           variant="contained" 
-//           color="error" 
-//           startIcon={<ShareIcon />}
-//           sx={{ borderRadius: 2, textTransform: 'none' }}
-//         >
-//           Show Mapping
-//         </Button>
-//       </Box>
-
-//       {/* Description Text */}
-//       <Typography variant="body2" sx={{ lineHeight: 1.6, color: 'text.secondary', textAlign: 'justify' }}>
-//         An Implantable Pulse Generator (IPG) includes a surgically implantable housing, a battery, 
-//         a first waveform generator, a second waveform generator, a modulator, and electrodes. 
-//         The IPG produces a pulse envelope, a carrier waveform, and a modulated waveform. 
-//         The pulse envelope is a low frequency waveform with specific pulse width, amplitude 
-//         and shape to selectively stimulate a target nerve or body part.
-//       </Typography>
-//     </Container>
-//   );
-// };
-
-// export default PatentDetail;
-
-
-
-
-
-
-
-
-
-
 
 import React from 'react';
 import { Box, Typography, Paper, Button, Container, IconButton } from '@mui/material';
@@ -139,8 +17,10 @@ const PatentDetail = () => {
 
   
   return (
-   <>
-    <Container maxWidth="lg" sx={{ py: 4, fontFamily: 'Roboto, sans-serif' , marginTop:'90px' }}>
+
+   <Box sx={{background: "#ebebebff",}}>
+
+      <Container maxWidth="lg" sx={{ py: 4, fontFamily: 'Roboto, sans-serif' , paddingTop:'90px' }}>
       
       {/* Navigation Header */}
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }} onClick={() => navigate(-1)}>
@@ -255,9 +135,10 @@ const PatentDetail = () => {
    
 
 
-   {/* <PatentMetadataDashboard/> */}
-   
-   </>
+   <PatentMetadataDashboard/>
+   </Box>
+  
+
   );
 };
 
