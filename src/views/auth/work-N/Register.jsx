@@ -102,7 +102,7 @@ const Register = () => {
                 </div>
               </div>
 
-              <h3 className="fw-bold mb-1">Sign up</h3>
+              <h3 className="fw-bold mb-1">Sign Up</h3>
               <p className="text-muted mb-4 small">Enter your details to create an account.</p>
 
               {getApiErrorMessage() && (
@@ -178,7 +178,7 @@ const Register = () => {
                       className="fw-bold text-decoration-none"
                       style={{ color: '#E94E34' }}
                     >
-                      Log in
+                      Log In
                     </Link>
                   </p>
                 </div>

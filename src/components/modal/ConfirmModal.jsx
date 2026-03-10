@@ -74,7 +74,7 @@ const overlayStyle = {
 
 const cardStyle = {
   width: "100%",
-  maxWidth: "400px", // Slightly narrower for confirmation
+  maxidth: "400px", // Slightly narrower for confirmation
   backgroundColor: "#ffffff",
   borderRadius: "16px",
   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",

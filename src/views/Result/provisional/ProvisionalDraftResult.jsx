@@ -471,14 +471,14 @@ const ProvisionalDraftResult = ({data}) => {
 
   return (
     <>
-      <div className="draft-container container">
+      <div className="draft-container " >
         {/* Header */}
 
 
-        <div className="container">
+        <div >
           {/* Main Content */}
           <div>
-            <div className="draft-content-wrapper">
+            <div class="draft-content-wrapper">
               {sectionsConfig.map((section) => {
                 const isGenerating = generatingSections[section.key];
 

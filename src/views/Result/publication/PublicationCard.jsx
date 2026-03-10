@@ -30,6 +30,7 @@ const PatentCard = ({data, wideMode }) => {
   {/* 1. Check if scholarResults exists and has items */}
   {data?.scholarResults && data.scholarResults.length > 0 ? (
     data.scholarResults.map((scholar, index) => (
+      <Grid item size={{ md: wideMode ? 6 : 12 , xs: 12 }} key={index}>
       <Card
         key={index} // Always include a unique key
         component={motion.div}
@@ -45,9 +46,10 @@ const PatentCard = ({data, wideMode }) => {
           flexDirection: 'column',
           width: '100%',
           '&:hover': { border: '1px solid #b1b9c0' },
-          '@media (min-width: 1410px)': {
-            maxWidth: wideMode ? '650px' : '100%',
-          },
+          '@media(min-width: 1410px)': {
+             maxWidth: wideMode ? '750px' : '100%',
+          }
+          
         }}
       >
         <Typography variant="h6" sx={{ fontWeight: 800, color: '#1e293b', mb: 2, fontSize: '1.1rem', lineHeight: 1.3, display: '-webkit-box',
@@ -81,6 +83,7 @@ const PatentCard = ({data, wideMode }) => {
           {truncateWords(scholar?.title, 20)}
         </Typography>
       </Card>
+      </Grid>
     ))
   ) : (
     /* 2. Fallback UI when no scholar results are found */

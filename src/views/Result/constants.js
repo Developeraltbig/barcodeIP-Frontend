@@ -5,16 +5,16 @@ export const BRAND_AMBER = "#F5A623";
 
 export const outlineBtnStyle = { 
   textTransform: 'none', 
-  borderRadius: '10px', 
+  borderRadius: '5px', 
   fontWeight: 700, 
   fontSize: '0.75rem', 
-  color: '#475569', 
-  borderColor: '#e2e8f0' 
+  color: '#E94E34', 
+  border: ' 1px solid #E94E34' 
 };
 
 export const filledBtnStyle = { 
   textTransform: 'none', 
-  borderRadius: '10px', 
+  borderRadius: '5px', 
   fontWeight: 700, 
   fontSize: '0.75rem', 
   bgcolor: BRAND_RED, 

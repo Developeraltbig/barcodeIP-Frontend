@@ -336,7 +336,69 @@ const ListItemRow = ({ item, isLastItem, showAnalystMessage }) => {
 };
 
 
+// const WidgetCard = ({ title, icon: Icon, data, isLoading, error, isAnalystWidget }) => {
+//   return (
+//     <Paper
+//       elevation={0}
+//       sx={{
+//         p: 3,
+//         borderRadius: '12px',
+//         border: '1px solid #E5E7EB',
+//         height: '100%',
+//         minHeight: '200px',
+//       }}
+//     >
+//       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+//         <Icon sx={{ color: '#E94E34' }} />
+//         <Typography variant="h6" sx={{ fontWeight: 700, color: '#E94E34' }}>
+//           {title}
+//         </Typography>
+//       </Box>
+
+//       {isLoading && (
+//         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '150px' }}>
+//           <CircularProgress size={30} sx={{ color: '#E94E34' }} />
+//         </Box>
+//       )}
+
+//       {error && !isLoading && (
+//         <Typography variant="body2" color="error" sx={{ mt: 2 }}>
+//           Failed to load data.
+//         </Typography>
+//       )}
+
+//       {!isLoading && !error && (!data || data.length === 0) && (
+//         <Typography variant="body2" sx={{ mt: 2, color: '#9CA3AF' }}>
+//           No records found.
+//         </Typography>
+//       )}
+
+//       {!isLoading && !error && data && (
+//         <Box>
+//           {data.map((item, index) => (
+//             <ListItemRow 
+//               key={item._id || item.id || index} 
+//               item={item} 
+//               isLastItem={index === data.length - 1} 
+//               showAnalystMessage={isAnalystWidget} // Pass the flag down
+//             />
+//           ))}
+//         </Box>
+//       )}
+//     </Paper>
+//   );
+// };
+
+// --- Main Component ---
+
 const WidgetCard = ({ title, icon: Icon, data, isLoading, error, isAnalystWidget }) => {
+  // Logic to determine if we have any valid analyst connections
+  const hasAnalystConnections = useMemo(() => {
+    if (!data || data.length === 0) return false;
+    // Check if at least one project has a message from an analyst
+    return data.some(item => item.analyst_record?.message);
+  }, [data]);
+
   return (
     <Paper
       elevation={0}
@@ -367,29 +429,51 @@ const WidgetCard = ({ title, icon: Icon, data, isLoading, error, isAnalystWidget
         </Typography>
       )}
 
-      {!isLoading && !error && (!data || data.length === 0) && (
-        <Typography variant="body2" sx={{ mt: 2, color: '#9CA3AF' }}>
-          No records found.
-        </Typography>
-      )}
-
-      {!isLoading && !error && data && (
+      {/* Logic for Empty States */}
+      {!isLoading && !error && (
         <Box>
-          {data.map((item, index) => (
-            <ListItemRow 
-              key={item._id || item.id || index} 
-              item={item} 
-              isLastItem={index === data.length - 1} 
-              showAnalystMessage={isAnalystWidget} // Pass the flag down
-            />
-          ))}
+          {/* CASE 1: It's the Analyst Widget but NO records have a message 
+          */}
+          {isAnalystWidget && !hasAnalystConnections ? (
+            <Typography variant="body2" sx={{ mt: 2, color: '#9CA3AF', fontStyle: 'italic' }}>
+              You did not connect to any analytics yet!
+            </Typography>
+          ) : 
+          
+          /* CASE 2: General Empty State (No projects at all) 
+          */
+          (!data || data.length === 0) ? (
+            <Typography variant="body2" sx={{ mt: 2, color: '#9CA3AF' }}>
+              No records found.
+            </Typography>
+          ) : (
+            
+            /* CASE 3: Render the list 
+            */
+            <Box>
+              {data.map((item, index) => {
+                // If it's the analyst widget, we only want to show rows that actually have messages
+                if (isAnalystWidget && !item.analyst_record?.message) {
+                  return null;
+                }
+
+                return (
+                  <ListItemRow 
+                    key={item._id || item.id || index} 
+                    item={item} 
+                    isLastItem={index === data.length - 1} 
+                    showAnalystMessage={isAnalystWidget} 
+                  />
+                );
+              })}
+            </Box>
+          )}
         </Box>
       )}
     </Paper>
   );
 };
 
-// --- Main Component ---
 const DashboardWidgets = () => {
   // 1. Hook Calls
   const { data: getRecentThreeProjects, isLoading: loadingProjects } = useGetRecentThreeProjectsQuery();

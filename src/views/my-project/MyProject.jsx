@@ -9,6 +9,8 @@ import { setSelectedProject } from '../../features/slice/userSlice';
 import { Stack } from 'react-bootstrap';
 import { FaArrowLeft } from 'react-icons/fa6';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { RiContactsFill } from "react-icons/ri";
+
 // Import your API hooks and Slice actions
 
 const MyProject = () => {
@@ -82,7 +84,7 @@ const MyProject = () => {
                 
               </span> */}
               <Typography variant="body2" sx={{ color: '#64748b', fontWeight: 500 , marginBottom:'10px' }}>
-              <ArrowBackIcon fontSize="small" sx={{marginRight:'10px'}} /> Back to Result
+              <ArrowBackIcon fontSize="small" sx={{marginRight:'10px'}} /> Back 
               </Typography>
             </Stack>
             <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ fontWeight: 800, color: '#002B49', mb: 0.5 }}>
@@ -103,7 +105,8 @@ const MyProject = () => {
                 PROJECT NAME
               </Typography>
               <Typography sx={{ flex: 2, fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textAlign: 'center' }}>CREATED</Typography>
-              <Typography sx={{ flex: 2, fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textAlign: 'right' }}>ACTION</Typography>
+              <Typography sx={{ flex: 2, fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textAlign: 'center' }}>ACTION</Typography>
+              <Typography sx={{ flex: 2, fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textAlign: 'right'}}>CONNECT ANALYST</Typography>
             </Box>
           )}
 
@@ -147,7 +150,7 @@ const MyProject = () => {
                   </Box>
 
                   {/* Action Button */}
-                  <Box sx={{ flex: 2, textAlign: 'right', width: { xs: '100%', md: 'auto' } }}>
+                  <Box sx={{ flex: 2.5, textAlign: 'center', width: { xs: '100%', md: 'auto' }}}>
                     <Button
                       fullWidth={isMobile}
                       onClick={() => handleViewMore(project)}
@@ -164,6 +167,31 @@ const MyProject = () => {
                     >
                       View More
                     </Button>
+                  </Box>
+
+                  <Box sx={{ flex: 1.5, textAlign: 'right', width: { xs: '100%', md: 'auto' } }}>
+                    <Button
+                      fullWidth={isMobile}
+                      onClick={() => handleViewMore(project)}
+                      variant="contained"
+                      disableElevation
+                      // endIcon={<ChevronRight />}
+                      sx={{
+                        border:  '1px solid #E94E34',
+                        fontWeight: 700,
+                        textTransform: 'none',
+                        borderRadius: '8px',
+                        bgcolor:'transparent',
+                        color:'#E94E34',
+                        '&:hover': { bgcolor: '#d1432c' , color:'white'}
+                      }}
+                    >
+                      <RiContactsFill style={{marginRight:'10px'}} />  Connect
+                    </Button>
+
+                    {/* <IconButton >
+                      <GrContact />
+                    </IconButton> */}
                   </Box>
                 </Box>
                 {index !== projects.length - 1 && <Divider sx={{ mx: 4, opacity: 0.6 }} />}
