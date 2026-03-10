@@ -340,6 +340,8 @@ const PatentCard = ({ data, wideMode }) => {
   const navigate = useNavigate();
   const [showImagesMap, setShowImagesMap] = useState({});
   const [loadedImages, setLoadedImages] = useState({}); // ADDED: State to track loaded images
+  // Check if any card has the 'show image' state enabled
+   const isListView = Object.values(showImagesMap).some(value => value === true);
 
   const truncateWords = (text, limit) => {
     if (!text) return '';
@@ -362,6 +364,9 @@ const PatentCard = ({ data, wideMode }) => {
     }));
   };
 
+
+
+
   // ADDED: Handler to mark image as loaded (or failed to load, so the spinner stops)
   const handleImageLoad = (index, imgIdx) => {
     setLoadedImages((prev) => ({
@@ -374,7 +379,7 @@ const PatentCard = ({ data, wideMode }) => {
     <>
       {data?.novelty_analysis?.comparisons?.length > 0 ? (
         data.novelty_analysis.comparisons.map((item, index) => (
-          <Grid item size={{ md: wideMode ? 6 : 12 }} key={index}>
+          <Grid item size={{ md: isListView ? 12 : (wideMode ? 6 : 12) }} key={index}>
             <Card
               component={motion.div}
               initial={{ opacity: 0, y: 20 }}
@@ -389,9 +394,13 @@ const PatentCard = ({ data, wideMode }) => {
                 flexDirection: 'column',
                 width: '100%',
                 '&:hover': { border: '1px solid #b1b9c0' },
-                '@media(min-width: 1410px)': {
-                  maxWidth: wideMode ? '750px' : '100%'
-                }
+                 '@media(min-width: 1410px)': {
+                  // maxWidth: wideMode ? '750px' : '100%'
+                   maxWidth: (Object.values(showImagesMap).some(Boolean) || wideMode ? '750px' : '100%') ? '100%' : '750px',
+                },
+               
+
+                
               }}
             >
               <Typography
@@ -558,7 +567,7 @@ const PatentCard = ({ data, wideMode }) => {
                   variant="outlined"
                   startIcon={<ArticleOutlinedIcon />}
                   sx={outlineBtnStyle}
-                  onClick={() => navigate(`/overlap/${item?.metrics?._id}`, { state: { patentData: item } })}
+                  onClick={() => navigate('/patent-detail')}
                 >
                   View More
                 </Button>
