@@ -212,7 +212,7 @@ const AdvanceSearch = () => {
                   <Add />
                 </IconButton>
               </Grid>
-              <Grid item xs={12} md={12}>
+              <Grid item xs={12} size={{ md: 12 }}>
                 <StyledSelect placeholder="Patent Office" />
               </Grid>
 

@@ -73,16 +73,16 @@ const MyProject = () => {
         >
           <Box>
             <Stack
-              className='d-flex gap-2 mb-3 align-items-center'
+              class='d-flex gap-2 mb-3 '
               spacing={1}
               sx={{ mb: { xs: 1, sm: 2 }, cursor: 'pointer' }}
               onClick={() => navigate(-1)}
             >
-              <span size="small" style={{ color: '#64748b' , bgcolor:'green' , height1:'10px' , width:'20px' }}>
-                <ArrowBackIcon fontSize="small" />
-              </span>
-              <Typography variant="body2" sx={{ color: '#64748b', fontWeight: 500 }}>
-                Back to Result
+              {/* <span style={{ color: '#64748b'}}>
+                
+              </span> */}
+              <Typography variant="body2" sx={{ color: '#64748b', fontWeight: 500 , marginBottom:'10px' }}>
+              <ArrowBackIcon fontSize="small" sx={{marginRight:'10px'}} /> Back to Result
               </Typography>
             </Stack>
             <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ fontWeight: 800, color: '#002B49', mb: 0.5 }}>

@@ -13,9 +13,6 @@ const Footer = () => {
     return LatestContent.data || LatestContent.article || (Array.isArray(LatestContent) ? LatestContent : []);
   }, [LatestContent]);
 
-
-  console.log("footer content", content)
-
   return (
     <Box
       component="footer"
@@ -30,7 +27,7 @@ const Footer = () => {
     >
       <Container maxWidth="xl">
         <Grid container spacing={4} alignItems="flex-start" justifyContent="space-between">
-          <Grid item xs={12} md={4}>
+          <Grid item size={{ xs: 12, md: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 2 }}>
               <Typography variant="h5" sx={{ fontWeight: 800, fontSize: '30px' }}>
                 barcode
@@ -42,7 +39,7 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={4} md={2.5}>
+          <Grid item size={{ xs: 12, md: 2.5 , sm:4 }}>
             <Typography variant="caption" sx={{ color: '#888', fontWeight: 700 }}>
               CONTACT US
             </Typography>
@@ -51,7 +48,7 @@ const Footer = () => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} sm={4} md={3}>
+          <Grid item size={{ xs: 12, md: 3 , sm: 4 }}>
             <Typography variant="caption" sx={{ color: '#888', fontWeight: 700 }}>
               EMAIL
             </Typography>
@@ -60,7 +57,7 @@ const Footer = () => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} sm={4} md={2.5}>
+          <Grid item size={{ xs: 12, md: 2.5 , sm:4 }}>
             <Typography variant="caption" sx={{ color: '#888', fontWeight: 700 }}>
               ADDRESS
             </Typography>
@@ -74,7 +71,7 @@ const Footer = () => {
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
           <Typography variant="caption" sx={{ color: '#666' }}>
-            © Terms and Conditions Applied
+            {content.copyright}
           </Typography>
           <Link href="#" underline="hover" sx={{ color: '#E94E34', fontSize: '0.75rem', fontWeight: 600 }}>
             Privacy

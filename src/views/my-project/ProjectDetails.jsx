@@ -68,7 +68,7 @@ const ProjectDetails = () => {
           </Grid>
 
           {/* Right Column: Metadata */}
-          <Grid item xs={12} md={4}>
+          <Grid item size={{ xs: 12, md: 4 }}>
             <Card sx={{ p: 4, borderRadius: '20px', border: 'none', height: '100%' }}>
               <Typography variant="h6" sx={{ fontWeight: 700, mb: 3 }}>Details</Typography>
               
