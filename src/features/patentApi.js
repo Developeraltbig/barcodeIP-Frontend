@@ -22,27 +22,7 @@ export const patentApi = baseApi.injectEndpoints({
       invalidatesTags: ["Patent"],
     }),
 
-    // // PUT: Update specific section (implied from handleSaveSection)
-    // updatePatentSection: builder.mutation({
-    //   query: ({ id, field, content }) => ({
-    //     url: `/api/provisionaldraft/update/${id}`,
-    //     method: "PUT",
-    //     body: { field, content },
-    //   }),
-    //   // Optimistic updates can be applied here, or just invalidate
-    //   invalidatesTags: ["Patent"],
-    // }),
-
-    // // POST: Regenerate specific section (implied from handleRegenerate)
-    // regeneratePatentSection: builder.mutation({
-    //   query: ({ id, field }) => ({
-    //     url: `/api/provisionaldraft/regenerate/${id}`,
-    //     method: "POST",
-    //     body: { field },
-    //   }),
-    //   invalidatesTags: ["Patent"],
-    // }),
-
+   
   }),
   overrideExisting: false,
 });
@@ -50,6 +30,5 @@ export const patentApi = baseApi.injectEndpoints({
 export const {
   useGetPatentByIdQuery,
   useLazyGenerateAllPatentQuery, // Use Lazy for actions triggered by events
-  // useUpdatePatentSectionMutation,
-  // useRegeneratePatentSectionMutation
+  
 } = patentApi;
