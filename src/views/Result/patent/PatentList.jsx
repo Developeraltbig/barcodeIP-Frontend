@@ -51,6 +51,8 @@ const NoDataFound = ({ tabName }) => (
   </Box>
 );
 
+
+
 const PatentList = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
