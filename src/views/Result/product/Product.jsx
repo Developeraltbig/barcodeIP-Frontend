@@ -28,7 +28,6 @@ const Product = ({ data, progress }) => {
 
   return (
     <Box sx={{ bgcolor: '#f8fafc', minHeight: '100vh', py: 8 }}>
-      <Container >
        
 
         {/* 4. Pass the list and the selection handler */}

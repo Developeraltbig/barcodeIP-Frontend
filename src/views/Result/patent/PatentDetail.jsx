@@ -19,7 +19,7 @@ const PatentDetail = () => {
   
   return (
 
-   <Box sx={{background: "#ebebebff",}}>
+   <Box sx={{background: "rgb(240, 240, 240)",}}>
 
       <Container maxWidth="xl" sx={{ py: 4, fontFamily: 'Roboto, sans-serif' , paddingTop:'90px' }}>
       

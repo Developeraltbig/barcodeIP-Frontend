@@ -1,5 +1,5 @@
 export const TABS = [
-  { id: 'patents', label: 'Patent' },
+  { id: 'patent', label: 'Patent' },
   { id: 'publications', label: 'Publication' },
   { id: 'products', label: 'Products' },
   { id: 'provisional', label: 'Provisional Specification' },

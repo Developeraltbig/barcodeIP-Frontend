@@ -138,14 +138,14 @@ const InputSectionN = () => {
 
           <IconButton
           sx={{
-            bgcolor: '#FEF2F2',
+            // bgcolor: '#FEF2F2',
             color: '#E94E34',
             borderRadius: '5px',
             width:'80px'
   
           }}
         >
-          <CloudUploadOutlined style={{ fontSize: '35px' }} />
+          <CloudUploadOutlined style={{ fontSize: '25px' }} />
         </IconButton>
         </Paper>
         
