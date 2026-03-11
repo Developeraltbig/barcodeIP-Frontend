@@ -29,6 +29,7 @@ import { htmlToDocxParagraphs } from "../../../utils/docxUtils";
 import "../../../assets/css/style.css";
 import useAuthStore from "../../../store/authStore";
 import DraftSection from "../non_provisional/DraftSection";
+import { LinearProgress, Typography } from "@mui/material";
 
 // --- STATIC DATA ---
 // const STATIC_INVENTION_DATA = {
@@ -77,7 +78,7 @@ import DraftSection from "../non_provisional/DraftSection";
 // };
 // -------------------
 
-const ProvisionalDraftResult = ({data}) => {
+const ProvisionalDraftResult = ({ data, progress }) => {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const { projectId } = useParams();
@@ -209,7 +210,7 @@ const ProvisionalDraftResult = ({data}) => {
     const currentContent = draftData[sectionKey];
     try {
       setDraftData((prev) => ({ ...prev, [sectionKey]: newContent }));
-      
+
       // --- MOCKED SAVE ---
       // await axios.put(`/api/provisionaldraft/update/${projectId}`, {
       //   field: sectionKey,
@@ -241,12 +242,12 @@ const ProvisionalDraftResult = ({data}) => {
       //   field: sectionKey,
       // });
       setTimeout(() => {
-         setGeneratingSections((prev) => ({ ...prev, [sectionKey]: false }));
-         setDraftData((prev) => ({
-            ...prev,
-            [sectionKey]: prev[sectionKey] + " (Regenerated)"
-         }));
-         toast.success("Section Regenerated (Mock)");
+        setGeneratingSections((prev) => ({ ...prev, [sectionKey]: false }));
+        setDraftData((prev) => ({
+          ...prev,
+          [sectionKey]: prev[sectionKey] + " (Regenerated)"
+        }));
+        toast.success("Section Regenerated (Mock)");
       }, 1500);
       // -------------------------
     } catch (error) {
@@ -432,6 +433,17 @@ const ProvisionalDraftResult = ({data}) => {
   }, []);
 
   useEffect(() => {
+
+    if (progress) {
+
+      console.log("Provisional generation progress:", progress);
+
+    }
+
+  }, [progress])
+
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDownloadOptions(false);
@@ -473,7 +485,22 @@ const ProvisionalDraftResult = ({data}) => {
     <>
       <div className="draft-container " >
         {/* Header */}
+        {progress > 0 && progress < 100 && (
+          <div style={{ marginBottom: "20px" }}>
+            <Typography variant="body2">
+              Generating Provisional Draft... {progress}%
+            </Typography>
 
+            <LinearProgress
+              variant="determinate"
+              value={progress}
+              sx={{
+                height: 8,
+                borderRadius: 5
+              }}
+            />
+          </div>
+        )}
 
         <div >
           {/* Main Content */}

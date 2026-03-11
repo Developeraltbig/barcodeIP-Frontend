@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Container, Grid, CircularProgress, Typography } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { 
+import {
   useLazyGetProductByProjectIdQuery,
   useLazyGetPatentByProjectIdQuery,
   useLazyGetPublicationByProjectIdQuery,
@@ -12,14 +12,17 @@ import {
   useLazyGetNonProvisionalByProjectIdQuery
 } from '../../../features/userApi';
 
-import { 
-  setProjectProduct, setProjectPatent, 
-  setProjectPublication, setProjectProvisional, 
-  setProjectNonProvisional 
+import {
+  setProjectProduct, setProjectPatent,
+  setProjectPublication, setProjectProvisional,
+  setProjectNonProvisional
 } from '../../../features/slice/userSlice';
 
 import Loadable from 'components/Loadable';
 // import Product from '../product/Product';
+import { socket } from "../../../utils/socket";
+
+import { LinearProgress } from "@mui/material";
 
 // Components
 
@@ -32,14 +35,14 @@ const ProvisionalDraftResult = Loadable(lazy(() => import('../provisional/Provis
 const Product = Loadable(lazy(() => import('../product/Product')));
 
 const NoDataFound = ({ tabName }) => (
-  <Box sx={{ 
-    display: 'flex', 
-    flexDirection: 'column', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    py: 10, 
+  <Box sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    py: 10,
     width: '100%',
-    opacity: 0.6 
+    opacity: 0.6
   }}>
     {/* <InboxIcon sx={{ fontSize: 60, mb: 2, color: 'text.secondary' }} /> */}
     <Typography variant="h5" gutterBottom>
@@ -56,10 +59,10 @@ const NoDataFound = ({ tabName }) => (
 const PatentList = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [activeTab, setActiveTab] = useState('patents');
+  const [activeTab, setActiveTab] = useState('patent');
   const [isWideMode, setIsWideMode] = useState(true);
 
-//   // Lazy Hooks
+  //   // Lazy Hooks
   const [getPatents, { isLoading: pLoad }] = useLazyGetPatentByProjectIdQuery();
   const [getProducts, { isLoading: prodLoad }] = useLazyGetProductByProjectIdQuery();
   const [getPubs, { isLoading: pubLoad }] = useLazyGetPublicationByProjectIdQuery();
@@ -68,12 +71,21 @@ const PatentList = () => {
 
   // 1. Memoized Configuration
   const tabConfigs = useMemo(() => ({
-    patents: { trigger: getPatents, action: setProjectPatent, stateKey: 'projectPatent' },
+    patent: { trigger: getPatents, action: setProjectPatent, stateKey: 'projectPatent' },
     publications: { trigger: getPubs, action: setProjectPublication, stateKey: 'projectPublication' },
     products: { trigger: getProducts, action: setProjectProduct, stateKey: 'projectProduct' },
     provisional: { trigger: getProv, action: setProjectProvisional, stateKey: 'projectProvisional' },
     nonProvisional: { trigger: getNonProv, action: setProjectNonProvisional, stateKey: 'projectNonProvisional' },
   }), [getPatents, getPubs, getProducts, getProv, getNonProv]);
+
+  const [workerProgress, setWorkerProgress] = useState({
+    provisional: 0,
+    nonProvisional: 0,
+    patent: 0,
+    publish: 0,
+    product: 0
+  });
+
 
   // Selectors
   const dashboard = useSelector((state) => state.userDashboard || {});
@@ -118,10 +130,49 @@ const PatentList = () => {
   // };
 
 
+  useEffect(() => {
+    if (!id) return;
+
+    console.log("Joining project room:", id);
+
+    socket.emit("joinProject", id);
+
+    socket.on("jobUpdate", (event) => {
+
+      console.log("Frontend Received Event:", event);
+
+      if (event.projectId !== id) return;
+
+      if (event.event === "progress") {
+
+        setWorkerProgress((prev) => ({
+          ...prev,
+          [event.type === "non-provisional" ? "nonProvisional" : event.type]: event.progress
+        }));
+
+      }
+
+      if (event.event === "progress") {
+        console.log("Progress:", event.type, event.progress);
+      }
+
+      if (event.event === "started") {
+        console.log("Started:", event.type);
+      }
+
+    });
+
+    return () => {
+      socket.off("jobUpdate");
+    };
+
+  }, [id]);
+
+
   const renderActiveComponent = () => {
     const rawData = displayData[0];
-    const data = rawData?.data ; 
-    
+    const data = rawData?.data;
+
     // Checks if data is null, undefined, an empty array, or an empty string
     const hasNoData = !data || (Array.isArray(data) && data.length === 0);
 
@@ -129,17 +180,15 @@ const PatentList = () => {
       return <NoDataFound tabName={activeTab} />;
     } else {
 
-    switch (activeTab) {
-      case 'patents': return <PatentCard data={data} wideMode={isWideMode} />;
-      case 'publications': return <PublicationCard data={data} wideMode={isWideMode} />;
-      case 'nonProvisional': return <DraftMasterResult data={data} />;
-      case 'provisional': return <ProvisionalDraftResult data={data} />;
-      case 'products': return <Product data={data} />;
-      default: return null;
+      switch (activeTab) {
+        case 'patent': return <PatentCard data={data} wideMode={isWideMode} progress={workerProgress.patent} />;
+        case 'publications': return <PublicationCard data={data} wideMode={isWideMode} progress={workerProgress.publish} />;
+        case 'nonProvisional': return <DraftMasterResult data={data} progress={workerProgress.nonProvisional} />;
+        case 'provisional': return <ProvisionalDraftResult data={data} progress={workerProgress.provisional} />;
+        case 'products': return <Product data={data} progress={workerProgress.product} />;
+        default: return null;
+      }
     }
-    }
-  
-  
   };
 
   const isLoading = pLoad || prodLoad || pubLoad || provLoad || nonProvLoad;
@@ -149,12 +198,28 @@ const PatentList = () => {
       <TopSection />
       <Container maxWidth="xl" sx={{ mt: 4 }}>
         <TabComponent activeTab={activeTab} setActiveTab={setActiveTab} onToggleLayout={() => setIsWideMode(!isWideMode)} isWideMode={isWideMode} />
+        {/* {workerProgress.patent !== undefined && workerProgress.patent < 100 && (
+          <div style={{ marginBottom: "20px" }}>
+            <Typography variant="body2">
+              Generating Patent Draft... {workerProgress.patent}%
+            </Typography>
+
+            <LinearProgress
+              variant="determinate"
+              value={workerProgress.patent}
+              sx={{
+                height: 8,
+                borderRadius: 5
+              }}
+            />
+          </div>
+        )} */}
 
         <AnimatePresence mode="wait">
-          <motion.div 
-            key={activeTab} 
-            initial={{ opacity: 0, y: 10 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
           >
@@ -163,7 +228,7 @@ const PatentList = () => {
                 {/* <CircularProgress color="primary" /> */}
               </Box>
             ) : (
-              <Grid container spacing={3} sx={{ alignItems:'center'  }}>
+              <Grid container spacing={3} sx={{ alignItems: 'center' }}>
                 {renderActiveComponent()}
               </Grid>
             )}
