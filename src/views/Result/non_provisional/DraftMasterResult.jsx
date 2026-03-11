@@ -13,8 +13,9 @@ import { getSafeFilename } from '../../../utils/formatUtils';
 import DraftSection from './DraftSection';
 import DiagramSection from './DiagramSection';
 import useAuthStore from '../../../store/authStore';
+import { LinearProgress, Typography } from "@mui/material";
 
-const DraftMasterResult = ({data}) => {
+const DraftMasterResult = ({ data, progress }) => {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const { projectId } = useParams();
@@ -457,54 +458,69 @@ const DraftMasterResult = ({data}) => {
 
   return (
     <>
-<Box className="draft-container">
-  {/* Header */}
+      <Box className="draft-container">
+        {/* Header */}
+        {progress !== undefined && progress < 100 && (
+          <div style={{ marginBottom: "20px" }}>
+            <Typography variant="body2">
+              Generating Non-Provisional Draft... {progress}%
+            </Typography>
 
-  <Box>
-    {/* Main Content */}
-    <Box>
-      <Box class="draft-content-wrapper">
-        {sectionsConfig.map((section) => {
-          const isDiagram =
-            section.key === "flow_chart" || section.key === "block_diagram";
-          const isGenerating = generatingSections[section.key];
-          const disableRegenerate =
-            section.key === "brief_description" && isDependentsGenerating;
-
-          // Conditional Rendering
-          if (isDiagram) {
-            return (
-              <DiagramSection
-                key={section.key}
-                sectionKey={section.key}
-                title={section.label}
-                content={draftData[section.key] || ""}
-                isVisible={sectionVisibility[section.key]}
-                isRegenerating={isGenerating}
-                onRegenerate={handleRegenerate}
-              />
-            );
-          }
-
-          // Standard Text Section
-          return (
-            <DraftSection
-              key={section.key}
-              sectionKey={section.key}
-              title={section.label}
-              content={draftData[section.key] || ""}
-              isVisible={sectionVisibility[section.key]}
-              isRegenerating={isGenerating}
-              onSave={handleSaveSection}
-              onRegenerate={handleRegenerate}
-              disableRegenerate={disableRegenerate}
+            <LinearProgress
+              variant="determinate"
+              value={progress}
+              sx={{
+                height: 8,
+                borderRadius: 5
+              }}
             />
-          );
-        })}
+          </div>
+        )}
+        <Box>
+          {/* Main Content */}
+          <Box>
+            <Box class="draft-content-wrapper">
+              {sectionsConfig.map((section) => {
+                const isDiagram =
+                  section.key === "flow_chart" || section.key === "block_diagram";
+                const isGenerating = generatingSections[section.key];
+                const disableRegenerate =
+                  section.key === "brief_description" && isDependentsGenerating;
+
+                // Conditional Rendering
+                if (isDiagram) {
+                  return (
+                    <DiagramSection
+                      key={section.key}
+                      sectionKey={section.key}
+                      title={section.label}
+                      content={draftData[section.key] || ""}
+                      isVisible={sectionVisibility[section.key]}
+                      isRegenerating={isGenerating}
+                      onRegenerate={handleRegenerate}
+                    />
+                  );
+                }
+
+                // Standard Text Section
+                return (
+                  <DraftSection
+                    key={section.key}
+                    sectionKey={section.key}
+                    title={section.label}
+                    content={draftData[section.key] || ""}
+                    isVisible={sectionVisibility[section.key]}
+                    isRegenerating={isGenerating}
+                    onSave={handleSaveSection}
+                    onRegenerate={handleRegenerate}
+                    disableRegenerate={disableRegenerate}
+                  />
+                );
+              })}
+            </Box>
+          </Box>
+        </Box>
       </Box>
-    </Box>
-  </Box>
-</Box>
     </>
   );
 };

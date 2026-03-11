@@ -107,7 +107,7 @@
 //                   icon={<OpenInNewIcon sx={{ fontSize: '14px !important' }} />}
 //                   sx={{ bgcolor: `${BRAND_RED}10`, color: BRAND_RED, fontWeight: 800, borderRadius: '8px', cursor: 'pointer' }}
 //                 />
-                
+
 //                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#64748b' }}>
 //                   <CalendarTodayIcon sx={{ fontSize: 16 }} />
 //                   <Typography variant="caption" sx={{ fontWeight: 600 }}>
@@ -148,7 +148,7 @@
 //                     bgcolor: '#f8fafc', // Light slate background makes images pop
 //                     borderRadius: '8px',
 //                     border: '1px solid #e2e8f0',
-                    
+
 //                     // Custom scrollbar styling
 //                     scrollbarWidth: 'thin', // For Firefox
 //                     scrollbarColor: '#cbd5e1 transparent', // For Firefox
@@ -309,11 +309,12 @@ import { motion } from 'framer-motion';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'; 
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import JoinInnerIcon from '@mui/icons-material/JoinInner';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { BRAND_RED, outlineBtnStyle, filledBtnStyle } from '../constants';
 import { useNavigate } from 'react-router-dom';
+import { LinearProgress } from "@mui/material";
 
 const NoDataFound = ({ tabName }) => (
   <Box
@@ -336,12 +337,12 @@ const NoDataFound = ({ tabName }) => (
   </Box>
 );
 
-const PatentCard = ({ data, wideMode }) => {
+const PatentCard = ({ data, wideMode, progress }) => {
   const navigate = useNavigate();
   const [showImagesMap, setShowImagesMap] = useState({});
   const [loadedImages, setLoadedImages] = useState({}); // ADDED: State to track loaded images
   // Check if any card has the 'show image' state enabled
-   const isListView = Object.values(showImagesMap).some(value => value === true);
+  const isListView = Object.values(showImagesMap).some(value => value === true);
 
   const truncateWords = (text, limit) => {
     if (!text) return '';
@@ -377,6 +378,8 @@ const PatentCard = ({ data, wideMode }) => {
 
   return (
     <>
+
+
       {data?.novelty_analysis?.comparisons?.length > 0 ? (
         data.novelty_analysis.comparisons.map((item, index) => (
           <Grid item size={{ md: isListView ? 12 : (wideMode ? 6 : 12) }} key={index}>
@@ -394,13 +397,13 @@ const PatentCard = ({ data, wideMode }) => {
                 flexDirection: 'column',
                 width: '100%',
                 '&:hover': { border: '1px solid #b1b9c0' },
-                 '@media(min-width: 1410px)': {
+                '@media(min-width: 1410px)': {
                   // maxWidth: wideMode ? '750px' : '100%'
-                   maxWidth: (Object.values(showImagesMap).some(Boolean) || wideMode ? '750px' : '100%') ? '100%' : '750px',
+                  maxWidth: (Object.values(showImagesMap).some(Boolean) || wideMode ? '750px' : '100%') ? '100%' : '750px',
                 },
-               
 
-                
+
+
               }}
             >
               <Typography
@@ -422,13 +425,13 @@ const PatentCard = ({ data, wideMode }) => {
 
               <Stack direction="row" flexWrap="wrap" alignItems="center" gap={1.5} sx={{ mb: 2 }}>
                 <Chip
-                  onClick={() => handlePatentRedirect(item?.details?.patent_id)} 
+                  onClick={() => handlePatentRedirect(item?.details?.patent_id)}
                   disabled={!item?.details?.patent_id}
                   label={item?.details?.patent_id?.match(/(?<=\/)[A-Z0-9]+(?=\/)/) || item?.details?.patent_id}
                   icon={<OpenInNewIcon sx={{ fontSize: '14px !important' }} />}
                   sx={{ bgcolor: `${BRAND_RED}10`, color: BRAND_RED, fontWeight: 800, borderRadius: '8px', cursor: 'pointer' }}
                 />
-                
+
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#64748b' }}>
                   <CalendarTodayIcon sx={{ fontSize: 16 }} />
                   <Typography variant="caption" sx={{ fontWeight: 600 }}>
@@ -469,15 +472,15 @@ const PatentCard = ({ data, wideMode }) => {
                     bgcolor: '#f8fafc', // Light slate background makes images pop
                     borderRadius: '8px',
                     border: '1px solid #e2e8f0',
-                    
+
                     // Custom scrollbar styling
                     scrollbarWidth: 'thin', // For Firefox
                     scrollbarColor: '#cbd5e1 transparent', // For Firefox
-                    '&::-webkit-scrollbar': { 
-                      height: '8px' 
+                    '&::-webkit-scrollbar': {
+                      height: '8px'
                     },
-                    '&::-webkit-scrollbar-track': { 
-                      background: 'transparent' 
+                    '&::-webkit-scrollbar-track': {
+                      background: 'transparent'
                     },
                     '&::-webkit-scrollbar-thumb': {
                       backgroundColor: '#cbd5e1',
@@ -494,7 +497,7 @@ const PatentCard = ({ data, wideMode }) => {
                       sx={{
                         flexShrink: 0,
                         height: 180, // Taller size matching patent sketches
-                        width: 140, 
+                        width: 140,
                         backgroundColor: '#ffffff',
                         borderRadius: '6px',
                         border: '1px solid #e2e8f0',

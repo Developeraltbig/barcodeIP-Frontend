@@ -6,10 +6,11 @@ import AnalysisView from './AnalysisView';
 import SourcesSection from './SourcesSection';
 import DiscoveredProducts from './DiscoveredProducts';
 import NotFound from '../../../components/NotFound';
+import { LinearProgress } from "@mui/material";
 
-const Product = ({ data }) => {
+const Product = ({ data, progress }) => {
   // 1. Normalize the list of products from props
-  
+
   const displayList = data?.results?.selectedTop5;
 
 
@@ -22,32 +23,47 @@ const Product = ({ data }) => {
   useEffect(() => {
     if (displayList.length > 0) {
       setActiveProduct(displayList[0]);
-    } 
+    }
   }, [data]);
 
   return (
     <Box sx={{ bgcolor: '#f8fafc', minHeight: '100vh', py: 8 }}>
-      <Container sx={{bgcolor:''}}>
-       
+      <Container sx={{ bgcolor: '' }}>
+        {progress !== undefined && progress < 100 && (
+          <div style={{ marginBottom: "20px" }}>
+            <Typography variant="body2">
+              Generating Product Draft... {progress}%
+            </Typography>
+
+            <LinearProgress
+              variant="determinate"
+              value={progress}
+              sx={{
+                height: 8,
+                borderRadius: 5
+              }}
+            />
+          </div>
+        )}
 
         {/* 4. Pass the list and the selection handler */}
         <TabComponent
-          items={displayList} 
-          activeId={activeProduct?.id} 
-          onSelect={setActiveProduct} 
+          items={displayList}
+          activeId={activeProduct?.id}
+          onSelect={setActiveProduct}
         />
 
         {/* 5. AnalysisView now receives the specific object from the active tab */}
         {activeProduct && (
           <Fade in={true} key={activeProduct.id} timeout={600}>
             <Box sx={{ mb: 6 }}>
-              <AnalysisView product={activeProduct} item={itemResult}  />
+              <AnalysisView product={activeProduct} item={itemResult} />
             </Box>
           </Fade>
         )}
 
-          {/* Collapsible Section */}
-        <SourcesSection  item={itemResult}  />
+        {/* Collapsible Section */}
+        <SourcesSection item={itemResult} />
 
         {/* Footer Sources */}
         <DiscoveredProducts item={data.results} />
