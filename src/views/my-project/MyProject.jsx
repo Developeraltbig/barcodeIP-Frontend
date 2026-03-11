@@ -1,12 +1,11 @@
 import React, { lazy, useMemo } from 'react';
-import { Box, Typography, Button, Card, Divider, useMediaQuery, useTheme, CircularProgress, IconButton } from '@mui/material';
+import { Box, Typography, Button, Card, Divider, useMediaQuery, useTheme, CircularProgress, IconButton, Stack } from '@mui/material';
 import Loadable from 'components/Loadable';
 import { ChevronRight, CalendarMonth, AssignmentOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useFetchAllProjectsQuery } from '../../features/userApi';
 import { setSelectedProject } from '../../features/slice/userSlice';
-import { Stack } from 'react-bootstrap';
 import { FaArrowLeft } from 'react-icons/fa6';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { RiContactsFill } from "react-icons/ri";
@@ -75,7 +74,7 @@ const MyProject = () => {
         >
           <Box>
             <Stack
-              class='d-flex gap-2 mb-3 '
+              className='d-flex gap-2 mb-3 '
               spacing={1}
               sx={{ mb: { xs: 1, sm: 2 }, cursor: 'pointer' }}
               onClick={() => navigate(-1)}

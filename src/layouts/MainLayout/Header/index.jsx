@@ -110,8 +110,8 @@ export default function Header() {
 
         {/* Right Side: User Profile */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button onClick={handleMenuClick} endIcon={<KeyboardArrowDown />}>
-            <Avatar sx={{ width: 32, height: 32, bgcolor: '#FFDbd6', color: '#E94E34', mr: 1 }}>
+          <Button onClick={handleMenuClick} endIcon={<KeyboardArrowDown />} >
+            <Avatar sx={{ width: 32, height: 32, bgcolor: '#FFDbd6', color: '#E94E34', mr: 1 , }}>
               <Person fontSize="small" />
             </Avatar>
 
@@ -145,7 +145,8 @@ export default function Header() {
                 mt: 1,
                 // This logic ensures the menu is at least as wide as the button
                 minWidth: anchorEl ? anchorEl.clientWidth : 0,
-                borderRadius: '8px'
+                borderRadius: '5px',
+                justifyItems:'center'
               }
             }}
           >
@@ -165,7 +166,7 @@ export default function Header() {
                 // Pass the user object as 'state'
                 navigate(`/profile`, { state: { userData: user } });
               }}
-              // sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
+              
             >
               Profile
             </MenuItem>
@@ -174,11 +175,11 @@ export default function Header() {
                 handleMenuClose();
                 navigate(`/project`);
               }}
-              sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
+              sx={{ display: { xs: 'flex', md: 'none' }, gap: 2  }}
             >
               My Project
             </MenuItem>
-            <MenuItem onClick={() => handleLogout()} sx={{ color: 'primary.main' }}>
+            <MenuItem onClick={() => handleLogout()} sx={{ color: 'primary.main' ,  }}>
               Logout
             </MenuItem>
           </Menu>

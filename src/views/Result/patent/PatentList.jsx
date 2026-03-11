@@ -82,6 +82,8 @@ const PatentList = () => {
     return Array.isArray(rawData) ? rawData : [rawData];
   }, [dashboard, activeTab, tabConfigs]);
 
+  console.log("display data - 85" , displayData)
+
   // 3. Optimized Data Fetching
   const loadTabData = useCallback(async () => {
     if (!id) return;
@@ -138,12 +140,6 @@ const PatentList = () => {
   
   };
 
-
-
-
-
-
-
   const isLoading = pLoad || prodLoad || pubLoad || provLoad || nonProvLoad;
 
   return (
@@ -162,7 +158,7 @@ const PatentList = () => {
           >
             {isLoading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
-                <CircularProgress color="primary" />
+                {/* <CircularProgress color="primary" /> */}
               </Box>
             ) : (
               <Grid container spacing={3} sx={{ alignItems:'center'  }}>

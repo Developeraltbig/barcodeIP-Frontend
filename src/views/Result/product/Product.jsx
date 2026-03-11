@@ -26,8 +26,8 @@ const Product = ({ data }) => {
   }, [data]);
 
   return (
-    <Box sx={{ bgcolor: '#f8fafc', minHeight: '100vh', py: 8 }}>
-      <Container sx={{bgcolor:''}}>
+    <Box sx={{ bgcolor: '#3b72a8', minHeight: '100vh', py: 8 }}>
+     
        
 
         {/* 4. Pass the list and the selection handler */}
@@ -51,7 +51,7 @@ const Product = ({ data }) => {
 
         {/* Footer Sources */}
         <DiscoveredProducts item={data.results} />
-      </Container>
+    
     </Box>
   );
 };

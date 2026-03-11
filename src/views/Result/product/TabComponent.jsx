@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Box, Paper, Avatar, Typography, ButtonBase, IconButton } from '@mui/material';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'; // Using React Icons
 
+
 const TabComponent = ({ items, activeId, onSelect }) => {
   const scrollRef = useRef(null);
 
@@ -13,6 +14,7 @@ const TabComponent = ({ items, activeId, onSelect }) => {
     }
   };
  
+
   return (
     <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%', mb: 4 }}>
       {/* Left Navigation Arrow */}
@@ -24,7 +26,8 @@ const TabComponent = ({ items, activeId, onSelect }) => {
           zIndex: 5,
           bgcolor: 'white',
           boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-          '&:hover': { bgcolor: '#f8fafc' }
+          '&:hover': { bgcolor: '#f8fafc' },
+           display: { xs: 'flex', md: 'none' }, 
         }}
       >
         <IoIosArrowBack size={20} />

@@ -141,7 +141,7 @@ const InputSectionN = () => {
             bgcolor: '#FEF2F2',
             color: '#E94E34',
             borderRadius: '5px',
-        
+            width:'80px'
   
           }}
         >
@@ -194,11 +194,13 @@ const InputSectionN = () => {
           Generate Key Strings
         </Button>
         <FormControlLabel
+       
           control={
             <Switch
+              color="default"
               checked={advanceSearch}
               onChange={(e) => setAdvanceSearch(e.target.checked)}
-              sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#E94E34' } }}
+              sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#E94E34'  } , }}
             />
           }
           label="Advance Search"

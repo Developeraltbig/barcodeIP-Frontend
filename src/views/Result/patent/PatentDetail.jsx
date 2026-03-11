@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import { useNavigate } from 'react-router-dom';
 import PatentMetadataDashboard from './PatentMetadataDashboard';
+import PatentClaims from './PatentClaims';
 
 const PatentDetail = () => {
      const navigate = useNavigate();
@@ -20,7 +21,7 @@ const PatentDetail = () => {
 
    <Box sx={{background: "#ebebebff",}}>
 
-      <Container maxWidth="lg" sx={{ py: 4, fontFamily: 'Roboto, sans-serif' , paddingTop:'90px' }}>
+      <Container maxWidth="xl" sx={{ py: 4, fontFamily: 'Roboto, sans-serif' , paddingTop:'90px' }}>
       
       {/* Navigation Header */}
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }} onClick={() => navigate(-1)}>
@@ -136,6 +137,7 @@ const PatentDetail = () => {
 
 
    <PatentMetadataDashboard/>
+   <PatentClaims/>
    </Box>
   
 

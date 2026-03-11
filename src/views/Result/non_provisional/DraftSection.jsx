@@ -372,7 +372,7 @@ const DraftSection = ({
         </Box>
       ) : (
         <Box
-          class="content-view"
+          className="content-view"
           dangerouslySetInnerHTML={{
             __html: localContent || getPlaceholder(),
           }}

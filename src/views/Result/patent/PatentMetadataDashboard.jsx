@@ -33,7 +33,7 @@ const classifications = [
 export default function PatentMetadataDashboard() {
   return (
   <Box >
-      <Container sx={{ p: 3,  minHeight: "100vh" }}>
+      <Container maxWidth="xl" sx={{ p: 3}}>
       
       {/* Header */}
       <Paper
@@ -43,7 +43,7 @@ export default function PatentMetadataDashboard() {
           p: 2,
           textAlign: "center",
           background: "#f6e5e5",
-          borderRadius: 2
+          borderRadius: 1
         }}
       >
         <Typography
@@ -58,7 +58,7 @@ export default function PatentMetadataDashboard() {
         
         {/* Left Top */}
         <Grid item size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 2, borderRadius: 2, height: "100%" }}>
+          <Paper sx={{ p: 2, borderRadius: 1, height: "100%" }}>
             <Typography sx={{ color: "#c0392b", fontWeight: 600 }}>
               Inventor
             </Typography>
@@ -79,7 +79,7 @@ export default function PatentMetadataDashboard() {
 
         {/* Right Top */}
         <Grid item size={{ xs: 12, md: 6 }}>
-          <Paper sx={{ p: 2, borderRadius: 2, height: "100%" , width: '100%'}}>
+          <Paper sx={{ p: 2, borderRadius: 1, height: "100%" , width: '100%'}}>
             <Typography sx={{ color: "#c0392b", fontWeight: 600, mb: 1 }}>
               Worldwide applications
             </Typography>
@@ -94,7 +94,7 @@ export default function PatentMetadataDashboard() {
           <Paper
             sx={{
               p: 2,
-              borderRadius: 2,
+              borderRadius: 1,
               height: 260,
               display: "flex",
               flexDirection: "column"
@@ -121,7 +121,7 @@ export default function PatentMetadataDashboard() {
           <Paper
             sx={{
               p: 2,
-              borderRadius: 2,
+              borderRadius: 1,
               height: 260,
               display: "flex",
               flexDirection: "column"

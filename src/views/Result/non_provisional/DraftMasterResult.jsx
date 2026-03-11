@@ -463,7 +463,7 @@ const DraftMasterResult = ({data}) => {
   <Box>
     {/* Main Content */}
     <Box>
-      <Box class="draft-content-wrapper">
+      <Box className="draft-content-wrapper">
         {sectionsConfig.map((section) => {
           const isDiagram =
             section.key === "flow_chart" || section.key === "block_diagram";

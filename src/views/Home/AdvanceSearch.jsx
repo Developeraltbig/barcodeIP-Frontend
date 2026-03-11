@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, TextField, Grid, Button, MenuItem, Select, IconButton, InputAdornment, Divider} from '@mui/material';
+import { Box, Typography, TextField, Grid, Button, MenuItem, Select, IconButton, InputAdornment, Divider, Container} from '@mui/material';
 import { CalendarToday, PersonOutlined, Add, PeopleAltOutlined, ClearAll } from '@mui/icons-material';
 
 const AdvanceSearch = ({ onGenerate }) => {
@@ -94,10 +94,10 @@ const AdvanceSearch = ({ onGenerate }) => {
   );
 
   return (
-    <Box sx={{ maxWidth: '1200px', margin: '0px auto', p: 2, fontFamily: 'sans-serif', }}>
+    <Container maxWidth="xl" sx={{ fontFamily: 'sans-serif', bgcolor:'#fffdfdf3', py:'20px' }} >
 
       {/* 1. Header Title (Outside the container) */}
-      <Box sx={{ bgcolor: '#F3F4F6', borderRadius: '12px', p: 3, mt: 2, marginBottom:'30px' }}>
+      <Box sx={{ width:'100%', bgcolor: '#F3F4F6', borderRadius: '12px', p: 3, mt: 2, marginBottom:'30px' }}>
         {/* Top Header Row */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Typography variant="h5" sx={{ fontWeight: 800, color: '#374151', letterSpacing: '-0.5px' }}>
@@ -115,10 +115,10 @@ const AdvanceSearch = ({ onGenerate }) => {
       </Box>
 
       {/* 2. Main Container Box */}
-      <Box sx={{ bgcolor: '#EEEEEE', borderRadius: '8px', p: 3, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+      <Box sx={{ bgcolor: '#EEEEEE', borderRadius: '8px', p: 3, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' , margin:'0'}}>
         {/* ROW 1: Date Range */}
-        <Grid container spacing={{ xs: 2, md: 6}} columns={{ xs: 4, sm: 8, md: 12 }} alignItems="center" sx={{ mb: 2 }}>
-          <Grid item xs={12} md={2}>
+        <Grid container spacing={{ xs: 2, md: 8}} columns={{ xs: 4, sm: 8, md: 12 }} alignItems="center" sx={{ mb: 2 }}>
+          <Grid item xs={12} md={4}>
             <Typography variant="body2" sx={{ fontWeight: 600, color: '#777', textAlign: 'center' }}>
               Date Range
             </Typography>
@@ -265,7 +265,7 @@ const AdvanceSearch = ({ onGenerate }) => {
         </Grid>
 
       </Box>
-    </Box>
+    </Container>
   );
 };
 

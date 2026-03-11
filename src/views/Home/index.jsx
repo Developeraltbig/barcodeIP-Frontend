@@ -23,7 +23,7 @@ function Home() {
     }, [LatestContent]);
 
   return (
-    <div style={{marginTop:'30px',}}>
+    <div style={{marginTop:'30px', }}>
       <Banner content={content} />
       <InputSectionN />
       <DashboardWidgets />

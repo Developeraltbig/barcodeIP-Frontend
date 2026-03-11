@@ -478,7 +478,7 @@ const ProvisionalDraftResult = ({data}) => {
         <div >
           {/* Main Content */}
           <div>
-            <div class="draft-content-wrapper">
+            <div className="draft-content-wrapper">
               {sectionsConfig.map((section) => {
                 const isGenerating = generatingSections[section.key];
 

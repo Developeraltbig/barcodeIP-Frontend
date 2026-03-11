@@ -6,7 +6,6 @@ import AuthGuard from './AuthGuard';
 import ForgotPassword from '../views/auth/work-N/ForgotPassword';
 import ResetPassword from '../views/auth/work-N/ResetPassword';
 import MyProject from '../views/my-project/MyProject';
-import ProjectDetails from '../views/my-project/ProjectDetails';
 import NotFound from '../components/NotFound';
 import PatentDetail from '../views/Result/patent/PatentDetail';
 
@@ -73,10 +72,6 @@ const MainRoutes = {
     {
       path: '/project',
       element: <MyProject />
-    },
-    {
-      path: '/project-details/:id',
-      element: <ProjectDetails />
     },
     {
       path: '/patent-detail',
