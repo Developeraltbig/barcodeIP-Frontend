@@ -446,6 +446,8 @@ const TopSection = () => {
   const dashboard = useSelector((state) => state.userDashboard || {});
   const features = dashboard?.projectPatent?.data?.key_features;
 
+
+  console.log(dashboard,"dash")
   const resultCount = 
     (dashboard?.projectPatent?.data?.novelty_analysis?.comparisons?.length) || 
     (dashboard.projectProduct?.length) || 
@@ -466,7 +468,7 @@ const TopSection = () => {
               <Box>
                 <Typography variant="h6" sx={{ fontWeight: 800, color: '#1E293B', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1.5, fontSize: '1.1rem'}}>
                   Case ID : <Typography component="span" sx={{ color: '#64748B', fontWeight: 500, fontFamily: 'monospace', fontSize: '1rem', letterSpacing: '0.5px' }}>
-                    {dashboard?.selectedProject?.project_id || 'KQ-y9SBkKXxKADmw2ZBP'}
+                    {dashboard?.selectedProject?.case_id?.match(/-(\d+)$/)?.[1] || 'id not found'}
                   </Typography>
                 </Typography>
                 <Typography variant="caption" sx={{ color: BRAND_RED, fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 0.5, mt: 1 }}>

@@ -16,6 +16,8 @@ import {
   Divider
 } from '@mui/material';
 import { ClearAll, Visibility, Add } from '@mui/icons-material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 // --- MOCK DATA FOR THE LIST ---
 const MOCK_TEXT_DATA = [
@@ -26,6 +28,66 @@ const MOCK_TEXT_DATA = [
   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap",
   'Another piece of dummy text. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.'
 ];
+
+const PATENT_OFFICES = [
+  { code: "US", label: "United States (USPTO)" },
+  { code: "EP", label: "European Patent Office (EPO)" },
+  { code: "JP", label: "Japan Patent Office (JPO)" },
+  { code: "CN", label: "China National Intellectual Property Administration (CNIPA)" },
+  { code: "KR", label: "Korean Intellectual Property Office (KIPO)" },
+  { code: "IN", label: "India Patent Office" },
+  { code: "CA", label: "Canadian Intellectual Property Office (CIPO)" },
+  { code: "AU", label: "IP Australia" },
+  { code: "RU", label: "Russian Patent Office" },
+  { code: "BR", label: "Brazilian Patent and Trademark Office" },
+  // Add more if needed
+];
+
+// Languages based on common patent languages globally (ISO 639-1 codes)
+const LANGUAGES = [
+  { code: "EN", label: "English" },
+  { code: "FR", label: "French" },
+  { code: "DE", label: "German" },
+  { code: "JP", label: "Japanese" },
+  { code: "ZH", label: "Chinese" },
+  { code: "KR", label: "Korean" },
+  { code: "ES", label: "Spanish" },
+  { code: "RU", label: "Russian" },
+  { code: "PT", label: "Portuguese" },
+  { code: "IT", label: "Italian" },
+  { code: "NL", label: "Dutch" },
+  { code: "SE", label: "Swedish" },
+  // Extend list if desired
+];
+
+
+  // --- STYLES ---
+  // Style for flat, grey-background input fields
+  const customInputStyle = {
+    bgcolor: '#eeebeb',
+    borderRadius: '2px',
+    '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+    '& .MuiOutlinedInput-input': {
+      padding: '12px 16px',
+      fontSize: '0.85rem',
+      color: '#555'
+    },
+    '& .MuiSelect-select': {
+      padding: '12px 16px',
+      fontSize: '0.85rem',
+      color: '#888' // Muted text for placeholders
+    }
+  };
+
+  // Red Adornment Button Style (Flush to right)
+  const redAdornmentStyle = {
+    bgcolor: '#E4563C',
+    color: 'white',
+    minWidth: '45px',
+    height: '45px',
+    borderRadius: '0 2px 2px 0', // Sharp corners left, slight rounding right
+    '&:hover': { bgcolor: '#D3452B' }
+  };
 
 const AdvanceSearch = ({ query }) => {
   // --- STATE ---
@@ -86,34 +148,32 @@ const AdvanceSearch = ({ query }) => {
     setShowConfirmModal(false);
   };
 
-  // --- STYLES ---
-  // Style for flat, grey-background input fields
-  const customInputStyle = {
-    bgcolor: '#eeebeb',
-    borderRadius: '2px',
-    '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-    '& .MuiOutlinedInput-input': {
-      padding: '12px 16px',
-      fontSize: '0.85rem',
-      color: '#555'
-    },
-    '& .MuiSelect-select': {
-      padding: '12px 16px',
-      fontSize: '0.85rem',
-      color: '#888' // Muted text for placeholders
+
+    // Handlers for DatePickers with validation logic
+  const handleStartDateChange = (newDate) => {
+    setFormData((prev) => ({
+      ...prev,
+      startDate: newDate,
+      // Optional: Adjust endDate if before startDate
+      endDate: prev.endDate && newDate && newDate > prev.endDate ? newDate : prev.endDate,
+    }));
+  };
+
+  const handleEndDateChange = (newDate) => {
+    setFormData((prev) => ({
+      ...prev,
+      endDate: newDate,
+      // Optional: Adjust startDate if after endDate
+      startDate: prev.startDate && newDate && newDate < prev.startDate ? newDate : prev.startDate,
+    }));
+  };
+
+  const menuProps = {
+    PaperProps: {
+      sx: { maxHeight: 250 }
     }
   };
-
-  // Red Adornment Button Style (Flush to right)
-  const redAdornmentStyle = {
-    bgcolor: '#E4563C',
-    color: 'white',
-    minWidth: '45px',
-    height: '45px',
-    borderRadius: '0 2px 2px 0', // Sharp corners left, slight rounding right
-    '&:hover': { bgcolor: '#D3452B' }
-  };
-
+  
   return (
     <Container maxWidth="xl" sx={{ fontFamily: 'sans-serif', bgcolor: '#fffdfdf3', py: '20px' }}>
       {/* 1. Header Title */}
@@ -202,173 +262,236 @@ const AdvanceSearch = ({ query }) => {
       </Box>
 
       {/* 3. Modal Dialog */}
-      <Dialog
-        open={openModal}
-        onClose={handleCloseModal}
-        maxWidth="md"
-        fullWidth
-        PaperProps={{ sx: { borderRadius: '4px', p: { xs: 2, md: 4 } } }}
+     <Dialog
+      open={openModal}
+      onClose={handleCloseModal}
+      maxWidth="md"
+      fullWidth
+      scroll="paper" // Important: Makes the content scroll inside the paper
+      PaperProps={{ 
+        sx: { 
+          borderRadius: '4px', 
+          p: { xs: 2, md: 4 },
+          maxHeight: '90vh' // Prevents the modal from exceeding screen height
+        } 
+      }}
+    >
+      <DialogContent 
+        sx={{ 
+          p: 0, 
+          overflowY: 'auto', // Enables the vertical scroll
+          overflowX: 'hidden' 
+        }}
       >
-        <DialogContent sx={{ p: 0 }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 3, color: '#111827' }}>
-            Date Range
-          </Typography>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 3, color: '#111827' }}>
+          Date Range
+        </Typography>
 
-          <Grid container spacing={2}>
-            {/* --- Date Range Section --- */}
-            <Grid item size={{ xs: 12, sm: 6 }}>
-              <Select
-                fullWidth
-                displayEmpty
-                value={formData.priority}
-                onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                sx={customInputStyle}
-              >
-                <MenuItem value="" disabled>
-                  Priority
-                </MenuItem>
-                <MenuItem value="Priority">Priority 1</MenuItem>
-                <MenuItem value="Application">Application</MenuItem>
-              </Select>
-            </Grid>
-            <Grid item size={{ xs: 12, sm: 6 }}>
-              <TextField fullWidth placeholder="Start Date" sx={customInputStyle} />
-            </Grid>
-            <Grid item size={{ xs: 12 }}>
-              <TextField fullWidth placeholder="End Date" sx={customInputStyle} />
-            </Grid>
-
-            {/* First Divider */}
-            <Grid item size={{ xs: 12 }}>
-              <Divider sx={{ my: 2, borderColor: '#526283' }} />
-            </Grid>
-
-            {/* --- Text Area Section --- */}
-            <Grid item size={{ xs: 12 }}>
-              <TextField
-                fullWidth
-                multiline
-                rows={4}
-                value={formData.queryText}
-                onChange={(e) => setFormData({ ...formData, queryText: e.target.value })}
-                sx={{
-                  ...customInputStyle,
-                  '& .MuiOutlinedInput-root': { padding: '16px' },
-                  '& .MuiOutlinedInput-input': { color: '#888', lineHeight: 1.5 }
-                }}
-              />
-            </Grid>
-
-            {/* Second Divider */}
-            <Grid item size={{ xs: 12 }}>
-              <Divider sx={{ my: 2, borderColor: '#3f64ad' }} />
-            </Grid>
-
-            {/* --- Inventor & Assignee & Patent Office --- */}
-            <Grid item size={{ xs: 12, sm: 6 }}>
-              <TextField
-                fullWidth
-                placeholder="Inventor"
-                sx={customInputStyle}
-                InputProps={{
-                  sx: { pr: 0 }, // Remove padding to make button flush
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Button sx={redAdornmentStyle}>
-                        <Add fontSize="small" />
-                      </Button>
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Grid>
-            <Grid item size={{ xs: 12, sm: 6 }}>
-              <TextField
-                fullWidth
-                placeholder="Assignee"
-                sx={customInputStyle}
-                InputProps={{
-                  sx: { pr: 0 }, // Remove padding to make button flush
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Button sx={redAdornmentStyle}>
-                        <Add fontSize="small" />
-                      </Button>
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Grid>
-            <Grid item size={{ xs: 12 }}>
-              <Select fullWidth displayEmpty value={formData.patentOffice} sx={customInputStyle}>
-                <MenuItem value="" disabled>
-                  Patent Office
-                </MenuItem>
-                <MenuItem value="US">US</MenuItem>
-                <MenuItem value="EP">EP</MenuItem>
-              </Select>
-            </Grid>
-
-            {/* Third Divider */}
-            <Grid item size={{ xs: 12 }}>
-              <Divider sx={{ my: 2, borderColor: '#7c7f86' }} />
-            </Grid>
-
-            {/* --- Language, Status, Type, Litigation --- */}
-            <Grid item size={{ xs: 12, sm: 6 }}>
-              <Select fullWidth displayEmpty value={formData.language} sx={customInputStyle}>
-                <MenuItem value="" disabled>
-                  Language
-                </MenuItem>
-                <MenuItem value="EN">English</MenuItem>
-              </Select>
-            </Grid>
-            <Grid item size={{ xs: 12, sm: 6 }}>
-              <Select fullWidth displayEmpty value={formData.status} sx={customInputStyle}>
-                <MenuItem value="" disabled>
-                  Status
-                </MenuItem>
-                <MenuItem value="Active">Active</MenuItem>
-              </Select>
-            </Grid>
-            <Grid item size={{ xs: 12, sm: 6 }}>
-              <Select fullWidth displayEmpty value={formData.type} sx={customInputStyle}>
-                <MenuItem value="" disabled>
-                  Type
-                </MenuItem>
-                <MenuItem value="Utility">Utility</MenuItem>
-              </Select>
-            </Grid>
-            <Grid item size={{ xs: 12, sm: 6 }}>
-              <Select fullWidth displayEmpty value={formData.litigation} sx={customInputStyle}>
-                <MenuItem value="" disabled>
-                  Litigation
-                </MenuItem>
-                <MenuItem value="Yes">Yes</MenuItem>
-              </Select>
-            </Grid>
-
-            {/* --- Update Button --- */}
-            <Grid item size={{ xs: 12, sm: 7, md: 12 }} sx={{ mt: 2 }}>
-              <Button
-                variant="contained"
-                onClick={handleCloseModal}
-                sx={{
-                  bgcolor: '#E4563C',
-                  '&:hover': { bgcolor: '#D3452B' },
-                  textTransform: 'none',
-                  px: 4,
-                  py: 1.2,
-                  fontWeight: 'bold',
-                  borderRadius: '2px'
-                }}
-              >
-                Update
-              </Button>
-            </Grid>
+        <Grid container spacing={2}>
+          {/* --- Date Range Section --- */}
+          <Grid item size={{ xs: 12, sm: 6, md: 12 }}>
+            <Select
+              fullWidth
+              displayEmpty
+              value={formData.priority}
+              onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
+              sx={customInputStyle}
+              MenuProps={menuProps}
+            >
+              <MenuItem value="" disabled>Priority</MenuItem>
+              <MenuItem value="Filing">Filing</MenuItem>
+              <MenuItem value="Publication">Publication</MenuItem>
+            </Select>
           </Grid>
-        </DialogContent>
-      </Dialog>
+
+          <Grid item size={{ xs: 12, sm: 6 }}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Start Date"
+                value={formData.startDate}
+                onChange={handleStartDateChange}
+                maxDate={formData.endDate || undefined}
+                renderInput={(params) => <TextField fullWidth {...params} sx={customInputStyle} />}
+              />
+            </LocalizationProvider>
+          </Grid>
+
+          <Grid item size={{ xs: 12, sm: 6 }}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="End Date"
+                value={formData.endDate}
+                onChange={handleEndDateChange}
+                minDate={formData.startDate || undefined}
+                renderInput={(params) => <TextField fullWidth {...params} sx={customInputStyle} />}
+              />
+            </LocalizationProvider>
+          </Grid>
+
+          <Grid item size={{ xs: 12 }}>
+            <Divider sx={{ my: 2, borderColor: '#eee' }} />
+          </Grid>
+
+          {/* --- Text Area Section --- */}
+          <Grid item size={{ xs: 12 }}>
+            <TextField
+              fullWidth
+              multiline
+              rows={4}
+              value={formData.queryText}
+              onChange={(e) => setFormData({ ...formData, queryText: e.target.value })}
+              sx={{
+                ...customInputStyle,
+                '& .MuiOutlinedInput-root': { padding: '16px', backgroundColor: '#eee' },
+                '& .MuiOutlinedInput-input': { color: '#666', lineHeight: 1.5 }
+              }}
+            />
+          </Grid>
+
+          <Grid item size={{ xs: 12 }}>
+            <Divider sx={{ my: 2, borderColor: '#eee' }} />
+          </Grid>
+
+          {/* --- Inventor & Assignee --- */}
+          <Grid item size={{ xs: 12, sm: 6 }}>
+            <TextField
+              fullWidth
+              placeholder="Inventor"
+              sx={customInputStyle}
+              InputProps={{
+                sx: { pr: 0 },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Button sx={redAdornmentStyle}>
+                      <Add fontSize="small" />
+                    </Button>
+                  </InputAdornment>
+                )
+              }}
+            />
+          </Grid>
+
+          <Grid item size={{ xs: 12, sm: 6 }}>
+            <TextField
+              fullWidth
+              placeholder="Assignee"
+              sx={customInputStyle}
+              InputProps={{
+                sx: { pr: 0 },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Button sx={redAdornmentStyle}>
+                      <Add fontSize="small" />
+                    </Button>
+                  </InputAdornment>
+                )
+              }}
+            />
+          </Grid>
+
+          <Grid item size={{ xs: 12 }}>
+            <Select
+              fullWidth
+              displayEmpty
+              value={formData.patentOffice}
+              onChange={(e) => setFormData({ ...formData, patentOffice: e.target.value })}
+              sx={customInputStyle}
+              MenuProps={menuProps}
+            >
+              <MenuItem value="" disabled>Patent Office</MenuItem>
+              {PATENT_OFFICES.map((office) => (
+                <MenuItem key={office.code} value={office.code}>{office.label}</MenuItem>
+              ))}
+            </Select>
+          </Grid>
+
+          <Grid item size={{ xs: 12 }}>
+            <Divider sx={{ my: 2, borderColor: '#eee' }} />
+          </Grid>
+
+          {/* --- Bottom Selects --- */}
+          <Grid item size={{ xs: 12, sm: 6 }}>
+            <Select
+              fullWidth
+              displayEmpty
+              value={formData.language}
+              onChange={(e) => setFormData({ ...formData, language: e.target.value })}
+              sx={customInputStyle}
+              MenuProps={menuProps}
+            >
+              <MenuItem value="" disabled>Language</MenuItem>
+              {LANGUAGES.map((lang) => (
+                <MenuItem key={lang} value={lang}>{lang}</MenuItem>
+              ))}
+            </Select>
+          </Grid>
+
+          <Grid item size={{ xs: 12, sm: 6 }}>
+            <Select
+              fullWidth
+              displayEmpty
+              value={formData.status}
+              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+              sx={customInputStyle}
+              MenuProps={menuProps}
+            >
+              <MenuItem value="" disabled>Status</MenuItem>
+              <MenuItem value="Active">Active</MenuItem>
+              <MenuItem value="Inactive">Inactive</MenuItem>
+            </Select>
+          </Grid>
+
+          <Grid item size={{ xs: 12, sm: 6 }}>
+            <Select
+              fullWidth
+              displayEmpty
+              value={formData.type}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+              sx={customInputStyle}
+              MenuProps={menuProps}
+            >
+              <MenuItem value="" disabled>Type</MenuItem>
+              <MenuItem value="Utility">Utility</MenuItem>
+            </Select>
+          </Grid>
+
+          <Grid item size={{ xs: 12, sm: 6 }}>
+            <Select
+              fullWidth
+              displayEmpty
+              value={formData.litigation}
+              onChange={(e) => setFormData({ ...formData, litigation: e.target.value })}
+              sx={customInputStyle}
+              MenuProps={menuProps}
+            >
+              <MenuItem value="" disabled>Litigation</MenuItem>
+              <MenuItem value="Yes">Yes</MenuItem>
+              <MenuItem value="No">No</MenuItem>
+            </Select>
+          </Grid>
+
+          {/* --- Update Button --- */}
+          <Grid item size={{ xs: 12, sm: 7, md: 12 }} sx={{ mt: 2 }}>
+            <Button
+              variant="contained"
+              onClick={handleCloseModal}
+              sx={{
+                bgcolor: '#E4563C',
+                '&:hover': { bgcolor: '#D3452B' },
+                textTransform: 'none',
+                px: 6,
+                py: 1.2,
+                fontWeight: 'bold',
+                borderRadius: '2px'
+              }}
+            >
+              Update
+            </Button>
+          </Grid>
+        </Grid>
+      </DialogContent>
+    </Dialog>
+      
 
       <Dialog open={showConfirmModal} onClose={cancelClear} maxWidth="xs" fullWidth>
         <DialogContent sx={{ textAlign: 'center', p: 4 }}>
@@ -402,3 +525,7 @@ const AdvanceSearch = ({ query }) => {
 };
 
 export default AdvanceSearch;
+
+
+
+

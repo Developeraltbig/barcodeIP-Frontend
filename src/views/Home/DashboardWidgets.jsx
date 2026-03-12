@@ -1,9 +1,10 @@
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Box, Grid, Paper, Typography, Divider, CircularProgress, Container } from '@mui/material';
 import { History as HistoryIcon, Link as LinkIcon, ChevronRight, DescriptionOutlined as DescriptionOutlinedIcon } from '@mui/icons-material';
 import { useGetRecentThreeProjectsQuery, useGetSupportAnalystsQuery } from '../../features/userApi';
 import { useNavigate } from 'react-router-dom';
+import AnalystReviewModal from '../components/AnalystReviewModal';
 
 // ==========================================
 // FORMATTERS
@@ -374,8 +375,83 @@ const AnalystWidgetCard = ({ data, isLoading, error }) => {
 // ==========================================
 // MAIN DASHBOARD COMPONENT
 // ==========================================
+// const DashboardWidgets = () => {
+//   // --- REAL DATA FOR SEARCH HISTORY ---
+//   const { data: getRecentThreeProjects, isLoading: loadingProjects } = useGetRecentThreeProjectsQuery();
+  
+//   const projects = useMemo(() => {
+//     if (!getRecentThreeProjects) return [];
+//     return getRecentThreeProjects.projects || getRecentThreeProjects.data || (Array.isArray(getRecentThreeProjects) ? getRecentThreeProjects : []);
+//   }, [getRecentThreeProjects]);
+
+//   // --- DUMMY DATA FOR ANALYST REVIEWS (Matches Screenshot exactly) ---
+//   const dummyAnalystData = [
+//     {
+//       _id: 'LFGMFBbk-0p0mI0iNAvX',
+//       project_title: 'Bi-metallic Clamp and Tool...',
+//       project_id: 'LFGMFBbk-0p0mI0iNAvX',
+//       status: 'Pending',
+//       createdAt: '2024-03-09T10:00:00Z', 
+//       analyst_record: { message: "Passes filter" } // Required to render based on original logic
+//     },
+//     {
+//       _id: 'KQ-y9SBkKXxKADmw2ZBP',
+//       project_title: 'Wireless Earbuds with Advanced...',
+//       project_id: 'KQ-y9SBkKXxKADmw2ZBP',
+//       status: 'In Review',
+//       createdAt: '2024-03-07T10:00:00Z', 
+//       analyst_record: { message: "Passes filter" }
+//     },
+//     {
+//       _id: '9bDJiku8g8-CwzIB99KI8',
+//       project_title: 'Structural Innovations in Speaker...',
+//       project_id: '9bDJiku8g8-CwzIB99KI8',
+//       status: 'Completed',
+//       createdAt: '2024-03-03T10:00:00Z', 
+//       analyst_record: { message: "Passes filter" }
+//     }
+//   ];
+
+//   return (
+//     <Container maxWidth="xl" sx={{marginTop:'50px'}} >
+//        <Grid
+//           container
+//           columns={{ xs: 4, sm: 6, md: 12 }}
+//           spacing={3}
+//           sx={{
+//             justifyContent: 'center',
+//             alignItems: 'stretch', 
+//             pb: 4, 
+//             px: { xs: 2, md: 0 }, 
+//           }}
+//         >
+//           {/* SEARCH HISTORY - Renders Original Untouched UI with REAL Data */}
+//           <Grid item size={{ xs: 12, md: 6 }}>
+//             <WidgetCard 
+//               // title="Search History" 
+//               icon={HistoryIcon} 
+//               data={projects} // <--- Real API Data
+//               isLoading={loadingProjects} 
+//               isAnalystWidget={false}  
+//             />
+//           </Grid>
+
+//           {/* ANALYST CONNECTIONS - Renders New UI with DUMMY Data */}
+//           <Grid item size={{ xs: 12, md: 6 }}>
+//             <AnalystWidgetCard
+//               data={dummyAnalystData} // <--- Dummy Data Passed Here
+//               isLoading={false} // <--- Hardcoded to false so it renders immediately
+//               error={null} 
+//             />
+//           </Grid>
+//         </Grid>
+//     </Container>
+//   );
+// };
+
+
 const DashboardWidgets = () => {
-  // --- REAL DATA FOR SEARCH HISTORY ---
+    // --- REAL DATA FOR SEARCH HISTORY ---
   const { data: getRecentThreeProjects, isLoading: loadingProjects } = useGetRecentThreeProjectsQuery();
   
   const projects = useMemo(() => {
@@ -403,7 +479,7 @@ const DashboardWidgets = () => {
     },
     {
       _id: '9bDJiku8g8-CwzIB99KI8',
-      project_title: 'Structural Innovations in Speaker...',
+      project_title: 'Structural Innovations in Speaker Structural Innovations in Speaker...',
       project_id: '9bDJiku8g8-CwzIB99KI8',
       status: 'Completed',
       createdAt: '2024-03-03T10:00:00Z', 
@@ -411,39 +487,123 @@ const DashboardWidgets = () => {
     }
   ];
 
-  return (
-    <Container maxWidth="xl" sx={{marginTop:'50px'}} >
-       <Grid
-          container
-          columns={{ xs: 4, sm: 6, md: 12 }}
-          spacing={3}
-          sx={{
-            justifyContent: 'center',
-            alignItems: 'stretch', 
-            pb: 4, 
-            px: { xs: 2, md: 0 }, 
-          }}
-        >
-          {/* SEARCH HISTORY - Renders Original Untouched UI with REAL Data */}
-          <Grid item size={{ xs: 12, md: 6 }}>
-            <WidgetCard 
-              // title="Search History" 
-              icon={HistoryIcon} 
-              data={projects} // <--- Real API Data
-              isLoading={loadingProjects} 
-              isAnalystWidget={false}  
-            />
-          </Grid>
+  // Modal state
+  const [selectedReview, setSelectedReview] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
-          {/* ANALYST CONNECTIONS - Renders New UI with DUMMY Data */}
-          <Grid item size={{ xs: 12, md: 6 }}>
-            <AnalystWidgetCard
-              data={dummyAnalystData} // <--- Dummy Data Passed Here
-              isLoading={false} // <--- Hardcoded to false so it renders immediately
-              error={null} 
-            />
-          </Grid>
+  const openModal = (review) => {
+    setSelectedReview(review);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedReview(null);
+  };
+
+  return (
+    <Container maxWidth="xl" sx={{ marginTop: '50px' }}>
+      <Grid
+        container
+        columns={{ xs: 4, sm: 6, md: 12 }}
+        spacing={3}
+        sx={{
+          justifyContent: 'center',
+          alignItems: 'stretch',
+          pb: 4,
+          px: { xs: 2, md: 0 },
+        }}
+      >
+        {/* Search History */}
+        <Grid item size={{ xs: 12, md: 6 }}>
+          <WidgetCard
+            icon={HistoryIcon}
+            data={projects}
+            isLoading={loadingProjects}
+            isAnalystWidget={false}
+          />
         </Grid>
+
+        {/* Analyst Reviews with modal trigger */}
+        <Grid item size={{ xs: 12, md: 6 }}>
+          <Paper
+            elevation={0}
+            sx={{ borderRadius: '5px', border: '1px solid #f0f0f0', height: '100%', minHeight: '200px' }}
+          >
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2.5 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                <DescriptionOutlinedIcon sx={{ color: '#E94E34' }} />
+                <Typography sx={{ fontWeight: 700, color: '#374151', fontSize: '1.05rem' }}>
+                  Analyst Reviews
+                </Typography>
+              </Box>
+              {dummyAnalystData.filter(item =>
+                item.status && (item.status.toLowerCase().includes('pending') || item.status.toLowerCase().includes('review'))
+              ).length > 0 && (
+                <Box sx={{ bgcolor: '#fff0ed', color: '#e94e34', px: 1.5, py: 0.5, borderRadius: '20px', fontSize: '0.75rem', fontWeight: 700 }}>
+                  {dummyAnalystData.filter(item =>
+                    item.status && (item.status.toLowerCase().includes('pending') || item.status.toLowerCase().includes('review'))
+                  ).length} Active
+                </Box>
+              )}
+            </Box>
+
+            <Divider sx={{ borderColor: '#b1bac7' }} />
+
+            <Box sx={{ px: 2.5, pb: 1 }}>
+              {dummyAnalystData.length === 0 ? (
+                <Typography variant="body2" sx={{ my: 4, color: '#9CA3AF', textAlign: 'center' }}>
+                  No records found.
+                </Typography>
+              ) : (
+                dummyAnalystData.map((item, index) => (
+                  <Box
+                    key={item._id || item.id || index}
+                    onClick={() => openModal(item)}
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      gap: 2,
+                      py: 2.5,
+                      cursor: 'pointer',
+                      transition: 'background-color 0.2s',
+                      '&:hover': { bgcolor: '#fdfdfd' },
+                    }}
+                  >
+                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                      <Typography variant="body1" noWrap sx={{ fontWeight: 600, color: '#374151', mb: 0.5, fontSize: '0.95rem' }}>
+                        {item.project_title || item.title || 'Untitled Project'}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        noWrap
+                        sx={{ color: '#9CA3AF', fontFamily: 'monospace', letterSpacing: '0.5px', fontSize: '0.85rem' }}
+                      >
+                        {item.project_id || item._id || 'N/A'}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1.5, sm: 3 }, flexShrink: 0 }}>
+                      <StatusBadge index={index} statusText={item.status} />
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography
+                          sx={{ color: '#9ca3af', fontSize: '0.85rem', fontWeight: 500, whiteSpace: 'nowrap' }}
+                        >
+                          {formatAnalystDate(item.createdAt || item.date)}
+                        </Typography>
+                        <ChevronRight sx={{ color: '#d1d5db', fontSize: '1.2rem' }} />
+                      </Box>
+                    </Box>
+                  </Box>
+                ))
+              )}
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
+
+      {/* Analyst Review Modal */}
+      <AnalystReviewModal open={modalOpen} onClose={closeModal} review={selectedReview} />
     </Container>
   );
 };
