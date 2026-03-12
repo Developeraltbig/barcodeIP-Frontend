@@ -225,7 +225,7 @@ const PatentList = () => {
           >
             {isLoading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
-                {/* <CircularProgress color="primary" /> */}
+                <CircularProgress color="primary" />
               </Box>
             ) : (
               <Grid container spacing={3} sx={{ alignItems: 'center' }}>

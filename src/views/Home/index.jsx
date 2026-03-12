@@ -12,9 +12,8 @@ import Banner from './Banner';
 function Home() {
   
    // 1. Fetch data from API (passing default pagination if needed)
-      const { data: LatestContent} = useGetLatestContentQuery();
-    
-  
+    const { data: LatestContent} = useGetLatestContentQuery();
+   
     // 2. Safe Data Extraction
     const content = useMemo(() => {
       if (!LatestContent) return [];
@@ -26,9 +25,11 @@ function Home() {
     <div style={{marginTop:'30px', }}>
       <Banner content={content} />
       <InputSectionN />
+       {/* <KeyFeatures /> */}
       <DashboardWidgets />
+
       {/* <AdvanceSearch /> */}
-      {/* <KeyFeatures /> */}
+     
       {/* <RecentArticles/> */}
     </div>
   );

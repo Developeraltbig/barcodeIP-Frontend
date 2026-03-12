@@ -1,17 +1,45 @@
 import React, { useState } from 'react';
-import { Box, Typography, TextField, Grid, Button, MenuItem, Select, IconButton, InputAdornment, Divider, Container} from '@mui/material';
-import { CalendarToday, PersonOutlined, Add, PeopleAltOutlined, ClearAll } from '@mui/icons-material';
+import {
+  Box,
+  Typography,
+  TextField,
+  Grid,
+  Button,
+  MenuItem,
+  Select,
+  IconButton,
+  InputAdornment,
+  Container,
+  Paper,
+  Dialog,
+  DialogContent,
+  Divider
+} from '@mui/material';
+import { ClearAll, Visibility, Add } from '@mui/icons-material';
 
-const AdvanceSearch = ({ onGenerate }) => {
-  // --- LOGIC (Unchanged) ---
+// --- MOCK DATA FOR THE LIST ---
+const MOCK_TEXT_DATA = [
+  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries  Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
+
+  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled i",
+  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap",
+  'Another piece of dummy text. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.'
+];
+
+const AdvanceSearch = ({ query }) => {
+  // --- STATE ---
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedText, setSelectedText] = useState('');
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  console.log('query', query);
+
   const [formData, setFormData] = useState({
-    datePriority: 'Priority',
+    priority: '',
     startDate: '',
     endDate: '',
-    // Fixed: Initialized as string to prevent React render crash,
-    // assuming specific text from image for visual matching
-    queryText:
-      "(TI=(Bioelectronic neural interface OR Endovascular implants OR Implantable pulse generator OR External blood pressure monitor) OR AB=(Bioelectronic neural interface OR Endovascular implants OR Implantable pulse generator OR External blood pressure monitor) OR DESC=(Bioelectronic neural interface OR Endovascular implants OR Implantable pulse generator OR External blood pressure monitor)) AND (CLMS=(Neuromodulation OR Treatment of autonomic disorders OR Chronic stimulation OR Blood pressure regulation)) AND (CLMS=(Stent-like device with stimulation sites OR Expandable structure with electrodes OR High currents with electrochemical stability OR External pulse generator control for open-loop or closed-loop operation)) AND (DESC=(Minimally invasive implantation OR Transvascular neuromodulation OR Device's ability to grow into the blood vessel wall OR Radial coverage of the stimulation sites)) AND (DESC=(Minimally thrombogenic cable OR Wired tracks OR Stimulation sites on stent crossings OR Wireless capability))",
+    queryText: '',
     inventor: '',
     assignee: '',
     patentOffice: '',
@@ -21,13 +49,24 @@ const AdvanceSearch = ({ onGenerate }) => {
     litigation: ''
   });
 
-  const handleChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  // --- HANDLERS ---
+  const handleClear = () => {
+    setShowConfirmModal(true);
   };
 
-  const handleClear = () => {
+  const handleOpenModal = (text) => {
+    setSelectedText(text);
+    setFormData((prev) => ({ ...prev, queryText: text }));
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const confirmClear = () => {
     setFormData({
-      datePriority: '',
+      priority: '',
       startDate: '',
       endDate: '',
       queryText: '',
@@ -39,67 +78,47 @@ const AdvanceSearch = ({ onGenerate }) => {
       type: '',
       litigation: ''
     });
-  };
-  // -------------------------
 
-  // Custom Styles to match the image inputs exactly
-  const inputStyles = {
-    bgcolor: 'white',
-    borderRadius: '4px',
-    '& .MuiOutlinedInput-notchedOutline': { border: '1px solid #e0e0e0' },
-    '&:hover .MuiOutlinedInput-notchedOutline': { border: '1px solid #bdbdbd' },
-    '& .MuiOutlinedInput-input': { padding: '10px 14px', fontSize: '0.9rem', color: '#555' },
-    '& .MuiInputAdornment-root': { color: '#9ca3af', marginRight: '8px' } // Gray icons
+    setShowConfirmModal(false);
   };
 
-  const selectStyles = {
-    ...inputStyles,
-    '& .MuiSelect-select': { padding: '10px 14px', fontSize: '0.9rem', color: '#555', display: 'flex', alignItems: 'center' }
+  const cancelClear = () => {
+    setShowConfirmModal(false);
   };
 
-  // Helper for Dropdowns
-  const CustomSelect = ({ value, onChange, placeholder, options = [] }) => (
-    <Select
-      fullWidth
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      displayEmpty
-      sx={selectStyles}
-      IconComponent={() => (
-        <Box
-          sx={{
-            width: 0,
-            height: 0,
-            borderLeft: '5px solid transparent',
-            borderRight: '5px solid transparent',
-            borderTop: '5px solid #999',
-            marginRight: '12px',
-            pointerEvents: 'none'
-          }}
-        />
-      )} // Custom triangle arrow
-    >
-      <MenuItem value="" disabled sx={{ display: 'none' }}>
-        <Typography color="#9ca3af" fontSize="0.9rem">
-          {placeholder}
-        </Typography>
-      </MenuItem>
-      <MenuItem value="Priority">Priority</MenuItem> {/* Hardcoded for UI match */}
-      {options.map((opt) => (
-        <MenuItem key={opt} value={opt}>
-          {opt}
-        </MenuItem>
-      ))}
-    </Select>
-  );
+  // --- STYLES ---
+  // Style for flat, grey-background input fields
+  const customInputStyle = {
+    bgcolor: '#eeebeb',
+    borderRadius: '2px',
+    '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+    '& .MuiOutlinedInput-input': {
+      padding: '12px 16px',
+      fontSize: '0.85rem',
+      color: '#555'
+    },
+    '& .MuiSelect-select': {
+      padding: '12px 16px',
+      fontSize: '0.85rem',
+      color: '#888' // Muted text for placeholders
+    }
+  };
+
+  // Red Adornment Button Style (Flush to right)
+  const redAdornmentStyle = {
+    bgcolor: '#E4563C',
+    color: 'white',
+    minWidth: '45px',
+    height: '45px',
+    borderRadius: '0 2px 2px 0', // Sharp corners left, slight rounding right
+    '&:hover': { bgcolor: '#D3452B' }
+  };
 
   return (
-    <Container maxWidth="xl" sx={{ fontFamily: 'sans-serif', bgcolor:'#fffdfdf3', py:'20px' }} >
-
-      {/* 1. Header Title (Outside the container) */}
-      <Box sx={{ width:'100%', bgcolor: '#F3F4F6', borderRadius: '12px', p: 3, mt: 2, marginBottom:'30px' }}>
-        {/* Top Header Row */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+    <Container maxWidth="xl" sx={{ fontFamily: 'sans-serif', bgcolor: '#fffdfdf3', py: '20px' }}>
+      {/* 1. Header Title */}
+      <Box sx={{ width: '100%', bgcolor: '#F3F4F6', borderRadius: '8px', p: 3, mb: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant="h5" sx={{ fontWeight: 800, color: '#374151', letterSpacing: '-0.5px' }}>
             Advance Search
           </Typography>
@@ -107,164 +126,277 @@ const AdvanceSearch = ({ onGenerate }) => {
             onClick={handleClear}
             variant="contained"
             startIcon={<ClearAll />}
-            sx={{ bgcolor: '#ef4444', '&:hover': { bgcolor: '#dc2626' }, textTransform: 'none', borderRadius: '6px', fontWeight: 700 }}
+            sx={{ bgcolor: '#E4563C', '&:hover': { bgcolor: '#dc2626' }, textTransform: 'none', borderRadius: '6px', fontWeight: 700 }}
           >
             Clear All
           </Button>
         </Box>
       </Box>
 
-      {/* 2. Main Container Box */}
-      <Box sx={{ bgcolor: '#EEEEEE', borderRadius: '8px', p: 3, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' , margin:'0'}}>
-        {/* ROW 1: Date Range */}
-        <Grid container spacing={{ xs: 2, md: 8}} columns={{ xs: 4, sm: 8, md: 12 }} alignItems="center" sx={{ mb: 2 }}>
-          <Grid item xs={12} md={4}>
-            <Typography variant="body2" sx={{ fontWeight: 600, color: '#777', textAlign: 'center' }}>
-              Date Range
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={3} size={{ xs: 3, sm: 3, md: 3}}>
-            <CustomSelect value={formData.datePriority} onChange={(val) => handleChange('datePriority', val)} placeholder="Priority" />
-          </Grid>
-          <Grid item xs={12} md={3.5} size={{ xs: 3, sm: 3, md: 3}}>
-            <TextField
-              fullWidth
-              placeholder="Start Date"
-              value={formData.startDate}
-              onChange={(e) => handleChange('startDate', e.target.value)}
-              sx={inputStyles}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <CalendarToday fontSize="small" />
-                  </InputAdornment>
-                )
+      {/* 2. Text List Section */}
+      <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: '#111827' }}>
+        Text
+      </Typography>
+
+      {/* Scrollable Container (Shows max 3 items) */}
+      <Box
+        sx={{
+          maxHeight: '340px',
+          overflowY: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          pr: 1,
+          '&::-webkit-scrollbar': { width: '8px' },
+          '&::-webkit-scrollbar-thumb': { backgroundColor: '#ccc', borderRadius: '4px' }
+        }}
+      >
+        {Array.isArray(query) && query.length > 0 ? (
+          query.map((text, index) => (
+            <Paper
+              key={index}
+              elevation={0}
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                p: 2,
+                bgcolor: '#F9FAFB',
+                border: '1px solid #E5E7EB',
+                borderRadius: '2px'
               }}
-            />
-          </Grid>
-          <Grid item xs={12} md={3.5} size={{ xs: 3, sm: 3, md: 3}}>
-            <TextField
-              fullWidth
-              placeholder="End Date"
-              value={formData.endDate}
-              onChange={(e) => handleChange('endDate', e.target.value)}
-              sx={inputStyles}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <CalendarToday fontSize="small" />
-                  </InputAdornment>
-                )
-              }}
-            />
-          </Grid>
-        </Grid>
-
-        <Divider sx={{ my: 2, borderColor: '#d1d5db' }} />
-
-        {/* ROW 2: Query Logic Text Area */}
-        <Box sx={{ width: '100%', mb: 2 }}>
-          <TextField
-            fullWidth
-            multiline
-            rows={6}
-            value={formData.queryText}
-            onChange={(e) => handleChange('queryText', e.target.value)}
-            sx={{
-              ...inputStyles,
-              '& .MuiOutlinedInput-root': { padding: '12px' },
-              '& .MuiOutlinedInput-input': {
-                fontSize: '0.8rem',
-                lineHeight: 1.5,
-                color: '#1e3a8a', // The blue color from the image
-                fontFamily: 'inherit'
-              }
-            }}
-          />
-        </Box>
-
-        <Divider sx={{ my: 2, borderColor: '#d1d5db' }} />
-
-        {/* ROW 3: Inventor / Assignee / Office */}
-        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} sx={{ mb: 2 }} >
-          {/* Inventor */}
-          <Grid item  sx={{ display: 'flex', gap: 1 }} size={{ xs: 4, sm: 4, md: 4}}>
-            <TextField
-              fullWidth
-              placeholder="Inventor"
-              value={formData.inventor}
-              onChange={(e) => handleChange('inventor', e.target.value)}
-              sx={inputStyles}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PersonOutlined fontSize="small" />
-                  </InputAdornment>
-                )
-              }}
-            />
-            <Button
-              sx={{ minWidth: '40px', bgcolor: 'white', border: '1px solid #e0e0e0', color: '#777', '&:hover': { bgcolor: '#f5f5f5' } }}
             >
-              <Add fontSize="small" />
-            </Button>
-          </Grid>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: '#6B7280',
+                  flex: 1,
+                  pr: 3,
+                  lineHeight: 1.3,
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden'
+                }}
+              >
+                {text}
+              </Typography>
 
-          {/* Assignee */}
-          <Grid item sx={{ display: 'flex', gap: 1 }} size={{ xs: 4, sm: 4, md: 4}}>
-            <TextField
-              fullWidth
-              placeholder="Assignee"
-              value={formData.assignee}
-              onChange={(e) => handleChange('assignee', e.target.value)}
-              sx={inputStyles}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PeopleAltOutlined fontSize="small" />
-                  </InputAdornment>
-                )
-              }}
-            />
-            <Button
-              sx={{ minWidth: '40px', bgcolor: 'white', border: '1px solid #e0e0e0', color: '#777', '&:hover': { bgcolor: '#f5f5f5' } }}
-            >
-              <Add fontSize="small" />
-            </Button>
-          </Grid>
-
-          {/* Patent Office */}
-          <Grid item  size={{ xs: 4, sm: 4, md: 4}}>
-            <CustomSelect value={formData.patentOffice} onChange={(val) => handleChange('patentOffice', val)} placeholder="Patent Office" />
-          </Grid>
-        </Grid>
-
-        <Divider sx={{ my: 2, borderColor: '#d1d5db' }} />
-
-        {/* ROW 4: Bottom Dropdowns */}
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}
-          sx={{
-            width: '100%',
-            m: 0 // Prevents overflow issues
-          }}
-        >
-          <Grid item xs={12} sm={6} md={3} size={{ xs: 3, sm: 3, md: 3 }}>
-            <CustomSelect value={formData.language} onChange={(val) => handleChange('language', val)} placeholder="Language" />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3} size={{ xs: 3, sm: 3, md: 3}}>
-            <CustomSelect value={formData.status} onChange={(val) => handleChange('status', val)} placeholder="Status" />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3} size={{ xs: 3, sm: 3, md: 3 }}>
-            <CustomSelect value={formData.type} onChange={(val) => handleChange('type', val)} placeholder="Type" />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3} size={{ xs: 3, sm: 3, md: 3}}>
-            <CustomSelect value={formData.litigation} onChange={(val) => handleChange('litigation', val)} placeholder="Litigation" />
-          </Grid>
-        </Grid>
-
+              <IconButton
+                onClick={() => handleOpenModal(text)}
+                sx={{
+                  bgcolor: '#E4563C',
+                  color: 'white',
+                  borderRadius: '2px',
+                  p: '10px',
+                  '&:hover': { bgcolor: '#D3452B' }
+                }}
+              >
+                <Visibility sx={{ fontSize: '1.2rem' }} />
+              </IconButton>
+            </Paper>
+          ))
+        ) : (
+          <Typography sx={{ textAlign: 'center', color: '#9CA3AF', py: 3 }}>No Queries Available</Typography>
+        )}
       </Box>
+
+      {/* 3. Modal Dialog */}
+      <Dialog
+        open={openModal}
+        onClose={handleCloseModal}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{ sx: { borderRadius: '4px', p: { xs: 2, md: 4 } } }}
+      >
+        <DialogContent sx={{ p: 0 }}>
+          <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 3, color: '#111827' }}>
+            Date Range
+          </Typography>
+
+          <Grid container spacing={2}>
+            {/* --- Date Range Section --- */}
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <Select
+                fullWidth
+                displayEmpty
+                value={formData.priority}
+                onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
+                sx={customInputStyle}
+              >
+                <MenuItem value="" disabled>
+                  Priority
+                </MenuItem>
+                <MenuItem value="Priority">Priority 1</MenuItem>
+                <MenuItem value="Application">Application</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <TextField fullWidth placeholder="Start Date" sx={customInputStyle} />
+            </Grid>
+            <Grid item size={{ xs: 12 }}>
+              <TextField fullWidth placeholder="End Date" sx={customInputStyle} />
+            </Grid>
+
+            {/* First Divider */}
+            <Grid item size={{ xs: 12 }}>
+              <Divider sx={{ my: 2, borderColor: '#526283' }} />
+            </Grid>
+
+            {/* --- Text Area Section --- */}
+            <Grid item size={{ xs: 12 }}>
+              <TextField
+                fullWidth
+                multiline
+                rows={4}
+                value={formData.queryText}
+                onChange={(e) => setFormData({ ...formData, queryText: e.target.value })}
+                sx={{
+                  ...customInputStyle,
+                  '& .MuiOutlinedInput-root': { padding: '16px' },
+                  '& .MuiOutlinedInput-input': { color: '#888', lineHeight: 1.5 }
+                }}
+              />
+            </Grid>
+
+            {/* Second Divider */}
+            <Grid item size={{ xs: 12 }}>
+              <Divider sx={{ my: 2, borderColor: '#3f64ad' }} />
+            </Grid>
+
+            {/* --- Inventor & Assignee & Patent Office --- */}
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <TextField
+                fullWidth
+                placeholder="Inventor"
+                sx={customInputStyle}
+                InputProps={{
+                  sx: { pr: 0 }, // Remove padding to make button flush
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Button sx={redAdornmentStyle}>
+                        <Add fontSize="small" />
+                      </Button>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </Grid>
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <TextField
+                fullWidth
+                placeholder="Assignee"
+                sx={customInputStyle}
+                InputProps={{
+                  sx: { pr: 0 }, // Remove padding to make button flush
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Button sx={redAdornmentStyle}>
+                        <Add fontSize="small" />
+                      </Button>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </Grid>
+            <Grid item size={{ xs: 12 }}>
+              <Select fullWidth displayEmpty value={formData.patentOffice} sx={customInputStyle}>
+                <MenuItem value="" disabled>
+                  Patent Office
+                </MenuItem>
+                <MenuItem value="US">US</MenuItem>
+                <MenuItem value="EP">EP</MenuItem>
+              </Select>
+            </Grid>
+
+            {/* Third Divider */}
+            <Grid item size={{ xs: 12 }}>
+              <Divider sx={{ my: 2, borderColor: '#7c7f86' }} />
+            </Grid>
+
+            {/* --- Language, Status, Type, Litigation --- */}
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <Select fullWidth displayEmpty value={formData.language} sx={customInputStyle}>
+                <MenuItem value="" disabled>
+                  Language
+                </MenuItem>
+                <MenuItem value="EN">English</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <Select fullWidth displayEmpty value={formData.status} sx={customInputStyle}>
+                <MenuItem value="" disabled>
+                  Status
+                </MenuItem>
+                <MenuItem value="Active">Active</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <Select fullWidth displayEmpty value={formData.type} sx={customInputStyle}>
+                <MenuItem value="" disabled>
+                  Type
+                </MenuItem>
+                <MenuItem value="Utility">Utility</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <Select fullWidth displayEmpty value={formData.litigation} sx={customInputStyle}>
+                <MenuItem value="" disabled>
+                  Litigation
+                </MenuItem>
+                <MenuItem value="Yes">Yes</MenuItem>
+              </Select>
+            </Grid>
+
+            {/* --- Update Button --- */}
+            <Grid item size={{ xs: 12, sm: 7, md: 12 }} sx={{ mt: 2 }}>
+              <Button
+                variant="contained"
+                onClick={handleCloseModal}
+                sx={{
+                  bgcolor: '#E4563C',
+                  '&:hover': { bgcolor: '#D3452B' },
+                  textTransform: 'none',
+                  px: 4,
+                  py: 1.2,
+                  fontWeight: 'bold',
+                  borderRadius: '2px'
+                }}
+              >
+                Update
+              </Button>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showConfirmModal} onClose={cancelClear} maxWidth="xs" fullWidth>
+        <DialogContent sx={{ textAlign: 'center', p: 4 }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+            Confirm Clear
+          </Typography>
+
+          <Typography sx={{ mb: 3, color: '#6B7280' }}>Are you sure you want to clear all fields?</Typography>
+
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+            <Button
+              variant="contained"
+              onClick={confirmClear}
+              sx={{
+                bgcolor: '#E4563C',
+                '&:hover': { bgcolor: '#D3452B' },
+                textTransform: 'none'
+              }}
+            >
+              Yes, Clear
+            </Button>
+
+            <Button variant="outlined" onClick={cancelClear} sx={{ textTransform: 'none' }}>
+              Cancel
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Container>
   );
 };

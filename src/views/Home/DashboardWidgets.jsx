@@ -412,7 +412,7 @@ const DashboardWidgets = () => {
   ];
 
   return (
-    <Container maxWidth="xl" >
+    <Container maxWidth="xl" sx={{marginTop:'50px'}} >
        <Grid
           container
           columns={{ xs: 4, sm: 6, md: 12 }}
