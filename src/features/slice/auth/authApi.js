@@ -66,10 +66,20 @@ export const authApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: '/api/v1/user/Dashboard/update-profile-image',
         method: 'PATCH',
-        body: data
+        body: data,
+        formData: true,
       }),
-      invalidatesTags: ['User'],
+      // invalidatesTags: ['User'],
       
+    }),
+
+    // GET: Fetch User Details by ID
+    getUserDetails: builder.query({
+      query: (id) => ({
+        url: `/api/v1/auth/get-userDetails/${id}`,
+        method: 'GET'
+      }),
+      providesTags: ['User'] // Mark this data with the 'User' tag
     }),
 
     changePassword: builder.mutation({
@@ -88,14 +98,7 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ['User']
     }),
 
-    // GET: Fetch User Details by ID
-    getUserDetails: builder.query({
-      query: (id) => ({
-        url: `/api/v1/auth/get-userDetails/${id}`,
-        method: 'GET'
-      }),
-      providesTags: ['User'] // Mark this data with the 'User' tag
-    })
+    
   })
 });
 
@@ -112,7 +115,7 @@ export const {
   useDeleteAccountMutation,
   useChangePasswordMutation,
   useUpdateImageMutation,
-   useGetUserDetailsQuery,
+  useGetUserDetailsQuery,
 } = authApi;
 
 

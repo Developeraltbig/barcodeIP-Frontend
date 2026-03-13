@@ -123,7 +123,7 @@ const KeyFeatures = ({ projectId , featureData}) => {
             mt: 2,
           }}
         >
-          View More
+          View Result
         </Button>
       </Container>
     </Box>

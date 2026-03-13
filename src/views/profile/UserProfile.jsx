@@ -182,7 +182,7 @@
 //             />
 //             <Divider sx={{ mb: 5 }} />
 
-//             <UserInfoForm formData={formData} handleChange={handleChange} />
+//             <UserInfoForm />
 
 //             <Stack direction="row" spacing={2} sx={{ mt: 8 }}>
 //               <Button variant="outlined" onClick={handleReset} disabled={isProfileUpdating}>
@@ -214,16 +214,34 @@
 // export default UserProfile;
 
 
-import { Box } from '@mui/material'
+import { Alert, Box, CssBaseline, Snackbar, ThemeProvider } from '@mui/material'
 import React from 'react'
+import { theme } from './theme';
+import UserInfoForm from './UserInfoForm';
+import AccountPage from '../account/AccountPage';
 
 const UserProfile = () => {
   return (
-    <Box sx={{marginTop:'300px' , textAlign:'center'}}>
+     <ThemeProvider theme={theme}>
+      <CssBaseline />
+    <Box sx={{ minHeight: '100vh', py: 8, bgcolor: 'background.default', marginTop: '70px' }}>
+        
+        <UserInfoForm />
+     
+        <AccountPage />
 
-      This is profile page !!!!!
+        {/* <Snackbar 
+          // open={feedback.open} 
+          autoHideDuration={4000} 
+          // onClose={() => setFeedback({ ...feedback, open: false })}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }} // Positioning added here
+        >
+          <Alert severity={feedback.severity} variant="filled">{feedback.message}</Alert>
+        </Snackbar> */}
     </Box>
+     </ThemeProvider>
   )
 }
 
 export default UserProfile
+
