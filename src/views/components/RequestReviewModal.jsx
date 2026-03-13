@@ -31,6 +31,9 @@ const RequestReviewModal = ({ open, onClose, project }) => {
     product: true,
   });
 
+  const checked_module = project?.module || [] ;
+  console.log(project?.module)
+
   const [notes, setNotes] = useState('');
   const [successOpen, setSuccessOpen] = useState(false);
 
@@ -50,7 +53,7 @@ const RequestReviewModal = ({ open, onClose, project }) => {
     project?.projectName ||
     "Wireless Earbuds with Advanced Sensor Capabilities";
 
-  const projectId = project?.project_id || "KQ-y9SBkKXxKADmw2ZBP";
+  const projectId = project?.project_id || "na ";
 
   return (
     <>
@@ -107,24 +110,20 @@ const RequestReviewModal = ({ open, onClose, project }) => {
           </Typography>
 
           <Stack>
-            {[
-              { label: "Patent Search Results", name: "patent" },
-              { label: "Publication Search Results", name: "publication" },
-              { label: "Product Search Results", name: "product" }
-            ].map((item) => (
+            {checked_module?.map((item) => (
               <FormControlLabel
-                key={item.name}
+                key={item}
                 control={
                   <Checkbox
-                    checked={modules[item.name]}
+                    checked={modules[item]}
                     onChange={handleCheckboxChange}
-                    name={item.name}
+                    name={item}
                     sx={{
                       "&.Mui-checked": { color: BRAND_RED }
                     }}
                   />
                 }
-                label={item.label}
+                label={item}
               />
             ))}
           </Stack>

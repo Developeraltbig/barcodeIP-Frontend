@@ -604,6 +604,7 @@ const DashboardWidgets = () => {
 
       {/* Analyst Review Modal */}
       <AnalystReviewModal open={modalOpen} onClose={closeModal} review={selectedReview} />
+      {}
     </Container>
   );
 };

@@ -37,7 +37,7 @@ export default function UserInfoForm() {
   });
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const [localImagePreview, setLocalImagePreview] = useState(null); // ✅ CHANGED: track local preview
+  const [localImagePreview, setLocalImagePreview] = useState(null); //  CHANGED: track local preview
 
   useEffect(() => {
     if (data?.data) {
@@ -87,33 +87,6 @@ export default function UserInfoForm() {
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
-
-// Update handleImageChange
-// const handleImageChange = async (e) => {
-//   const file = e.target.files?.[0];
-//   if (!file) return;
-
-//   const previewUrl = URL.createObjectURL(file);
-//   setLocalImagePreview(previewUrl);
-
-//   const formPayload = new FormData();
-//   formPayload.append('profile_image', file);
-
-//   try {
-//     await updateImage(formPayload).unwrap();
-//     setSuccessMsg('Profile image updated!');
-//     setErrorMsg('');
-
-    
-//   } catch (err) {
-//     console.error('Image upload error:', err);
-//     setLocalImagePreview(null); // revert preview on failure
-//     setErrorMsg(err?.data?.message || 'Failed to update image.');
-//   }
-
-//   e.target.value = '';
-// };
-
 
 const handleImageChange = async (e) => {
   const file = e.target.files?.[0];

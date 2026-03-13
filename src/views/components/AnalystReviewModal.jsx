@@ -17,8 +17,6 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 const AnalystReviewModal = ({ open, onClose, review }) => {
   if (!review) return null;
 
-  console.log("review modal", review)
-
   // Helper to determine status colors
   const getStatusConfig = (status) => {
     switch (status?.toLowerCase()) {
@@ -32,6 +30,8 @@ const AnalystReviewModal = ({ open, onClose, review }) => {
   };
 
   const statusStyle = getStatusConfig(review.status);
+
+  console.log("review modal-------------------------------------------------------------------", statusStyle)
 
   return (
     <Dialog 

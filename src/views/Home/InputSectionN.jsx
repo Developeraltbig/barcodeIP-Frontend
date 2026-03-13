@@ -93,7 +93,7 @@ const InputSectionN = () => {
     try {
       await createProject(formData).unwrap();
       setShowAdvanceOption(true);
-      setAdvanceSearch(true);
+      // setAdvanceSearch(true);
     } catch (err) {
       console.error('Project Generation Failed:', err);
     }
