@@ -5,9 +5,6 @@ import Loadable from 'components/Loadable';
 import AuthGuard from './AuthGuard';
 import ForgotPassword from '../views/auth/work-N/ForgotPassword';
 import ResetPassword from '../views/auth/work-N/ResetPassword';
-import MyProject from '../views/my-project/MyProject';
-import NotFound from '../components/NotFound';
-import PatentDetail from '../views/Result/patent/PatentDetail';
 
 // pages
 const Home = Loadable(lazy(() => import('../views/Home/index')));
@@ -20,6 +17,10 @@ const OverlapMatrix = Loadable(lazy(() => import('../views/components/OverlapMat
 const DraftMasterResult = Loadable(lazy(() => import('../views/Result/non_provisional/DraftMasterResult')));
 const ProvisionalDraftResult = Loadable(lazy(() => import('../views/Result/provisional/ProvisionalDraftResult')));
 const Product = Loadable(lazy(() => import('../views/Result/product')));
+const PatentDetail = Loadable(lazy(() => import('../views/Result/patent/PatentDetail')));
+const NotFound  = Loadable(lazy(() => import('../components/NotFound')));
+const MyProject = Loadable(lazy(() => import('../views/my-project/MyProject')));
+
 
 
 

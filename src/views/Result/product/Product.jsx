@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
+import Loadable from 'components/Loadable';
 import { Box, Container, Typography, Fade } from '@mui/material';
 import { PRODUCTS_DATA } from './data';
-import TabComponent from './TabComponent';
-import AnalysisView from './AnalysisView';
-import SourcesSection from './SourcesSection';
-import DiscoveredProducts from './DiscoveredProducts';
 import NotFound from '../../../components/NotFound';
 import { LinearProgress } from "@mui/material";
+
+const TabComponent = Loadable(lazy(() => import('./TabComponent')));
+const  AnalysisView  = Loadable(lazy(() => import('./AnalysisView')));
+const  SourcesSection = Loadable(lazy(() => import('./SourcesSection')));
+const  DiscoveredProducts = Loadable(lazy(() => import('./DiscoveredProducts')));
+
 
 const Product = ({ data, progress }) => {
   // 1. Normalize the list of products from props

@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { lazy, useMemo, useState } from 'react';
+import Loadable from 'components/Loadable';
 import {
   Box,
   Typography,
@@ -28,7 +29,7 @@ import { useDispatch } from 'react-redux';
 // --- API & Slice Imports (Unchanged) ---
 import { useFetchAllProjectsQuery } from '../../features/userApi';
 import { setSelectedProject } from '../../features/slice/userSlice';
-import RequestReviewModal from '../components/RequestReviewModal';
+const RequestReviewModal = Loadable(lazy(() => import('../components/RequestReviewModal')));
 
 // ==========================================
 // HELPER COMPONENTS & FORMATTERS
@@ -40,57 +41,75 @@ const formatDate = (dateString) => {
   return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 };
 
-const getMockModules = (index) => {
-  if (index === 0) return ['Patent', 'Publication', 'Products'];
-  if (index === 1) return ['Patent', 'Provisional'];
-  return ['Patent', 'Publication', 'Products', 'Provisional', 'Non-Prov'];
-};
+const AnalystReviewBadge = ({ index ,status, onActionClick }) => {
+  let config;
 
-// ENHANCED: Modern "Soft" Status Badges (Updated to make 'Request' clickable)
-const AnalystReviewBadge = ({ index, onActionClick }) => {
-  let config = {
-    mainColor: '#EF4444', // Red
-    bg: '#FEF2F2',
-    icon: <PersonAddAltOutlined sx={{ fontSize: 18 }} />,
-    text: 'Request Review',
-    isClickable: true // Flag to render as a button
-  };
+  console.log("cnfig-->",config)
+  console.log("status-->",status)
 
-  if (index === 1) {
-    config = {
-      mainColor: '#F59E0B',
-      bg: '#FFFBEB',
-      icon: <AccessTime sx={{ fontSize: 18 }} />,
-      text: 'Review Pending',
-      isClickable: false
-    };
-  } else if (index === 2) {
-    config = {
-      mainColor: '#10B981',
-      bg: '#ECFDF5',
-      icon: <CheckCircleOutline sx={{ fontSize: 18 }} />,
-      text: 'Review Complete',
-      isClickable: false
-    };
+  switch (status) {
+    case "notRequested":
+      config = {
+        mainColor: "#EF4444",
+        bg: "#FEF2F2",
+        icon: <PersonAddAltOutlined sx={{ fontSize: 18 }} />,
+        text: "Request Review",
+        isClickable: true
+      };
+      break;
+    case "pending":
+      config = {
+        mainColor: "#F59E0B",
+        bg: "#FFFBEB",
+        icon: <AccessTime sx={{ fontSize: 18 }} />,
+        text: "Review Pending",
+        isClickable: false
+      };
+      break;
+    case "inreview":
+      config = {
+        mainColor: "#3B82F6",
+        bg: "#EFF6FF",
+        icon: <AccessTime sx={{ fontSize: 18 }} />,
+        text: "In Review",
+        isClickable: false
+      };
+      break;
+    case "completed":
+      config = {
+        mainColor: "#10B981",
+        bg: "#ECFDF5",
+        icon: <CheckCircleOutline sx={{ fontSize: 18 }} />,
+        text: "Review Complete",
+        isClickable: false
+      };
+      break;
+    default:
+      config = {
+        mainColor: "#64748B",
+        bg: "#F1F5F9",
+        icon: null,
+        text: "Unknown",
+        isClickable: false
+      };
   }
 
   const commonStyles = {
-    display: 'inline-flex',
-    alignItems: 'center',
+    display: "inline-flex",
+    alignItems: "center",
     gap: 1,
     bgcolor: config.bg,
     color: config.mainColor,
     px: 2,
     py: 1,
-    borderRadius: '8px',
+    borderRadius: "8px",
     fontWeight: 600,
-    fontSize: '0.85rem',
+    fontSize: "0.85rem",
     border: `1px solid ${alpha(config.mainColor, 0.2)}`,
-    width: { xs: '100%', md: 'auto' },
-    justifyContent: { xs: 'center', md: 'flex-start' }
+    width: { xs: "100%", md: "auto" },
+    justifyContent: { xs: "center", md: "flex-start" }
   };
 
-  // Render as a clickable Button if it's the "Request Review" state
   if (config.isClickable) {
     return (
       <Button
@@ -98,8 +117,8 @@ const AnalystReviewBadge = ({ index, onActionClick }) => {
         disableElevation
         sx={{
           ...commonStyles,
-          textTransform: 'none',
-          '&:hover': {
+          textTransform: "none",
+          "&:hover": {
             bgcolor: alpha(config.mainColor, 0.1),
             borderColor: alpha(config.mainColor, 0.4)
           }
@@ -111,7 +130,6 @@ const AnalystReviewBadge = ({ index, onActionClick }) => {
     );
   }
 
-  // Render as a static Box for Pending/Complete states
   return (
     <Box sx={commonStyles}>
       {config.icon}
@@ -135,7 +153,7 @@ const MyProject = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { data: projectsData, isLoading, isError } = useFetchAllProjectsQuery();
+  const { data: projectsData, isLoading, isError, refetch } = useFetchAllProjectsQuery();
 
   const projects = useMemo(() => {
     if (!projectsData) return [];
@@ -155,6 +173,11 @@ const MyProject = () => {
     setProjectToReview(project);
     setReviewModalOpen(true);
   };
+
+  const handleRequestReview = async (project) => {
+  await sendReviewRequest(project.id); // API call
+  refetch(); // re-fetch projects to get updated analyst_status
+};
 
   // --- RENDERING ---
   if (isLoading) {
@@ -320,7 +343,8 @@ const MyProject = () => {
                     )}
 
                     {/* ---> PASS ONCLICK EVENT HERE <--- */}
-                    <AnalystReviewBadge index={index} onActionClick={() => handleOpenReviewModal(project)} />
+                    <AnalystReviewBadge status={project.analyst_status  || 'notRequested' } onActionClick={() => handleOpenReviewModal(project)} />
+
                   </Box>
 
                   <Box
@@ -376,3 +400,7 @@ const MyProject = () => {
 };
 
 export default MyProject;
+
+
+
+

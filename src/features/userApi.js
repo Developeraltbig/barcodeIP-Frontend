@@ -13,7 +13,7 @@ export const userApi = baseApi.injectEndpoints({
 
     getRecentThreeProjects: builder.query({
       query: () => ({
-        url: '/api/v1/user/Dashboard/project/recent/get',
+        url: '/api/v1/user/Dashboard/projects-with-analyst-status',
         method: 'GET'
       }),
       providesTags: ['RecentProject']
@@ -95,7 +95,7 @@ export const userApi = baseApi.injectEndpoints({
     // --- Support Analysts ---
     getSupportAnalysts: builder.query({
       query: () => ({
-        url: '/api/v1/user/Dashboard/support-analyst/getAll',
+        url: '/api/v1/user/Dashboard/projects-with-analyst-status',
         method: 'GET',
       }),
       providesTags: ['SupportAnalysts']

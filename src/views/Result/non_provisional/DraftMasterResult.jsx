@@ -1,19 +1,21 @@
 import { Packer, Document, ImageRun, Paragraph, HeadingLevel, AlignmentType, convertInchesToTwip } from 'docx';
+import Loadable from 'components/Loadable';
 import { FaPlus, FaTimes, FaFilePdf, FaFileWord, FaArrowRight, FaDownload } from 'react-icons/fa';
 import axios from 'axios';
 import { saveAs } from 'file-saver';
 import { toast } from 'react-toastify';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box } from "@mui/material";
 import '../../../assets/css/style.css';
 import { getPlantUmlImageUrl } from '../../../utils/plantUmlUtils';
 import { htmlToDocxParagraphs } from '../../../utils/docxUtils';
 import { getSafeFilename } from '../../../utils/formatUtils';
-import DraftSection from './DraftSection';
-import DiagramSection from './DiagramSection';
-import useAuthStore from '../../../store/authStore';
 import { LinearProgress, Typography } from "@mui/material";
+
+const  DraftSection = Loadable(lazy(() => import('./DraftSection')));
+const DiagramSection = Loadable(lazy(() => import('./DiagramSection')));
+const useAuthStore = Loadable(lazy(() => import('../../../store/authStore')));
 
 const DraftMasterResult = ({ data, progress }) => {
   const navigate = useNavigate();

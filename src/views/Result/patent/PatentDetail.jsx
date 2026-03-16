@@ -1,11 +1,13 @@
 
-import React from 'react';
+import React, { lazy } from 'react';
+import Loadable from 'components/Loadable';
 import { Box, Typography, Paper, Button, Container, IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import { useNavigate } from 'react-router-dom';
-import PatentMetadataDashboard from './PatentMetadataDashboard';
-import PatentClaims from './PatentClaims';
+
+const PatentMetadataDashboard  = Loadable(lazy(() => import('./PatentMetadataDashboard')));
+const PatentClaims = Loadable(lazy(() => import('./PatentClaims')));
 
 const PatentDetail = () => {
      const navigate = useNavigate();

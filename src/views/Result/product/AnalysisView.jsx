@@ -1,6 +1,9 @@
 import { Card, Chip, Paper } from "@mui/material";
 import { Box, Container, Typography, Fade } from '@mui/material';
-import PerformanceStats from '../product/PerformanceStats'; 
+import { lazy } from "react";
+import Loadable from 'components/Loadable';
+
+const  PerformanceStats = Loadable(lazy(() => import('../product/PerformanceStats')));
 
 const NoDataFound = ({ tabName }) => (
   <Box sx={{ 

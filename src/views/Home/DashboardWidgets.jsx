@@ -170,20 +170,30 @@ const ListItemRow = ({ item, isLastItem, showAnalystMessage }) => {
   );
 };
 
-const WidgetCard = ({  icon: Icon, data, isLoading, error, isAnalystWidget }) => {
+const WidgetCard = ({ icon: Icon, data, isLoading, error, isAnalystWidget }) => {
   const hasAnalystConnections = useMemo(() => {
     if (!data || data.length === 0) return false;
     return data.some(item => item.analyst_record?.message);
   }, [data]);
 
+  // Limit to latest 3 items
+  const latestData = useMemo(() => {
+    if (!data) return [];
+    // Reverse to get latest first, then slice 3 items
+    const filteredData = isAnalystWidget 
+      ? data.filter(item => item.analyst_record?.message)
+      : data;
+    return filteredData.slice(-3).reverse();
+  }, [data, isAnalystWidget]);
+
   return (
     <Paper elevation={0} sx={{ p: 3, borderRadius: '5px', border: '1px solid #E5E7EB', height: '100%', minHeight: '200px' }}>
-       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <DescriptionOutlinedIcon sx={{ color: '#E94E34' }} />
-          <Typography sx={{ fontWeight: 700, color: '#374151', fontSize: '1.05rem' }}>
-            Search History
-          </Typography>
-        </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+        <DescriptionOutlinedIcon sx={{ color: '#E94E34' }} />
+        <Typography sx={{ fontWeight: 700, color: '#374151', fontSize: '1.05rem' }}>
+          Search History
+        </Typography>
+      </Box>
 
       {isLoading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '150px' }}>
@@ -191,22 +201,30 @@ const WidgetCard = ({  icon: Icon, data, isLoading, error, isAnalystWidget }) =>
         </Box>
       )}
 
-      <Divider sx={{ borderColor: '#b1bac7' , pt:'20px' }} />
+      <Divider sx={{ borderColor: '#b1bac7', pt:'20px' }} />
 
       {error && !isLoading && <Typography variant="body2" color="error" sx={{ mt: 2 }}>Failed to load data.</Typography>}
 
       {!isLoading && !error && (
         <Box>
           {isAnalystWidget && !hasAnalystConnections ? (
-            <Typography variant="body2" sx={{ mt: 2, color: '#9CA3AF', fontStyle: 'italic' }}>You did not connect to any analytics yet!</Typography>
-          ) : (!data || data.length === 0) ? (
-            <Typography variant="body2" sx={{ mt: 2, color: '#9CA3AF' }}>No records found.</Typography>
+            <Typography variant="body2" sx={{ mt: 2, color: '#9CA3AF', fontStyle: 'italic' }}>
+              You did not connect to any analytics yet!
+            </Typography>
+          ) : latestData.length === 0 ? (
+            <Typography variant="body2" sx={{ mt: 2, color: '#9CA3AF' }}>
+              No records found.
+            </Typography>
           ) : (
             <Box>
-              {data.map((item, index) => {
-                if (isAnalystWidget && !item.analyst_record?.message) return null;
-                return <ListItemRow key={item._id || item.id || index} item={item} isLastItem={index === data.length - 1} showAnalystMessage={isAnalystWidget} />;
-              })}
+              {latestData.map((item, index) => (
+                <ListItemRow 
+                  key={item._id || item.id || index} 
+                  item={item} 
+                  isLastItem={index === latestData.length - 1} 
+                  showAnalystMessage={isAnalystWidget} 
+                />
+              ))}
             </Box>
           )}
         </Box>
@@ -214,7 +232,6 @@ const WidgetCard = ({  icon: Icon, data, isLoading, error, isAnalystWidget }) =>
     </Paper>
   );
 };
-
 
 // ==========================================
 // NEW COMPONENTS (Analyst Reviews - Exact Match UI)
@@ -375,81 +392,6 @@ const AnalystWidgetCard = ({ data, isLoading, error }) => {
 // ==========================================
 // MAIN DASHBOARD COMPONENT
 // ==========================================
-// const DashboardWidgets = () => {
-//   // --- REAL DATA FOR SEARCH HISTORY ---
-//   const { data: getRecentThreeProjects, isLoading: loadingProjects } = useGetRecentThreeProjectsQuery();
-  
-//   const projects = useMemo(() => {
-//     if (!getRecentThreeProjects) return [];
-//     return getRecentThreeProjects.projects || getRecentThreeProjects.data || (Array.isArray(getRecentThreeProjects) ? getRecentThreeProjects : []);
-//   }, [getRecentThreeProjects]);
-
-//   // --- DUMMY DATA FOR ANALYST REVIEWS (Matches Screenshot exactly) ---
-//   const dummyAnalystData = [
-//     {
-//       _id: 'LFGMFBbk-0p0mI0iNAvX',
-//       project_title: 'Bi-metallic Clamp and Tool...',
-//       project_id: 'LFGMFBbk-0p0mI0iNAvX',
-//       status: 'Pending',
-//       createdAt: '2024-03-09T10:00:00Z', 
-//       analyst_record: { message: "Passes filter" } // Required to render based on original logic
-//     },
-//     {
-//       _id: 'KQ-y9SBkKXxKADmw2ZBP',
-//       project_title: 'Wireless Earbuds with Advanced...',
-//       project_id: 'KQ-y9SBkKXxKADmw2ZBP',
-//       status: 'In Review',
-//       createdAt: '2024-03-07T10:00:00Z', 
-//       analyst_record: { message: "Passes filter" }
-//     },
-//     {
-//       _id: '9bDJiku8g8-CwzIB99KI8',
-//       project_title: 'Structural Innovations in Speaker...',
-//       project_id: '9bDJiku8g8-CwzIB99KI8',
-//       status: 'Completed',
-//       createdAt: '2024-03-03T10:00:00Z', 
-//       analyst_record: { message: "Passes filter" }
-//     }
-//   ];
-
-//   return (
-//     <Container maxWidth="xl" sx={{marginTop:'50px'}} >
-//        <Grid
-//           container
-//           columns={{ xs: 4, sm: 6, md: 12 }}
-//           spacing={3}
-//           sx={{
-//             justifyContent: 'center',
-//             alignItems: 'stretch', 
-//             pb: 4, 
-//             px: { xs: 2, md: 0 }, 
-//           }}
-//         >
-//           {/* SEARCH HISTORY - Renders Original Untouched UI with REAL Data */}
-//           <Grid item size={{ xs: 12, md: 6 }}>
-//             <WidgetCard 
-//               // title="Search History" 
-//               icon={HistoryIcon} 
-//               data={projects} // <--- Real API Data
-//               isLoading={loadingProjects} 
-//               isAnalystWidget={false}  
-//             />
-//           </Grid>
-
-//           {/* ANALYST CONNECTIONS - Renders New UI with DUMMY Data */}
-//           <Grid item size={{ xs: 12, md: 6 }}>
-//             <AnalystWidgetCard
-//               data={dummyAnalystData} // <--- Dummy Data Passed Here
-//               isLoading={false} // <--- Hardcoded to false so it renders immediately
-//               error={null} 
-//             />
-//           </Grid>
-//         </Grid>
-//     </Container>
-//   );
-// };
-
-
 const DashboardWidgets = () => {
     // --- REAL DATA FOR SEARCH HISTORY ---
   const { data: getRecentThreeProjects, isLoading: loadingProjects } = useGetRecentThreeProjectsQuery();
@@ -604,7 +546,7 @@ const DashboardWidgets = () => {
 
       {/* Analyst Review Modal */}
       <AnalystReviewModal open={modalOpen} onClose={closeModal} review={selectedReview} />
-      {}
+      
     </Container>
   );
 };
