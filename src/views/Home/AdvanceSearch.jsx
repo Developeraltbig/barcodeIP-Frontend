@@ -260,7 +260,7 @@ const AdvanceSearch = ({ query }) => {
   const [selectedText, setSelectedText] = useState('');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  console.log('query', query);
+  // console.log('query', query);
 
   const [formData, setFormData] = useState({
     priority: '',

@@ -34,9 +34,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { logout, setCredentials } from '../features/slice/auth/authSlice';
 import { useSelector } from 'react-redux';
 
-// let api_url = "http://54.146.252.18:5000";
+let api_url = "http://54.146.252.18:5000";
 
-let api_url = "http://localhost:5000";
+// let api_url = "http://localhost:5000";
 
 // A basic fetchBaseQuery instance
 const baseQuery = fetchBaseQuery({

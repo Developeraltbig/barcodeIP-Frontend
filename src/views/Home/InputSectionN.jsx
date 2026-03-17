@@ -7,29 +7,31 @@ import {
 } from '@mui/material';
 import { Search as SearchIcon, CloudUploadOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+
+// ---> ADDED REDUX IMPORTS <---
+import { useDispatch } from 'react-redux';
+import { setSelectedProject } from '../../features/slice/userSlice';
 import { useCreateProjectMutation } from '../../features/userApi';
+
 const AdvanceSearch = Loadable(lazy(() => import('./AdvanceSearch')));
 const KeyFeatures = Loadable(lazy(() => import('./KeyFeatures')));
 
-// Assuming these are imported correctly in your actual file:
-// import { useCreateProjectMutation } from 'your-api-path';
-// import AdvanceSearch from './AdvanceSearch';
-// import KeyFeatures from './KeyFeatures';
-
-// Mock array for loader (assuming you have this defined somewhere)
 const LOADING_MESSAGES = ["Analyzing input...", "Extracting key features...", "Generating queries..."];
 
 const InputSectionN = () => {
   const [searchValue, setSearchValue] = useState('');
-
-  // FIX 1: Initialized with 'patent' instead of an empty string ''
   const [selectedFilters, setSelectedFilters] = useState(['patent']);
   const [showAdvanceOption, setShowAdvanceOption] = useState(false);
   const [advanceSearch, setAdvanceSearch] = useState(false);
   const [messageIndex, setMessageIndex] = useState(0);
 
+  // ---> NEW STATE TO GUARANTEE FRESH DATA <---
+  const [activeProject, setActiveProject] = useState(null);
+
   const navigate = useNavigate();
-  const [createProject, { isLoading, isSuccess, data }] = useCreateProjectMutation();
+  const dispatch = useDispatch(); 
+
+  const [createProject, { isLoading, isSuccess }] = useCreateProjectMutation();
 
   // --- CSS SCROLL LOCK LOGIC ---
   useEffect(() => {
@@ -38,9 +40,7 @@ const InputSectionN = () => {
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
+    return () => document.body.style.overflow = 'unset';
   }, [isLoading]);
 
   // --- Text Cycling Logic ---
@@ -71,8 +71,8 @@ const InputSectionN = () => {
     } 
   }, [selectedFilters]);
 
+  // --- HANDLE TEXT SUBMIT ---
   const handleGenerate = async () => {
-    // FIX 2: Added an alert so you know if you forgot to type something
     if (!searchValue.trim()) {
       alert('Please describe your invention first!');
       return;
@@ -83,96 +83,117 @@ const InputSectionN = () => {
     selectedFilters.forEach((item) => formData.append('checked', item));
 
     try {
-      await createProject(formData).unwrap();
-      setShowAdvanceOption(true);
-      // setAdvanceSearch(true);
+      const response = await createProject(formData).unwrap();
+      
+      const newProjectData = response?.data || response;
+      const newProjectId = newProjectData?.project_id || newProjectData?.id || newProjectData?._id;
+
+      console.log("Newly Generated Project ID (Text):", newProjectId);
+
+      // SAVE DIRECTLY TO LOCAL STATE TO PREVENT CACHE ISSUES
+      setActiveProject(newProjectData);
+
+      // If patent is not checked, navigate directly to result page
+      if (!selectedFilters.includes('patent') && newProjectId) {
+        dispatch(setSelectedProject({
+          ...newProjectData,
+          _id: newProjectId,
+          id: newProjectId
+        }));
+        navigate(`/result/${newProjectId}`);
+      } else {
+        setShowAdvanceOption(true);
+      }
     } catch (err) {
       console.error('Project Generation Failed:', err);
     }
   };
 
-  // Upload file code
   const [isSearching, setIsSearching] = useState(false);
 
-  // This function runs when the user selects a file
-  // const handleFileChange = async (event) => {
-  //   const file = event.target.files[0];
-    
-  //   if (!file) return; // Exit if no file was selected
-
-  //   console.log("File selected:", file.name);
-  //   setIsSearching(true);
-
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('file', file); // Append the file
-      
-  //     // Append the selected filters just like in the text search
-  //     selectedFilters.forEach((item) => formData.append('checked', item));
-
-  //     // Make the actual API call using your RTK Query mutation
-  //     await createProject(formData).unwrap();
-      
-  //     setShowAdvanceOption(true);
-
-  //   } catch (error) {
-  //     console.error("Error searching with file:", error);
-  //     alert('File upload failed. Please try again.');
-  //   } finally {
-  //     setIsSearching(false);
-  //     // Reset the input value so the user can upload the exact same file again if needed
-  //     event.target.value = null; 
-  //   }
-  // };
-
+  // --- HANDLE FILE SUBMIT ---
   const handleFileChange = async (event) => {
-  const file = event.target.files[0];
+    const file = event.target.files[0];
 
-  if (!file) return;
+    if (!file) return;
 
-  const allowedTypes = [
-    "application/pdf",
-    "application/msword",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-  ];
+    const allowedTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ];
 
-  if (!allowedTypes.includes(file.type)) {
-    toast.error("Invalid file type. Only PDF, DOC, and DOCX are allowed");
-    event.target.value = null;
-    return;
-  }
+    if (!allowedTypes.includes(file.type)) {
+      alert("Invalid file type. Only PDF, DOC, and DOCX are allowed");
+      event.target.value = null;
+      return;
+    }
 
-  console.log("File selected:", file.name);
-  setIsSearching(true);
+    console.log("File selected:", file.name);
+    setIsSearching(true);
 
-  try {
-    const formData = new FormData();
-    formData.append("file", file);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    selectedFilters.forEach((item) =>
-      formData.append("checked", item)
-    );
+      selectedFilters.forEach((item) => formData.append("checked", item));
 
-    await createProject(formData).unwrap();
+      const response = await createProject(formData).unwrap();
+      
+      const newProjectData = response?.data || response;
+      const newProjectId = newProjectData?.project_id || newProjectData?.id || newProjectData?._id;
 
-    setShowAdvanceOption(true);
+      console.log("Newly Generated Project ID (File):", newProjectId);
 
-  } catch (error) {
-    console.error("Error searching with file:", error);
-    toast.error("File upload failed. Please try again.");
-  } finally {
-    setIsSearching(false);
-    event.target.value = null;
-  }
-};
+      // SAVE DIRECTLY TO LOCAL STATE TO PREVENT CACHE ISSUES
+      setActiveProject(newProjectData);
 
-  // FIX 3: Re-added the extraction of projectId from the response
-  const projectId = data?.data?.project_id || data?.id || data?._id || data?.data?.id;
-  // console.log(data?.data?.patent_details?.queries)
+      // If patent is not checked, navigate directly to result page
+      if (!selectedFilters.includes('patent') && newProjectId) {
+        dispatch(setSelectedProject({
+          ...newProjectData,
+          _id: newProjectId,
+          id: newProjectId
+        }));
+        navigate(`/result/${newProjectId}`);
+      } else {
+        setShowAdvanceOption(true);
+      }
 
-  const features = data?.data;
-  // console.log(features)
-  const queries = data?.data?.patent_details?.queries || [];
+    } catch (error) {
+      console.error("Error searching with file:", error);
+      alert("File upload failed. Please try again.");
+    } finally {
+      setIsSearching(false);
+      event.target.value = null;
+    }
+  };
+
+  // --- EXTRACT DATA FROM LOCAL STATE INSTEAD OF RTK QUERY `data` ---
+  // This ensures we are always looking at the exact data that was just created.
+  const projectId = activeProject?.project_id || activeProject?.id || activeProject?._id;
+  const features = activeProject; 
+  const queries = activeProject?.patent_details?.queries || [];
+
+  // ---> BULLETPROOF handleViewMore LOGIC <---
+  const handleViewMore = () => {
+    console.log("Button Clicked! Navigating to ID:", projectId);
+
+    if (projectId && activeProject) {
+      // 1. Double check Redux is updated with the latest active project data
+      dispatch(setSelectedProject({
+        ...activeProject,
+        _id: projectId,
+        id: projectId
+      }));
+
+      // 2. Navigate to the correct result page
+      navigate(`/result/${projectId}`);
+    } else {
+      console.error("No project ID found! activeProject state is null.");
+      alert("Failed to find the new project ID. Please check the console.");
+    }
+  };
 
   return (
     <Box>
@@ -233,24 +254,17 @@ const InputSectionN = () => {
             </Box>
 
             <IconButton
-              component="label" // <--- This is the key part
+              component="label"
               disabled={isSearching || isLoading}
               sx={{
                 color: '#E94E34',
                 borderRadius: '5px',
                 width: '80px',
-                opacity: (isSearching || isLoading) ? 0.5 : 1 // Dim button while searching
+                opacity: (isSearching || isLoading) ? 0.5 : 1
               }}
             >
               <CloudUploadOutlined style={{ fontSize: '25px' }} />
-
-              {/* Hidden file input */}
-              <input
-                type="file"
-                hidden
-                onChange={handleFileChange}
-                accept=".pdf,.doc,.docx"
-              />
+              <input type="file" hidden onChange={handleFileChange} accept=".pdf,.doc,.docx" />
             </IconButton>
           </Paper>
         </Box>
@@ -303,15 +317,11 @@ const InputSectionN = () => {
               control={
                 <Switch
                   color="default"
-                  checked={advanceSearch} // This is controlled by the state above
+                  checked={advanceSearch}
                   onChange={(e) => setAdvanceSearch(e.target.checked)}
                   sx={{
-                    '& .MuiSwitch-switchBase.Mui-checked': {
-                      color: '#E94E34'
-                    },
-                    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                      backgroundColor: '#E94E34' // Optional: colors the track too
-                    }
+                    '& .MuiSwitch-switchBase.Mui-checked': { color: '#E94E34' },
+                    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#E94E34' }
                   }}
                 />
               }
@@ -328,11 +338,34 @@ const InputSectionN = () => {
         </Collapse>
       </Container>
 
-      {selectedFilters.includes('patent') && <Box>{isSuccess && <KeyFeatures propProjectId={projectId} featureData={features} />}</Box>}
+      {/* Render Key Features ONLY if activeProject exists and was successful */}
+      {selectedFilters.includes('patent') && activeProject && isSuccess && (
+        <Box>
+          <KeyFeatures propProjectId={projectId} featureData={features} />
+          
+          <Container maxWidth="xl" sx={{ pb: 6 }}>
+            <Button
+              variant="contained"
+              onClick={handleViewMore}
+              sx={{
+                bgcolor: '#E94E34',
+                '&:hover': { bgcolor: '#e06b56ff' },
+                px: 4,
+                py: 1.5,
+                textTransform: 'none',
+                fontWeight: 600,
+                borderRadius: '5px',
+                mt: 2,
+              }}
+            >
+              View Result
+            </Button>
+          </Container>
+        </Box>
+      )}
 
-      {/* FIX 4: UNCOMMENTED THE KEY FEATURES COMPONENT */}
+      
 
-      {/* <KeyFeatures propProjectId={projectId} featureData={features } /> */}
     </Box>
   );
 };

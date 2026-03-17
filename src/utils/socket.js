@@ -1,11 +1,35 @@
+// import { io } from "socket.io-client";
+
+// export const socket = io("http://54.146.252.18:5000");
+
+// socket.on("connect", () => {
+//     console.log("Socket connected:", socket.id);
+// });
+
+// socket.on("connect_error", (err) => {
+//     console.log("Socket error:", err);
+// });
+
+
+
+
+
+
+
+
+
+
 import { io } from "socket.io-client";
 
-export const socket = io("http://54.146.252.18:5000");
+export const socket = io("http://54.146.252.18:5000", {
+  transports: ["websocket", "polling"], // fallback if websocket fails
+  withCredentials: true
+});
 
 socket.on("connect", () => {
-    console.log("Socket connected:", socket.id);
+  console.log("Socket connected:", socket.id);
 });
 
 socket.on("connect_error", (err) => {
-    console.log("Socket error:", err);
+  console.log("Socket error:", err);
 });

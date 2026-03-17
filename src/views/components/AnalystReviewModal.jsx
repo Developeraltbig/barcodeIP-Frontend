@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Dialog,
@@ -17,8 +18,6 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 const AnalystReviewModal = ({ open, onClose, review }) => {
   if (!review) return null;
 
-  console.log(review)
-
   // Helper to determine status colors
   const getStatusConfig = (status) => {
     switch (status?.toLowerCase()) {
@@ -31,15 +30,18 @@ const AnalystReviewModal = ({ open, onClose, review }) => {
     }
   };
 
-  const statusStyle = getStatusConfig(review.status);
+  const statusStyle = getStatusConfig(review.analystStatus);
 
-
+  // Extract messages from the "analyst" array if it exists
+  const analystMessages = review.analyst && Array.isArray(review.analyst) && review.analyst.length > 0
+    ? review.analyst.map(a => a.message).filter(Boolean).join('\n\n')
+    : null;
 
   return (
-    <Dialog 
-      open={open} 
-      onClose={onClose} 
-      maxWidth="sm" 
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth="sm"
       fullWidth
       PaperProps={{ sx: { borderRadius: 3, boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' } }}
     >
@@ -73,15 +75,24 @@ const AnalystReviewModal = ({ open, onClose, review }) => {
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
             gap: 2,
-            mb: 4,
+            mb: 4
           }}
         >
           <Box sx={{ p: 2, borderRadius: 2, border: '1px solid #f1f5f9', bgcolor: '#f8fafc' }}>
             <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 600, display: 'block', mb: 0.5 }}>
               CASE ID
             </Typography>
-            <Typography variant="body2" sx={{ fontFamily: 'monospace', fontWeight: 700, color: '#334155' }}>
-              #{review.project_id || review._id?.slice(-8) || 'N/A'}
+            <Typography
+              variant="body2"
+              noWrap
+              sx={{
+                color: '#9CA3AF',
+                fontFamily: 'monospace',
+                letterSpacing: '0.5px',
+                fontSize: '0.85rem'
+              }}
+            >
+              { review.case_id || review._id ? (review.case_id || review._id).split('-').pop() : 'N/A'}
             </Typography>
           </Box>
 
@@ -89,16 +100,16 @@ const AnalystReviewModal = ({ open, onClose, review }) => {
             <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 600, display: 'block', mb: 0.5 }}>
               STATUS
             </Typography>
-            <Chip 
-              label={statusStyle.label} 
+            <Chip
+              label={statusStyle.label}
               size="small"
-              sx={{ 
-                bgcolor: statusStyle.bgColor, 
-                color: statusStyle.color, 
-                fontWeight: 800, 
+              sx={{
+                bgcolor: statusStyle.bgColor,
+                color: statusStyle.color,
+                fontWeight: 800,
                 fontSize: '0.7rem',
                 borderRadius: 1
-              }} 
+              }}
             />
           </Box>
         </Box>
@@ -123,13 +134,10 @@ const AnalystReviewModal = ({ open, onClose, review }) => {
             boxShadow: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)'
           }}
         >
-          {review.analyst_record?.message || 'No additional analyst notes provided for this review.'}
+          {analystMessages || 'No additional analyst notes provided for this review.'}
         </Box>
-        
-        <Typography
-          variant="caption"
-          sx={{ display: 'block', textAlign: 'right', mt: 2, color: '#94a3b8', fontStyle: 'italic' }}
-        >
+
+        <Typography variant="caption" sx={{ display: 'block', textAlign: 'right', mt: 2, color: '#94a3b8', fontStyle: 'italic' }}>
           Review logged on: {new Date(review.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
         </Typography>
       </DialogContent>
@@ -145,7 +153,7 @@ const AnalystReviewModal = ({ open, onClose, review }) => {
             fontWeight: 700,
             borderRadius: 2,
             textTransform: 'none',
-            '&:hover': { bgcolor: '#0F172A' },
+            '&:hover': { bgcolor: '#0F172A' }
           }}
         >
           Dismiss

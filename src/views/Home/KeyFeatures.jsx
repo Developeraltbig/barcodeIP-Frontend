@@ -106,28 +106,38 @@ const KeyFeatures = ({ projectId , featureData}) => {
                     dangerouslySetInnerHTML={{ __html: features}} 
                   />
         </Paper>
-      </Container>
-
-      <Container maxWidth="xl">
-        <Button
-          variant="contained"
-          onClick={handleNavigate}
-          sx={{
-            bgcolor: '#E94E34',
-            '&:hover': { bgcolor: '#e06b56ff' },
-            px: 4,
-            py: 1.5,
-            textTransform: 'none',
-            fontWeight: 600,
-            borderRadius: '5px',
-            mt: 2,
-          }}
-        >
-          View Result
-        </Button>
-      </Container>
+      </Container> 
     </Box>
   );
 };
 
 export default KeyFeatures;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
