@@ -385,7 +385,7 @@ const PatentList = () => {
       publish: 'publications',
       product: 'products',
       provisional: 'provisional',
-      'non-provisional': 'nonProvisional'
+      'nonProvisional': 'nonProvisional'
     };
 
     const combined = [
@@ -420,11 +420,11 @@ const PatentList = () => {
 
   // Worker progress state
   const [workerProgress, setWorkerProgress] = useState({
-    provisional: 0,
-    nonProvisional: 0,
-    patent: 0,
-    publish: 0,
-    product: 0
+    provisional: 10,
+    nonProvisional: 70,
+    patent: 50,
+    publish: 20,
+    product: 100
   });
 
   // Selector for display data
@@ -475,7 +475,7 @@ const PatentList = () => {
           ...prev,
           [normalizeType(event.type)]: event.progress
         }));
-      }
+      }           
     });
 
     return () => {
