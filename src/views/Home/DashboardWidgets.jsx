@@ -82,7 +82,7 @@ const ListItemRow = ({ item, isLastItem, showAnalystMessage }) => {
               fontSize: '0.85rem'
             }}
           >
-            { `CASE ID - ${item.case_id || item._id ? (item.case_id || item._id).split('-').pop() : 'N/A'}`}
+            {`CASE ID - ${item.case_id || item._id ? (item.case_id || item._id).split('-').pop() : 'N/A'}`}
           </Typography>
 
           {showAnalystMessage && item.analyst_record?.message && (
@@ -274,26 +274,26 @@ const DashboardWidgets = () => {
               {analystProjects.filter(
                 (item) => item.status && (item.status.toLowerCase().includes('pending') || item.status.toLowerCase().includes('review'))
               ).length > 0 && (
-                <Box
-                  sx={{
-                    bgcolor: '#fff0ed',
-                    color: '#e94e34',
-                    px: 1.5,
-                    py: 0.5,
-                    borderRadius: '20px',
-                    fontSize: '0.75rem',
-                    fontWeight: 700
-                  }}
-                >
-                  {
-                    analystProjects.filter(
-                      (item) =>
-                        item.status && (item.status.toLowerCase().includes('pending') || item.status.toLowerCase().includes('review'))
-                    ).length
-                  }{' '}
-                  Active
-                </Box>
-              )}
+                  <Box
+                    sx={{
+                      bgcolor: '#fff0ed',
+                      color: '#e94e34',
+                      px: 1.5,
+                      py: 0.5,
+                      borderRadius: '20px',
+                      fontSize: '0.75rem',
+                      fontWeight: 700
+                    }}
+                  >
+                    {
+                      analystProjects.filter(
+                        (item) =>
+                          item.status && (item.status.toLowerCase().includes('pending') || item.status.toLowerCase().includes('review'))
+                      ).length
+                    }{' '}
+                    Active
+                  </Box>
+                )}
             </Box>
 
             <Divider sx={{ borderColor: '#b1bac7' }} />
@@ -342,11 +342,11 @@ const DashboardWidgets = () => {
                           fontSize: '0.85rem'
                         }}
                       >
-                        { `CASE ID - ${item.case_id || item._id ? (item.case_id || item._id).split('-').pop() : 'N/A'}`}
+                        {`CASE ID - ${item.case_id || item._id ? (item.case_id || item._id).split('-').pop() : 'N/A'}`}
                       </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1.5, sm: 3 }, flexShrink: 0 }}>
-                      <StatusBadge index={index} statusText={item.status || item.analystStatus} />
+                      {(item.status) ? <StatusBadge index={index} statusText={item.status || item.analystStatus} /> : <></>}
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Typography sx={{ color: '#9ca3af', fontSize: '0.85rem', fontWeight: 500, whiteSpace: 'nowrap' }}>
                           {formatAnalystDate(item.createdAt || item.date)}

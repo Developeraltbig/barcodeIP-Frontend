@@ -63,9 +63,9 @@
 
 //   // Selectors
 //   const dashboard = useSelector((state) => state.userDashboard || state.user || {});
-  
+
 //   console.log("DASHBOARD", dashboard)
- 
+
 //   // Map selected modules to Tab Names
 //   const selectedProject = dashboard?.selectedProject;
 //  console.log("patentlist DASHBOARD", dashboard?.selectedProject)
@@ -245,7 +245,7 @@
 //     <Box sx={{ bgcolor: '#F4F7F9', minHeight: '100vh', pb: 10 }}>
 //       <TopSection />
 //       <Container maxWidth="xl" sx={{ mt: 4 }}>
-        
+
 //         <TabComponent 
 //           activeTab={activeTab} 
 //           setActiveTab={setActiveTab} 
@@ -385,7 +385,7 @@ const PatentList = () => {
       publish: 'publications',
       product: 'products',
       provisional: 'provisional',
-      'nonProvisional': 'nonProvisional'
+      nonprovisional: 'nonProvisional' // ✅ FIXED
     };
 
     const combined = [
@@ -401,6 +401,7 @@ const PatentList = () => {
 
   }, [selectedProject]);
 
+  console.log('availableTabs', availableTabs)
   const [activeTab, setActiveTab] = useState(availableTabs[0] || 'patent');
 
   useEffect(() => {
@@ -420,11 +421,11 @@ const PatentList = () => {
 
   // Worker progress state
   const [workerProgress, setWorkerProgress] = useState({
-    provisional: 10,
-    nonProvisional: 70,
-    patent: 50,
-    publish: 20,
-    product: 100
+    provisional: 0,
+    nonProvisional: 0,
+    patent: 0,
+    publish: 0,
+    product: 0
   });
 
   // Selector for display data
@@ -462,8 +463,8 @@ const PatentList = () => {
       if (event.projectId !== id) return;
 
       const normalizeType = (type) => {
-        switch(type){
-          case 'non-provisional': return 'nonProvisional';
+        switch (type) {
+          case 'nonProvisional': return 'nonProvisional';
           case 'publish': return 'publish';
           case 'product': return 'product';
           default: return type;
@@ -475,7 +476,7 @@ const PatentList = () => {
           ...prev,
           [normalizeType(event.type)]: event.progress
         }));
-      }           
+      }
     });
 
     return () => {
@@ -502,7 +503,7 @@ const PatentList = () => {
     if (currentProgress === 100) {
       const timer = setTimeout(() => {
         loadTabData();
-      }, 1500); 
+      }, 1500);
       return () => clearTimeout(timer);
     }
   }, [currentProgress, loadTabData]);
@@ -514,15 +515,15 @@ const PatentList = () => {
           <Typography variant="h6" sx={{ mb: 2, color: '#475569', fontWeight: 600 }}>
             Generating {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Data... {currentProgress}%
           </Typography>
-          <LinearProgress 
-            variant="determinate" 
-            value={currentProgress} 
-            sx={{ 
-              height: 12, 
-              borderRadius: 6, 
-              bgcolor: '#e2e8f0', 
-              '& .MuiLinearProgress-bar': { bgcolor: '#E94E34' } 
-            }} 
+          <LinearProgress
+            variant="determinate"
+            value={currentProgress}
+            sx={{
+              height: 12,
+              borderRadius: 6,
+              bgcolor: '#e2e8f0',
+              '& .MuiLinearProgress-bar': { bgcolor: '#E94E34' }
+            }}
           />
           <Typography variant="body2" sx={{ mt: 3, color: '#94a3b8' }}>
             Please wait while our AI extracts and processes your information. This may take a few moments.
