@@ -385,7 +385,7 @@ const PatentList = () => {
       publish: 'publications',
       product: 'products',
       provisional: 'provisional',
-      'nonProvisional': 'nonProvisional'
+      nonProvisional: 'nonProvisional'
     };
 
     const combined = [
