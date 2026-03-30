@@ -239,8 +239,7 @@ const DraftSection = ({
       sectionKey === "add_custom_paragraph" ||
       sectionKey === "sequence_listing" ||
       sectionKey === "custom_paragraphs"
-    )
-     {
+    ) {
       return "<i>No content yet. Click edit to add your content.</i>";
     } else if (sectionKey === "detailed_descriptions") {
       return "<i>Waiting for Brief Description...</i>";
@@ -315,32 +314,33 @@ const DraftSection = ({
                 {sectionKey !== "add_custom_paragraph" &&
                   sectionKey !== "custom_paragraphs" &&
                   sectionKey !== "sequence_listing" && (
-                    <Tooltip
-                      title={
-                        disableRegenerate
-                          ? "Dependents are updating..."
-                          : "Regenerate"
-                      }
-                    >
-                      {/* Wrapping in span allows tooltip to show even if button is disabled */}
-                      <span
-                        style={
-                          disableRegenerate ? { cursor: "not-allowed" } : {}
-                        }
-                      >
-                        <IconButton
-                          onClick={() => onRegenerate(sectionKey)}
-                          disabled={disableRegenerate}
-                          sx={
-                            disableRegenerate
-                              ? { pointerEvents: "none" }
-                              : {}
-                          }
-                        >
-                          <FaRedo />
-                        </IconButton>
-                      </span>
-                    </Tooltip>
+                    // <Tooltip
+                    //   title={
+                    //     disableRegenerate
+                    //       ? "Dependents are updating..."
+                    //       : "Regenerate"
+                    //   }
+                    // >
+                    //   {/* Wrapping in span allows tooltip to show even if button is disabled */}
+                    //   <span
+                    //     style={
+                    //       disableRegenerate ? { cursor: "not-allowed" } : {}
+                    //     }
+                    //   >
+                    //     <IconButton
+                    //       onClick={() => onRegenerate(sectionKey)}
+                    //       disabled={disableRegenerate}
+                    //       sx={
+                    //         disableRegenerate
+                    //           ? { pointerEvents: "none" }
+                    //           : {}
+                    //       }
+                    //     >
+                    //       <FaRedo />
+                    //     </IconButton>
+                    //   </span>
+                    // </Tooltip>
+                    <> </>
                   )}
 
                 <Tooltip title="Edit">

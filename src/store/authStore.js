@@ -19,7 +19,7 @@ const useAuthStore = create((set, get) => ({
         isAuthenticated: true,
         isCheckingAuth: false,
       });
-      get().connectSocket();
+      // get().connectSocket();
     } catch (error) {
       if (!import.meta.env.PROD) {
         console.error("User not authenticated:", error);
@@ -29,7 +29,7 @@ const useAuthStore = create((set, get) => ({
         isAuthenticated: false,
         isCheckingAuth: false,
       });
-      get().disconnectSocket();
+      // get().disconnectSocket();
     }
   },
 
@@ -41,7 +41,7 @@ const useAuthStore = create((set, get) => ({
         isAuthenticated: true,
       });
       toast.success(`Welcome back, ${response.data.data.name.split(" ")[0]}!`);
-      get().connectSocket();
+      // get().connectSocket();
     } catch (error) {
       if (!import.meta.env.PROD) {
         console.error("Login Failed:", error);
@@ -52,7 +52,7 @@ const useAuthStore = create((set, get) => ({
       });
       toast.error(
         error?.response?.data?.message ||
-          "An unexpected error occurred. Please try again.",
+        "An unexpected error occurred. Please try again.",
       );
     }
   },
@@ -65,7 +65,7 @@ const useAuthStore = create((set, get) => ({
         isAuthenticated: true,
       });
       toast.success(`Welcome, ${response.data.data.name.split(" ")[0]}!`);
-      get().connectSocket();
+      // get().connectSocket();
     } catch (error) {
       if (!import.meta.env.PROD) {
         console.error("Registration Failed:", error);
@@ -76,7 +76,7 @@ const useAuthStore = create((set, get) => ({
       });
       toast.error(
         error?.response?.data?.message ||
-          "An unexpected error occurred. Please try again.",
+        "An unexpected error occurred. Please try again.",
       );
     }
   },
@@ -93,7 +93,7 @@ const useAuthStore = create((set, get) => ({
         user: null,
         isAuthenticated: false,
       });
-      get().disconnectSocket();
+      // get().disconnectSocket();
     }
   },
 
@@ -111,39 +111,39 @@ const useAuthStore = create((set, get) => ({
     }
   },
 
-  connectSocket: () => {
-    const { user } = get();
-    if (!user || get().socket?.connected) {
-      return;
-    }
+  // connectSocket: () => {
+  //   const { user } = get();
+  //   if (!user || get().socket?.connected) {
+  //     return;
+  //   }
 
-    const socketOptions = {
-      query: {
-        userId: user._id,
-      },
-      transports: ["polling"], // Start with polling, then upgrade
-      reconnection: true,
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
-      timeout: 20000,
-      withCredentials: true,
-    };
+  //   const socketOptions = {
+  //     query: {
+  //       userId: user._id,
+  //     },
+  //     transports: ["polling"], // Start with polling, then upgrade
+  //     reconnection: true,
+  //     reconnectionAttempts: 5,
+  //     reconnectionDelay: 1000,
+  //     reconnectionDelayMax: 5000,
+  //     timeout: 20000,
+  //     withCredentials: true,
+  //   };
 
-    const socket = import.meta.env.PROD
-      ? io(socketOptions)
-      : io(import.meta.env.VITE_API_URL, socketOptions);
+  //   const socket = import.meta.env.PROD
+  //     ? io(socketOptions)
+  //     : io(import.meta.env.VITE_API_URL, socketOptions);
 
-    socket.connect();
-    set({ socket });
-  },
+  //   socket.connect();
+  //   set({ socket });
+  // },
 
-  disconnectSocket: () => {
-    if (get().socket?.connected) {
-      get().socket.disconnect();
-      set({ socket: null });
-    }
-  },
+  // disconnectSocket: () => {
+  //   if (get().socket?.connected) {
+  //     get().socket.disconnect();
+  //     set({ socket: null });
+  //   }
+  // },
 }));
 
 export default useAuthStore;

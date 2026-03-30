@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect, lazy } from 'react';
 import Loadable from 'components/Loadable';
-import { 
-  Box, Container, Backdrop, Typography, Paper, InputBase, 
-  IconButton, Grid, Checkbox, Button, FormControlLabel, Switch, Collapse 
+import {
+  Box, Container, Backdrop, Typography, Paper, InputBase,
+  IconButton, Grid, Checkbox, Button, FormControlLabel, Switch, Collapse
 } from '@mui/material';
 import { Search as SearchIcon, CloudUploadOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +29,7 @@ const InputSectionN = () => {
   const [activeProject, setActiveProject] = useState(null);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const [createProject, { isLoading, isSuccess }] = useCreateProjectMutation();
 
@@ -61,14 +61,14 @@ const InputSectionN = () => {
     { label: 'Publication', value: 'publish' },
     { label: 'Products', value: 'product' },
     { label: 'Provisional ', value: 'provisional' },
-    { label: 'Non-Provisional ', value: 'non-provisional' }
+    { label: 'Non-Provisional ', value: 'nonProvisional' }
   ];
 
   // Reset and hide Advance Search if "Patent" is unchecked
   useEffect(() => {
     if (!selectedFilters.includes('patent')) {
       setAdvanceSearch(false);
-    } 
+    }
   }, [selectedFilters]);
 
   // --- HANDLE TEXT SUBMIT ---
@@ -84,7 +84,7 @@ const InputSectionN = () => {
 
     try {
       const response = await createProject(formData).unwrap();
-      
+
       const newProjectData = response?.data || response;
       const newProjectId = newProjectData?.project_id || newProjectData?.id || newProjectData?._id;
 
@@ -139,7 +139,7 @@ const InputSectionN = () => {
       selectedFilters.forEach((item) => formData.append("checked", item));
 
       const response = await createProject(formData).unwrap();
-      
+
       const newProjectData = response?.data || response;
       const newProjectId = newProjectData?.project_id || newProjectData?.id || newProjectData?._id;
 
@@ -172,7 +172,7 @@ const InputSectionN = () => {
   // --- EXTRACT DATA FROM LOCAL STATE INSTEAD OF RTK QUERY `data` ---
   // This ensures we are always looking at the exact data that was just created.
   const projectId = activeProject?.project_id || activeProject?.id || activeProject?._id;
-  const features = activeProject; 
+  const features = activeProject;
   const queries = activeProject?.patent_details?.queries || [];
 
   // ---> BULLETPROOF handleViewMore LOGIC <---
@@ -342,7 +342,7 @@ const InputSectionN = () => {
       {selectedFilters.includes('patent') && activeProject && isSuccess && (
         <Box>
           <KeyFeatures propProjectId={projectId} featureData={features} />
-          
+
           <Container maxWidth="xl" sx={{ pb: 6 }}>
             <Button
               variant="contained"
@@ -364,7 +364,7 @@ const InputSectionN = () => {
         </Box>
       )}
 
-      
+
 
     </Box>
   );

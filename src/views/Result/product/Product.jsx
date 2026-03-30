@@ -6,9 +6,9 @@ import NotFound from '../../../components/NotFound';
 import { LinearProgress } from "@mui/material";
 
 const TabComponent = Loadable(lazy(() => import('./TabComponent')));
-const  AnalysisView  = Loadable(lazy(() => import('./AnalysisView')));
-const  SourcesSection = Loadable(lazy(() => import('./SourcesSection')));
-const  DiscoveredProducts = Loadable(lazy(() => import('./DiscoveredProducts')));
+const AnalysisView = Loadable(lazy(() => import('./AnalysisView')));
+const SourcesSection = Loadable(lazy(() => import('./SourcesSection')));
+const DiscoveredProducts = Loadable(lazy(() => import('./DiscoveredProducts')));
 
 
 const Product = ({ data, progress }) => {
@@ -29,32 +29,53 @@ const Product = ({ data, progress }) => {
     }
   }, [data]);
 
+
+  useEffect(() => {
+    if (progress) {
+      console.log("Product generation progress:", progress);
+    }
+  }, [progress])
+
   return (
     <Box sx={{ bgcolor: '#f8fafc', minHeight: '100vh', py: 8 }}>
-       
+      {progress > 0 && progress < 100 && (
+        <div style={{ marginBottom: "20px" }}>
+          <Typography variant="body2">
+            Generating Products ... {progress}%
+          </Typography>
 
-        {/* 4. Pass the list and the selection handler */}
-        <TabComponent
-          items={displayList}
-          activeId={activeProduct?.id}
-          onSelect={setActiveProduct}
-        />
+          <LinearProgress
+            variant="determinate"
+            value={progress}
+            sx={{
+              height: 8,
+              borderRadius: 5
+            }}
+          />
+        </div>
+      )}
+      {/* 4. Pass the list and the selection handler */}
+      <TabComponent
+        items={displayList}
+        activeId={activeProduct?.id}
+        onSelect={setActiveProduct}
+      />
 
-        {/* 5. AnalysisView now receives the specific object from the active tab */}
-        {activeProduct && (
-          <Fade in={true} key={activeProduct.id} timeout={600}>
-            <Box sx={{ mb: 6 }}>
-              <AnalysisView product={activeProduct} item={itemResult} />
-            </Box>
-          </Fade>
-        )}
+      {/* 5. AnalysisView now receives the specific object from the active tab */}
+      {activeProduct && (
+        <Fade in={true} key={activeProduct.id} timeout={600}>
+          <Box sx={{ mb: 6 }}>
+            <AnalysisView product={activeProduct} item={itemResult} />
+          </Box>
+        </Fade>
+      )}
 
-        {/* Collapsible Section */}
-        <SourcesSection item={itemResult} />
+      {/* Collapsible Section */}
+      <SourcesSection item={itemResult} />
 
-        {/* Footer Sources */}
-        <DiscoveredProducts item={data.results} />
-    
+      {/* Footer Sources */}
+      <DiscoveredProducts item={data.results} />
+
     </Box>
   );
 };

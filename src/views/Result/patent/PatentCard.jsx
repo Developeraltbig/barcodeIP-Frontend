@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Typography, Stack, Chip, Box, Button, Grid, CircularProgress } from '@mui/material';
 import { motion } from 'framer-motion';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -72,10 +72,30 @@ const PatentCard = ({ data, wideMode, progress }) => {
     }));
   };
 
+  useEffect(() => {
+    if (progress) {
+      console.log("Patent generation progress:", progress);
+    }
+  }, [progress])
+
   return (
     <>
+      {progress > 0 && progress < 100 && (
+        <div style={{ marginBottom: "20px" }}>
+          <Typography variant="body2">
+            Generating Patent... {progress}%
+          </Typography>
 
-
+          <LinearProgress
+            variant="determinate"
+            value={progress}
+            sx={{
+              height: 8,
+              borderRadius: 5
+            }}
+          />
+        </div>
+      )}
       {data?.novelty_analysis?.comparisons?.length > 0 ? (
         data.novelty_analysis.comparisons.map((item, index) => (
           <Grid item size={{ md: isListView ? 12 : (wideMode ? 6 : 12) }} key={index}>

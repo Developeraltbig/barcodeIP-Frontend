@@ -13,7 +13,7 @@ import { htmlToDocxParagraphs } from '../../../utils/docxUtils';
 import { getSafeFilename } from '../../../utils/formatUtils';
 import { LinearProgress, Typography } from "@mui/material";
 
-const  DraftSection = Loadable(lazy(() => import('./DraftSection')));
+const DraftSection = Loadable(lazy(() => import('./DraftSection')));
 const DiagramSection = Loadable(lazy(() => import('./DiagramSection')));
 const useAuthStore = Loadable(lazy(() => import('../../../store/authStore')));
 
@@ -455,6 +455,18 @@ const DraftMasterResult = ({ data, progress }) => {
   */
   // ----------------------------------
 
+
+  useEffect(() => {
+
+    if (progress) {
+
+      console.log("Non Provisional generation progress:", progress);
+
+    }
+
+  }, [progress])
+
+
   const dependents = ['flow_chart', 'block_diagram', 'detailed_descriptions'];
   const isDependentsGenerating = dependents.some((key) => generatingSections[key]);
 
@@ -481,7 +493,7 @@ const DraftMasterResult = ({ data, progress }) => {
         <Box>
           {/* Main Content */}
           <Box>
-            <Box class="draft-content-wrapper">
+            <Box className="draft-content-wrapper">
               {sectionsConfig.map((section) => {
                 const isDiagram =
                   section.key === "flow_chart" || section.key === "block_diagram";

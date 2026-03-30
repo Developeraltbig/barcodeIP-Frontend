@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, Typography, Stack, Chip, Box, Button, Grid } from '@mui/material';
 import { motion } from 'framer-motion';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -24,107 +24,111 @@ const PatentCard = ({ data, wideMode, progress }) => {
     return words.slice(0, limit).join(' ') + '...';
   };
 
+  useEffect(() => {
+    if (progress) {
+      console.log("Publication Card generation progress:", progress);
+    }
+  }, [progress])
+
+
   return (
     <>
+      {progress > 0 && progress < 100 && (
+        <div style={{ marginBottom: "20px" }}>
+          <Typography variant="body2">
+            Generating Publication Draft... {progress}%
+          </Typography>
 
-      <>
-        {progress > 0 && progress < 100 && (
-          <div style={{ marginBottom: "20px" }}>
-            <Typography variant="body2">
-              Generating Publication Draft... {progress}%
-            </Typography>
-
-            <LinearProgress
-              variant="determinate"
-              value={progress}
+          <LinearProgress
+            variant="determinate"
+            value={progress}
+            sx={{
+              height: 8,
+              borderRadius: 5
+            }}
+          />
+        </div>
+      )}
+      {/* 1. Check if scholarResults exists and has items */}
+      {data?.scholarResults && data.scholarResults.length > 0 ? (
+        data.scholarResults.map((scholar, index) => (
+          <Grid item size={{ md: wideMode ? 6 : 12, xs: 12 }} key={index}>
+            <Card
+              key={index} // Always include a unique key
+              component={motion.div}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5, boxShadow: '0 12px 30px rgba(0,0,0,0.08)' }}
               sx={{
-                height: 8,
-                borderRadius: 5
+                p: 3,
+                borderRadius: '5px',
+                border: '1px solid #b1b9c0',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                '&:hover': { border: '1px solid #b1b9c0' },
+                '@media(min-width: 1410px)': {
+                  maxWidth: wideMode ? '750px' : '100%',
+                }
+
               }}
-            />
-          </div>
-        )}
-        {/* 1. Check if scholarResults exists and has items */}
-        {data?.scholarResults && data.scholarResults.length > 0 ? (
-          data.scholarResults.map((scholar, index) => (
-            <Grid item size={{ md: wideMode ? 6 : 12, xs: 12 }} key={index}>
-              <Card
-                key={index} // Always include a unique key
-                component={motion.div}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -5, boxShadow: '0 12px 30px rgba(0,0,0,0.08)' }}
-                sx={{
-                  p: 3,
-                  borderRadius: '5px',
-                  border: '1px solid #b1b9c0',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '100%',
-                  '&:hover': { border: '1px solid #b1b9c0' },
-                  '@media(min-width: 1410px)': {
-                    maxWidth: wideMode ? '750px' : '100%',
-                  }
+            >
+              <Typography variant="h6" sx={{
+                fontWeight: 800, color: '#1e293b', mb: 2, fontSize: '1.1rem', lineHeight: 1.3, display: '-webkit-box',
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden'
+              }}>
+                {scholar?.snippet}
+              </Typography>
 
-                }}
-              >
-                <Typography variant="h6" sx={{
-                  fontWeight: 800, color: '#1e293b', mb: 2, fontSize: '1.1rem', lineHeight: 1.3, display: '-webkit-box',
-                  WebkitLineClamp: 1,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden'
-                }}>
-                  {scholar?.snippet}
-                </Typography>
+              <Stack direction="row" flexWrap="wrap" gap={1.5} sx={{ mb: 2 }}>
+                <Chip
+                  onClick={() => window.open(`${scholar?.scholar_link}`, '_blank', 'noopener,noreferrer')}
+                  label="View more"
+                  icon={<OpenInNewIcon sx={{ fontSize: '14px !important' }} />}
+                  sx={{ bgcolor: `${BRAND_RED}10`, color: BRAND_RED, fontWeight: 800, borderRadius: '8px', cursor: 'pointer' }}
+                />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#64748b' }}>
+                  <CalendarTodayIcon sx={{ fontSize: 16 }} />
+                  <Typography variant="caption" sx={{ fontWeight: 600 }}>{scholar?.publication_date}</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#64748b' }}>
+                  <PersonOutlineIcon sx={{ fontSize: 18 }} />
+                  <Typography variant="caption" sx={{ fontWeight: 600 }}>{scholar?.author}</Typography>
+                </Box>
+              </Stack>
 
-                <Stack direction="row" flexWrap="wrap" gap={1.5} sx={{ mb: 2 }}>
-                  <Chip
-                    onClick={() => window.open(`${scholar?.scholar_link}`, '_blank', 'noopener,noreferrer')}
-                    label="View more"
-                    icon={<OpenInNewIcon sx={{ fontSize: '14px !important' }} />}
-                    sx={{ bgcolor: `${BRAND_RED}10`, color: BRAND_RED, fontWeight: 800, borderRadius: '8px', cursor: 'pointer' }}
-                  />
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#64748b' }}>
-                    <CalendarTodayIcon sx={{ fontSize: 16 }} />
-                    <Typography variant="caption" sx={{ fontWeight: 600 }}>{scholar?.publication_date}</Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#64748b' }}>
-                    <PersonOutlineIcon sx={{ fontSize: 18 }} />
-                    <Typography variant="caption" sx={{ fontWeight: 600 }}>{scholar?.author}</Typography>
-                  </Box>
-                </Stack>
-
-                <Typography variant="body2" sx={{
-                  color: '#475569', mb: 4, lineHeight: 1.6, flexGrow: 1, display: '-webkit-box',
-                  WebkitLineClamp: 1,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden'
-                }}>
-                  {truncateWords(scholar?.title, 20)}
-                </Typography>
-              </Card>
-            </Grid>
-          ))
-        ) : (
-          /* 2. Fallback UI when no scholar results are found */
-          <Box sx={{
-            width: '100%',
-            p: 5,
-            textAlign: 'center',
-            border: '1px dashed #b1b9c0',
-            borderRadius: '8px',
-            bgcolor: 'rgba(0,0,0,0.02)'
-          }}>
-            <Typography variant="h6" color="textSecondary">
-              No Publication Results Found
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              Try adjusting your search or checking back later.
-            </Typography>
-          </Box>
-        )}
-      </>
+              <Typography variant="body2" sx={{
+                color: '#475569', mb: 4, lineHeight: 1.6, flexGrow: 1, display: '-webkit-box',
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden'
+              }}>
+                {truncateWords(scholar?.title, 20)}
+              </Typography>
+            </Card>
+          </Grid>
+        ))
+      ) : (
+        /* 2. Fallback UI when no scholar results are found */
+        <Box sx={{
+          width: '100%',
+          p: 5,
+          textAlign: 'center',
+          border: '1px dashed #b1b9c0',
+          borderRadius: '8px',
+          bgcolor: 'rgba(0,0,0,0.02)'
+        }}>
+          <Typography variant="h6" color="textSecondary">
+            No Publication Results Found
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Try adjusting your search or checking back later.
+          </Typography>
+        </Box>
+      )}
     </>
   )
 }

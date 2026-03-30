@@ -420,12 +420,35 @@ const PatentList = () => {
   }), [getPatents, getPubs, getProducts, getProv, getNonProv]);
 
   // Worker progress state
-  const [workerProgress, setWorkerProgress] = useState({
-    provisional: 0,
-    nonProvisional: 0,
-    patent: 0,
-    publish: 0,
-    product: 0
+  const [workerProgress, setWorkerProgress] = useState(() => {
+    if (!id) return {
+      provisional: 0,
+      nonProvisional: 0,
+      patent: 0,
+      publish: 0,
+      product: 0
+    };
+
+    try {
+      const saved = localStorage.getItem(`workerProgress_${id}`);
+      return saved
+        ? JSON.parse(saved)
+        : {
+          provisional: 0,
+          nonProvisional: 0,
+          patent: 0,
+          publish: 0,
+          product: 0
+        };
+    } catch (e) {
+      return {
+        provisional: 0,
+        nonProvisional: 0,
+        patent: 0,
+        publish: 0,
+        product: 0
+      };
+    }
   });
 
   // Selector for display data
@@ -452,37 +475,109 @@ const PatentList = () => {
     loadTabData();
   }, [loadTabData]);
 
+  useEffect(() => {
+    if (!id) return;
+
+    localStorage.setItem(
+      `workerProgress_${id}`,
+      JSON.stringify(workerProgress)
+    );
+
+    console.log("💾 Saved progress to localStorage:", workerProgress);
+
+  }, [workerProgress, id]);
+
   // Socket Logic
   useEffect(() => {
     if (!id) return;
 
+    console.log("📡 Joining room:", id);
+
     socket.emit("joinProject", id);
 
-    socket.on("jobUpdate", (event) => {
-      console.log("Job update received:", event);
+    const handleJobUpdate = (event) => {
+      console.log("🔥 Job update received:", event);
+
       if (event.projectId !== id) return;
 
       const normalizeType = (type) => {
         switch (type) {
-          case 'nonProvisional': return 'nonProvisional';
-          case 'publish': return 'publish';
-          case 'product': return 'product';
-          default: return type;
+          case 'nonProvisional':
+          case 'non-provisional':
+            return 'nonProvisional';
+          case 'publish':
+            return 'publish';
+          case 'product':
+            return 'product';
+          case 'patent':
+            return 'patent';
+          case 'provisional':
+            return 'provisional';
+          default:
+            return type;
         }
+      };
+
+      const key = normalizeType(event.type);
+
+      // 🚀 STARTED
+      if (event.event === "started") {
+        setWorkerProgress((prev) => ({
+          ...prev,
+          [key]: 0
+        }));
       }
 
+      // 📊 PROGRESS
       if (event.event === "progress") {
         setWorkerProgress((prev) => ({
           ...prev,
-          [normalizeType(event.type)]: event.progress
+          [key]: event.progress
         }));
+      }
+
+      // ✅ COMPLETED
+      if (event.event === "completed") {
+        setWorkerProgress((prev) => ({
+          ...prev,
+          [key]: 100
+        }));
+      }
+    };
+
+    socket.off("jobUpdate").on("jobUpdate", handleJobUpdate);
+
+    return () => {
+      socket.off("jobUpdate", handleJobUpdate);
+    };
+  }, [id]);
+
+  useEffect(() => {
+    if (!availableTabs || availableTabs.length === 0) return;
+
+    const allDone = availableTabs.every(tab => {
+      switch (tab) {
+        case 'patent':
+          return workerProgress.patent === 100;
+        case 'publications':
+          return workerProgress.publish === 100;
+        case 'nonProvisional':
+          return workerProgress.nonProvisional === 100;
+        case 'provisional':
+          return workerProgress.provisional === 100;
+        case 'products':
+          return workerProgress.product === 100;
+        default:
+          return true;
       }
     });
 
-    return () => {
-      socket.off("jobUpdate");
-    };
-  }, [id]);
+    if (allDone) {
+      console.log("🧹 Clearing localStorage (all ACTIVE jobs done)");
+      localStorage.removeItem(`workerProgress_${id}`);
+    }
+  }, [workerProgress, id, availableTabs]);
+
 
   // Generic getProgress for any tab
   const getProgress = (tab) => {
