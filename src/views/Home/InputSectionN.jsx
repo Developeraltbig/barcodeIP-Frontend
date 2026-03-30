@@ -24,6 +24,7 @@ const InputSectionN = () => {
   const [showAdvanceOption, setShowAdvanceOption] = useState(false);
   const [advanceSearch, setAdvanceSearch] = useState(false);
   const [messageIndex, setMessageIndex] = useState(0);
+  const [enableButton, setEnableButton] = useState(false);
 
   // ---> NEW STATE TO GUARANTEE FRESH DATA <---
   const [activeProject, setActiveProject] = useState(null);
@@ -73,6 +74,11 @@ const InputSectionN = () => {
 
   // --- HANDLE TEXT SUBMIT ---
   const handleGenerate = async () => {
+
+    if (selectedFilters.length == 0) {
+      alert('Please Select Service First');
+      return;
+    }
     if (!searchValue.trim()) {
       alert('Please describe your invention first!');
       return;
@@ -89,7 +95,7 @@ const InputSectionN = () => {
       const newProjectId = newProjectData?.project_id || newProjectData?.id || newProjectData?._id;
 
       console.log("Newly Generated Project ID (Text):", newProjectId);
-
+      setEnableButton(true)
       // SAVE DIRECTLY TO LOCAL STATE TO PREVENT CACHE ISSUES
       setActiveProject(newProjectData);
 
@@ -106,6 +112,11 @@ const InputSectionN = () => {
       }
     } catch (err) {
       console.error('Project Generation Failed:', err);
+      console.error('Project Generation Failed:11', err.status);
+      if (err.status == 400) {
+        alert(err.data.error);
+      }
+
     }
   };
 
@@ -297,7 +308,7 @@ const InputSectionN = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           <Button
             variant="contained"
-            disabled={isLoading || isSearching}
+            disabled={isLoading || isSearching || enableButton}
             onClick={handleGenerate}
             sx={{
               bgcolor: '#E94E34',

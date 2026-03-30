@@ -63,6 +63,12 @@ export default function Header() {
     } catch (error) {
       console.error('Logout error', error);
     } finally {
+      Object.keys(localStorage).forEach((key) => {
+        if (key.startsWith("workerProgress_")) {
+          console.log('start with', key)
+          localStorage.removeItem(key);
+        }
+      });
       // 2. PURGE the persistent storage (Deletes stored data from browser)
       await persistor.purge();
 
@@ -111,7 +117,7 @@ export default function Header() {
         {/* Right Side: User Profile */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button onClick={handleMenuClick} endIcon={<KeyboardArrowDown />} >
-            <Avatar sx={{ width: 32, height: 32, bgcolor: '#FFDbd6', color: '#E94E34', mr: 1 , }}>
+            <Avatar sx={{ width: 32, height: 32, bgcolor: '#FFDbd6', color: '#E94E34', mr: 1, }}>
               <Person fontSize="small" />
             </Avatar>
 
@@ -146,7 +152,7 @@ export default function Header() {
                 // This logic ensures the menu is at least as wide as the button
                 minWidth: anchorEl ? anchorEl.clientWidth : 0,
                 borderRadius: '5px',
-                justifyItems:'center'
+                justifyItems: 'center'
               }
             }}
           >
@@ -166,7 +172,7 @@ export default function Header() {
                 // Pass the user object as 'state'
                 navigate(`/profile`, { state: { userData: user } });
               }}
-              
+
             >
               Profile
             </MenuItem>
@@ -175,11 +181,11 @@ export default function Header() {
                 handleMenuClose();
                 navigate(`/project`);
               }}
-              sx={{ display: { xs: 'flex', md: 'none' }, gap: 2  }}
+              sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
             >
               My Project
             </MenuItem>
-            <MenuItem onClick={() => handleLogout()} sx={{ color: 'primary.main' ,  }}>
+            <MenuItem onClick={() => handleLogout()} sx={{ color: 'primary.main', }}>
               Logout
             </MenuItem>
           </Menu>

@@ -13,26 +13,32 @@ const AccountActions = () => {
   const dispatch = useDispatch();
   const [Logout] = useLazyLogoutQuery();
 
-const handleLogout = async () => {
-  try {
-    // 1. Call your API logout endpoint
-    await axios.get("/api/auth/logout");
-  } catch (error) {
-    console.error("Logout error", error);
-  } finally {
-    // 2. PURGE the persistent storage (Deletes stored data from browser)
-    await persistor.purge();
-    
-    // 3. Optional: Clear specific keys just in case
-    localStorage.removeItem('persist:auth');
-    localStorage.removeItem('persist:userDashboard');
-    
-    // 4. Force a hard refresh to clear the Redux state in memory
-    window.location.href = '/pages/auth/login'; 
-  }
-};
+  const handleLogout = async () => {
+    try {
+      // 1. Call your API logout endpoint
+      await axios.get("/api/auth/logout");
+    } catch (error) {
+      console.error("Logout error", error);
+    } finally {
+      Object.keys(localStorage).forEach((key) => {
+        if (key.startsWith("workerProgress_")) {
+          console.log('start with', key)
+          localStorage.removeItem(key);
+        }
+      });
+      // 2. PURGE the persistent storage (Deletes stored data from browser)
+      await persistor.purge();
 
-const navigate = useNavigate();
+      // 3. Optional: Clear specific keys just in case
+      localStorage.removeItem('persist:auth');
+      localStorage.removeItem('persist:userDashboard');
+
+      // 4. Force a hard refresh to clear the Redux state in memory
+      window.location.href = '/pages/auth/login';
+    }
+  };
+
+  const navigate = useNavigate();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const [deleteAccount, { isLoading: isDeleting }] = useDeleteAccountMutation();
@@ -41,12 +47,12 @@ const navigate = useNavigate();
     try {
       await deleteAccount().unwrap();
       // Clear local storage/session if your app doesn't do it automatically on logout
-      navigate('/pages/auth/login'); 
+      navigate('/pages/auth/login');
     } catch (err) {
       console.error("Failed to delete account:", err);
     }
   };
-  
+
 
   // Common style for the buttons with hover animation
   const actionButtonStyle = {
@@ -54,7 +60,7 @@ const navigate = useNavigate();
     color: '#334155',
     fontWeight: 700,
     textTransform: 'none',
-    width: 'fit-content', 
+    width: 'fit-content',
     px: 2,
     py: 1,
     borderRadius: '4px',

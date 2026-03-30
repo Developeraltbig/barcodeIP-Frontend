@@ -173,6 +173,15 @@ const PatentList = () => {
   useEffect(() => {
     if (!id) return;
 
+    console.log('tabConfigs[activeTab]', tabConfigs[activeTab]?.stateKey)
+    console.log('111', displayData[0]?.data?.status)
+    console.log("💾 Saved progress to localStorage:", workerProgress);
+
+    if (tabConfigs[activeTab]?.stateKey == "projectPatent") {
+      if (displayData[0]?.data?.novelty_analysis_status == "generated") {
+        workerProgress.patent = 0;
+      }
+    }
     localStorage.setItem(
       `workerProgress_${id}`,
       JSON.stringify(workerProgress)

@@ -26,7 +26,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
   // API Hook
   const [login, { isLoading, error: apiError }] = useLoginMutation();
 
@@ -37,10 +37,10 @@ const LoginPage = () => {
     try {
       // Execute Mutation
       const result = await login({ email, password }).unwrap();
-      
+
       // Usually, you save the token here if your Redux slice doesn't handle it automatically
       // localStorage.setItem('token', result.token);
-      
+
       console.log('Login success', result);
       navigate('/'); // Redirect to dashboard
     } catch (err) {
@@ -98,7 +98,7 @@ const LoginPage = () => {
         {/* RIGHT SIDE */}
         <Grid
           item xs={12} size={{ sm: 8 }} md={6}
-          sx={{ backgroundColor:'red', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', bgcolor: '#fff' }}
+          sx={{ backgroundColor: 'red', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', bgcolor: '#fff' }}
         >
           <Box sx={{ width: '100%', maxWidth: '450px', px: { xs: 3, sm: 6 }, display: 'flex', flexDirection: 'column' }}>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>Welcome to</Typography>
@@ -138,10 +138,10 @@ const LoginPage = () => {
               />
 
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <FormControlLabel
+                {/* <FormControlLabel
                   control={<Checkbox value="remember" sx={{ color: '#D0D5DD', '&.Mui-checked': { color: 'primary.main' } }} />}
                   label={<Typography variant="body2" color="text.secondary">Remember Me</Typography>}
-                />
+                /> */}
                 <Link href="#" variant="body2" sx={{ fontWeight: 600, textDecoration: 'none', color: 'primary.main' }}>Forgot password</Link>
               </Box>
 

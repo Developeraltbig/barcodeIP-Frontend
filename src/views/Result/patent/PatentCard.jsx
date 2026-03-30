@@ -62,6 +62,8 @@ const PatentCard = ({ data, wideMode, progress }) => {
   };
 
 
+  console.log('data --', data)
+  console.log('data --', data.novelty_analysis_status)
 
 
   // ADDED: Handler to mark image as loaded (or failed to load, so the spinner stops)
