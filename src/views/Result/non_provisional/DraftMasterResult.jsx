@@ -474,7 +474,7 @@ const DraftMasterResult = ({ data, progress }) => {
     <>
       <Box className="draft-container">
         {/* Header */}
-        {progress !== undefined && progress < 100 && (
+        {progress > 0 && progress < 100 && (
           <div style={{ marginBottom: "20px" }}>
             <Typography variant="body2">
               Generating Non-Provisional Draft... {progress}%
