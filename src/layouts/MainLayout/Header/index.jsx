@@ -65,7 +65,7 @@ export default function Header() {
     } finally {
       Object.keys(localStorage).forEach((key) => {
         if (key.startsWith("workerProgress_")) {
-          console.log('start with', key)
+          // console.log('start with', key)
           localStorage.removeItem(key);
         }
       });

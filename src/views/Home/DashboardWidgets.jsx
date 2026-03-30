@@ -214,7 +214,7 @@ const DashboardWidgets = () => {
     );
   }, [getRecentThreeProjects]);
 
-  console.log('analyst--->', projects);
+  // console.log('analyst--->', projects);
 
   // --- REAL DATA FOR ANALYST REVIEWS ---
   const { data: supportAnalystsData, isLoading: loadingAnalysts, error: errorAnalysts } = useGetSupportAnalystsQuery();

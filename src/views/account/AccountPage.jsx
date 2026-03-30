@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import { 
-  Box, Container, Typography, Button, ThemeProvider, 
-  CssBaseline, Paper, CircularProgress, Alert, Snackbar 
+import {
+  Box, Container, Typography, Button, ThemeProvider,
+  CssBaseline, Paper, CircularProgress, Alert, Snackbar
 } from '@mui/material';
 import { theme } from './theme';
 import PasswordInput from './PasswordInput';
@@ -15,7 +15,7 @@ import { logout } from '../../features/slice/auth/authSlice';
 const AccountPage = () => {
   // 1. API Hook
   const [changePassword, { isLoading }] = useChangePasswordMutation();
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   // 2. Form State
   const [passwords, setPasswords] = useState({
@@ -41,8 +41,8 @@ const AccountPage = () => {
   };
 
   const handleSave = async () => {
-    console.log('passwords --', passwords);
-    
+    // console.log('passwords --', passwords);
+
     // Validation
     if (passwords.newPassword !== passwords.confirmPassword) {
       setFeedback({ open: true, message: 'Passwords do not match!', severity: 'error' });
@@ -55,16 +55,16 @@ const AccountPage = () => {
 
       // 2. Show Success Message
       setFeedback({ open: true, message: 'Password changed successfully! Logging out...', severity: 'success' });
-      
+
       // 3. Clear Form (Optional, since we are navigating away)
       setPasswords({ oldPassword: '', newPassword: '', confirmPassword: '' });
 
       // 4. Logout Logic (Delayed slightly so user sees the success message)
       setTimeout(() => {
         // A. Remove token from storage
-        localStorage.removeItem('token'); 
+        localStorage.removeItem('token');
         localStorage.removeItem('user'); // or whatever keys you use
-        
+
         // B. Dispatch logout action (If using Redux)
         dispatch(logout());
 
@@ -73,10 +73,10 @@ const AccountPage = () => {
       }, 1500); // 1.5 second delay
 
     } catch (err) {
-      setFeedback({ 
-        open: true, 
-        message: err?.data?.message || 'Failed to change password', 
-        severity: 'error' 
+      setFeedback({
+        open: true,
+        message: err?.data?.message || 'Failed to change password',
+        severity: 'error'
       });
     }
   };
@@ -88,26 +88,26 @@ const AccountPage = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: '100vh', py: 8, bgcolor: 'background.default', marginTop:'70px'}}>
+      <Box sx={{ minHeight: '100vh', py: 8, bgcolor: 'background.default', marginTop: '70px' }}>
         <Container maxWidth="md">
           <Typography variant="h5" sx={{ mb: 5 }} > Account Settings </Typography>
-          
-          <Paper elevation={0} sx={{ p: { xs: 3, md: 5 }, border: '1px solid #d6d8dbff'  , borderRadius:'5px'   }}>
+
+          <Paper elevation={0} sx={{ p: { xs: 3, md: 5 }, border: '1px solid #d6d8dbff', borderRadius: '5px' }}>
             <Typography variant="h6" sx={{ mb: 4 }}>Change Password</Typography>
-            
+
             <Box sx={{ maxWidth: '100%' }}>
-              <PasswordInput 
-                label="Current Password" 
+              <PasswordInput
+                label="Current Password"
                 value={passwords.oldPassword}
                 onChange={handleInputChange('oldPassword')}
               />
-              <PasswordInput 
-                label="New Password" 
+              <PasswordInput
+                label="New Password"
                 value={passwords.newPassword}
                 onChange={handleInputChange('newPassword')}
               />
-              <PasswordInput 
-                label="Confirm New Password" 
+              <PasswordInput
+                label="Confirm New Password"
                 value={passwords.confirmPassword}
                 onChange={handleInputChange('confirmPassword')}
               />
@@ -127,9 +127,9 @@ const AccountPage = () => {
         </Container>
 
         {/* Feedback Toast */}
-        <Snackbar 
-          open={feedback.open} 
-          autoHideDuration={4000} 
+        <Snackbar
+          open={feedback.open}
+          autoHideDuration={4000}
           onClose={() => setFeedback({ ...feedback, open: false })}
         >
           <Alert severity={feedback.severity} variant="filled">

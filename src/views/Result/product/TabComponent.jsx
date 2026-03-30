@@ -53,10 +53,10 @@ const TabComponent = ({ items, activeId, onSelect }) => {
         }}
       >
         {items.length > 0 ? (
-          items.map((item) => {
+          items.map((item, index) => {
             const isActive = item.id === activeId;
             return (
-              <ButtonBase key={item.id} onClick={() => onSelect(item)} sx={{ borderRadius: 3, flexShrink: 0 }}>
+              <ButtonBase key={index} onClick={() => onSelect(item)} sx={{ borderRadius: 3, flexShrink: 0 }}>
                 <Paper
                   elevation={0}
                   sx={{

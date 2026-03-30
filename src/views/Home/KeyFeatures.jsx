@@ -58,12 +58,12 @@ const FeatureList = ({ title, items }) => {
 };
 
 // --- Main Component ---
-const KeyFeatures = ({ projectId , featureData}) => {
+const KeyFeatures = ({ projectId, featureData }) => {
   const navigate = useNavigate();
-  console.log("features jjkhfkhbfh", featureData)
+  // console.log("features jjkhfkhbfh", featureData)
 
- const project_Id = featureData?.project_id;
- console.log(project_Id);
+  const project_Id = featureData?.project_id;
+  //  console.log(project_Id);
 
   const features = featureData?.patent_details?.key_features;
 
@@ -81,7 +81,7 @@ const KeyFeatures = ({ projectId , featureData}) => {
         <Paper
           elevation={0}
           sx={{
-            p: { xs: 3, md: 4 }, 
+            p: { xs: 3, md: 4 },
             borderRadius: '5px',
             border: '1px solid #E5E7EB',
             bgcolor: '#fff'
@@ -100,13 +100,13 @@ const KeyFeatures = ({ projectId , featureData}) => {
           {/* <FeatureList title="Primary Features:" items={primaryFeatures} />
           <FeatureList title="Secondary Features:" items={secondaryFeatures} /> */}
 
-           <Typography 
-                    variant="body1" 
-                    component="div"
-                    dangerouslySetInnerHTML={{ __html: features}} 
-                  />
+          <Typography
+            variant="body1"
+            component="div"
+            dangerouslySetInnerHTML={{ __html: features }}
+          />
         </Paper>
-      </Container> 
+      </Container>
     </Box>
   );
 };

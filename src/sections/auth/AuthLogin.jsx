@@ -49,7 +49,7 @@ export default function AuthLogin({ inputSx }) {
   const onSubmit = async (data) => {
     try {
       const res = await login(data).unwrap();
-      console.log('res.data.user', res.data.user);
+      // console.log('res.data.user', res.data.user);
       dispatch(
         setAuth({
           user: res.data.user,

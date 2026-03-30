@@ -94,7 +94,7 @@ const InputSectionN = () => {
       const newProjectData = response?.data || response;
       const newProjectId = newProjectData?.project_id || newProjectData?.id || newProjectData?._id;
 
-      console.log("Newly Generated Project ID (Text):", newProjectId);
+      // console.log("Newly Generated Project ID (Text):", newProjectId);
       setEnableButton(true)
       // SAVE DIRECTLY TO LOCAL STATE TO PREVENT CACHE ISSUES
       setActiveProject(newProjectData);
@@ -140,7 +140,7 @@ const InputSectionN = () => {
       return;
     }
 
-    console.log("File selected:", file.name);
+    // console.log("File selected:", file.name);
     setIsSearching(true);
 
     try {
@@ -154,7 +154,7 @@ const InputSectionN = () => {
       const newProjectData = response?.data || response;
       const newProjectId = newProjectData?.project_id || newProjectData?.id || newProjectData?._id;
 
-      console.log("Newly Generated Project ID (File):", newProjectId);
+      // console.log("Newly Generated Project ID (File):", newProjectId);
 
       // SAVE DIRECTLY TO LOCAL STATE TO PREVENT CACHE ISSUES
       setActiveProject(newProjectData);
@@ -188,7 +188,7 @@ const InputSectionN = () => {
 
   // ---> BULLETPROOF handleViewMore LOGIC <---
   const handleViewMore = () => {
-    console.log("Button Clicked! Navigating to ID:", projectId);
+    // console.log("Button Clicked! Navigating to ID:", projectId);
 
     if (projectId && activeProject) {
       // 1. Double check Redux is updated with the latest active project data

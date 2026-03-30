@@ -53,6 +53,7 @@ const PatentList = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [isWideMode, setIsWideMode] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   // Lazy Hooks
   const [getPatents, { isLoading: pLoad }] = useLazyGetPatentByProjectIdQuery();
@@ -96,8 +97,17 @@ const PatentList = () => {
 
   }, [selectedProject]);
 
-  console.log('availableTabs', availableTabs)
+  // console.log('availableTabs', availableTabs)
   const [activeTab, setActiveTab] = useState(availableTabs[0] || 'patent');
+
+  // ⏳ Run only once on first render
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setInitialLoading(false);
+    }, 5000); // 5 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (availableTabs.length > 0 && !availableTabs.includes(activeTab)) {
@@ -173,9 +183,9 @@ const PatentList = () => {
   useEffect(() => {
     if (!id) return;
 
-    console.log('tabConfigs[activeTab]', tabConfigs[activeTab]?.stateKey)
-    console.log('111', displayData[0]?.data?.status)
-    console.log("💾 Saved progress to localStorage:", workerProgress);
+    // console.log('tabConfigs[activeTab]', tabConfigs[activeTab]?.stateKey)
+    // console.log('111', displayData[0]?.data?.status)
+    // console.log("💾 Saved progress to localStorage:", workerProgress);
 
     if (tabConfigs[activeTab]?.stateKey == "projectPatent") {
       if (displayData[0]?.data?.novelty_analysis_status == "generated") {
@@ -187,7 +197,7 @@ const PatentList = () => {
       JSON.stringify(workerProgress)
     );
 
-    console.log("💾 Saved progress to localStorage:", workerProgress);
+    // console.log("💾 Saved progress to localStorage:", workerProgress);
 
   }, [workerProgress, id]);
 
@@ -347,7 +357,7 @@ const PatentList = () => {
     }
   };
 
-  const isLoading = pLoad || prodLoad || pubLoad || provLoad || nonProvLoad;
+  const isLoading = pLoad || prodLoad || pubLoad || provLoad || nonProvLoad || initialLoading;
 
   return (
     <Box sx={{ bgcolor: '#F4F7F9', minHeight: '100vh', pb: 10 }}>
