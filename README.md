@@ -1,4 +1,4 @@
-# Barcode Admin Dashboard
+# Barcode Dashboard
 Why RTK + RTK Query is the right choice here
 
 Centralized auth state (no prop drilling)

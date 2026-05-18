@@ -1,12 +1,12 @@
-import React, { memo, useCallback, useEffect, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { memo, useCallback, useMemo } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import "./BarcodeNewCase.css";
 
 import { PAGES } from "./constants";
 import { navItems } from "./data";
 
 import Sidebar from "../../layouts/Sidebar";
-import Topbar from "../../layouts/Topbar";
+// import Topbar from "../../layouts/Topbar";
 
 import NewCasePage from "../../pages/NewCasePage";
 import MyProjectsPage from "../../pages/MyProjectsPage";
@@ -37,20 +37,11 @@ function BarcodeNewCase() {
     const navigate = useNavigate();
     const { tab } = useParams();
 
-    const activePage = useMemo(() => {
-        return TAB_TO_PAGE[tab] || PAGES.NEW_CASE;
-    }, [tab]);
+    const activePage = TAB_TO_PAGE[tab];
 
-    useEffect(() => {
-        if (!tab) {
-            navigate("/project/new-case", { replace: true });
-            return;
-        }
-
-        if (!TAB_TO_PAGE[tab]) {
-            navigate("/project/new-case", { replace: true });
-        }
-    }, [tab, navigate]);
+    if (!activePage) {
+        return <Navigate to="/project/new-case" replace />;
+    }
 
     const handlePageChange = useCallback(
         (page) => {
@@ -58,9 +49,11 @@ function BarcodeNewCase() {
 
             if (!tabName) return;
 
+            if (tabName === tab) return;
+
             navigate(`/project/${tabName}`);
         },
-        [navigate]
+        [navigate, tab]
     );
 
     const handleProfileClick = useCallback(() => {
@@ -111,11 +104,13 @@ function BarcodeNewCase() {
             <Sidebar activePage={activePage} onPageChange={handlePageChange} />
 
             <main className="main-area" aria-label={pageTitle}>
-                <Topbar
-                    userName="Developeraltbig"
-                    onProfileClick={handleProfileClick}
-                    onLogoutConfirm={handleLogout}
-                />
+                {/* 
+        <Topbar
+          userName="Developeraltbig"
+          onProfileClick={handleProfileClick}
+          onLogoutConfirm={handleLogout}
+        /> 
+        */}
 
                 {renderedPage}
             </main>

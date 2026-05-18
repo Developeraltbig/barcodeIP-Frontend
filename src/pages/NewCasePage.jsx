@@ -5,9 +5,23 @@ import { modules, projects } from "../views/Home/data";
 import ModuleCard from "../components/ModuleCard";
 import ProjectCard from "../components/ProjectCard";
 
+// --- API & Slice Imports (Unchanged) ---
+// import { useFetchAllProjectsQuery } from '../features/userApi';
+// import { setSelectedProject } from '../features/slice/userSlice';
+
+
 function NewCasePage({ onPageChange }) {
     const [inventionText, setInventionText] = useState("");
     const [selectedModules, setSelectedModules] = useState([]);
+    // const { data: projectsData, isLoading, isError, refetch } = useFetchAllProjectsQuery();
+
+    // console.log('projectsData --', projectsData);
+
+
+    // const projects = useMemo(() => {
+    //     if (!projectsData) return [];
+    //     return projectsData.projects || projectsData.data || (Array.isArray(projectsData) ? projectsData : []);
+    // }, [projectsData]);
 
     const selectedModuleSet = useMemo(
         () => new Set(selectedModules),
@@ -23,6 +37,7 @@ function NewCasePage({ onPageChange }) {
     const handleGenerate = useCallback(() => {
         onPageChange(PAGES.REVIEW);
     }, [onPageChange]);
+
 
     return (
         <section className="content-wrap">

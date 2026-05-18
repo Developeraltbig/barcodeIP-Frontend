@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 // import Toolbar from '@mui/material/Toolbar';
 // import Box from '@mui/material/Box';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 // project imports
 import Notification from './Notification';
@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLazyLogoutQuery } from '../../../features/slice/auth/authApi';
 import { logout, setCredentials } from '../../../features/slice/auth/authSlice';
 import { persistor } from '../../../app/store';
+import Topbar from "../../Topbar";
 
 // AppBar props, including styles that vary based on drawer state and screen size
 const appBar = { position: 'fixed', sx: { width: 1, zIndex: { xs: 1100, lg: 1201 } } };
@@ -83,116 +84,18 @@ export default function Header() {
 
   const navigate = useNavigate();
 
+  const handleProfileClick = useCallback(() => {
+    navigate("/project/profile");
+  }, [navigate]);
+
+
   // Common header content
-  const mainHeader = (
-    <AppBar sx={{ backgroundColor: '#fffafa' }}>
-      <Toolbar sx={{ justifyContent: 'space-between', minHeight: '70px !important' }}>
-        {/* Left Side: Logo & Nav Links */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          {/* Logo */}
-          <Box sx={{ display: 'flex', alignItems: 'baseline', cursor: 'pointer' }} onClick={() => navigate(`/`)}>
-            <Typography variant="h5" sx={{ fontWeight: 800, color: '#444' }}>
-              barcode
-            </Typography>
-            <Typography variant="h5" sx={{ fontWeight: 800, color: '#E94E34' }}>
-              IP
-            </Typography>
-            <Box component="span" sx={{ width: 5, height: 5, bgcolor: '#E94E34', borderRadius: '50%', ml: 0.5, mb: 1 }} />
-          </Box>
-
-          {/* Navigation Links (Hidden on small mobile) */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-            {/* <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/profile`)}>
-              Profile
-            </Button> */}
-            {/* <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/recent-search`)}>
-              Recent Searches
-            </Button> */}
-            <Button color="inherit" sx={{ fontSize: '0.95rem', color: '#555' }} onClick={() => navigate(`/project`)}>
-              My Projects
-            </Button>
-          </Box>
-        </Box>
-
-        {/* Right Side: User Profile */}
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button onClick={handleMenuClick} endIcon={<KeyboardArrowDown />} >
-            <Avatar sx={{ width: 32, height: 32, bgcolor: '#FFDbd6', color: '#E94E34', mr: 1, }}>
-              <Person fontSize="small" />
-            </Avatar>
-
-            {/* 3. Make the text dynamic */}
-            <Typography
-              variant="body1"
-              sx={{
-                fontWeight: 600,
-                display: { xs: 'none', sm: 'block' },
-                textTransform: 'capitalize',
-                // Prevent layout breaking for massive emails
-                maxWidth: '200px',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              {user?.email ? user.email.split('@')[0].replace(/[._]/g, ' ') : 'Guest'}
-            </Typography>
-          </Button>
-
-          {/* Dropdown Menu */}
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleMenuClose}
-            MenuListProps={{ 'aria-labelledby': 'basic-button' }}
-            PaperProps={{
-              elevation: 3,
-              sx: {
-                mt: 1,
-                // This logic ensures the menu is at least as wide as the button
-                minWidth: anchorEl ? anchorEl.clientWidth : 0,
-                borderRadius: '5px',
-                justifyItems: 'center'
-              }
-            }}
-          >
-            {/* <MenuItem onClick={handleMenuClose}>Settings</MenuItem> */}
-            {/* <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                navigate(`/recent-search`);
-              }}
-              sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
-            >
-              Recent Search
-            </MenuItem> */}
-            <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                // Pass the user object as 'state'
-                navigate(`/profile`, { state: { userData: user } });
-              }}
-
-            >
-              Profile
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                navigate(`/project`);
-              }}
-              sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
-            >
-              My Project
-            </MenuItem>
-            <MenuItem onClick={() => handleLogout()} sx={{ color: 'primary.main', }}>
-              Logout
-            </MenuItem>
-          </Menu>
-        </Box>
-      </Toolbar>
-    </AppBar>
+  return (
+    <Topbar
+      userName="Developeraltbig"
+      onProfileClick={handleProfileClick}
+      onLogoutConfirm={handleLogout}
+    />
   );
 
-  return <AppBar {...appBar}>{mainHeader}</AppBar>;
 }

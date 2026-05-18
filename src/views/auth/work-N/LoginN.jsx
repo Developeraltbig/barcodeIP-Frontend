@@ -25,30 +25,30 @@ const theme = createTheme({
     background: { default: '#FDFDFD', paper: '#ffffff' },
     text: { primary: '#111827', secondary: '#6B7280' }
   },
-  typography: { 
+  typography: {
     fontFamily: '"Inter", "Plus Jakarta Sans", sans-serif',
     h4: { fontWeight: 800, letterSpacing: '-0.02em' }
   },
   components: {
-    MuiButton: { 
-      styleOverrides: { 
-        root: { 
-          borderRadius: '10px', textTransform: 'none', fontWeight: 600, 
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '10px', textTransform: 'none', fontWeight: 600,
           padding: '12px 0', transition: 'all 0.2s ease-in-out',
           boxShadow: 'none', '&:hover': { boxShadow: '0 4px 12px rgba(233, 78, 52, 0.15)' }
-        } 
-      } 
+        }
+      }
     },
-    MuiOutlinedInput: { 
-      styleOverrides: { 
-        root: { 
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
           borderRadius: '10px',
           backgroundColor: '#F9FAFB',
           '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E5E7EB' },
           '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#D1D5DB' },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#E94E34', borderWidth: '1px' }
-        } 
-      } 
+        }
+      }
     }
   }
 });
@@ -79,10 +79,10 @@ const Login = () => {
     }
     try {
       const userData = await login({ email: formData.email, password: formData.password }).unwrap();
-      dispatch(setCredentials({...userData.data}));
-      localStorage.setItem("rememberMe", rememberMe); 
-      toast.success('Successfully logged in!'); 
-      navigate('/'); 
+      dispatch(setCredentials({ ...userData.data }));
+      localStorage.setItem("rememberMe", rememberMe);
+      toast.success('Successfully logged in!');
+      navigate("/project/new-case", { replace: true });
     } catch (err) {
       console.error('Login failed:', err);
     }
@@ -100,21 +100,21 @@ const Login = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <GlobalStyles styles={{ 
-        'html, body, #root': { width: '100%', height: '100%', margin: 0, padding: 0, backgroundColor: '#FDFDFD' } 
+      <GlobalStyles styles={{
+        'html, body, #root': { width: '100%', height: '100%', margin: 0, padding: 0, backgroundColor: '#FDFDFD' }
       }} />
 
       {isLoading && <FullPageLoader colors={['#E94E34', '#E94E34', '#E94E34']} label="Connecting to Dashboard..." />}
 
       <div className="container-fluid p-0 overflow-hidden">
         <div className="row g-0 min-vh-100">
-          
+
           <LeftSideImageSection />
 
           <div className="col-12 col-md-6 d-flex justify-content-center align-items-center bg-white p-4">
             <Fade in={true} timeout={600}>
               <Box sx={{ width: '100%', maxWidth: '440px' }}>
-                
+
                 {view === 'login' ? (
                   <>
                     <Box className="mb-5">
@@ -123,7 +123,7 @@ const Login = () => {
 
                     <Box className="mb-4">
                       <Typography variant="h4" color="text.primary" sx={{ mb: 1 }}>
-                        Sign In 
+                        Sign In
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Welcome back! Please enter your details.
@@ -190,10 +190,10 @@ const Login = () => {
                         </Link>
                       </Box>
 
-                      <Button 
-                        type="submit" 
-                        fullWidth 
-                        variant="contained" 
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
                         disabled={isLoading}
                         sx={{ py: 1.8, fontSize: '0.95rem' }}
                       >

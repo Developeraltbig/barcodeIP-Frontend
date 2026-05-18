@@ -7,7 +7,7 @@ import ForgotPassword from '../views/auth/work-N/ForgotPassword';
 import ResetPassword from '../views/auth/work-N/ResetPassword';
 
 // pages
-const Home = Loadable(lazy(() => import('../views/Home/index')));
+const Home = Loadable(lazy(() => import('../views/Home/BarcodeNewCase')));
 const Result = Loadable(lazy(() => import('../views/Result/index')));
 const MainLayout = Loadable(lazy(() => import('layouts/MainLayout')));
 const RecentSearch = Loadable(lazy(() => import('../views/search/RecentSearch')));
@@ -27,12 +27,12 @@ const MyProject = Loadable(lazy(() => import('../views/my-project/MyProject')));
 // ==============================|| MAIN ROUTES ||============================== //
 
 const MainRoutes = {
-  // path: '/',
-  // element: (
-  //   <AuthGuard>
-  //     <MainLayout />
-  //   </AuthGuard>
-  // ),
+  path: '/',
+  element: (
+    <AuthGuard>
+      <MainLayout />
+    </AuthGuard>
+  ),
   children: [
     {
       path: '/',
