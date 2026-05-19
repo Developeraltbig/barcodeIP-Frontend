@@ -4,23 +4,25 @@ import { modules, projects } from "../views/Home/data";
 
 import ModuleCard from "../components/ModuleCard";
 import ProjectCard from "../components/ProjectCard";
+import KeyFeaturesReview from "../views/Home/KeyFeaturesReview";
 
-// --- API & Slice Imports (Unchanged) ---
-// import { useFetchAllProjectsQuery } from '../features/userApi';
-// import { setSelectedProject } from '../features/slice/userSlice';
-
+import { useFetchAllProjectsQuery } from "../features/userApi";
 
 function NewCasePage({ onPageChange }) {
     const [inventionText, setInventionText] = useState("");
     const [selectedModules, setSelectedModules] = useState([]);
-    // const { data: projectsData, isLoading, isError, refetch } = useFetchAllProjectsQuery();
+    const [showKeyFeatures, setShowKeyFeatures] = useState(false);
 
-    // console.log('projectsData --', projectsData);
-
+    // const { data: projectsData } = useFetchAllProjectsQuery();
 
     // const projects = useMemo(() => {
-    //     if (!projectsData) return [];
-    //     return projectsData.projects || projectsData.data || (Array.isArray(projectsData) ? projectsData : []);
+    //     if (!projectsData) return staticProjects;
+
+    //     return (
+    //         projectsData.projects ||
+    //         projectsData.data ||
+    //         (Array.isArray(projectsData) ? projectsData : staticProjects)
+    //     );
     // }, [projectsData]);
 
     const selectedModuleSet = useMemo(
@@ -30,14 +32,44 @@ function NewCasePage({ onPageChange }) {
 
     const toggleModule = useCallback((id) => {
         setSelectedModules((prev) =>
-            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+            prev.includes(id)
+                ? prev.filter((item) => item !== id)
+                : [...prev, id]
         );
     }, []);
 
-    const handleGenerate = useCallback(() => {
-        onPageChange(PAGES.REVIEW);
-    }, [onPageChange]);
+    const handleGenerate = () => {
+        if (!inventionText.trim()) {
+            alert("Please describe your invention first.");
+            return;
+        }
 
+        if (selectedModules.length === 0) {
+            alert("Please select at least one output.");
+            return;
+        }
+
+        setShowKeyFeatures(true);
+    };
+
+    const handleContinueFromKeyFeatures = (features) => {
+        console.log("Final key features:", features);
+
+        // Later you can send inventionText, selectedModules, and features to API here.
+        onPageChange(PAGES.REVIEW);
+    };
+
+    if (showKeyFeatures) {
+        return (
+            <KeyFeaturesReview
+                inventionText={inventionText}
+                selectedModules={selectedModules}
+                modules={modules}
+                onBack={() => setShowKeyFeatures(false)}
+                onContinue={handleContinueFromKeyFeatures}
+            />
+        );
+    }
 
     return (
         <section className="content-wrap">
@@ -77,7 +109,11 @@ function NewCasePage({ onPageChange }) {
                 </div>
 
                 <div className="generate-row">
-                    <button className="generate-btn" type="button" onClick={handleGenerate}>
+                    <button
+                        className="generate-btn"
+                        type="button"
+                        onClick={handleGenerate}
+                    >
                         ✦ Generate Key Features
                     </button>
 
@@ -108,7 +144,7 @@ function NewCasePage({ onPageChange }) {
                 <div className="project-grid">
                     {projects.map((project) => (
                         <ProjectCard
-                            key={project.id}
+                            key={project.id || project._id}
                             project={project}
                             onOpen={() => onPageChange(PAGES.REVIEW)}
                         />

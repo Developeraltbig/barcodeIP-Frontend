@@ -32,7 +32,7 @@ export const modules = [
         icon: "▣",
     },
     {
-        id: "publication",
+        id: "publish",
         title: "Publications Search",
         desc: "Find papers and references",
         icon: "▤",
@@ -50,7 +50,7 @@ export const modules = [
         icon: "▤",
     },
     {
-        id: "nonprovisional",
+        id: "nonProvisional",
         title: "Non-Provisional Draft",
         desc: "Create claims and diagrams",
         icon: "▤",
