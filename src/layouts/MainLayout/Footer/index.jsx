@@ -48,112 +48,112 @@ const Footer = () => {
   // ==========================================
   // RENDER
   // ==========================================
-  return (
-    <Box
-      component="footer"
-      sx={{
-        bgcolor: '#1a1d27', // Dark navy/gray background from image
-        color: '#94a3b8',
-        pt: { xs: 4, md: 5 },
-        pb: { xs: 3, md: 4 },
-        width: '100%',
-        mt: 'auto',
-        fontFamily: 'Inter, sans-serif'
-      }}
-    >
-      <Container maxWidth="xl">
-        
-        {/* TOP SECTION: Logo, Links, Socials */}
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            flexDirection: { xs: 'column', md: 'row' }, 
-            justifyContent: 'space-between', 
-            alignItems: 'center',
-            gap: { xs: 4, md: 0 }
-          }}
-        >
-          {/* 1. Logo */}
-          <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
-            <Typography variant="h5" sx={{ fontWeight: 800, fontSize: '26px', color: '#ffffff' }}>
-              barcode
-            </Typography>
-            <Typography variant="h5" sx={{ fontWeight: 800, color: '#E94E34', fontSize: '26px' }}>
-              IP
-            </Typography>
-            <Typography sx={{ color: '#E94E34', fontSize: '26px', fontWeight: 800, lineHeight: 1 }}>
-              .
-            </Typography>
-          </Box>
+  // return (
+  //   <Box
+  //     component="footer"
+  //     sx={{
+  //       bgcolor: '#1a1d27', // Dark navy/gray background from image
+  //       color: '#94a3b8',
+  //       pt: { xs: 4, md: 5 },
+  //       pb: { xs: 3, md: 4 },
+  //       width: '100%',
+  //       mt: 'auto',
+  //       fontFamily: 'Inter, sans-serif'
+  //     }}
+  //   >
+  //     <Container maxWidth="xl">
 
-          {/* 2. Navigation Links */}
-          <Stack 
-            direction={{ xs: 'column', sm: 'row' }} 
-            spacing={{ xs: 2, md: 5 }}
-            alignItems="center"
-          >
-            <Link href="#" sx={navLinkStyle}>About Us</Link>
-            <Link href="#" sx={navLinkStyle}>Terms of Service</Link>
-            <Link href="#" sx={navLinkStyle}>Privacy Policy</Link>
-            <Link href="#" sx={navLinkStyle}>Support</Link>
-          </Stack>
+  //       {/* TOP SECTION: Logo, Links, Socials */}
+  //       <Box 
+  //         sx={{ 
+  //           display: 'flex', 
+  //           flexDirection: { xs: 'column', md: 'row' }, 
+  //           justifyContent: 'space-between', 
+  //           alignItems: 'center',
+  //           gap: { xs: 4, md: 0 }
+  //         }}
+  //       >
+  //         {/* 1. Logo */}
+  //         <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
+  //           <Typography variant="h5" sx={{ fontWeight: 800, fontSize: '26px', color: '#ffffff' }}>
+  //             barcode
+  //           </Typography>
+  //           <Typography variant="h5" sx={{ fontWeight: 800, color: '#E94E34', fontSize: '26px' }}>
+  //             IP
+  //           </Typography>
+  //           <Typography sx={{ color: '#E94E34', fontSize: '26px', fontWeight: 800, lineHeight: 1 }}>
+  //             .
+  //           </Typography>
+  //         </Box>
 
-          {/* 3. Social Icons */}
-          <Stack direction="row" spacing={2}>
-            <IconButton sx={iconButtonStyle}>
-              <LinkedInIcon fontSize="small" />
-            </IconButton>
-            <IconButton sx={iconButtonStyle}>
-              <XIcon fontSize="small" />
-            </IconButton>
-          </Stack>
-        </Box>
+  //         {/* 2. Navigation Links */}
+  //         <Stack 
+  //           direction={{ xs: 'column', sm: 'row' }} 
+  //           spacing={{ xs: 2, md: 5 }}
+  //           alignItems="center"
+  //         >
+  //           <Link href="#" sx={navLinkStyle}>About Us</Link>
+  //           <Link href="#" sx={navLinkStyle}>Terms of Service</Link>
+  //           <Link href="#" sx={navLinkStyle}>Privacy Policy</Link>
+  //           <Link href="#" sx={navLinkStyle}>Support</Link>
+  //         </Stack>
 
-        {/* THIN DIVIDER LINE */}
-        <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.08)', my: 4 }} />
+  //         {/* 3. Social Icons */}
+  //         <Stack direction="row" spacing={2}>
+  //           <IconButton sx={iconButtonStyle}>
+  //             <LinkedInIcon fontSize="small" />
+  //           </IconButton>
+  //           <IconButton sx={iconButtonStyle}>
+  //             <XIcon fontSize="small" />
+  //           </IconButton>
+  //         </Stack>
+  //       </Box>
 
-        {/* BOTTOM SECTION: Copyright & Contact */}
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            flexDirection: { xs: 'column', md: 'row' }, 
-            justifyContent: 'space-between', 
-            alignItems: 'center',
-            gap: 2
-          }}
-        >
-          {/* Copyright Text (Uses API data if available, else fallback) */}
-          <Typography variant="body2" sx={{ color: '#64748b' }}>
-            {content.copyright || '© 2026 BarcodeIP. All rights reserved.'}
-          </Typography>
+  //       {/* THIN DIVIDER LINE */}
+  //       <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.08)', my: 4 }} />
 
-          {/* Contact Info (Uses API data if available, else fallback) */}
-          <Stack 
-            direction={{ xs: 'column', sm: 'row' }} 
-            spacing={{ xs: 2, md: 4 }}
-            alignItems="center"
-          >
-            {/* Email */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#94a3b8' }}>
-              <MailOutlineIcon fontSize="small" sx={{ color: '#64748b' }} />
-              <Typography variant="body2">
-                {content.email || 'altbig@gmail.com'}
-              </Typography>
-            </Box>
+  //       {/* BOTTOM SECTION: Copyright & Contact */}
+  //       <Box 
+  //         sx={{ 
+  //           display: 'flex', 
+  //           flexDirection: { xs: 'column', md: 'row' }, 
+  //           justifyContent: 'space-between', 
+  //           alignItems: 'center',
+  //           gap: 2
+  //         }}
+  //       >
+  //         {/* Copyright Text (Uses API data if available, else fallback) */}
+  //         <Typography variant="body2" sx={{ color: '#64748b' }}>
+  //           {content.copyright || '© 2026 BarcodeIP. All rights reserved.'}
+  //         </Typography>
 
-            {/* Phone */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#94a3b8' }}>
-              <PhoneOutlinedIcon fontSize="small" sx={{ color: '#64748b' }} />
-              <Typography variant="body2">
-                {content.contact || '+91 323 555 0174'}
-              </Typography>
-            </Box>
-          </Stack>
-        </Box>
+  //         {/* Contact Info (Uses API data if available, else fallback) */}
+  //         <Stack 
+  //           direction={{ xs: 'column', sm: 'row' }} 
+  //           spacing={{ xs: 2, md: 4 }}
+  //           alignItems="center"
+  //         >
+  //           {/* Email */}
+  //           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#94a3b8' }}>
+  //             <MailOutlineIcon fontSize="small" sx={{ color: '#64748b' }} />
+  //             <Typography variant="body2">
+  //               {content.email || 'altbig@gmail.com'}
+  //             </Typography>
+  //           </Box>
 
-      </Container>
-    </Box>
-  );
+  //           {/* Phone */}
+  //           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#94a3b8' }}>
+  //             <PhoneOutlinedIcon fontSize="small" sx={{ color: '#64748b' }} />
+  //             <Typography variant="body2">
+  //               {content.contact || '+91 323 555 0174'}
+  //             </Typography>
+  //           </Box>
+  //         </Stack>
+  //       </Box>
+
+  //     </Container>
+  //   </Box>
+  // );
 };
 
 export default Footer;

@@ -104,14 +104,6 @@ function BarcodeNewCase() {
             <Sidebar activePage={activePage} onPageChange={handlePageChange} />
 
             <main className="main-area" aria-label={pageTitle}>
-                {/* 
-        <Topbar
-          userName="Developeraltbig"
-          onProfileClick={handleProfileClick}
-          onLogoutConfirm={handleLogout}
-        /> 
-        */}
-
                 {renderedPage}
             </main>
         </div>

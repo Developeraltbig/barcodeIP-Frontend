@@ -120,37 +120,6 @@ function NewCasePage({ onPageChange }) {
                     <p>You can review and edit features before reports are created.</p>
                 </div>
             </div>
-
-            <div className="recent-card">
-                <div className="recent-header">
-                    <div>
-                        <h2>Recent Projects</h2>
-                        <p>
-                            Latest invention cases. Showing 6 here; use My Projects for the
-                            full list.
-                        </p>
-                    </div>
-
-                    <button
-                        className="view-all-btn"
-                        type="button"
-                        onClick={() => onPageChange(PAGES.PROJECTS)}
-                    >
-                        <span>▦</span>
-                        View All
-                    </button>
-                </div>
-
-                <div className="project-grid">
-                    {projects.map((project) => (
-                        <ProjectCard
-                            key={project.id || project._id}
-                            project={project}
-                            onOpen={() => onPageChange(PAGES.REVIEW)}
-                        />
-                    ))}
-                </div>
-            </div>
         </section>
     );
 }
