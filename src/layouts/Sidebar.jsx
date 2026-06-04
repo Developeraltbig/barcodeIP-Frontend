@@ -1,10 +1,10 @@
 import React, { memo, useMemo, useState } from "react";
-import { ChevronDown, Clock } from "lucide-react";
+import { ChevronDown, Clock, UserRound } from "lucide-react";
 import { PAGES } from "../views/Home/constants";
 import { navItems } from "../views/Home/data";
 
 function Sidebar({ activePage, onPageChange }) {
-    const [showRecent, setShowRecent] = useState(true);
+    const [showRecent, setShowRecent] = useState(false);
 
     const recentProjects = useMemo(
         () => [
@@ -49,38 +49,57 @@ function Sidebar({ activePage, onPageChange }) {
                 ))}
             </nav>
 
-            <div className="recent-projects-panel">
-                {showRecent ? (
-                    <div className="recent-projects-list">
-                        {recentProjects.map((project, index) => (
-                            <button
-                                key={`${project.caseId}-${index}`}
-                                type="button"
-                                className="recent-project-item"
-                                onClick={() => onPageChange(PAGES.PROJECTS)}
-                            >
-                                <span>{project.title}</span>
-                                <small>CASE ID : {project.caseId}</small>
-                            </button>
-                        ))}
-                    </div>
-                ) : null}
+            <div className="sidebar-bottom">
+                <div className="recent-projects-panel">
+                    {showRecent ? (
+                        <div className="recent-projects-list">
+                            {recentProjects.map((project, index) => (
+                                <button
+                                    key={`${project.caseId}-${index}`}
+                                    type="button"
+                                    className="recent-project-item"
+                                    onClick={() => onPageChange(PAGES.PROJECTS)}
+                                >
+                                    <span>{project.title}</span>
+                                    <small>CASE ID : {project.caseId}</small>
+                                </button>
+                            ))}
+                        </div>
+                    ) : null}
 
-                <button
-                    type="button"
-                    className="recent-toggle-btn"
-                    onClick={() => setShowRecent((prev) => !prev)}
-                >
-                    <span>
-                        <Clock size={16} />
-                        Recent Projects
-                    </span>
+                    <button
+                        type="button"
+                        className="recent-toggle-btn"
+                        onClick={() => setShowRecent((prev) => !prev)}
+                    >
+                        <span>
+                            <Clock size={15} />
+                            Recent Projects
+                        </span>
 
-                    <ChevronDown
-                        size={18}
-                        className={showRecent ? "recent-chevron open" : "recent-chevron"}
-                    />
-                </button>
+                        <ChevronDown
+                            size={16}
+                            className={showRecent ? "recent-chevron open" : "recent-chevron"}
+                        />
+                    </button>
+                </div>
+
+                <div className="sidebar-profile-wrap">
+                    <button
+                        type="button"
+                        className={`sidebar-profile-btn ${activePage === PAGES.PROFILE ? "active" : ""
+                            }`}
+                        onClick={() => onPageChange(PAGES.PROFILE)}
+                    >
+                        <span className="sidebar-profile-avatar">
+                            <UserRound size={17} />
+                        </span>
+
+                        <span className="sidebar-profile-name">Harshit</span>
+
+                        <ChevronDown size={15} />
+                    </button>
+                </div>
             </div>
         </aside>
     );

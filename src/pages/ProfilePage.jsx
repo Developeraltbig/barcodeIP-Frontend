@@ -1,16 +1,19 @@
 import React, { memo, useState } from "react";
+import { Camera, Eye } from "lucide-react";
 
-function ProfilePage({ onBack }) {
+function ProfilePage() {
     const [profileForm, setProfileForm] = useState({
-        fullName: "Team Dev",
+        firstName: "",
+        lastName: "",
         email: "developeraltbig@gmail.com",
-        phone: "8130047149"
+        phone: "8130047149",
+        gender: ""
     });
 
     const [passwordForm, setPasswordForm] = useState({
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: ""
+        currentPassword: "12345678",
+        newPassword: "12345678",
+        confirmPassword: "12345678"
     });
 
     const [showPassword, setShowPassword] = useState({
@@ -55,120 +58,156 @@ function ProfilePage({ onBack }) {
     };
 
     return (
-        <section className="profile-page">
-            <div className="profile-hero-card">
-                <button type="button" className="back-btn" onClick={onBack}>
-                    <span>←</span>
-                    Back
-                </button>
-
-                <div>
-                    <h1>Profile</h1>
-                    <p>Manage user information and account security for this BarcodeIP workspace.</p>
-                </div>
+        <section className="profile-screen">
+            <div className="profile-title-block">
+                <h1>Profile</h1>
+                <p>Manage user information and account security for this BarcodeIP workspace.</p>
             </div>
 
-            <form className="profile-card" onSubmit={handleProfileSubmit}>
-                <div className="profile-section-head">
-                    <h2>User Information</h2>
-                    <p>These details appear on your workspace and generated reports.</p>
-                </div>
+            <form className="profile-info-card" onSubmit={handleProfileSubmit}>
+                <div className="profile-info-top">
+                    <div className="profile-photo-wrap">
+                        <div className="profile-photo">
+                            <span>HN</span>
+                        </div>
 
-                <div className="profile-summary-box">
-                    <div className="profile-large-avatar">
-                        <UserIcon />
-                        <span className="avatar-edit">✎</span>
+                        <button type="button" className="profile-camera-btn">
+                            <Camera size={14} />
+                        </button>
                     </div>
 
-                    <div>
-                        <h3>{profileForm.fullName}</h3>
-                        <p>{profileForm.email}</p>
+                    <div className="profile-name-actions">
+                        <h2>Harshit Nehra</h2>
+
+                        <div className="profile-upload-actions">
+                            <button type="button" className="profile-upload-btn">
+                                Upload New
+                            </button>
+
+                            <button type="button" className="profile-delete-btn">
+                                Delete Avatar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="gender-options">
+                        <label className="gender-box">
+                            <input
+                                type="radio"
+                                name="gender"
+                                value="male"
+                                checked={profileForm.gender === "male"}
+                                onChange={handleProfileChange}
+                            />
+                            <span>Male</span>
+                        </label>
+
+                        <label className="gender-box">
+                            <input
+                                type="radio"
+                                name="gender"
+                                value="female"
+                                checked={profileForm.gender === "female"}
+                                onChange={handleProfileChange}
+                            />
+                            <span>Female</span>
+                        </label>
                     </div>
                 </div>
 
-                <div className="profile-grid">
-                    <div className="form-group">
-                        <label>Full Name</label>
+                <div className="profile-form-grid">
+                    <div className="profile-form-group">
+                        <label>First Name</label>
                         <input
                             type="text"
-                            name="fullName"
-                            value={profileForm.fullName}
+                            name="firstName"
+                            value={profileForm.firstName}
                             onChange={handleProfileChange}
+                            placeholder="First Name"
                         />
                     </div>
 
-                    <div className="form-group">
-                        <label>Email Address</label>
+                    <div className="profile-form-group">
+                        <label>Last Name</label>
+                        <input
+                            type="text"
+                            name="lastName"
+                            value={profileForm.lastName}
+                            onChange={handleProfileChange}
+                            placeholder="Last Name"
+                        />
+                    </div>
+
+                    <div className="profile-form-group">
+                        <label>Email</label>
                         <input
                             type="email"
                             name="email"
                             value={profileForm.email}
                             onChange={handleProfileChange}
+                            placeholder="Email"
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="profile-form-group">
                         <label>Phone Number</label>
                         <input
                             type="text"
                             name="phone"
                             value={profileForm.phone}
                             onChange={handleProfileChange}
+                            placeholder="Phone Number"
                         />
                     </div>
                 </div>
 
-                <div className="profile-actions">
-                    <button type="button" className="btn-secondary">
+                <div className="profile-card-actions">
+                    <button type="button" className="profile-cancel-btn">
                         Cancel
                     </button>
 
-                    <button type="submit" className="btn-danger">
-                        ✓ Save Changes
+                    <button type="submit" className="profile-save-btn">
+                        Save Changes
                     </button>
                 </div>
             </form>
 
-            <form className="profile-card" onSubmit={handlePasswordSubmit}>
-                <div className="profile-section-head">
-                    <h2>Account Settings</h2>
-                    <p>Update password details for workspace access.</p>
-                </div>
+            <div className="profile-title-block account-title-block">
+                <h1>Account Settings</h1>
+                <p>Update password details for workspace access.</p>
+            </div>
 
-                <div className="password-form">
-                    <PasswordInput
-                        label="Current Password"
-                        name="currentPassword"
-                        value={passwordForm.currentPassword}
-                        visible={showPassword.currentPassword}
-                        onChange={handlePasswordChange}
-                        onToggle={() => togglePassword("currentPassword")}
-                    />
+            <form className="account-card" onSubmit={handlePasswordSubmit}>
+                <PasswordInput
+                    label="Current Password"
+                    name="currentPassword"
+                    value={passwordForm.currentPassword}
+                    visible={showPassword.currentPassword}
+                    onChange={handlePasswordChange}
+                    onToggle={() => togglePassword("currentPassword")}
+                />
 
-                    <PasswordInput
-                        label="New Password"
-                        name="newPassword"
-                        value={passwordForm.newPassword}
-                        visible={showPassword.newPassword}
-                        onChange={handlePasswordChange}
-                        onToggle={() => togglePassword("newPassword")}
-                    />
+                <PasswordInput
+                    label="New Password"
+                    name="newPassword"
+                    value={passwordForm.newPassword}
+                    visible={showPassword.newPassword}
+                    onChange={handlePasswordChange}
+                    onToggle={() => togglePassword("newPassword")}
+                />
 
-                    <PasswordInput
-                        label="Confirm New Password"
-                        name="confirmPassword"
-                        value={passwordForm.confirmPassword}
-                        visible={showPassword.confirmPassword}
-                        onChange={handlePasswordChange}
-                        onToggle={() => togglePassword("confirmPassword")}
-                    />
-                </div>
+                <PasswordInput
+                    label="New Password"
+                    name="confirmPassword"
+                    value={passwordForm.confirmPassword}
+                    visible={showPassword.confirmPassword}
+                    onChange={handlePasswordChange}
+                    onToggle={() => togglePassword("confirmPassword")}
+                />
 
-                <div className="profile-actions">
-                    <button type="submit" className="btn-danger">
-                        ✓ Save Password
-                    </button>
-                </div>
+                <button type="submit" className="profile-save-btn password-save-btn">
+                    Save Password
+                </button>
             </form>
         </section>
     );
@@ -176,10 +215,10 @@ function ProfilePage({ onBack }) {
 
 function PasswordInput({ label, name, value, visible, onChange, onToggle }) {
     return (
-        <div className="form-group password-group">
+        <div className="profile-form-group password-profile-group">
             <label>{label}</label>
 
-            <div className="password-input-wrap">
+            <div className="profile-password-wrap">
                 <input
                     type={visible ? "text" : "password"}
                     name={name}
@@ -188,45 +227,10 @@ function PasswordInput({ label, name, value, visible, onChange, onToggle }) {
                 />
 
                 <button type="button" onClick={onToggle}>
-                    <EyeIcon />
+                    <Eye size={15} />
                 </button>
             </div>
         </div>
-    );
-}
-
-function UserIcon() {
-    return (
-        <svg viewBox="0 0 24 24" width="34" height="34" fill="none">
-            <path
-                d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
-                stroke="currentColor"
-                strokeWidth="2"
-            />
-            <path
-                d="M4 21a8 8 0 0 1 16 0"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-            />
-        </svg>
-    );
-}
-
-function EyeIcon() {
-    return (
-        <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
-            <path
-                d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"
-                stroke="currentColor"
-                strokeWidth="2"
-            />
-            <path
-                d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                stroke="currentColor"
-                strokeWidth="2"
-            />
-        </svg>
     );
 }
 
