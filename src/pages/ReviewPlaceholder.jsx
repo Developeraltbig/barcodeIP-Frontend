@@ -5,6 +5,9 @@ import ResultHeader from "./components/Review/ResultHeader";
 import OutputTabs from "./components/Review/OutputTabs";
 import KeyFeaturesSection from "./components/Review/KeyFeaturesSection";
 import PatentTab from "./components/Review/PatentTab";
+import PublicationTab from "./components/Review/PublicationTab";
+import ProductTab from "./components/Review/ProductTab";
+import DraftTab from "./components/Review/DraftTab";
 import ProcessingPlaceholderTab from "./components/Review/ProcessingPlaceholderTab";
 import RequestOoltoCommentsModal from "./components/Review/RequestOoltoCommentsModal";
 import FeatureMappingView from "./components/Review/FeatureMappingView";
@@ -18,7 +21,11 @@ import {
     PROJECT_INFO,
     PRIMARY_FEATURES,
     SECONDARY_FEATURES,
-    PATENT_RESULTS
+    PATENT_RESULTS,
+    PUBLICATION_RESULTS,
+    PRODUCT_RESULTS,
+    PROVISIONAL_SECTIONS,
+    NON_PROVISIONAL_SECTIONS
 } from "./data/reviewResultsData";
 
 import "./ReviewResultsTabs.css";
@@ -37,31 +44,16 @@ function ReviewPlaceholder({ onPageChange }) {
     );
 
     /*
-      Future Socket.IO integration example:
+      Future Socket.IO integration:
+      update payload by tab type.
   
-      useEffect(() => {
-        const socket = io(SOCKET_URL, { withCredentials: true });
-  
-        socket.emit("join", { projectId: PROJECT_INFO.id });
-  
-        socket.on("analysis:progress", handleRealtimeUpdate);
-        socket.on("analysis:completed", handleRealtimeUpdate);
-  
-        return () => {
-          socket.off("analysis:progress", handleRealtimeUpdate);
-          socket.off("analysis:completed", handleRealtimeUpdate);
-          socket.disconnect();
-        };
-      }, [handleRealtimeUpdate]);
-  
-      Expected payload:
       {
         type: "patent" | "publications" | "products" | "provisional" | "nonProvisional",
         status: "queued" | "processing" | "completed" | "error",
         progress: 68,
-        message: "Preparing top 10 mappings",
-        subMessage: "Mapping may take 5–6 minutes",
-        steps: [...]
+        message: "Preparing mappings",
+        subMessage: "This can take a few minutes",
+        steps: []
       }
     */
     const handleRealtimeUpdate = useCallback((payload) => {
@@ -101,8 +93,71 @@ function ReviewPlaceholder({ onPageChange }) {
         setActiveView("overlap");
     };
 
-    const downloadReport = () => {
-        console.log("Download full report for project:", PROJECT_INFO);
+    const renderActiveTab = () => {
+        if (activeTab === TAB_KEYS.PATENT) {
+            return (
+                <PatentTab
+                    runtime={tabRuntime.patent}
+                    results={PATENT_RESULTS}
+                    strictMode={strictMode}
+                    onStrictModeChange={setStrictMode}
+                    onViewMapping={openMapping}
+                    onViewDetails={openDetails}
+                    onViewOverlap={openOverlap}
+                    onDownloadPatentReport={() => console.log("Download patent report")}
+                />
+            );
+        }
+
+        if (activeTab === TAB_KEYS.PUBLICATIONS) {
+            return (
+                <PublicationTab
+                    results={PUBLICATION_RESULTS}
+                    onDownloadPublications={() => console.log("Download publications")}
+                    onViewPublication={(publication) => console.log("View publication:", publication)}
+                />
+            );
+        }
+
+        if (activeTab === TAB_KEYS.PRODUCTS) {
+            return (
+                <ProductTab
+                    results={PRODUCT_RESULTS}
+                    onViewProductDetails={(product) => console.log("View product details:", product)}
+                />
+            );
+        }
+
+        if (activeTab === TAB_KEYS.PROVISIONAL) {
+            return (
+                <DraftTab
+                    title="Provisional Draft"
+                    description="Editable provisional specification sections generated from the invention disclosure."
+                    sections={PROVISIONAL_SECTIONS}
+                    downloadLabel="Download Publications"
+                    onDownload={() => console.log("Download provisional draft")}
+                />
+            );
+        }
+
+        if (activeTab === TAB_KEYS.NON_PROVISIONAL) {
+            return (
+                <DraftTab
+                    title="Non-Provisional Draft"
+                    description="Draft sections, representative claims, block diagrams, and flow charts."
+                    sections={NON_PROVISIONAL_SECTIONS}
+                    downloadLabel="Download Publications"
+                    onDownload={() => console.log("Download non-provisional draft")}
+                />
+            );
+        }
+
+        return (
+            <ProcessingPlaceholderTab
+                label={activeTabConfig?.label || "Selected"}
+                runtime={tabRuntime[activeTab]}
+            />
+        );
     };
 
     if (activeView === "mapping") {
@@ -179,7 +234,7 @@ function ReviewPlaceholder({ onPageChange }) {
                     });
                 }}
                 onRequestComments={() => setShowCommentsModal(true)}
-                onDownloadReport={downloadReport}
+                onDownloadReport={() => console.log("Download full report")}
             />
 
             <OutputTabs
@@ -191,28 +246,14 @@ function ReviewPlaceholder({ onPageChange }) {
                 }}
             />
 
-            <KeyFeaturesSection
-                primaryFeatures={PRIMARY_FEATURES}
-                secondaryFeatures={SECONDARY_FEATURES}
-            />
-
-            {activeTab === TAB_KEYS.PATENT ? (
-                <PatentTab
-                    runtime={tabRuntime.patent}
-                    results={PATENT_RESULTS}
-                    strictMode={strictMode}
-                    onStrictModeChange={setStrictMode}
-                    onViewMapping={openMapping}
-                    onViewDetails={openDetails}
-                    onViewOverlap={openOverlap}
-                    onDownloadPatentReport={() => console.log("Download patent report")}
-                />
-            ) : (
-                <ProcessingPlaceholderTab
-                    label={activeTabConfig?.label || "Selected"}
-                    runtime={tabRuntime[activeTab]}
+            {activeTab === TAB_KEYS.PATENT && (
+                <KeyFeaturesSection
+                    primaryFeatures={PRIMARY_FEATURES}
+                    secondaryFeatures={SECONDARY_FEATURES}
                 />
             )}
+
+            {renderActiveTab()}
 
             {showCommentsModal && (
                 <RequestOoltoCommentsModal
