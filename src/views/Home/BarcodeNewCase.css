@@ -1,3 +1,42 @@
+/* ==========================================================
+   BarcodeIP Workspace - Optimized Responsive Styles
+   Replace your full BarcodeNewCase.css with this file.
+   ========================================================== */
+
+/* -----------------------------
+   Design tokens
+----------------------------- */
+:root {
+    --sidebar-width: 262px;
+    --page-bg: #f7f7f7;
+    --sidebar-bg: #fbf6f6;
+    --card-bg: #ffffff;
+    --input-soft-bg: #fbf3f3;
+
+    --text-main: #3f3f3f;
+    --text-muted: #777777;
+    --text-soft: #8b8b8b;
+
+    --brand-red: #c9362d;
+    --brand-dark: #4b4b4b;
+    --primary: #b7332c;
+    --primary-dark: #9f2d26;
+    --primary-light: rgba(183, 51, 44, 0.08);
+
+    --border: #d8d8d8;
+    --border-soft: #eeeeee;
+
+    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow-soft: 0 5px 16px rgba(0, 0, 0, 0.05);
+
+    --radius-sm: 3px;
+    --radius-md: 4px;
+    --transition: 0.18s ease;
+}
+
+/* -----------------------------
+   Reset / Base
+----------------------------- */
 * {
     box-sizing: border-box;
 }
@@ -12,8 +51,8 @@ body {
     margin: 0;
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", sans-serif;
-    background: #f7f7f7;
-    color: #3d3d3d;
+    background: var(--page-bg);
+    color: var(--text-main);
     overflow-x: hidden;
 }
 
@@ -28,32 +67,70 @@ button {
     cursor: pointer;
 }
 
-/* Main layout */
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
 
+input,
+textarea {
+    min-width: 0;
+}
+
+svg {
+    flex-shrink: 0;
+}
+
+/* -----------------------------
+   App layout
+----------------------------- */
 .barcode-page {
     width: 100%;
     min-height: 100vh;
     display: flex;
-    background: #f7f7f7;
+    background: var(--page-bg);
     overflow-x: hidden;
 }
 
 .main-area {
-    width: calc(100% - 262px);
-    margin-left: 262px;
+    width: calc(100% - var(--sidebar-width));
     min-height: 100vh;
-    background: #f7f7f7;
+    margin-left: var(--sidebar-width);
+    background: var(--page-bg);
     min-width: 0;
     overflow-x: hidden;
 }
 
-/* Sidebar */
+/* Shared page wrapper */
+.content-wrap,
+.projects-page-wrap,
+.profile-screen,
+.profile-page {
+    width: calc(100% - 64px);
+    max-width: 1260px;
+    margin: 76px auto 56px;
+    padding: 0;
+    min-width: 0;
+}
 
+.content-wrap {
+    margin-top: 146px;
+}
+
+.profile-screen,
+.profile-page {
+    max-width: 1320px;
+    margin-top: 58px;
+}
+
+/* -----------------------------
+   Sidebar
+----------------------------- */
 .sidebar {
-    width: 262px;
+    width: var(--sidebar-width);
     min-height: 100vh;
-    background: #f8f4f4;
-    border-right: 1px solid #d8d8d8;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -67,7 +144,7 @@ button {
     display: flex;
     align-items: flex-start;
     padding: 0 24px;
-    background: #f8f4f4;
+    background: var(--sidebar-bg);
     border-bottom: 1px solid #cfcfcf;
 }
 
@@ -86,15 +163,15 @@ button {
 }
 
 .brand-red {
-    color: #c9362d;
+    color: var(--brand-red);
 }
 
 .brand-dark {
-    color: #4b4b4b;
+    color: var(--brand-dark);
 }
 
 .brand-dot {
-    color: #c9362d;
+    color: var(--brand-red);
 }
 
 .sidebar-nav {
@@ -118,7 +195,7 @@ button {
     font-weight: 400;
     text-align: left;
     position: relative;
-    transition: background 0.18s ease, color 0.18s ease;
+    transition: background var(--transition), color var(--transition);
 }
 
 .nav-item::before {
@@ -142,7 +219,7 @@ button {
 }
 
 .nav-item.active::before {
-    background: #b73028;
+    background: var(--primary);
 }
 
 .nav-icon {
@@ -164,18 +241,25 @@ button {
     min-width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #b73028;
-    color: #fff;
+    background: var(--primary);
+    color: #ffffff;
     font-size: 11px;
     display: grid;
     place-items: center;
 }
 
-/* Recent projects */
+/* Sidebar bottom + recent projects */
+.sidebar-bottom {
+    margin-top: auto;
+}
 
 .recent-projects-panel {
     margin-top: auto;
-    padding: 0 34px 12px 42px;
+    padding: 0 30px 22px 38px;
+}
+
+.sidebar-bottom .recent-projects-panel {
+    margin-top: 0;
 }
 
 .recent-projects-list {
@@ -204,7 +288,7 @@ button {
 }
 
 .recent-project-item small {
-    color: #c43a31;
+    color: var(--brand-red);
     font-size: 9px;
     letter-spacing: 0.3px;
     font-weight: 500;
@@ -212,11 +296,11 @@ button {
 
 .recent-toggle-btn {
     width: 100%;
+    height: 32px;
     border: 0;
     background: transparent;
     color: #5d5d5d;
     padding: 0;
-    height: 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -238,18 +322,121 @@ button {
     transform: rotate(180deg);
 }
 
-/* Main page wrapper */
+/* Sidebar profile tab */
+.sidebar-profile-wrap {
+    border-top: 1px solid var(--border);
+    padding: 22px 26px;
+}
 
-.content-wrap {
-    width: calc(100% - 64px);
-    max-width: 1260px;
-    margin: 146px auto 56px;
-    padding: 0;
+.sidebar-profile-btn {
+    width: 100%;
+    height: 47px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: #ffffff;
+    color: #555555;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    box-shadow: var(--shadow-card);
+}
+
+.sidebar-profile-btn.active,
+.sidebar-profile-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.sidebar-profile-avatar {
+    width: 31px;
+    height: 31px;
+    border-radius: 50%;
+    background: #efe2d9;
+    color: #6b4c3b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.sidebar-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sidebar-profile-name {
+    flex: 1;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* -----------------------------
+   Shared cards / buttons
+----------------------------- */
+.new-case-card,
+.page-hero,
+.table-card,
+.projects-table-card,
+.profile-info-card,
+.account-card,
+.profile-card,
+.profile-hero-card,
+.empty-card,
+.comment-card,
+.key-feature-card {
     min-width: 0;
 }
 
-/* New case page */
+.card-surface,
+.page-hero,
+.table-card,
+.projects-table-card,
+.profile-info-card,
+.account-card,
+.profile-card,
+.profile-hero-card,
+.empty-card,
+.comment-card,
+.key-feature-card {
+    background: var(--card-bg);
+    border: 1px solid #d1d1d1;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+}
 
+.primary-action-btn,
+.generate-btn,
+.projects-back-btn,
+.projects-new-btn,
+.projects-filter-btn,
+.view-more-btn,
+.profile-upload-btn,
+.profile-save-btn {
+    border: 0;
+    border-radius: var(--radius-md);
+    background: var(--primary);
+    color: #ffffff;
+    font-weight: 700;
+    box-shadow: none;
+}
+
+.primary-action-btn:hover,
+.generate-btn:hover,
+.projects-back-btn:hover,
+.projects-new-btn:hover,
+.projects-filter-btn:hover,
+.view-more-btn:hover,
+.profile-upload-btn:hover,
+.profile-save-btn:hover {
+    background: var(--primary-dark);
+}
+
+/* -----------------------------
+   New Case page
+----------------------------- */
 .new-case-card {
     width: 100%;
     background: transparent;
@@ -257,7 +444,6 @@ button {
     border-radius: 0;
     box-shadow: none;
     padding: 0;
-    min-width: 0;
 }
 
 .section-heading {
@@ -271,30 +457,27 @@ button {
     line-height: 1.05;
     letter-spacing: 4px;
     font-weight: 700;
-    color: #3f3f3f;
+    color: var(--text-main);
 }
 
 .section-heading p,
 .page-hero p {
     margin: 11px 0 0;
-    color: #757575;
+    color: var(--text-muted);
     font-size: 17px;
     font-weight: 400;
     letter-spacing: 1.2px;
 }
 
-/* White form card */
-
 .input-box {
     width: 100%;
     border: 1px solid #d1d1d1;
-    border-radius: 4px;
-    background: #ffffff;
-    box-shadow: 0 7px 24px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-card);
     overflow: hidden;
     padding: 17px 27px 14px;
     position: relative;
-    min-width: 0;
 }
 
 .input-label {
@@ -316,17 +499,17 @@ button {
     border: 0;
     resize: none;
     outline: none;
-    border-radius: 4px;
+    border-radius: var(--radius-md);
     padding: 15px 16px;
     font-size: 11px;
     font-weight: 400;
     color: #333333;
-    background: #faf4f4;
+    background: var(--input-soft-bg);
     display: block;
 }
 
 .input-box textarea::placeholder {
-    color: #8b8b8b;
+    color: var(--text-soft);
 }
 
 .input-footer {
@@ -337,7 +520,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #777777;
+    color: var(--text-muted);
     font-size: 11px;
     font-weight: 400;
     position: relative;
@@ -350,7 +533,7 @@ button {
     min-width: 30px;
     border: 0;
     border-radius: 50%;
-    background: #b93630;
+    background: var(--primary);
     color: #ffffff;
     display: grid;
     place-items: center;
@@ -366,8 +549,6 @@ button {
     color: #ffffff;
 }
 
-/* Output cards - fixed overflow */
-
 .module-grid {
     width: 100%;
     display: grid;
@@ -375,9 +556,6 @@ button {
     gap: 12px;
     margin-top: 18px;
     position: static;
-    left: auto;
-    right: auto;
-    bottom: auto;
     min-width: 0;
 }
 
@@ -385,19 +563,19 @@ button {
     min-width: 0;
     min-height: 80px;
     border: 1px solid #d4d4d4;
-    border-radius: 4px;
-    background: #ffffff;
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
     padding: 11px 13px 10px;
     text-align: left;
     position: relative;
-    transition: 0.18s ease;
+    transition: border-color var(--transition), box-shadow var(--transition);
     box-shadow: none;
     overflow: hidden;
 }
 
 .module-card:hover,
 .module-card.selected {
-    border-color: #c43a31;
+    border-color: var(--brand-red);
     box-shadow: 0 8px 18px rgba(180, 48, 40, 0.1);
     transform: none;
 }
@@ -418,8 +596,8 @@ button {
 }
 
 .checkbox.checked {
-    background: #c43a31;
-    border-color: #c43a31;
+    background: var(--brand-red);
+    border-color: var(--brand-red);
 }
 
 .module-icon {
@@ -461,24 +639,11 @@ button {
     white-space: normal;
 }
 
-/* Generate button */
-
 .generate-row {
     margin-top: 18px;
     display: flex;
     align-items: center;
     gap: 18px;
-}
-
-.generate-btn,
-.primary-action-btn {
-    border: 0;
-    border-radius: 4px;
-    background: #c33b33;
-    color: #ffffff;
-    font-size: 13px;
-    font-weight: 700;
-    box-shadow: none;
 }
 
 .generate-btn {
@@ -489,35 +654,19 @@ button {
     align-items: center;
     justify-content: center;
     gap: 9px;
-}
-
-.generate-btn:hover {
-    background: #ad3029;
+    font-size: 13px;
 }
 
 .generate-row p {
     margin: 0;
-    color: #777777;
+    color: var(--text-muted);
     font-size: 13px;
     font-weight: 400;
 }
 
-/* Other page cards fallback */
-
-.recent-card,
-.page-hero,
-.table-card,
-.empty-card,
-.comment-card,
-.key-feature-card,
-.profile-hero-card,
-.profile-card {
-    background: #ffffff;
-    border: 1px solid #d1d1d1;
-    border-radius: 4px;
-    box-shadow: 0 7px 24px rgba(0, 0, 0, 0.08);
-}
-
+/* -----------------------------
+   Fallback page hero / table card
+----------------------------- */
 .page-hero {
     min-height: 132px;
     padding: 32px 36px;
@@ -527,111 +676,72 @@ button {
     gap: 24px;
 }
 
+.back-btn {
+    border: 0;
+    background: transparent;
+    color: #625c55;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0;
+    margin-bottom: 12px;
+}
+
 .primary-action-btn {
     min-width: 190px;
     height: 42px;
     padding: 0 22px;
+    font-size: 13px;
 }
 
-/* Responsive */
-
-@media (max-width: 1280px) {
-    .content-wrap {
-        width: calc(100% - 48px);
-        max-width: none;
-        margin-top: 110px;
-    }
-
-    .module-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+.table-card {
+    margin-top: 24px;
+    overflow: hidden;
 }
 
-@media (max-width: 900px) {
-    .barcode-page {
-        display: block;
-    }
-
-    .sidebar {
-        position: static;
-        width: 100%;
-        min-height: auto;
-    }
-
-    .brand {
-        height: 72px;
-        align-items: center;
-    }
-
-    .sidebar-nav {
-        margin-top: 0;
-    }
-
-    .recent-projects-panel {
-        padding: 18px 28px;
-    }
-
-    .main-area {
-        width: 100%;
-        margin-left: 0;
-    }
-
-    .content-wrap {
-        width: 100%;
-        max-width: none;
-        margin: 36px auto 48px;
-        padding: 0 18px;
-    }
-
-    .section-heading h1,
-    .page-hero h1 {
-        font-size: 32px;
-        letter-spacing: 1px;
-    }
-
-    .section-heading p,
-    .page-hero p {
-        font-size: 14px;
-        letter-spacing: 0.3px;
-    }
-
-    .input-box {
-        padding: 16px;
-    }
-
-    .input-footer {
-        margin-top: 8px;
-    }
-
-    .module-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .generate-row,
-    .page-hero {
-        align-items: stretch;
-        flex-direction: column;
-    }
-
-    .generate-btn,
-    .primary-action-btn {
-        width: 100%;
-    }
+.table-toolbar {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-soft);
+    display: grid;
+    grid-template-columns: 1fr 112px;
+    gap: 12px;
 }
 
-/* ===================================================== */
-/* MY PROJECTS PAGE - PDF MATCHING DESIGN */
-/* ===================================================== */
+.search-control {
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 14px;
+}
 
+.search-control input {
+    width: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font-size: 13px;
+}
+
+.filter-btn {
+    height: 44px;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: var(--primary);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* -----------------------------
+   My Projects page
+----------------------------- */
 .projects-page-wrap {
-    width: calc(100% - 90px);
     max-width: 1280px;
-    margin: 76px auto 60px;
-    padding: 0;
-    min-width: 0;
+    margin-top: 76px;
 }
-
-/* Hero */
 
 .projects-hero {
     width: 100%;
@@ -645,18 +755,13 @@ button {
 .projects-back-btn {
     height: 31px;
     min-width: 86px;
-    border: 0;
-    border-radius: 4px;
-    background: #b7332c;
-    color: #ffffff;
     font-size: 12px;
-    font-weight: 700;
     margin-bottom: 18px;
 }
 
 .projects-hero h1 {
     margin: 0;
-    color: #3f3f3f;
+    color: var(--text-main);
     font-size: 39px;
     line-height: 1.05;
     font-weight: 700;
@@ -665,7 +770,7 @@ button {
 
 .projects-hero p {
     margin: 10px 0 0;
-    color: #777777;
+    color: var(--text-muted);
     font-size: 15px;
     font-weight: 400;
     letter-spacing: 0.2px;
@@ -674,32 +779,13 @@ button {
 .projects-new-btn {
     height: 38px;
     min-width: 142px;
-    border: 0;
-    border-radius: 4px;
-    background: #b7332c;
-    color: #ffffff;
     font-size: 12px;
-    font-weight: 700;
     margin-bottom: 18px;
 }
 
-.projects-back-btn:hover,
-.projects-new-btn:hover,
-.projects-filter-btn:hover,
-.view-more-btn:hover {
-    background: #9f2d26;
-}
-
-/* Table Card */
-
 .projects-table-card {
     width: 100%;
-    background: #ffffff;
-    border: 1px solid #d2d2d2;
-    border-radius: 4px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     overflow: hidden;
-    min-width: 0;
 }
 
 .projects-table-toolbar {
@@ -710,16 +796,16 @@ button {
     align-items: center;
     gap: 16px;
     background: #ffffff;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid var(--border-soft);
 }
 
 .projects-search-control {
     height: 34px;
     width: 100%;
     border: 1px solid #dddddd;
-    border-radius: 4px;
+    border-radius: var(--radius-md);
     background: #ffffff;
-    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-soft);
     display: flex;
     align-items: center;
     gap: 10px;
@@ -727,7 +813,7 @@ button {
 }
 
 .projects-search-control span {
-    color: #777777;
+    color: var(--text-muted);
     font-size: 14px;
 }
 
@@ -747,15 +833,8 @@ button {
 
 .projects-filter-btn {
     height: 34px;
-    border: 0;
-    border-radius: 4px;
-    background: #b7332c;
-    color: #ffffff;
     font-size: 12px;
-    font-weight: 700;
 }
-
-/* Table */
 
 .project-table-wrap {
     width: 100%;
@@ -805,7 +884,6 @@ button {
 }
 
 .project-table td {
-    min-height: 88px;
     padding: 25px 48px;
     border-top: 1px solid #dddddd;
     color: #555555;
@@ -823,7 +901,7 @@ button {
 
 .table-case-id {
     margin-top: 5px;
-    color: #c33b33;
+    color: var(--brand-red);
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.3px;
@@ -836,8 +914,6 @@ button {
     white-space: nowrap;
 }
 
-/* Module pills */
-
 .table-tags {
     display: grid;
     grid-template-columns: repeat(3, minmax(56px, 1fr));
@@ -848,9 +924,9 @@ button {
 .table-tags span {
     height: 17px;
     border: 1px solid #d7d7d7;
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     background: #ffffff;
-    color: #777777;
+    color: var(--text-muted);
     font-size: 8px;
     font-weight: 500;
     display: inline-flex;
@@ -863,10 +939,10 @@ button {
 .request-review-btn {
     height: 35px;
     min-width: 116px;
-    border: 1px solid #b7332c;
-    border-radius: 4px;
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-md);
     background: #ffffff;
-    color: #b7332c;
+    color: var(--primary);
     font-size: 12px;
     font-weight: 700;
 }
@@ -874,158 +950,19 @@ button {
 .view-more-btn {
     height: 35px;
     min-width: 101px;
-    border: 0;
-    border-radius: 4px;
-    background: #c23a32;
-    color: #ffffff;
     font-size: 12px;
-    font-weight: 700;
 }
 
 .project-empty-cell {
     height: 120px;
     text-align: center;
-    color: #777777;
+    color: var(--text-muted);
     font-size: 14px;
 }
 
-/* Fix old conflicting styles */
-
-.page-hero {
-    box-shadow: none;
-}
-
-.table-card {
-    box-shadow: none;
-}
-
-/* Responsive */
-
-@media (max-width: 1280px) {
-    .projects-page-wrap {
-        width: calc(100% - 56px);
-        margin-top: 76px;
-    }
-
-    .projects-table-toolbar {
-        padding: 24px 48px;
-    }
-
-    .project-table th,
-    .project-table td {
-        padding-left: 32px;
-        padding-right: 32px;
-    }
-}
-
-@media (max-width: 900px) {
-    .projects-page-wrap {
-        width: 100%;
-        margin: 36px auto 48px;
-        padding: 0 18px;
-    }
-
-    .projects-hero {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .projects-hero h1 {
-        font-size: 32px;
-    }
-
-    .projects-new-btn {
-        width: 100%;
-        margin-bottom: 0;
-    }
-
-    .projects-table-toolbar {
-        grid-template-columns: 1fr;
-        padding: 18px;
-    }
-
-    .projects-filter-btn {
-        width: 100%;
-    }
-
-    .project-table {
-        min-width: 900px;
-    }
-}
-
-
-/* ===================================================== */
-/* SIDEBAR PROFILE BUTTON */
-/* ===================================================== */
-
-.sidebar-bottom {
-    margin-top: auto;
-}
-
-.recent-projects-panel {
-    margin-top: 0;
-    padding: 0 30px 22px 38px;
-}
-
-.recent-toggle-btn {
-    height: 32px;
-}
-
-.sidebar-profile-wrap {
-    border-top: 1px solid #d8d8d8;
-    padding: 22px 26px;
-}
-
-.sidebar-profile-btn {
-    width: 100%;
-    height: 47px;
-    border: 1px solid #d8d8d8;
-    border-radius: 4px;
-    background: #ffffff;
-    color: #555555;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 12px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-}
-
-.sidebar-profile-btn.active {
-    border-color: #b7332c;
-    color: #b7332c;
-}
-
-.sidebar-profile-avatar {
-    width: 31px;
-    height: 31px;
-    border-radius: 50%;
-    background: #efe2d9;
-    color: #6b4c3b;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.sidebar-profile-name {
-    flex: 1;
-    text-align: left;
-    font-size: 13px;
-    font-weight: 500;
-}
-
-/* ===================================================== */
-/* PROFILE PAGE DESIGN */
-/* ===================================================== */
-
-.profile-screen {
-    width: calc(100% - 64px);
-    max-width: 1320px;
-    margin: 58px auto 60px;
-    padding: 0;
-    min-width: 0;
-}
-
+/* -----------------------------
+   Profile page
+----------------------------- */
 .profile-title-block {
     margin-bottom: 18px;
 }
@@ -1049,10 +986,7 @@ button {
 .profile-info-card,
 .account-card {
     width: 100%;
-    background: #ffffff;
-    border: 1px solid #d7d7d7;
-    border-radius: 3px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-sm);
 }
 
 .profile-info-card {
@@ -1084,6 +1018,13 @@ button {
     justify-content: center;
     font-size: 28px;
     font-weight: 700;
+    overflow: hidden;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile-camera-btn {
@@ -1094,7 +1035,7 @@ button {
     height: 28px;
     border: 2px solid #ffffff;
     border-radius: 50%;
-    background: #bb342d;
+    background: var(--primary);
     color: #ffffff;
     display: grid;
     place-items: center;
@@ -1118,13 +1059,11 @@ button {
 .profile-upload-btn,
 .profile-save-btn {
     height: 34px;
-    border: 0;
     border-radius: 2px;
-    background: linear-gradient(180deg, #d9483e, #8f211c);
-    color: #ffffff;
     padding: 0 22px;
     font-size: 11px;
     font-weight: 500;
+    background: linear-gradient(180deg, #d9483e, #8f211c);
 }
 
 .profile-delete-btn,
@@ -1149,14 +1088,14 @@ button {
 .gender-box {
     width: 130px;
     height: 34px;
-    border: 1px solid #d8d8d8;
-    border-radius: 4px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
     background: #ffffff;
     display: flex;
     align-items: center;
     gap: 9px;
     padding: 0 17px;
-    color: #777777;
+    color: var(--text-muted);
     font-size: 11px;
     font-weight: 400;
     box-shadow: 0 5px 14px rgba(0, 0, 0, 0.04);
@@ -1165,7 +1104,7 @@ button {
 .gender-box input {
     width: 14px;
     height: 14px;
-    accent-color: #b7332c;
+    accent-color: var(--primary);
 }
 
 .profile-form-grid {
@@ -1174,19 +1113,23 @@ button {
     gap: 24px 70px;
 }
 
-.profile-form-group label {
+.profile-form-group label,
+.form-group label {
     display: block;
     margin-bottom: 7px;
     color: #6f6f6f;
     font-size: 11px;
     font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
 }
 
-.profile-form-group input {
+.profile-form-group input,
+.form-group input {
     width: 100%;
     height: 42px;
     border: 1px solid #d6d6d6;
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     background: #ffffff;
     color: #444444;
     padding: 0 14px;
@@ -1195,16 +1138,19 @@ button {
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.profile-form-group input::placeholder {
+.profile-form-group input::placeholder,
+.form-group input::placeholder {
     color: #c9c9c9;
 }
 
-.profile-form-group input:focus {
-    border-color: #b7332c;
-    box-shadow: 0 0 0 3px rgba(183, 51, 44, 0.08);
+.profile-form-group input:focus,
+.form-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
 }
 
-.profile-card-actions {
+.profile-card-actions,
+.profile-actions {
     margin-top: 36px;
     display: flex;
     align-items: center;
@@ -1223,15 +1169,18 @@ button {
     margin-bottom: 22px;
 }
 
-.profile-password-wrap {
+.profile-password-wrap,
+.password-input-wrap {
     position: relative;
 }
 
-.profile-password-wrap input {
+.profile-password-wrap input,
+.password-input-wrap input {
     padding-right: 48px;
 }
 
-.profile-password-wrap button {
+.profile-password-wrap button,
+.password-input-wrap button {
     position: absolute;
     top: 50%;
     right: 14px;
@@ -1239,7 +1188,7 @@ button {
     height: 24px;
     border: 0;
     background: transparent;
-    color: #b7332c;
+    color: var(--primary);
     display: grid;
     place-items: center;
     padding: 0;
@@ -1252,20 +1201,163 @@ button {
     min-width: 126px;
 }
 
-/* Remove old profile design conflict */
-.profile-page,
-.profile-hero-card,
-.profile-card,
-.profile-summary-box,
-.profile-grid,
-.password-form {
-    all: unset;
+/* Old ProfilePage fallback */
+.profile-hero-card {
+    padding: 0;
+    margin: 0 0 18px;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
 }
 
-/* Responsive */
+.profile-hero-card h1 {
+    margin: 0;
+    color: #3e3e3e;
+    font-size: 32px;
+    line-height: 1.1;
+    font-weight: 700;
+}
+
+.profile-hero-card p {
+    margin: 6px 0 0;
+    color: #858585;
+    font-size: 13px;
+}
+
+.profile-card {
+    padding: 34px 50px;
+    margin-bottom: 24px;
+}
+
+.profile-section-head h2 {
+    margin: 0;
+    color: #3e3e3e;
+    font-size: 24px;
+}
+
+.profile-section-head p {
+    margin: 6px 0 20px;
+    color: #858585;
+    font-size: 13px;
+}
+
+.profile-summary-box {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: #ffffff;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.profile-large-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d8c1b1, #8c5b43);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.avatar-edit {
+    position: absolute;
+    right: -2px;
+    bottom: 2px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.password-form {
+    max-width: none;
+    display: grid;
+    gap: 14px;
+}
+
+.btn-secondary,
+.btn-danger {
+    min-height: 34px;
+    border-radius: 2px;
+    padding: 0 18px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.btn-secondary {
+    border: 1px solid #d43e36;
+    background: #ffffff;
+    color: #d43e36;
+}
+
+.btn-danger {
+    border: 0;
+    background: linear-gradient(180deg, #d9483e, #8f211c);
+    color: #ffffff;
+}
+
+/* -----------------------------
+   Generic comments / empty cards
+----------------------------- */
+.empty-card {
+    margin-top: 24px;
+    padding: 42px;
+}
+
+.empty-card h2 {
+    margin: 0 0 8px;
+    font-size: 24px;
+}
+
+.empty-card p {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+/* -----------------------------
+   Responsive
+----------------------------- */
 @media (max-width: 1280px) {
-    .profile-screen {
+
+    .content-wrap,
+    .projects-page-wrap,
+    .profile-screen,
+    .profile-page {
         width: calc(100% - 48px);
+        max-width: none;
+    }
+
+    .content-wrap {
+        margin-top: 110px;
+    }
+
+    .module-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .projects-table-toolbar {
+        padding: 24px 48px;
+    }
+
+    .project-table th,
+    .project-table td {
+        padding-left: 32px;
+        padding-right: 32px;
     }
 
     .profile-info-card,
@@ -1282,17 +1374,124 @@ button {
         grid-column: 2 / 3;
         padding-top: 0;
     }
+
+    .profile-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 1100px) {
+    .module-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .project-table {
+        min-width: 900px;
+    }
 }
 
 @media (max-width: 900px) {
-    .profile-screen {
+    .barcode-page {
+        display: block;
+    }
+
+    .sidebar {
+        position: static;
         width: 100%;
+        min-height: auto;
+    }
+
+    .brand {
+        height: 72px;
+        align-items: center;
+    }
+
+    .sidebar-nav {
+        margin-top: 0;
+    }
+
+    .recent-projects-panel {
+        padding: 18px 28px;
+    }
+
+    .sidebar-profile-wrap {
+        padding: 18px 28px;
+    }
+
+    .main-area {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .content-wrap,
+    .projects-page-wrap,
+    .profile-screen,
+    .profile-page {
+        width: 100%;
+        max-width: none;
         margin: 36px auto 48px;
         padding: 0 18px;
     }
 
+    .section-heading h1,
+    .page-hero h1,
+    .projects-hero h1,
+    .profile-title-block h1,
+    .profile-hero-card h1 {
+        font-size: 32px;
+        letter-spacing: 1px;
+    }
+
+    .section-heading p,
+    .page-hero p,
+    .projects-hero p {
+        font-size: 14px;
+        letter-spacing: 0.3px;
+    }
+
+    .input-box {
+        padding: 16px;
+    }
+
+    .input-footer {
+        margin-top: 8px;
+    }
+
+    .module-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .generate-row,
+    .page-hero,
+    .projects-hero {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .generate-btn,
+    .primary-action-btn,
+    .projects-new-btn {
+        width: 100%;
+    }
+
+    .projects-new-btn {
+        margin-bottom: 0;
+    }
+
+    .projects-table-toolbar,
+    .table-toolbar {
+        grid-template-columns: 1fr;
+        padding: 18px;
+    }
+
+    .projects-filter-btn,
+    .filter-btn {
+        width: 100%;
+    }
+
     .profile-info-card,
-    .account-card {
+    .account-card,
+    .profile-card {
         padding: 24px;
     }
 
@@ -1311,13 +1510,15 @@ button {
         width: 100%;
     }
 
-    .profile-form-grid {
+    .profile-form-grid,
+    .profile-grid {
         grid-template-columns: 1fr;
         gap: 18px;
     }
 
     .profile-upload-actions,
-    .profile-card-actions {
+    .profile-card-actions,
+    .profile-actions {
         flex-direction: column;
         align-items: stretch;
     }
@@ -1325,7 +1526,34 @@ button {
     .profile-upload-btn,
     .profile-delete-btn,
     .profile-cancel-btn,
-    .profile-save-btn {
+    .profile-save-btn,
+    .btn-secondary,
+    .btn-danger {
         width: 100%;
+    }
+}
+
+@media (max-width: 560px) {
+    .brand-logo {
+        font-size: 28px;
+    }
+
+    .section-heading h1,
+    .page-hero h1,
+    .projects-hero h1,
+    .profile-title-block h1,
+    .profile-hero-card h1 {
+        font-size: 28px;
+        letter-spacing: 0.2px;
+    }
+
+    .profile-photo-wrap,
+    .profile-photo {
+        width: 96px;
+        height: 96px;
+    }
+
+    .project-table {
+        min-width: 820px;
     }
 }
