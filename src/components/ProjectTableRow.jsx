@@ -1,45 +1,48 @@
-import React, { memo, useMemo } from "react";
+import React from "react";
 
 function ProjectTableRow({ project, onOpen }) {
-    const commentClass = useMemo(() => {
-        const value = project.commentStatus.toLowerCase();
-
-        if (value.includes("ready")) return "ready";
-        if (value.includes("review")) return "review";
-
-        return "neutral";
-    }, [project.commentStatus]);
+    const tags = Array.isArray(project.tags) ? project.tags : [];
 
     return (
         <tr>
             <td>
-                <div className="table-project-title">{project.title}</div>
-                <div className="table-case-id">CASE ID : {project.id}</div>
+                <div className="table-project-title">
+                    {project.title ||
+                        "Manage invention cases, generated modules, reports, and Barcode Comments."}
+                </div>
+
+                <div className="table-case-id">
+                    CASE ID : {project.id || project._id || "016"}
+                </div>
             </td>
 
-            <td>{project.date}</td>
+            <td className="project-created-cell">
+                {project.date || project.createdAt || "13 May 2026"}
+            </td>
 
             <td>
                 <div className="table-tags">
-                    {project.tags.map((tag) => (
-                        <span key={tag}>{tag}</span>
-                    ))}
+                    {(tags.length ? tags : ["Patent", "Publication", "Product", "Provisional", "Non-Provisional"]).map(
+                        (tag) => (
+                            <span key={tag}>{tag}</span>
+                        )
+                    )}
                 </div>
             </td>
 
             <td>
-                <span className={`comment-status ${commentClass}`}>
-                    {project.commentStatus}
-                </span>
+                <button className="request-review-btn" type="button">
+                    {project.commentStatus || "Request Review"}
+                </button>
             </td>
 
             <td>
-                <button className="open-btn" type="button" onClick={onOpen}>
-                    Open ›
+                <button className="view-more-btn" type="button" onClick={onOpen}>
+                    View More
                 </button>
             </td>
         </tr>
     );
 }
 
-export default memo(ProjectTableRow);
+export default ProjectTableRow;

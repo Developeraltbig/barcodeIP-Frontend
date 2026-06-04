@@ -12,14 +12,18 @@ function MyProjectsPage({ onPageChange }) {
         if (!value) return projects;
 
         return projects.filter((project) => {
+            const tags = Array.isArray(project.tags) ? project.tags : [];
+
             const searchableText = [
                 project.id,
+                project._id,
                 project.title,
                 project.date,
                 project.status,
                 project.commentStatus,
-                ...project.tags,
+                ...tags,
             ]
+                .filter(Boolean)
                 .join(" ")
                 .toLowerCase();
 
@@ -28,11 +32,11 @@ function MyProjectsPage({ onPageChange }) {
     }, [search]);
 
     return (
-        <section className="content-wrap">
-            <div className="page-hero">
+        <section className="content-wrap projects-page-wrap">
+            <div className="projects-hero">
                 <div>
                     <button
-                        className="back-btn"
+                        className="projects-back-btn"
                         type="button"
                         onClick={() => onPageChange(PAGES.NEW_CASE)}
                     >
@@ -47,7 +51,7 @@ function MyProjectsPage({ onPageChange }) {
                 </div>
 
                 <button
-                    className="primary-action-btn"
+                    className="projects-new-btn"
                     type="button"
                     onClick={() => onPageChange(PAGES.NEW_CASE)}
                 >
@@ -55,19 +59,19 @@ function MyProjectsPage({ onPageChange }) {
                 </button>
             </div>
 
-            <div className="table-card">
-                <div className="table-toolbar">
-                    <div className="search-control">
+            <div className="projects-table-card">
+                <div className="projects-table-toolbar">
+                    <div className="projects-search-control">
                         <span>⌕</span>
 
                         <input
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search projects"
+                            placeholder="Search..."
                         />
                     </div>
 
-                    <button className="filter-btn" type="button">
+                    <button className="projects-filter-btn" type="button">
                         ⌯ Filter
                     </button>
                 </div>
@@ -87,11 +91,19 @@ function MyProjectsPage({ onPageChange }) {
                         <tbody>
                             {filteredProjects.map((project) => (
                                 <ProjectTableRow
-                                    key={project.id}
+                                    key={project.id || project._id}
                                     project={project}
                                     onOpen={() => onPageChange(PAGES.REVIEW)}
                                 />
                             ))}
+
+                            {filteredProjects.length === 0 ? (
+                                <tr>
+                                    <td colSpan="5" className="project-empty-cell">
+                                        No projects found.
+                                    </td>
+                                </tr>
+                            ) : null}
                         </tbody>
                     </table>
                 </div>

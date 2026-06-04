@@ -6,29 +6,25 @@ function CommentCard({ item }) {
     }, [item.status]);
 
     return (
-        <article className="comment-card">
-            <div className="comment-main">
-                <span className="comment-case">
-                    {item.id} · CASE {item.caseId}
+        <article className="oc-comment-card">
+            <div className="oc-comment-main">
+                <span className="oc-comment-case">
+                    {item.id} · Case {item.caseId}
                 </span>
 
                 <h3>{item.title}</h3>
+
+                <p className="oc-requested-text">Requested: {item.requestedAt}</p>
             </div>
 
-            <div className="comment-meta">
-                <span className={`comment-pill ${statusClass}`}>{item.status}</span>
-                <span className="requested-text">Requested: {item.requestedAt}</span>
+            <div className="oc-comment-status-wrap">
+                <span className={`oc-comment-pill ${statusClass}`}>{item.status}</span>
+            </div>
 
-                <div className="comment-tags">
-                    {item.tags.map((tag) => (
-                        <span
-                            key={tag}
-                            className={tag === "Patent Search" ? "highlight" : ""}
-                        >
-                            {tag}
-                        </span>
-                    ))}
-                </div>
+            <div className="oc-comment-tags">
+                {item.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                ))}
             </div>
         </article>
     );

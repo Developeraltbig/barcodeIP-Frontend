@@ -618,3 +618,337 @@ button {
         width: 100%;
     }
 }
+
+/* ===================================================== */
+/* MY PROJECTS PAGE - PDF MATCHING DESIGN */
+/* ===================================================== */
+
+.projects-page-wrap {
+    width: calc(100% - 90px);
+    max-width: 1280px;
+    margin: 76px auto 60px;
+    padding: 0;
+    min-width: 0;
+}
+
+/* Hero */
+
+.projects-hero {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.projects-back-btn {
+    height: 31px;
+    min-width: 86px;
+    border: 0;
+    border-radius: 4px;
+    background: #b7332c;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.projects-hero h1 {
+    margin: 0;
+    color: #3f3f3f;
+    font-size: 39px;
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.projects-hero p {
+    margin: 10px 0 0;
+    color: #777777;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+}
+
+.projects-new-btn {
+    height: 38px;
+    min-width: 142px;
+    border: 0;
+    border-radius: 4px;
+    background: #b7332c;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.projects-back-btn:hover,
+.projects-new-btn:hover,
+.projects-filter-btn:hover,
+.view-more-btn:hover {
+    background: #9f2d26;
+}
+
+/* Table Card */
+
+.projects-table-card {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #d2d2d2;
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    min-width: 0;
+}
+
+.projects-table-toolbar {
+    min-height: 88px;
+    padding: 26px 76px;
+    display: grid;
+    grid-template-columns: 1fr 92px;
+    align-items: center;
+    gap: 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.projects-search-control {
+    height: 34px;
+    width: 100%;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    background: #ffffff;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 15px;
+}
+
+.projects-search-control span {
+    color: #777777;
+    font-size: 14px;
+}
+
+.projects-search-control input {
+    width: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: #444444;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.projects-search-control input::placeholder {
+    color: #9b9b9b;
+}
+
+.projects-filter-btn {
+    height: 34px;
+    border: 0;
+    border-radius: 4px;
+    background: #b7332c;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Table */
+
+.project-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.project-table {
+    width: 100%;
+    min-width: 980px;
+    border-collapse: collapse;
+}
+
+.project-table thead {
+    background: #fbf4f4;
+}
+
+.project-table th {
+    height: 52px;
+    padding: 0 48px;
+    color: #6f6f6f;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.project-table th:nth-child(1) {
+    width: 38%;
+}
+
+.project-table th:nth-child(2) {
+    width: 14%;
+}
+
+.project-table th:nth-child(3) {
+    width: 24%;
+}
+
+.project-table th:nth-child(4) {
+    width: 14%;
+}
+
+.project-table th:nth-child(5) {
+    width: 10%;
+}
+
+.project-table td {
+    min-height: 88px;
+    padding: 25px 48px;
+    border-top: 1px solid #dddddd;
+    color: #555555;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.table-project-title {
+    max-width: 365px;
+    color: #4a4a4a;
+    font-size: 15px;
+    line-height: 1.22;
+    font-weight: 700;
+}
+
+.table-case-id {
+    margin-top: 5px;
+    color: #c33b33;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.project-created-cell {
+    color: #555555;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Module pills */
+
+.table-tags {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(56px, 1fr));
+    gap: 5px;
+    max-width: 210px;
+}
+
+.table-tags span {
+    height: 17px;
+    border: 1px solid #d7d7d7;
+    border-radius: 3px;
+    background: #ffffff;
+    color: #777777;
+    font-size: 8px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    white-space: nowrap;
+}
+
+.request-review-btn {
+    height: 35px;
+    min-width: 116px;
+    border: 1px solid #b7332c;
+    border-radius: 4px;
+    background: #ffffff;
+    color: #b7332c;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.view-more-btn {
+    height: 35px;
+    min-width: 101px;
+    border: 0;
+    border-radius: 4px;
+    background: #c23a32;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.project-empty-cell {
+    height: 120px;
+    text-align: center;
+    color: #777777;
+    font-size: 14px;
+}
+
+/* Fix old conflicting styles */
+
+.page-hero {
+    box-shadow: none;
+}
+
+.table-card {
+    box-shadow: none;
+}
+
+/* Responsive */
+
+@media (max-width: 1280px) {
+    .projects-page-wrap {
+        width: calc(100% - 56px);
+        margin-top: 76px;
+    }
+
+    .projects-table-toolbar {
+        padding: 24px 48px;
+    }
+
+    .project-table th,
+    .project-table td {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+
+@media (max-width: 900px) {
+    .projects-page-wrap {
+        width: 100%;
+        margin: 36px auto 48px;
+        padding: 0 18px;
+    }
+
+    .projects-hero {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .projects-hero h1 {
+        font-size: 32px;
+    }
+
+    .projects-new-btn {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .projects-table-toolbar {
+        grid-template-columns: 1fr;
+        padding: 18px;
+    }
+
+    .projects-filter-btn {
+        width: 100%;
+    }
+
+    .project-table {
+        min-width: 900px;
+    }
+}

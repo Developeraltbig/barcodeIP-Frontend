@@ -164,31 +164,30 @@ const INITIAL_KEY_STRINGS = [
     }
 ];
 
-function FeatureList({ title, count, items, variant, isEditing, onChange }) {
+function FeatureList({ title, items, variant, isEditing, onChange }) {
     return (
         <div className={`kf-feature-panel ${variant === "primary" ? "is-primary" : ""}`}>
-            <div className="kf-panel-title-row">
-                <h3>{title}</h3>
-                <span>{count}</span>
-            </div>
+            <h3 className="kf-feature-panel-title">{title}</h3>
 
-            <div className="kf-feature-list">
-                {items.map((item, index) => (
-                    <div className="kf-feature-item" key={`${variant}-${index}`}>
-                        <div className={`kf-feature-number ${variant === "primary" ? "red" : "dark"}`}>
-                            {String(index + 1).padStart(2, "0")}
+            <div className="kf-feature-list-shell">
+                <div className="kf-feature-list">
+                    {items.map((item, index) => (
+                        <div className="kf-feature-item" key={`${variant}-${index}`}>
+                            <div className="kf-feature-number">
+                                {String(index + 1).padStart(2, "0")}
+                            </div>
+
+                            {isEditing ? (
+                                <textarea
+                                    value={item}
+                                    onChange={(e) => onChange(index, e.target.value)}
+                                />
+                            ) : (
+                                <p>{item}</p>
+                            )}
                         </div>
-
-                        {isEditing ? (
-                            <textarea
-                                value={item}
-                                onChange={(e) => onChange(index, e.target.value)}
-                            />
-                        ) : (
-                            <p>{item}</p>
-                        )}
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );
@@ -198,24 +197,24 @@ function KeyStringCard({ item, index, onCopy, onEdit }) {
     return (
         <div className="kf-string-card">
             <div className="kf-string-top">
-                <div>
-                    <span>KEY STRING {String(index + 1).padStart(2, "0")}</span>
-                    <h4>{item.title}</h4>
-                </div>
-
-                <em className={item.tag === "Strict" ? "strict" : ""}>{item.tag}</em>
+                <span>Key String {String(index + 1).padStart(2, "0")}</span>
+                <h4>{item.title}</h4>
             </div>
 
             <pre>{item.string}</pre>
 
             <div className="kf-string-actions">
-                <button type="button" onClick={() => onCopy(item.string)}>
-                    ⧉ Copy
-                </button>
+                <em className={item.tag === "Strict" ? "strict" : ""}>{item.tag}</em>
 
-                <button type="button" onClick={() => onEdit(index)}>
-                    ✎ Edit
-                </button>
+                <div>
+                    <button type="button" className="copy" onClick={() => onCopy(item.string)}>
+                        ⧉ Copy
+                    </button>
+
+                    <button type="button" className="edit" onClick={() => onEdit(index)}>
+                        ✎ Edit
+                    </button>
+                </div>
             </div>
         </div>
     );
@@ -338,9 +337,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                                 />
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        addValue("inventors", inventorInput, setInventorInput)
-                                    }
+                                    onClick={() => addValue("inventors", inventorInput, setInventorInput)}
                                 >
                                     +
                                 </button>
@@ -351,10 +348,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                                     {form.inventors.map((inventor) => (
                                         <span key={inventor}>
                                             {inventor}
-                                            <button
-                                                type="button"
-                                                onClick={() => removeValue("inventors", inventor)}
-                                            >
+                                            <button type="button" onClick={() => removeValue("inventors", inventor)}>
                                                 ×
                                             </button>
                                         </span>
@@ -374,9 +368,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                                 />
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        addValue("assignees", assigneeInput, setAssigneeInput)
-                                    }
+                                    onClick={() => addValue("assignees", assigneeInput, setAssigneeInput)}
                                 >
                                     +
                                 </button>
@@ -387,10 +379,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                                     {form.assignees.map((assignee) => (
                                         <span key={assignee}>
                                             {assignee}
-                                            <button
-                                                type="button"
-                                                onClick={() => removeValue("assignees", assignee)}
-                                            >
+                                            <button type="button" onClick={() => removeValue("assignees", assignee)}>
                                                 ×
                                             </button>
                                         </span>
@@ -449,10 +438,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                     <div className="ks-grid two">
                         <div className="ks-field">
                             <label>Type</label>
-                            <select
-                                value={form.type || "Type"}
-                                onChange={(e) => updateField("type", e.target.value)}
-                            >
+                            <select value={form.type || "Type"} onChange={(e) => updateField("type", e.target.value)}>
                                 <option>Type</option>
                                 <option>Patent</option>
                                 <option>Application</option>
@@ -490,11 +476,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
     );
 }
 
-function GeneratedKeyFeatures({
-    caseId = "016",
-    onStartAnotherCase,
-    onProceed
-}) {
+function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed }) {
     const [primaryFeatures, setPrimaryFeatures] = useState(INITIAL_PRIMARY_FEATURES);
     const [secondaryFeatures, setSecondaryFeatures] = useState(INITIAL_SECONDARY_FEATURES);
     const [keyStrings, setKeyStrings] = useState(INITIAL_KEY_STRINGS);
@@ -543,127 +525,111 @@ function GeneratedKeyFeatures({
 
     return (
         <>
-            <section className="content-wrap">
-                <div className="kf-review-card">
-                    <div className="kf-hero">
-                        <div>
-                            <span className="kf-case-badge">CASE {caseId}</span>
-                            <h1>Review generated key features</h1>
-                            <p>
-                                The input step is complete. Review the extracted features,
-                                optionally check key strings, then continue to results.
-                            </p>
-                        </div>
-
-                        <button
-                            type="button"
-                            className="kf-start-btn"
-                            onClick={onStartAnotherCase}
-                        >
-                            ← Start another case
-                        </button>
+            <section className="content-wrap key-feature-page">
+                <div className="kf-header-card">
+                    <div>
+                        <span className="kf-case-badge">CASE {caseId}</span>
+                        <h1>Review generated key features</h1>
+                        <p>
+                            The input step is complete. Review the extracted features, optionally check
+                            key strings, then continue to results.
+                        </p>
                     </div>
 
-                    <div className="kf-divider" />
+                    <button type="button" className="kf-start-btn" onClick={onStartAnotherCase}>
+                        <span>↪</span> Start New Analysis
+                    </button>
+                </div>
 
-                    <div className="kf-section-head">
-                        <div>
-                            <h2>Key Features</h2>
-                            <p>These features will be used for all selected outputs.</p>
-                        </div>
-
-                        <button
-                            type="button"
-                            className="kf-edit-btn"
-                            onClick={() => setIsEditingFeatures((prev) => !prev)}
-                        >
-                            ✎ {isEditingFeatures ? "Save Features" : "Edit Features"}
-                        </button>
-                    </div>
-
-                    <div className="kf-feature-grid">
-                        <FeatureList
-                            title="Primary Features"
-                            count={primaryFeatures.length}
-                            items={primaryFeatures}
-                            variant="primary"
-                            isEditing={isEditingFeatures}
-                            onChange={updatePrimaryFeature}
-                        />
-
-                        <FeatureList
-                            title="Secondary Features"
-                            count={secondaryFeatures.length}
-                            items={secondaryFeatures}
-                            variant="secondary"
-                            isEditing={isEditingFeatures}
-                            onChange={updateSecondaryFeature}
-                        />
+                <div className="kf-section-head">
+                    <div>
+                        <h2>Key Features</h2>
+                        <p>These features will be used for all selected outputs.</p>
                     </div>
 
                     <button
                         type="button"
-                        className="kf-advanced-row"
-                        onClick={() => setShowAdvanced((prev) => !prev)}
+                        className="kf-edit-btn"
+                        onClick={() => setIsEditingFeatures((prev) => !prev)}
                     >
-                        <div>
-                            <strong>{showAdvanced ? "⌄" : "›"} Advanced Search</strong>
-                            <span>
-                                Optional: review and edit patent search queries before running
-                                Patent Search.
-                            </span>
-                        </div>
-
-                        <em>9 Key Strings</em>
+                        ✎ {isEditingFeatures ? "Save Features" : "Edit Features"}
                     </button>
+                </div>
 
-                    {showAdvanced && (
-                        <div className="kf-strings-area">
-                            <div className="kf-section-head compact">
-                                <div>
-                                    <h2>Key Strings</h2>
-                                    <p>
-                                        Optional: review and edit patent search queries before
-                                        running Patent Search.
-                                    </p>
-                                </div>
+                <div className="kf-feature-grid">
+                    <FeatureList
+                        title="Primary Features"
+                        items={primaryFeatures}
+                        variant="primary"
+                        isEditing={isEditingFeatures}
+                        onChange={updatePrimaryFeature}
+                    />
 
-                                <button
-                                    type="button"
-                                    className="kf-edit-btn"
-                                    onClick={() => copyText(allKeyStringsText)}
-                                >
-                                    ⧉ Copy All
-                                </button>
+                    <FeatureList
+                        title="Secondary Features"
+                        items={secondaryFeatures}
+                        variant="secondary"
+                        isEditing={isEditingFeatures}
+                        onChange={updateSecondaryFeature}
+                    />
+                </div>
+
+                <button
+                    type="button"
+                    className="kf-advance-toggle"
+                    onClick={() => setShowAdvanced((prev) => !prev)}
+                >
+                    <span className={`kf-switch ${showAdvanced ? "is-on" : ""}`}>
+                        <i />
+                    </span>
+                    <strong>Advance Search</strong>
+                </button>
+
+                {showAdvanced && (
+                    <div className="kf-strings-area">
+                        <div className="kf-section-head compact">
+                            <div>
+                                <h2>Key Strings</h2>
+                                <p>
+                                    Optional: review and edit patent search queries before running Patent Search.
+                                </p>
                             </div>
 
-                            <div className="kf-strings-grid">
-                                {keyStrings.map((item, index) => (
-                                    <KeyStringCard
-                                        key={`${item.title}-${index}`}
-                                        item={item}
-                                        index={index}
-                                        onCopy={copyText}
-                                        onEdit={setEditingKeyStringIndex}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    )}
-
-                    <div className="kf-ready-box">
-                        <div>
-                            <h3>Key features are ready</h3>
-                            <p>
-                                Continue to results to review patent search, publications,
-                                products, drafts, downloads, and Barcode Comments.
-                            </p>
+                            <button
+                                type="button"
+                                className="kf-copy-all-btn"
+                                onClick={() => copyText(allKeyStringsText)}
+                            >
+                                ⧉ Copy All
+                            </button>
                         </div>
 
-                        <button type="button" onClick={onProceed}>
-                            › Proceed
-                        </button>
+                        <div className="kf-strings-grid">
+                            {keyStrings.map((item, index) => (
+                                <KeyStringCard
+                                    key={`${item.title}-${index}`}
+                                    item={item}
+                                    index={index}
+                                    onCopy={copyText}
+                                    onEdit={setEditingKeyStringIndex}
+                                />
+                            ))}
+                        </div>
                     </div>
+                )}
+
+                <div className="kf-ready-box">
+                    <div>
+                        <h3>Key features are ready</h3>
+                        <p>
+                            Continue to results to review patent search, publications, products, drafts,
+                            downloads, and Barcode Comments.
+                        </p>
+                    </div>
+
+                    <button type="button" onClick={onProceed}>
+                        › Proceed
+                    </button>
                 </div>
             </section>
 
