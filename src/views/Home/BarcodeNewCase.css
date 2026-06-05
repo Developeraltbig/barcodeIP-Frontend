@@ -1557,3 +1557,138 @@ svg {
         min-width: 820px;
     }
 }
+
+
+.sidebar-profile-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.sidebar-profile-menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(100% + 10px);
+    background: #ffffff;
+    border: 1px solid rgba(16, 24, 40, 0.08);
+    border-radius: 6px;
+    box-shadow: 0 12px 28px rgba(16, 24, 40, 0.14);
+    padding: 6px 0;
+    z-index: 50;
+    overflow: hidden;
+    animation: profileMenuFade 0.16s ease;
+}
+
+.profile-menu-item {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #4b5563;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.profile-menu-item svg {
+    color: #ef3b2d;
+    flex-shrink: 0;
+}
+
+.profile-menu-item:hover {
+    background: #fff4f2;
+    color: #111827;
+}
+
+.profile-menu-item.logout:hover {
+    background: #fff1f0;
+    color: #ef3b2d;
+}
+
+.sidebar-profile-btn {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid #d8dbe2;
+    border-radius: 6px;
+    background: #f7f8fa;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    cursor: pointer;
+    color: #374151;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sidebar-profile-btn:hover,
+.sidebar-profile-btn.active {
+    background: #ffffff;
+    border-color: #c9ced8;
+    box-shadow: 0 3px 10px rgba(16, 24, 40, 0.06);
+}
+
+.sidebar-profile-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ef3b2d;
+    flex-shrink: 0;
+}
+
+.sidebar-profile-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-chevron {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.profile-chevron.open {
+    transform: rotate(180deg);
+}
+
+@keyframes profileMenuFade {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar-profile-menu {
+        bottom: calc(100% + 8px);
+    }
+
+    .profile-menu-item {
+        padding: 11px 14px;
+        font-size: 13px;
+    }
+
+    .sidebar-profile-btn {
+        min-height: 42px;
+    }
+}

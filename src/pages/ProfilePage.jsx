@@ -77,7 +77,7 @@ function ProfilePage() {
                     </div>
 
                     <div className="profile-name-actions">
-                        <h2>Harshit Nehra</h2>
+                        <h2>Roshan</h2>
 
                         <div className="profile-upload-actions">
                             <button type="button" className="profile-upload-btn">

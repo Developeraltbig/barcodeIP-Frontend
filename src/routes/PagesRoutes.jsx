@@ -11,6 +11,7 @@ import Result_2 from '../views/auth/work-N/ResultN/Result_2';
 import Register from 'views/auth/work-N/Register';
 import ForgotPassword from '../views/auth/work-N/ForgotPassword';
 import ResetPassword from '../views/auth/work-N/ResetPassword';
+import LandingPage from '../views/LandingPage';
 
 // pages
 // const LoginPage = Loadable(lazy(() => import('views/auth/Login')));
@@ -25,10 +26,10 @@ const PagesRoutes = {
     {
       path: 'auth',
       children: [
-        // {
-        //   path: 'login',
-        //   element: <LoginPage />
-        // },
+        {
+          path: 'landing',
+          element: <LandingPage />
+        },
         {
           path: 'login',
           element: <LoginN />
@@ -36,7 +37,8 @@ const PagesRoutes = {
         {
           path: 'register',
           element: <Register />
-        },{
+        },
+        {
           path: 'forgot-password',
           element: <ForgotPassword />
         },
@@ -60,7 +62,7 @@ const PagesRoutes = {
           path: 'result2',
           element: <Result_2 />
         },
-        
+
 
         // {
         //   path: 'register',

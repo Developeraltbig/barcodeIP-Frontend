@@ -2,8 +2,8 @@ import { baseApi } from "../services/baseApi";
 
 export const patentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    
-    // GET: getById (from your screenshot)
+
+    // GET: getById
     getPatentById: builder.query({
       query: (id) => ({
         url: `/api/v1/patents/${id}`,
@@ -12,7 +12,7 @@ export const patentApi = baseApi.injectEndpoints({
       providesTags: ["Patent"],
     }),
 
-    // GET: GenerateAll (from your screenshot)
+    // GET: GenerateAll
     generateAllPatent: builder.query({
       query: (id) => ({
         url: `/api/v1/patents/generateall/${id}`,
@@ -22,7 +22,7 @@ export const patentApi = baseApi.injectEndpoints({
       invalidatesTags: ["Patent"],
     }),
 
-   
+
   }),
   overrideExisting: false,
 });
@@ -30,5 +30,5 @@ export const patentApi = baseApi.injectEndpoints({
 export const {
   useGetPatentByIdQuery,
   useLazyGenerateAllPatentQuery, // Use Lazy for actions triggered by events
-  
+
 } = patentApi;

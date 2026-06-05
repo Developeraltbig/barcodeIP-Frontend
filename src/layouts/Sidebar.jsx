@@ -1,10 +1,13 @@
-import React, { memo, useMemo, useState } from "react";
-import { ChevronDown, Clock, UserRound } from "lucide-react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
+import { ChevronDown, Clock, UserRound, LogOut } from "lucide-react";
 import { PAGES } from "../views/Home/constants";
 import { navItems } from "../views/Home/data";
 
-function Sidebar({ activePage, onPageChange }) {
+function Sidebar({ activePage, onPageChange, onLogout }) {
     const [showRecent, setShowRecent] = useState(false);
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
+
+    const profileRef = useRef(null);
 
     const recentProjects = useMemo(
         () => [
@@ -17,6 +20,37 @@ function Sidebar({ activePage, onPageChange }) {
         ],
         []
     );
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setShowProfileMenu(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const handleProfileClick = () => {
+        setShowProfileMenu(false);
+        onPageChange(PAGES.PROFILE);
+    };
+
+    const handleLogoutClick = () => {
+        setShowProfileMenu(false);
+
+        if (onLogout) {
+            onLogout();
+            return;
+        }
+
+        localStorage.clear();
+        window.location.href = "/login";
+    };
 
     return (
         <aside className="sidebar">
@@ -44,7 +78,9 @@ function Sidebar({ activePage, onPageChange }) {
                         <span className="nav-icon">{item.icon}</span>
                         <span className="nav-label">{item.label}</span>
 
-                        {item.badge ? <strong className="nav-badge">{item.badge}</strong> : null}
+                        {item.badge ? (
+                            <strong className="nav-badge">{item.badge}</strong>
+                        ) : null}
                     </button>
                 ))}
             </nav>
@@ -84,12 +120,36 @@ function Sidebar({ activePage, onPageChange }) {
                     </button>
                 </div>
 
-                <div className="sidebar-profile-wrap">
+                <div className="sidebar-profile-wrap" ref={profileRef}>
+                    {showProfileMenu ? (
+                        <div className="sidebar-profile-menu">
+                            <button
+                                type="button"
+                                className="profile-menu-item"
+                                onClick={handleProfileClick}
+                            >
+                                <UserRound size={14} />
+                                <span>Profile</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                className="profile-menu-item logout"
+                                onClick={handleLogoutClick}
+                            >
+                                <LogOut size={14} />
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    ) : null}
+
                     <button
                         type="button"
                         className={`sidebar-profile-btn ${activePage === PAGES.PROFILE ? "active" : ""
                             }`}
-                        onClick={() => onPageChange(PAGES.PROFILE)}
+                        onClick={() => setShowProfileMenu((prev) => !prev)}
+                        aria-expanded={showProfileMenu}
+                        aria-haspopup="menu"
                     >
                         <span className="sidebar-profile-avatar">
                             <UserRound size={17} />
@@ -97,7 +157,10 @@ function Sidebar({ activePage, onPageChange }) {
 
                         <span className="sidebar-profile-name">Harshit</span>
 
-                        <ChevronDown size={15} />
+                        <ChevronDown
+                            size={15}
+                            className={showProfileMenu ? "profile-chevron open" : "profile-chevron"}
+                        />
                     </button>
                 </div>
             </div>

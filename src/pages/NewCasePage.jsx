@@ -5,6 +5,7 @@ import { modules, projects } from "../views/Home/data";
 import ModuleCard from "../components/ModuleCard";
 import ProjectCard from "../components/ProjectCard";
 import KeyFeaturesReview from "../views/Home/KeyFeaturesReview";
+import { useCreateProjectMutation } from '../features/userApi';
 
 import { useFetchAllProjectsQuery } from "../features/userApi";
 
@@ -13,17 +14,20 @@ function NewCasePage({ onPageChange }) {
     const [selectedModules, setSelectedModules] = useState([]);
     const [showKeyFeatures, setShowKeyFeatures] = useState(false);
 
-    // const { data: projectsData } = useFetchAllProjectsQuery();
+    const { data: projectsData } = useFetchAllProjectsQuery();
+    const [createProject, { isLoading, isSuccess }] = useCreateProjectMutation();
 
-    // const projects = useMemo(() => {
-    //     if (!projectsData) return staticProjects;
+    const projects = useMemo(() => {
+        if (!projectsData) return null;
 
-    //     return (
-    //         projectsData.projects ||
-    //         projectsData.data ||
-    //         (Array.isArray(projectsData) ? projectsData : staticProjects)
-    //     );
-    // }, [projectsData]);
+        return (
+            projectsData.projects ||
+            projectsData.data ||
+            (Array.isArray(projectsData) ? projectsData : null)
+        );
+    }, [projectsData]);
+
+    console.log('projects', projects);
 
     const selectedModuleSet = useMemo(
         () => new Set(selectedModules),
@@ -38,7 +42,7 @@ function NewCasePage({ onPageChange }) {
         );
     }, []);
 
-    const handleGenerate = () => {
+    const handleGenerate = async () => {
         if (!inventionText.trim()) {
             alert("Please describe your invention first.");
             return;
@@ -49,7 +53,51 @@ function NewCasePage({ onPageChange }) {
             return;
         }
 
-        setShowKeyFeatures(true);
+        const formData = new FormData();
+        formData.append('text', inventionText);
+
+        // ✅ Send selectedModules as JSON array string
+        formData.append("checked", JSON.stringify(selectedModules));
+
+        console.log("inventionText", inventionText);
+        console.log("selectedModules array", selectedModules);
+        console.log("selectedModules length", selectedModules.length);
+
+        try {
+            const response = await createProject(formData).unwrap();
+
+            const newProjectData = response?.data || response;
+            const newProjectId = newProjectData?.project_id || newProjectData?.id || newProjectData?._id;
+
+            console.log("Newly Generated Project ID (Text):", newProjectId);
+
+            setShowKeyFeatures(true);
+
+            // setEnableButton(true)
+            // // SAVE DIRECTLY TO LOCAL STATE TO PREVENT CACHE ISSUES
+            // setActiveProject(newProjectData);
+
+            // // If patent is not checked, navigate directly to result page
+            // if (!selectedFilters.includes('patent') && newProjectId) {
+            //     dispatch(setSelectedProject({
+            //         ...newProjectData,
+            //         _id: newProjectId,
+            //         id: newProjectId
+            //     }));
+            //     navigate(`/result/${newProjectId}`);
+            // } else {
+            //     setShowAdvanceOption(true);
+            // }
+        } catch (err) {
+            console.error('Project Generation Failed:', err);
+            console.error('Project Generation Failed:11', err.status);
+            if (err.status == 400) {
+                alert(err.data.error);
+            }
+
+        }
+
+
     };
 
     const handleContinueFromKeyFeatures = (features) => {
