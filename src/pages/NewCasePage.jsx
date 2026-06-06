@@ -1,13 +1,17 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { PAGES } from "../views/Home/constants";
-import { modules, projects } from "../views/Home/data";
+import { modules } from "../views/Home/data";
 
 import ModuleCard from "../components/ModuleCard";
-import ProjectCard from "../components/ProjectCard";
 import KeyFeaturesReview from "../views/Home/KeyFeaturesReview";
-import { useCreateProjectMutation } from '../features/userApi';
+import {
+    useCreateProjectMutation,
+    useFetchAllProjectsQuery,
+} from "../features/userApi";
 
-import { useFetchAllProjectsQuery } from "../features/userApi";
+import SearchIcon from "../assets/icons/searchIcon.svg";
+import UploadIcon from "../assets/icons/uploadIcon.svg";
+import AiGeneratedKeyIcon from "../assets/icons/ai-generated-key-feature.svg";
 
 function NewCasePage({ onPageChange }) {
     const [inventionText, setInventionText] = useState("");
@@ -15,7 +19,7 @@ function NewCasePage({ onPageChange }) {
     const [showKeyFeatures, setShowKeyFeatures] = useState(false);
 
     const { data: projectsData } = useFetchAllProjectsQuery();
-    const [createProject, { isLoading, isSuccess }] = useCreateProjectMutation();
+    const [createProject, { isLoading }] = useCreateProjectMutation();
 
     const projects = useMemo(() => {
         if (!projectsData) return null;
@@ -27,7 +31,7 @@ function NewCasePage({ onPageChange }) {
         );
     }, [projectsData]);
 
-    console.log('projects', projects);
+    console.log("projects", projects);
 
     const selectedModuleSet = useMemo(
         () => new Set(selectedModules),
@@ -54,56 +58,34 @@ function NewCasePage({ onPageChange }) {
         }
 
         const formData = new FormData();
-        formData.append('text', inventionText);
-
-        // ✅ Send selectedModules as JSON array string
+        formData.append("text", inventionText);
         formData.append("checked", JSON.stringify(selectedModules));
-
-        console.log("inventionText", inventionText);
-        console.log("selectedModules array", selectedModules);
-        console.log("selectedModules length", selectedModules.length);
 
         try {
             const response = await createProject(formData).unwrap();
 
             const newProjectData = response?.data || response;
-            const newProjectId = newProjectData?.project_id || newProjectData?.id || newProjectData?._id;
+            const newProjectId =
+                newProjectData?.project_id ||
+                newProjectData?.id ||
+                newProjectData?._id;
 
-            console.log("Newly Generated Project ID (Text):", newProjectId);
+            console.log("Newly Generated Project ID:", newProjectId);
 
             setShowKeyFeatures(true);
-
-            // setEnableButton(true)
-            // // SAVE DIRECTLY TO LOCAL STATE TO PREVENT CACHE ISSUES
-            // setActiveProject(newProjectData);
-
-            // // If patent is not checked, navigate directly to result page
-            // if (!selectedFilters.includes('patent') && newProjectId) {
-            //     dispatch(setSelectedProject({
-            //         ...newProjectData,
-            //         _id: newProjectId,
-            //         id: newProjectId
-            //     }));
-            //     navigate(`/result/${newProjectId}`);
-            // } else {
-            //     setShowAdvanceOption(true);
-            // }
         } catch (err) {
-            console.error('Project Generation Failed:', err);
-            console.error('Project Generation Failed:11', err.status);
-            if (err.status == 400) {
-                alert(err.data.error);
+            console.error("Project Generation Failed:", err);
+
+            if (err?.status === 400) {
+                alert(err?.data?.error || "Something went wrong.");
+            } else {
+                alert("Project generation failed. Please try again.");
             }
-
         }
-
-
     };
 
     const handleContinueFromKeyFeatures = (features) => {
         console.log("Final key features:", features);
-
-        // Later you can send inventionText, selectedModules, and features to API here.
         onPageChange(PAGES.REVIEW);
     };
 
@@ -120,28 +102,32 @@ function NewCasePage({ onPageChange }) {
     }
 
     return (
-        <section className="content-wrap">
+        <section className="content-wrap new-case-wrap">
+            <div className="section-heading">
+                <h1>Describe your invention</h1>
+                <p>Select the outputs you want BarcodeIP to generate.</p>
+            </div>
+
             <div className="new-case-card">
-                <div className="section-heading">
-                    <h1>Describe your invention</h1>
-                    <p>Select the outputs you want BarcodeIP to generate.</p>
-                </div>
-
                 <div className="input-box">
-                    <div className="input-label">
-                        <span>⌕</span>
-                        INVENTION TEXT
-                    </div>
+                    <div className="input-label">INVENTION TEXT</div>
 
-                    <textarea
-                        value={inventionText}
-                        onChange={(e) => setInventionText(e.target.value)}
-                        placeholder="Describe your invention in plain English. Include the problem, main parts, how it works, and benefits."
-                    />
+                    <div className="textarea-wrap">
+                        <img src={SearchIcon} alt="" className="search-icon" />
+
+                        <textarea
+                            value={inventionText}
+                            onChange={(e) => setInventionText(e.target.value)}
+                            placeholder="Describe your invention in plain English. Include the problem, main parts, how it works and benefits."
+                        />
+                    </div>
 
                     <div className="input-footer">
                         <span>{inventionText.length} characters</span>
-                        <button type="button">▧ Upload file</button>
+
+                        <button type="button" className="upload-btn" aria-label="Upload file">
+                            <img src={UploadIcon} alt="" className="upload-icon" />
+                        </button>
                     </div>
                 </div>
 
@@ -161,11 +147,15 @@ function NewCasePage({ onPageChange }) {
                         className="generate-btn"
                         type="button"
                         onClick={handleGenerate}
+                        disabled={isLoading}
                     >
-                        ✦ Generate Key Features
+                        <img
+                            src={AiGeneratedKeyIcon}
+                            alt=""
+                            className="AiGeneratedKey-icon"
+                        />
+                        {isLoading ? "Generating..." : "Generate Key Features"}
                     </button>
-
-                    <p>You can review and edit features before reports are created.</p>
                 </div>
             </div>
         </section>

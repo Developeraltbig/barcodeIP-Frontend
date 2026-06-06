@@ -15,7 +15,9 @@ function ModuleCard({ item, checked, onToggle }) {
                 {checked ? "✓" : ""}
             </span>
 
-            <span className="module-icon">{item.icon}</span>
+            <span className="module-icon-box">
+                <img src={item.icon} alt="" className="module-card-icon" />
+            </span>
 
             <span className="module-text">
                 <strong>{item.title}</strong>

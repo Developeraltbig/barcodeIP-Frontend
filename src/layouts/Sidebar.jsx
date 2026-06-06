@@ -75,7 +75,7 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                         className={`nav-item ${activePage === item.id ? "active" : ""}`}
                         onClick={() => onPageChange(item.id)}
                     >
-                        <span className="nav-icon">{item.icon}</span>
+                        <span className="nav-icon"> <img src={item.icon} alt="" className="" /></span>
                         <span className="nav-label">{item.label}</span>
 
                         {item.badge ? (
@@ -155,7 +155,7 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                             <UserRound size={17} />
                         </span>
 
-                        <span className="sidebar-profile-name">Harshit</span>
+                        <span className="sidebar-profile-name">Roshan</span>
 
                         <ChevronDown
                             size={15}

@@ -1,26 +1,36 @@
 import { PAGES } from "./constants";
+import PatentSearchIcon from '../../assets/icons/patentSearchIcon.svg';
+import NonProvisionalDraftIcon from '../../assets/icons/nonProvisionalDraftIcon.svg';
+import ProductSearchIcon from '../../assets/icons/productSearchIcon.svg';
+import ProvisionalDraftIcon from '../../assets/icons/provisionalDraftIcon.svg';
+import PublicationSearchIcon from '../../assets/icons/publicationSearchIcon.svg';
+
+import DownloadIcon from "../../assets/icons/download.svg";
+import MyProjectIcon from "../../assets/icons/myProject.svg";
+import NewCaseIcon from "../../assets/icons/newCase.svg";
+import OoltoCommentsIcon from "../../assets/icons/oolto_comments.svg";
 
 export const navItems = [
     {
         id: PAGES.NEW_CASE,
         label: "New Case",
-        icon: "✦",
+        icon: NewCaseIcon,
     },
     {
         id: PAGES.PROJECTS,
         label: "My Projects",
-        icon: "▦",
+        icon: MyProjectIcon,
     },
     {
         id: PAGES.COMMENTS,
         label: "Barcode Comments",
-        icon: "▤",
+        icon: OoltoCommentsIcon,
         badge: 1,
     },
     {
         id: PAGES.DOWNLOADS,
         label: "Downloads",
-        icon: "⇩",
+        icon: DownloadIcon,
     },
 ];
 
@@ -29,31 +39,31 @@ export const modules = [
         id: "patent",
         title: "Patent Search",
         desc: "Find patents and mappings",
-        icon: "▣",
+        icon: PatentSearchIcon,
     },
     {
         id: "publish",
         title: "Publications Search",
         desc: "Find papers and references",
-        icon: "▤",
+        icon: PublicationSearchIcon,
     },
     {
         id: "product",
         title: "Product Comparison",
         desc: "Compare market products",
-        icon: "⬡",
+        icon: ProductSearchIcon,
     },
     {
         id: "provisional",
         title: "Provisional Draft",
         desc: "Create draft sections",
-        icon: "▤",
+        icon: ProvisionalDraftIcon,
     },
     {
         id: "nonProvisional",
         title: "Non-Provisional Draft",
         desc: "Create claims and diagrams",
-        icon: "▤",
+        icon: NonProvisionalDraftIcon,
     },
 ];
 
