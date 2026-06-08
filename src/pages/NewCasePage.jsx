@@ -71,8 +71,8 @@ function NewCasePage({ onPageChange }) {
                 newProjectData?._id;
 
             console.log("Newly Generated Project ID:", newProjectId);
-
             setShowKeyFeatures(true);
+
         } catch (err) {
             console.error("Project Generation Failed:", err);
 

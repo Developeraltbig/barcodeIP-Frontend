@@ -73,7 +73,7 @@ export const projects = [
         title: "Bimetallic Clamp and Tool for Live Tapping of Overhead Power Lines",
         date: "13 May 2026",
         status: "Completed",
-        commentStatus: "Not requested",
+        commentStatus: "Request Review",
         tags: [
             "Patent Search",
             "Publication Search",
@@ -87,7 +87,7 @@ export const projects = [
         title: "Power Amplifier with Selectable Parallel Amplifier Chains",
         date: "13 May 2026",
         status: "Processing",
-        commentStatus: "Not requested",
+        commentStatus: "Request Review",
         tags: ["Product Comparison"],
     },
     {
@@ -95,7 +95,7 @@ export const projects = [
         title: "Distributed Quantum-Resilient Key Management for IoT Edge Devices",
         date: "12 May 2026",
         status: "Completed",
-        commentStatus: "Not requested",
+        commentStatus: "Request Review",
         tags: [
             "Patent Search",
             "Publication Search",
@@ -109,7 +109,7 @@ export const projects = [
         title: "Artificial Intelligence and Machine Learning for Semantic Analysis",
         date: "07 May 2026",
         status: "Completed",
-        commentStatus: "Not requested",
+        commentStatus: "Request Review",
         tags: ["Patent Search"],
     },
     {
@@ -117,7 +117,7 @@ export const projects = [
         title: "Artificial Intelligence and Machine Learning Search Pipeline",
         date: "07 May 2026",
         status: "Comments Pending",
-        commentStatus: "In review",
+        commentStatus: "Request Review",
         tags: [
             "Patent Search",
             "Publication Search",

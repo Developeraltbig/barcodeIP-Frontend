@@ -4,6 +4,7 @@ import { barcodeComments } from "../views/Home/data";
 import CommentCard from "../components/CommentCard";
 import RequestCommentsModal from "../components/RequestCommentsModal";
 import "./OoltoComments.css";
+import RequestOoltoCommentIcon from "../assets/icons/requestOoltoComment.svg";
 
 function BarcodeCommentsPage() {
     const [showModal, setShowModal] = useState(false);
@@ -21,9 +22,7 @@ function BarcodeCommentsPage() {
 
                 <button className="oc-primary-action-btn" type="button" onClick={openModal}>
                     <span className="oc-btn-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M7 8h10M7 12h7M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-8l-5 3v-3H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
-                        </svg>
+                        <img src={RequestOoltoCommentIcon} alt="" className="request-oolto-icon" />
                     </span>
                     Request Oolto Comments
                 </button>

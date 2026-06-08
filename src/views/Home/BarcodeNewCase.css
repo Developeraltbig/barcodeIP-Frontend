@@ -417,7 +417,7 @@ svg {
 .profile-save-btn {
     border: 0;
     border-radius: var(--radius-md);
-    background: var(--primary);
+    background: linear-gradient(to right, #DF4833, #79271C);
     color: #ffffff;
     font-weight: 700;
     box-shadow: none;
@@ -441,7 +441,7 @@ svg {
 .content-wrap.new-case-wrap,
 .content-wrap:has(.new-case-card) {
     width: calc(100% - 36px);
-    max-width: 1180px;
+    max-width: 1265px;
     margin: 14px auto 40px;
     padding: 0;
 }
@@ -456,12 +456,11 @@ svg {
 .content-wrap.new-case-wrap .section-heading h1,
 .content-wrap:has(.new-case-card) .section-heading h1,
 .new-case-card>.section-heading h1 {
-    margin: 0;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-    color: #3e3e3e;
-    font-size: 24px;
-    font-weight: 700;
+    margin-top: 10%;
+    font-family: "Inter";
+    /* color: #3e3e3e; */
+    font-size: 40px;
+    font-weight: 600;
     line-height: 1.15;
     letter-spacing: 0;
 }
@@ -469,9 +468,9 @@ svg {
 .content-wrap.new-case-wrap .section-heading p,
 .content-wrap:has(.new-case-card) .section-heading p,
 .new-case-card>.section-heading p {
-    margin: 5px 0 0;
+    /* margin: 5px 0 0; */
     color: #777777;
-    font-size: 11px;
+    font-size: 17px;
     font-weight: 400;
     line-height: 1.4;
     letter-spacing: 0;
@@ -546,8 +545,9 @@ svg {
 .input-label {
     margin: 0 0 9px;
     color: #6f6f6f;
-    font-size: 9px;
-    font-weight: 700;
+    font-size: 15px;
+    font-style: "inter";
+    font-weight: 500;
     line-height: 1.2;
     letter-spacing: 0.8px;
     text-transform: uppercase;
@@ -583,8 +583,9 @@ svg {
 
 .input-box textarea::placeholder {
     color: #8b8b8b;
-    font-size: 9px;
-    font-weight: 400;
+    font-style: "inter";
+    font-size: 10px;
+    font-weight: 500;
     line-height: 1.4;
 }
 
@@ -615,17 +616,19 @@ svg {
 
 .input-footer {
     min-height: 20px;
-    margin-top: -21px;
+    margin-top: -31px;
     padding: 0 6px 0 0;
     position: relative;
     z-index: 3;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-style: "inter";
     color: #777777;
-    font-size: 8px;
-    font-weight: 400;
+    font-size: 10px;
+    font-weight: 500;
     line-height: 1;
+    margin-left: 11px;
 }
 
 .input-footer button,
@@ -748,8 +751,9 @@ svg {
 .module-text strong {
     display: block;
     color: #333333;
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: "inter";
     line-height: 1.2;
     white-space: normal;
 }
@@ -758,8 +762,9 @@ svg {
     display: block;
     margin-top: 2px;
     color: #8a8a8a;
-    font-size: 8px;
-    font-weight: 400;
+    font-size: 10px;
+    font-style: "inter";
+    font-weight: bold;
     line-height: 1.2;
     white-space: normal;
 }
@@ -773,18 +778,19 @@ svg {
 
 .generate-btn {
     min-width: 145px;
-    height: 31px;
+    height: 46px;
     border: 0;
     border-radius: 3px;
-    background: #b7332c;
+    background: linear-gradient(to right, #DF4833, #79271C);
     color: #ffffff;
     padding: 0 12px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 7px;
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 12px;
+    font-style: 'inter';
+    font-weight: bold;
     line-height: 1;
 }
 
@@ -902,7 +908,7 @@ svg {
 .projects-back-btn {
     height: 31px;
     min-width: 86px;
-    font-size: 12px;
+    font-size: 16px;
     margin-bottom: 18px;
 }
 
@@ -926,7 +932,7 @@ svg {
 .projects-new-btn {
     height: 38px;
     min-width: 142px;
-    font-size: 12px;
+    font-size: 16px;
     margin-bottom: 18px;
 }
 
@@ -980,7 +986,7 @@ svg {
 
 .projects-filter-btn {
     height: 34px;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .project-table-wrap {
@@ -995,15 +1001,16 @@ svg {
 }
 
 .project-table thead {
-    background: #fbf4f4;
+    background: #FCF5F5;
 }
 
 .project-table th {
     height: 52px;
     padding: 0 48px;
     color: #6f6f6f;
-    font-size: 11px;
-    font-weight: 800;
+    font-size: 12px;
+    font-style: "inter";
+    font-weight: 700;
     letter-spacing: 0.5px;
     text-align: left;
     text-transform: uppercase;
@@ -1040,62 +1047,81 @@ svg {
 
 .table-project-title {
     max-width: 365px;
-    color: #4a4a4a;
-    font-size: 15px;
+    color: #3E3E3E;
+    font-size: 16px;
+    font-style: "inter";
     line-height: 1.22;
     font-weight: 700;
 }
 
 .table-case-id {
     margin-top: 5px;
-    color: var(--brand-red);
-    font-size: 10px;
+    color: #DF4833;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.3px;
 }
 
 .project-created-cell {
-    color: #555555;
+    color: #676B6D;
     font-size: 13px;
     font-weight: 500;
     white-space: nowrap;
 }
 
 .table-tags {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(56px, 1fr));
-    gap: 5px;
-    max-width: 210px;
+    display: flex;
+    flex-wrap: wrap;
+    /* Smoothly wraps overflow tags to the next row */
+    gap: 6px 8px;
+    /* Clean spacing between rows and columns */
+    max-width: 100%;
+    /* Allows container to utilize full column space */
 }
 
 .table-tags span {
-    height: 17px;
-    border: 1px solid #d7d7d7;
-    border-radius: var(--radius-sm);
-    background: #ffffff;
-    color: var(--text-muted);
-    font-size: 8px;
-    font-weight: 500;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 8px;
+
+    /* Box Sizing & Dimensions */
+    height: 24px;
+    /* Clean vertical profile matching the screenshot */
+    padding: 0 12px;
+    /* Horizontal breathing room around text strings */
+
+    /* Aesthetics */
+    border: 1px solid #d7d7d7;
+    border-radius: 6px;
+    /* Gives it that smooth, rounded corner look */
+    background: #ffffff;
+
+    /* Typography */
+    color: var(--text-muted, #6f6f6f);
+    font-size: 11px;
+    font-weight: 500;
+
+    /* Structural Constraints */
     white-space: nowrap;
+    /* Keeps tag text on a single line */
+    width: auto;
+    /* Forces the box to size itself purely based on text length */
 }
 
 .request-review-btn {
-    height: 35px;
+    height: 40px;
     min-width: 116px;
     border: 1px solid var(--primary);
     border-radius: var(--radius-md);
     background: #ffffff;
     color: var(--primary);
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 500;
+    background-color: #FCF5F5;
 }
 
 .view-more-btn {
-    height: 35px;
+    height: 40px;
     min-width: 101px;
     font-size: 12px;
 }
@@ -1592,8 +1618,10 @@ svg {
     .section-heading p,
     .page-hero p,
     .projects-hero p {
-        font-size: 14px;
+        font-size: 17px;
         letter-spacing: 0.3px;
+        font-style: "inter";
+        font-weight: 500;
     }
 
     .input-box {

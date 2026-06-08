@@ -3,6 +3,13 @@ import { PAGES } from "../views/Home/constants";
 import { projects } from "../views/Home/data";
 import ProjectTableRow from "../components/ProjectTableRow";
 
+import NewAnalysisIcon from "../assets/icons/newAnalysis.svg";
+import LeftArrowIcon from "../assets/icons/leftArrow.svg";
+import FilterIcon from "../assets/icons/filter.svg";
+import SearchIcon from "../assets/icons/searchIcon.svg";
+
+
+
 function MyProjectsPage({ onPageChange }) {
     const [search, setSearch] = useState("");
 
@@ -40,7 +47,7 @@ function MyProjectsPage({ onPageChange }) {
                         type="button"
                         onClick={() => onPageChange(PAGES.NEW_CASE)}
                     >
-                        ← Back
+                        <span><img src={LeftArrowIcon} alt="" className="left-icon" /> Back</span>
                     </button>
 
                     <h1>My Projects</h1>
@@ -55,14 +62,14 @@ function MyProjectsPage({ onPageChange }) {
                     type="button"
                     onClick={() => onPageChange(PAGES.NEW_CASE)}
                 >
-                    ✦ New Analysis
+                    <span><img src={NewAnalysisIcon} alt="" className="new-analysis-icon" /> New Analysis</span>
                 </button>
             </div>
 
             <div className="projects-table-card">
                 <div className="projects-table-toolbar">
                     <div className="projects-search-control">
-                        <span>⌕</span>
+                        <span><img src={SearchIcon} alt="" className="search-icon" /></span>
 
                         <input
                             value={search}
@@ -72,7 +79,7 @@ function MyProjectsPage({ onPageChange }) {
                     </div>
 
                     <button className="projects-filter-btn" type="button">
-                        ⌯ Filter
+                        <span><img src={FilterIcon} alt="" className="filter-icon" /> Filter </span>
                     </button>
                 </div>
 

@@ -21,15 +21,17 @@
     font-size: 40px;
     line-height: 1.05;
     letter-spacing: -0.04em;
-    font-weight: 800;
+    font-weight: bold;
+    font-style: "inter";
 }
 
 .oc-page-hero p {
     margin: 0;
-    color: #818181;
+    color: #787878;
     font-size: 17px;
     line-height: 1.45;
-    font-weight: 500;
+    font-weight: normal;
+    font-style: "inter";
 }
 
 .oc-primary-action-btn,
