@@ -39,7 +39,7 @@
     height: 43px;
     border: 0;
     border-radius: 4px;
-    background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+    background: linear-gradient(to right, #DF4833, #79271C);
     color: #fff;
     padding: 0 22px;
     display: inline-flex;
@@ -47,7 +47,7 @@
     justify-content: center;
     gap: 10px;
     font-size: 13px;
-    font-weight: 800;
+    /* font-weight: 800; */
     cursor: pointer;
     box-shadow: 0 8px 18px rgba(175, 52, 41, 0.18);
     transition: 0.18s ease;
@@ -60,16 +60,16 @@
 }
 
 .oc-btn-icon {
-    width: 19px;
-    height: 19px;
+    width: 22px;
+    height: 22px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
 .oc-btn-icon svg {
-    width: 19px;
-    height: 19px;
+    width: 22px;
+    height: 22px;
     stroke: currentColor;
     stroke-width: 2.2;
 }
@@ -105,7 +105,7 @@
 .oc-comment-main h3 {
     max-width: 520px;
     margin: 0 0 7px;
-    color: #444;
+    color: #3E3E3E;
     font-size: 18px;
     line-height: 1.18;
     letter-spacing: -0.015em;
@@ -139,7 +139,6 @@
     align-items: center;
     justify-content: center;
     font-size: 11px;
-    font-weight: 800;
     box-shadow: 0 7px 14px rgba(175, 52, 41, 0.18);
 }
 
@@ -226,11 +225,11 @@
 
 .oc-request-modal-header h2 {
     margin: 0 0 4px;
-    color: #d84635;
-    font-size: 28px;
+    color: #DF4833;
+    font-size: 22px;
     line-height: 1.1;
     letter-spacing: -0.03em;
-    font-weight: 800;
+    /* font-weight: 800; */
 }
 
 .oc-request-modal-header p {
@@ -246,11 +245,11 @@
     height: 52px;
     border: 0;
     border-radius: 999px;
-    background: linear-gradient(135deg, #e04b39 0%, #8f271f 100%);
-    color: #fff;
+    /* background: linear-gradient(135deg, #e04b39 0%, #8f271f 100%); */
+    /* color: #fff; */
     font-size: 46px;
-    line-height: 48px;
-    font-weight: 300;
+    /* line-height: 48px; */
+    /* font-weight: 300; */
     cursor: pointer;
     box-shadow: 0 12px 22px rgba(175, 52, 41, 0.2);
 }
@@ -275,11 +274,11 @@
 
 .oc-selected-project-card h3 {
     margin: 0 0 8px;
-    color: #444;
+    color: #3E3E3E;
     font-size: 23px;
     line-height: 1.22;
     letter-spacing: -0.02em;
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 
 .oc-selected-project-card p {
@@ -401,7 +400,7 @@
     min-width: 202px;
     height: 52px;
     border-radius: 5px;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 /* Responsive */

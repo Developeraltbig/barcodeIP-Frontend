@@ -1,5 +1,9 @@
 import React, { memo, useState } from "react";
 import Icon from "./icons";
+import CloseIcon from "../../../assets/icons/closeIcon.svg";
+import RequestOoltoComment1Icon from "../../../assets/icons/requestOoltoComment1.svg";
+import RequestOoltoCommentIcon from "../../../assets/icons/requestOoltoComment.svg";
+
 
 const MODULE_OPTIONS = [
   "Patent Search",
@@ -39,7 +43,7 @@ function RequestOoltoCommentsModal({ project, onClose }) {
         <div className="rr-comment-modal-head">
           <div className="rr-comment-title">
             <span>
-              <Icon name="comment" />
+              <img src={RequestOoltoComment1Icon} alt="" className="requestOolto-icon" />
             </span>
             <div>
               <h2>Request Oolto Comments</h2>
@@ -48,7 +52,7 @@ function RequestOoltoCommentsModal({ project, onClose }) {
           </div>
 
           <button className="rr-modal-close" type="button" onClick={onClose}>
-            ×
+            <img src={CloseIcon} alt="" className="close-icon" />
           </button>
         </div>
 
@@ -93,7 +97,7 @@ function RequestOoltoCommentsModal({ project, onClose }) {
 
         <div className="rr-comment-footer">
           <button type="button" className="rr-submit-comment" onClick={submitRequest}>
-            <Icon name="comment" />
+            <img src={RequestOoltoCommentIcon} alt="" className="requestOolto-icon" />
             Submit Request
           </button>
         </div>

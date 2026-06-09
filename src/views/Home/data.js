@@ -143,7 +143,7 @@ export const barcodeComments = [
         title: "Bimetallic Clamp and Tool for Live Tapping of Overhead Power Lines",
         status: "Comments Pending",
         requestedAt: "13 May 2026, 3:18 PM",
-        tags: ["Patent Search", "Product Comparison", "Provisional Draft"],
+        tags: ["Patent Search", "Product Comparison", "Provisional Draft", "Publication Search", "Publication Search"],
     },
     {
         id: "BC-1019",

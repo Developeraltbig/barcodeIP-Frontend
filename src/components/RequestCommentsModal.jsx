@@ -1,5 +1,8 @@
 import React, { memo, useMemo, useState } from "react";
 import { projects } from "../views/Home/data";
+import CloseIcon from "../assets/icons/closeIcon.svg";
+import RequestOoltoComment1Icon from "../assets/icons/requestOoltoComment1.svg";
+import RequestOoltoCommentIcon from "../assets/icons/requestOoltoComment.svg";
 
 const MODULE_OPTIONS = [
     "Patent Search",
@@ -44,9 +47,7 @@ function RequestCommentsModal({ onClose }) {
                 <div className="oc-request-modal-header">
                     <div className="oc-modal-title-row">
                         <span className="oc-modal-title-icon">
-                            <svg viewBox="0 0 24 24" fill="none">
-                                <path d="M7 8h10M7 12h7M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-8l-5 3v-3H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
-                            </svg>
+                            <img src={RequestOoltoComment1Icon} alt="" className="requestOolto-icon" />
                         </span>
 
                         <div>
@@ -56,7 +57,7 @@ function RequestCommentsModal({ onClose }) {
                     </div>
 
                     <button className="oc-modal-close-btn" type="button" onClick={onClose}>
-                        ×
+                        <img src={CloseIcon} alt="" className="close-icon" />
                     </button>
                 </div>
 
@@ -120,9 +121,7 @@ function RequestCommentsModal({ onClose }) {
                 <div className="oc-request-modal-footer">
                     <button className="oc-submit-request-btn" type="button" onClick={handleSubmit}>
                         <span className="oc-btn-icon">
-                            <svg viewBox="0 0 24 24" fill="none">
-                                <path d="M7 8h10M7 12h7M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-8l-5 3v-3H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
-                            </svg>
+                            <img src={RequestOoltoCommentIcon} alt="" className="requestOolto-icon" />
                         </span>
                         Submit Request
                     </button>

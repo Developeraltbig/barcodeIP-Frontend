@@ -12,12 +12,13 @@
 }
 
 .downloads-hero h1 {
-    margin: 0 0 6px;
-    color: #3d3d3d;
-    font-size: 42px;
+    margin-top: 30px;
+    color: #3E3E3E;
+    font-size: 40px;
     line-height: 1.05;
     letter-spacing: -0.035em;
-    font-weight: 800;
+    font-weight: 600;
+    font-family: 'Inter';
 }
 
 .downloads-hero p {
@@ -57,11 +58,12 @@
 
 .download-info h2 {
     margin: 0 0 7px;
-    color: #464646;
-    font-size: 21px;
+    color: #3E3E3E;
+    font-size: 18px;
     line-height: 1.18;
-    letter-spacing: -0.015em;
-    font-weight: 700;
+    letter-spacing: -0.010em;
+    font-weight: 500;
+    font-family: 'Inter';
 }
 
 .download-info p {
@@ -83,7 +85,7 @@
     height: 43px;
     border: 0;
     border-radius: 4px;
-    background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+    background: linear-gradient(to right, #DF4833, #79271C);
     color: #ffffff;
     padding: 0 22px;
     display: inline-flex;
@@ -91,7 +93,7 @@
     justify-content: center;
     gap: 10px;
     font-size: 14px;
-    font-weight: 800;
+    font-weight: 500;
     cursor: pointer;
     box-shadow: 0 9px 18px rgba(175, 52, 41, 0.18);
     transition: 0.18s ease;

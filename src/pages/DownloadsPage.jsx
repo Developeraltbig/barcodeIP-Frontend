@@ -1,5 +1,6 @@
 import React from "react";
 import "./DownloadPage.css";
+import DownloadIcons from "../assets/icons/DownloadIcon1.svg";
 
 const downloadFiles = [
     {
@@ -41,11 +42,7 @@ const downloadFiles = [
 
 function DownloadIcon() {
     return (
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 3v11" />
-            <path d="m7 10 5 5 5-5" />
-            <path d="M5 19h14" />
-        </svg>
+        <img src={DownloadIcons} alt="" className="download-icon" />
     );
 }
 

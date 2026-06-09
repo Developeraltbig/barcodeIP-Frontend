@@ -15,7 +15,6 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
             { title: "Bimetallic Clamp and........", caseId: "016" },
             { title: "Bimetallic Clamp and........", caseId: "016" },
             { title: "Bimetallic Clamp and........", caseId: "016" },
-            { title: "Bimetallic Clamp and........", caseId: "016" },
             { title: "Bimetallic Clamp and........", caseId: "016" }
         ],
         []
@@ -78,9 +77,9 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                         <span className="nav-icon"> <img src={item.icon} alt="" className="" /></span>
                         <span className="nav-label">{item.label}</span>
 
-                        {item.badge ? (
+                        {/* {item.badge ? (
                             <strong className="nav-badge">{item.badge}</strong>
-                        ) : null}
+                        ) : null} */}
                     </button>
                 ))}
             </nav>
