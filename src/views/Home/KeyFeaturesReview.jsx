@@ -1,6 +1,18 @@
 import React, { memo, useEffect, useMemo, useState } from "react";
 import "./GeneratedKeyFeatures.css";
 
+import EditIcon from "../../assets/icons/editicon.svg";
+import newAnalysisIcon from "../../assets/icons/newAnalysis.svg";
+import CloseIcon from "../../assets/icons/closeIcon.svg";
+import CopyIcon from "../../assets/icons/copy.svg";
+import ArrowRightIconIcon from "../../assets/icons/arrowright-filled.svg";
+import RequestOoltoComment1Icon from "../../assets/icons/requestOoltoComment1.svg";
+import PlusIcon from "../../assets/icons/plus.svg";
+
+
+
+
+
 const INITIAL_PRIMARY_FEATURES = [
     "A clamp configured for tapping power from a bare aluminium overhead power line while connecting to a copper service entry conductor.",
     "A clamp body shaped to hook onto, seat against, and remain positioned on an overhead live conductor before final tightening.",
@@ -208,11 +220,11 @@ function KeyStringCard({ item, index, onCopy, onEdit }) {
 
                 <div>
                     <button type="button" className="copy" onClick={() => onCopy(item.string)}>
-                        ⧉ Copy
+                        <img src={CopyIcon} alt="" className="copy-icon" /> Copy
                     </button>
 
                     <button type="button" className="edit" onClick={() => onEdit(index)}>
-                        ✎ Edit
+                        <img src={EditIcon} alt="" className="edit-icon" /> Edit
                     </button>
                 </div>
             </div>
@@ -271,7 +283,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
             <div className="ks-modal" onMouseDown={(e) => e.stopPropagation()}>
                 <div className="ks-modal-header">
                     <div className="ks-modal-title-wrap">
-                        <span className="ks-modal-icon">✎</span>
+                        <span><img src={RequestOoltoComment1Icon} alt="" className="requestoolto-icon" /></span>
                         <div>
                             <h3>Edit Key String {String(index + 1).padStart(2, "0")}</h3>
                             <p>Update this search query and optional filters before Patent Search.</p>
@@ -279,7 +291,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                     </div>
 
                     <button className="ks-modal-close" type="button" onClick={onClose}>
-                        ×
+                        <img src={CloseIcon} alt="" className="close-icon" />
                     </button>
                 </div>
 
@@ -335,12 +347,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                                     value={inventorInput}
                                     onChange={(e) => setInventorInput(e.target.value)}
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => addValue("inventors", inventorInput, setInventorInput)}
-                                >
-                                    +
-                                </button>
+                                <img src={PlusIcon} alt="" className="plus-icon" onClick={() => addValue("inventors", inventorInput, setInventorInput)} />
                             </div>
 
                             {(form.inventors || []).length > 0 && (
@@ -349,7 +356,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                                         <span key={inventor}>
                                             {inventor}
                                             <button type="button" onClick={() => removeValue("inventors", inventor)}>
-                                                ×
+                                                <img src={CloseIcon} alt="" className="close-icon" />
                                             </button>
                                         </span>
                                     ))}
@@ -366,12 +373,8 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                                     value={assigneeInput}
                                     onChange={(e) => setAssigneeInput(e.target.value)}
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => addValue("assignees", assigneeInput, setAssigneeInput)}
-                                >
-                                    +
-                                </button>
+                                <img src={PlusIcon} alt="" className="plus-icon" onClick={() => addValue("assignees", assigneeInput, setAssigneeInput)} />
+
                             </div>
 
                             {(form.assignees || []).length > 0 && (
@@ -380,7 +383,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                                         <span key={assignee}>
                                             {assignee}
                                             <button type="button" onClick={() => removeValue("assignees", assignee)}>
-                                                ×
+                                                <img src={CloseIcon} alt="" className="close-icon" />
                                             </button>
                                         </span>
                                     ))}
@@ -468,11 +471,11 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
                     </button>
 
                     <button className="ks-update-btn" type="button" onClick={handleSubmit}>
-                        ✓ Update
+                        Save Changes
                     </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
@@ -537,7 +540,7 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
                     </div>
 
                     <button type="button" className="kf-start-btn" onClick={onStartAnotherCase}>
-                        <span>↪</span> Start New Analysis
+                        <span><img src={newAnalysisIcon} alt="" className="newAnalysis-icon" /></span> Start New Analysis
                     </button>
                 </div>
 
@@ -552,7 +555,7 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
                         className="kf-edit-btn"
                         onClick={() => setIsEditingFeatures((prev) => !prev)}
                     >
-                        ✎ {isEditingFeatures ? "Save Features" : "Edit Features"}
+                        <img src={EditIcon} alt="" className="edit-icon" /> {isEditingFeatures ? "Save Features" : "Edit Features"}
                     </button>
                 </div>
 
@@ -600,7 +603,7 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
                                 className="kf-copy-all-btn"
                                 onClick={() => copyText(allKeyStringsText)}
                             >
-                                ⧉ Copy All
+                                <img src={CopyIcon} alt="" className="copy-icon" /> Copy All
                             </button>
                         </div>
 
@@ -628,7 +631,7 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
                     </div>
 
                     <button type="button" onClick={onProceed}>
-                        › Proceed
+                        <img src={ArrowRightIconIcon} alt="" className="proceed-icon" /> Proceed
                     </button>
                 </div>
             </section>

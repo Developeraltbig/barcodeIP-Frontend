@@ -50,10 +50,10 @@
 
 .kf-header-card h1 {
     margin: 0 0 4px;
-    color: #454545;
+    color: #3E3E3E;
     font-size: 30px;
     line-height: 1.05;
-    letter-spacing: -0.03em;
+    /* letter-spacing: -0.03em; */
     font-weight: 800;
 }
 
@@ -62,9 +62,10 @@
 .kf-ready-box p {
     margin: 0;
     color: var(--kf-muted);
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.45;
-    font-weight: 500;
+    font-weight: 400;
+    font-family: 'Inter';
 }
 
 .kf-start-btn {
@@ -124,9 +125,10 @@
     height: 34px;
     border-radius: 4px;
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 500;
     cursor: pointer;
     transition: 0.18s ease;
+    font-family: "Inter";
 }
 
 .kf-edit-btn {
@@ -304,7 +306,7 @@
 }
 
 .kf-switch.is-on {
-    background: var(--kf-red);
+    background: linear-gradient(to right, #DF4833, #79271C);
 }
 
 .kf-switch.is-on i {
@@ -409,12 +411,14 @@
 }
 
 .kf-string-actions button {
-    height: 22px;
+    height: 26px;
     border-radius: 3px;
     padding: 0 9px;
-    font-size: 10px;
-    font-weight: 800;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
+    font-family: 'Inter';
+    width: 70px;
 }
 
 .kf-string-actions .copy {
@@ -458,10 +462,11 @@
     height: 38px;
     border: 0;
     border-radius: 4px;
-    background: linear-gradient(90deg, var(--kf-red) 0%, var(--kf-red-dark) 100%);
+    background: linear-gradient(to right, #DF4833, #79271C);
     color: #ffffff;
-    font-size: 12px;
-    font-weight: 900;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: 'Inter';
     cursor: pointer;
     box-shadow: 0 8px 18px rgba(188, 54, 43, 0.2);
 }
@@ -480,8 +485,8 @@
 }
 
 .ks-modal {
-    width: min(620px, 100%);
-    max-height: 92vh;
+    width: min(920px, 100%);
+    max-height: 95vh;
     overflow: hidden;
     background: #ffffff;
     border: 1px solid #dedede;
@@ -534,7 +539,7 @@
 }
 
 .ks-modal-close {
-    width: 30px;
+    width: 40px;
     height: 30px;
     border: 0;
     background: transparent;
@@ -672,13 +677,13 @@
 
 .ks-cancel-btn {
     border: 1px solid #d8d8d8;
-    background: #ffffff;
-    color: #454545;
+    background: #FCF5F5;
+    color: #e75c5c;
 }
 
 .ks-update-btn {
     border: 0;
-    background: var(--kf-red);
+    background: linear-gradient(to right, #DF4833, #79271C);
     color: #ffffff;
 }
 
