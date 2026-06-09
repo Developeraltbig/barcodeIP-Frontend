@@ -1,5 +1,9 @@
 import React, { memo } from "react";
 import ActionButton from "./ActionButton";
+import leftArrowIcon from "../../../assets/icons/leftArrow.svg";
+import FeatureSearchIcon from "../../../assets/icons/feature-search.svg";
+import requestOoltoCommentIcon from "../../../assets/icons/requestOoltoComment1.svg";
+import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 
 function ResultHeader({
   project,
@@ -11,7 +15,7 @@ function ResultHeader({
   return (
     <>
       <button className="rr-back-btn" type="button" onClick={onBack}>
-        ← Back
+        <img src={leftArrowIcon} alt="" className="leftArrow-icon" /> Back
       </button>
 
       <div className="rr-project-card">
@@ -21,16 +25,16 @@ function ResultHeader({
         </div>
 
         <div className="rr-project-actions">
-          <ActionButton variant="light" icon="feature" onClick={onViewKeyFeatures}>
-            View Key Features
+          <ActionButton variant="light" onClick={onViewKeyFeatures}>
+            <img src={FeatureSearchIcon} alt="" className="featureSearch-icon" /> View Key Features
           </ActionButton>
 
-          <ActionButton variant="outline" icon="comment" onClick={onRequestComments}>
-            Request Oolto Comments
+          <ActionButton variant="outline" onClick={onRequestComments}>
+            <img src={requestOoltoCommentIcon} alt="" className="requestOolto-icon" /> Request Oolto Comments
           </ActionButton>
 
-          <ActionButton icon="download" onClick={onDownloadReport}>
-            Download Report
+          <ActionButton onClick={onDownloadReport}>
+            <img src={DownloadIcon} alt="" className="Download-icon" /> Download Report
           </ActionButton>
         </div>
       </div>

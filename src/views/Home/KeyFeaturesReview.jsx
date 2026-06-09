@@ -10,9 +10,6 @@ import RequestOoltoComment1Icon from "../../assets/icons/requestOoltoComment1.sv
 import PlusIcon from "../../assets/icons/plus.svg";
 
 
-
-
-
 const INITIAL_PRIMARY_FEATURES = [
     "A clamp configured for tapping power from a bare aluminium overhead power line while connecting to a copper service entry conductor.",
     "A clamp body shaped to hook onto, seat against, and remain positioned on an overhead live conductor before final tightening.",

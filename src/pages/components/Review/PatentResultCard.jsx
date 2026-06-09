@@ -1,12 +1,16 @@
 import React, { memo } from "react";
 import Icon from "./icons";
 
+import overlapSummaryIcon from "../../../assets/icons/overlapSummary.svg";
+import viewMappingIcon from "../../../assets/icons/viewMapping.svg";
+import carbonViewIcon from "../../../assets/icons/carbon_view.svg";
+
 function PatentResultCard({ result, onViewMapping, onViewDetails, onViewOverlap }) {
   return (
     <article className="rr-patent-card">
       <div className="rr-result-left">
         <div className="rr-result-meta">
-          <strong>#{result.id}</strong>
+          <strong># {result.id}</strong>
           <span>{result.publication}</span>
           <em>{result.date}</em>
           <b>Mapping Ready</b>
@@ -35,17 +39,17 @@ function PatentResultCard({ result, onViewMapping, onViewDetails, onViewOverlap 
         </div>
 
         <button type="button" className="rr-view-mapping-btn" onClick={onViewMapping}>
-          <Icon name="mapping" />
+          <img src={viewMappingIcon} alt="" className="viewMapping-icon" />
           View Mapping
         </button>
 
         <button type="button" className="rr-light-result-btn" onClick={onViewOverlap}>
-          <Icon name="chart" />
+          <img src={overlapSummaryIcon} alt="" className="overlapSummary-icon" />
           Overlap Summary
         </button>
 
         <button type="button" className="rr-light-result-btn" onClick={onViewDetails}>
-          ⓘ Details
+          <img src={carbonViewIcon} alt="" className="carbon_view-icon" /> Details
         </button>
       </div>
     </article>

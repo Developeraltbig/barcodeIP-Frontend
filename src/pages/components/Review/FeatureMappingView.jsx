@@ -4,11 +4,17 @@ import {
   FEATURE_MAPPING_ROWS
 } from "../../data/reviewResultsData";
 
+import overlapSummaryIcon from "../../../assets/icons/overlapSummary1.svg";
+import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
+import LeftArrowIcon from "../../../assets/icons/leftArrow.svg";
+
+
+
 function FeatureMappingView({ patent, onBack, onOpenOverlap, onDownload }) {
   return (
     <>
       <button className="rr-back-btn" type="button" onClick={onBack}>
-        ← Back
+        <img src={LeftArrowIcon} alt="" className="leftArrow-icon" /> Back
       </button>
 
       <div className="rr-subpage-header">
@@ -27,11 +33,13 @@ function FeatureMappingView({ patent, onBack, onOpenOverlap, onDownload }) {
             Strict Mode
           </button>
 
-          <ActionButton variant="outline" icon="chart" onClick={onOpenOverlap}>
+          <ActionButton variant="outline" onClick={onOpenOverlap}>
+            <img src={overlapSummaryIcon} alt="" className="overlapSummary-icon" />
             Overlap Summary
           </ActionButton>
 
-          <ActionButton icon="download" onClick={onDownload}>
+          <ActionButton onClick={onDownload}>
+            <img src={DownloadIcon} alt="" className="download-icon" />
             Download Mapping
           </ActionButton>
         </div>

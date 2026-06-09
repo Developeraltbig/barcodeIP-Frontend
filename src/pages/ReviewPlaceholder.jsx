@@ -30,6 +30,8 @@ import {
 
 import "./ReviewResultsTabs.css";
 
+
+
 function ReviewPlaceholder({ onPageChange }) {
     const [activeTab, setActiveTab] = useState(TAB_KEYS.PATENT);
     const [activeView, setActiveView] = useState("results");

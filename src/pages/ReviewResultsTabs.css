@@ -1,6 +1,6 @@
 /* Review Results + clean child components */
 .rr-page {
-  width: min(1120px, calc(100% - 48px));
+  width: min(1320px, calc(100% - 48px));
   margin: 0 auto;
   padding: 42px 0 80px;
   color: #454545;
@@ -12,7 +12,7 @@
   min-width: 86px;
   border: 0;
   border-radius: 4px;
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
   color: #fff;
   padding: 0 16px;
   font-size: 12px;
@@ -33,7 +33,7 @@
   height: 34px;
   border: 0;
   border-radius: 4px;
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
   color: #fff;
   padding: 0 14px;
   display: inline-flex;
@@ -466,7 +466,7 @@
 .rr-result-meta b {
   height: 22px;
   border-radius: 4px;
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
   color: #fff;
   padding: 0 12px;
   display: inline-flex;
@@ -583,7 +583,7 @@
 
 .rr-view-mapping-btn {
   border: 0;
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
   color: #fff;
 }
 
@@ -776,7 +776,7 @@
   height: 42px;
   border: 0;
   border-radius: 5px;
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
   color: #fff;
   display: inline-flex;
   align-items: center;
@@ -917,13 +917,13 @@
 }
 
 .rr-level-pill {
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
   color: #fff;
   border: 0;
 }
 
 .rr-level-pill.not-found {
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
 }
 
 /* Patent detail page */
@@ -1166,7 +1166,7 @@
   width: fit-content;
   height: 25px;
   border-radius: 4px;
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
   color: #fff;
   padding: 0 12px;
   display: inline-flex;
@@ -1204,7 +1204,7 @@
 .rr-placeholder-progress span {
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
   display: block;
   transition: width 0.25s ease;
 }
@@ -1217,6 +1217,7 @@
 
 /* Responsive */
 @media (max-width: 1050px) {
+
   .rr-project-card,
   .rr-results-summary-head,
   .rr-subpage-header,
@@ -1454,7 +1455,7 @@
   height: 26px;
   border: 0;
   border-radius: 4px;
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
   color: #fff;
   padding: 0 14px;
   font-size: 9px;
@@ -1558,7 +1559,7 @@
   height: 27px;
   border: 0;
   border-radius: 4px;
-  background: linear-gradient(90deg, #d84635 0%, #8f271f 100%);
+  background: linear-gradient(to right, #DF4833, #79271C);
   color: #fff;
   padding: 0 12px;
   display: inline-flex;
@@ -1654,6 +1655,7 @@
 }
 
 @media (max-width: 700px) {
+
   .rr-publication-panel,
   .rr-product-panel {
     padding: 16px;
@@ -1864,7 +1866,7 @@
   transform: translateY(-1px);
 }
 
-.rr-draft-section-card > p {
+.rr-draft-section-card>p {
   min-height: 86px;
   margin: 0;
   padding: 29px 28px 30px;
@@ -1938,7 +1940,7 @@
     flex-direction: column;
   }
 
-  .rr-draft-section-card > p {
+  .rr-draft-section-card>p {
     padding: 18px 14px;
   }
 

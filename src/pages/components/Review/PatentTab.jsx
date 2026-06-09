@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import ActionButton from "./ActionButton";
 import PatentResultCard from "./PatentResultCard";
+import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 
 function ProcessingSteps({ steps }) {
   if (!steps?.length) return null;
@@ -57,8 +58,8 @@ function PatentTab({
               Strict Mode
             </button>
 
-            <ActionButton icon="download" onClick={onDownloadPatentReport}>
-              Patent Report
+            <ActionButton onClick={onDownloadPatentReport}>
+              <img src={DownloadIcon} alt="" className="Download-icon" /> Patent Report
             </ActionButton>
           </div>
         </div>

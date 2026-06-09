@@ -6,6 +6,10 @@ import {
   PATENT_CITATIONS
 } from "../../data/reviewResultsData";
 
+import viewMappingIcon from "../../../assets/icons/carbon_view1.svg";
+import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
+import LeftArrowIcon from "../../../assets/icons/leftArrow.svg";
+
 function DataTable({ rows }) {
   return (
     <div className="rr-data-table">
@@ -23,7 +27,7 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
   return (
     <>
       <button className="rr-back-btn" type="button" onClick={onBack}>
-        ← Back
+        <img src={LeftArrowIcon} alt="" className="LeftArrow-icon" /> Back
       </button>
 
       <div className="rr-detail-title-card">
@@ -36,11 +40,13 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
         </div>
 
         <div className="rr-subpage-actions">
-          <ActionButton variant="outline" icon="eye" onClick={onViewMapping}>
+          <ActionButton variant="outline" onClick={onViewMapping}>
+            <img src={viewMappingIcon} alt="" className="viewMapping-icon" />
             View Mapping
           </ActionButton>
 
-          <ActionButton icon="download" onClick={onDownloadMapping}>
+          <ActionButton onClick={onDownloadMapping}>
+            <img src={DownloadIcon} alt="" className="download-icon" />
             Download Mapping
           </ActionButton>
         </div>

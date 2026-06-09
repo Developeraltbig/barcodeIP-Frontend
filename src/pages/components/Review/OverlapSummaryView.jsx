@@ -1,6 +1,9 @@
 import React, { memo } from "react";
 import ActionButton from "./ActionButton";
 import { OVERLAP_BREAKDOWN } from "../../data/reviewResultsData";
+import viewMappingIcon from "../../../assets/icons/carbon_view1.svg";
+import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
+import LeftArrowIcon from "../../../assets/icons/leftArrow.svg";
 
 function OverlapSummaryView({
   patent,
@@ -13,7 +16,7 @@ function OverlapSummaryView({
   return (
     <>
       <button className="rr-back-btn rr-large-back" type="button" onClick={onBack}>
-        ← Back
+        <img src={LeftArrowIcon} alt="" className="leftArrow-icon" /> Back
       </button>
 
       <div className="rr-overlap-top-card">
@@ -37,11 +40,13 @@ function OverlapSummaryView({
             Strict Mode
           </button>
 
-          <ActionButton variant="outline" icon="eye" onClick={onViewMapping}>
+          <ActionButton variant="outline" onClick={onViewMapping}>
+            <img src={viewMappingIcon} alt="" className="viewMapping-icon" />
             View Mapping
           </ActionButton>
 
-          <ActionButton icon="download" onClick={onDownloadMapping}>
+          <ActionButton onClick={onDownloadMapping}>
+            <img src={DownloadIcon} alt="" className="download-icon" />
             Download Mapping
           </ActionButton>
         </div>

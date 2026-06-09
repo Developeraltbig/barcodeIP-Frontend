@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import ActionButton from "./ActionButton";
 import PublicationCard from "./PublicationCard";
+import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 
 function PublicationTab({ results, onDownloadPublications, onViewPublication }) {
   return (
@@ -11,7 +12,8 @@ function PublicationTab({ results, onDownloadPublications, onViewPublication }) 
           <p>Related non-patent literature, papers, public disclosures, and technical references.</p>
         </div>
 
-        <ActionButton icon="download" onClick={onDownloadPublications}>
+        <ActionButton onClick={onDownloadPublications}>
+          <img src={DownloadIcon} alt="" className="download-icon" />
           Download Publications
         </ActionButton>
       </div>

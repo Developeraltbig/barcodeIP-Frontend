@@ -1,6 +1,12 @@
 import React, { memo, useState } from "react";
 import Icon from "./icons";
 
+import DownArrowIcon from "../../../assets/icons/down_arrow.svg";
+import UpArrowIcon from "../../../assets/icons/up_arrow.svg";
+import ViewIcon from "../../../assets/icons/carbon_view.svg";
+
+
+
 function ProductCard({ item, onViewDetails }) {
   const [open, setOpen] = useState(Boolean(item.breakdownOpen));
 
@@ -32,7 +38,7 @@ function ProductCard({ item, onViewDetails }) {
         type="button"
         onClick={() => setOpen((prev) => !prev)}
       >
-        {open ? "Hide" : "Show"} feature breakdown⌄
+        {open ? "Hide" : "Show"} feature breakdown {open ? <img src={DownArrowIcon} alt="" className="downArrow-icon" /> : <img src={UpArrowIcon} alt="" className="UpArrow-icon" />}
       </button>
 
       {open && item.features?.length > 0 && (

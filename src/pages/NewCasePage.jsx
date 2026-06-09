@@ -47,41 +47,42 @@ function NewCasePage({ onPageChange }) {
     }, []);
 
     const handleGenerate = async () => {
-        if (!inventionText.trim()) {
-            alert("Please describe your invention first.");
-            return;
-        }
+        setShowKeyFeatures(true);
 
-        if (selectedModules.length === 0) {
-            alert("Please select at least one output.");
-            return;
-        }
+        // if (!inventionText.trim()) {
+        //     alert("Please describe your invention first.");
+        //     return;
+        // }
 
-        const formData = new FormData();
-        formData.append("text", inventionText);
-        formData.append("checked", JSON.stringify(selectedModules));
+        // if (selectedModules.length === 0) {
+        //     alert("Please select at least one output.");
+        //     return;
+        // }
 
-        try {
-            const response = await createProject(formData).unwrap();
+        // const formData = new FormData();
+        // formData.append("text", inventionText);
+        // formData.append("checked", JSON.stringify(selectedModules));
 
-            const newProjectData = response?.data || response;
-            const newProjectId =
-                newProjectData?.project_id ||
-                newProjectData?.id ||
-                newProjectData?._id;
+        // try {
+        //     const response = await createProject(formData).unwrap();
 
-            console.log("Newly Generated Project ID:", newProjectId);
-            setShowKeyFeatures(true);
+        //     const newProjectData = response?.data || response;
+        //     const newProjectId =
+        //         newProjectData?.project_id ||
+        //         newProjectData?.id ||
+        //         newProjectData?._id;
 
-        } catch (err) {
-            console.error("Project Generation Failed:", err);
+        //     console.log("Newly Generated Project ID:", newProjectId);
 
-            if (err?.status === 400) {
-                alert(err?.data?.error || "Something went wrong.");
-            } else {
-                alert("Project generation failed. Please try again.");
-            }
-        }
+        // } catch (err) {
+        //     console.error("Project Generation Failed:", err);
+
+        //     if (err?.status === 400) {
+        //         alert(err?.data?.error || "Something went wrong.");
+        //     } else {
+        //         alert("Project generation failed. Please try again.");
+        //     }
+        // }
     };
 
     const handleContinueFromKeyFeatures = (features) => {
