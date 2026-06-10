@@ -1,5 +1,6 @@
 import React, { memo, useState } from "react";
 import { Camera, Eye } from "lucide-react";
+import carbonViewIcons from "../assets/icons/carbon_view1.svg";
 
 function ProfilePage() {
     const [profileForm, setProfileForm] = useState({
@@ -227,7 +228,7 @@ function PasswordInput({ label, name, value, visible, onChange, onToggle }) {
                 />
 
                 <button type="button" onClick={onToggle}>
-                    <Eye size={15} />
+                    <img src={carbonViewIcons} alt="" className="carbon-view-icon" />
                 </button>
             </div>
         </div>

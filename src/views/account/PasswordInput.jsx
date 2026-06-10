@@ -12,10 +12,10 @@ const PasswordInput = ({ label, placeholder, onChange, value }) => {
       <TextField
         fullWidth
         // 2. Pass the value from the parent so the input is "Controlled"
-        value={value} 
+        value={value}
         // 3. Pass the onChange handler so the parent knows when typing happens
         onChange={onChange}
-        
+
         type={showPassword ? 'text' : 'password'}
         placeholder={placeholder}
         variant="outlined"

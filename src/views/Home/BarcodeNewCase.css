@@ -14,7 +14,7 @@
     --input-soft-bg: #fbf3f3;
 
     --text-main: #3f3f3f;
-    --text-muted: #777777;
+    --text-muted: #676B6D;
     --text-soft: #8b8b8b;
 
     --brand-red: #c9362d;
@@ -419,8 +419,9 @@ svg {
     border-radius: var(--radius-md);
     background: linear-gradient(to right, #DF4833, #79271C);
     color: #ffffff;
-    font-weight: 700;
+    font-weight: 400;
     box-shadow: none;
+    font-family: 'Inter';
 }
 
 .primary-action-btn:hover,
@@ -1142,18 +1143,20 @@ svg {
 
 .profile-title-block h1 {
     margin: 0;
-    color: #3e3e3e;
-    font-size: 32px;
+    color: #3E3E3E;
+    font-size: 40px;
+    font-family: 'Inter';
     line-height: 1.1;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.5px;
 }
 
 .profile-title-block p {
     margin: 6px 0 0;
-    color: #858585;
-    font-size: 13px;
+    color: #787878;
+    font-size: 17px;
     font-weight: 400;
+    font-family: 'Inter';
 }
 
 .profile-info-card,
@@ -1217,10 +1220,11 @@ svg {
 
 .profile-name-actions h2 {
     margin: 0 0 22px;
-    color: #444444;
-    font-size: 24px;
+    color: #3E3E3E;
+    font-size: 30px;
     line-height: 1.1;
-    font-weight: 700;
+    font-weight: 600;
+    font-family: 'Inter';
 }
 
 .profile-upload-actions {
@@ -1234,9 +1238,9 @@ svg {
     height: 34px;
     border-radius: 2px;
     padding: 0 22px;
-    font-size: 11px;
-    font-weight: 500;
-    background: linear-gradient(180deg, #d9483e, #8f211c);
+    font-size: 15px;
+    font-weight: 400;
+    background: linear-gradient(to right, #DF4833, #79271C);
 }
 
 .profile-delete-btn,
@@ -1244,10 +1248,11 @@ svg {
     height: 34px;
     border: 1px solid #d43e36;
     border-radius: 2px;
-    background: #ffffff;
+    background: #FCF5F5;
     color: #d43e36;
     padding: 0 22px;
-    font-size: 11px;
+    font-size: 15px;
+    font-family: 'Inter';
     font-weight: 500;
 }
 
@@ -1269,9 +1274,10 @@ svg {
     gap: 9px;
     padding: 0 17px;
     color: var(--text-muted);
-    font-size: 11px;
+    font-size: 15px;
     font-weight: 400;
     box-shadow: 0 5px 14px rgba(0, 0, 0, 0.04);
+    font-family: 'Inter';
 }
 
 .gender-box input {
@@ -1290,9 +1296,10 @@ svg {
 .form-group label {
     display: block;
     margin-bottom: 7px;
-    color: #6f6f6f;
-    font-size: 11px;
+    color: #676B6D;
+    font-size: 15px;
     font-weight: 400;
+    font-family: 'Inter';
     letter-spacing: 0;
     text-transform: none;
 }
@@ -1480,7 +1487,7 @@ svg {
 
 .btn-danger {
     border: 0;
-    background: linear-gradient(180deg, #d9483e, #8f211c);
+    background: linear-gradient(to right, #DF4833, #79271C);
     color: #ffffff;
 }
 
