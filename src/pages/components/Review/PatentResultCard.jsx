@@ -10,7 +10,7 @@ function PatentResultCard({ result, onViewMapping, onViewDetails, onViewOverlap 
     <article className="rr-patent-card">
       <div className="rr-result-left">
         <div className="rr-result-meta">
-          <strong># {result.id}</strong>
+          <strong>#{result.id}</strong>
           <span>{result.publication}</span>
           <em>{result.date}</em>
           <b>Mapping Ready</b>
@@ -19,8 +19,8 @@ function PatentResultCard({ result, onViewMapping, onViewDetails, onViewOverlap 
         <h3>{result.title}</h3>
 
         <div className="rr-result-submeta">
-          <span>Assignee {result.assignee}</span>
-          <span>Priority {result.priority}</span>
+          <span><b>Assignee</b> {result.assignee}</span>
+          <span><b>Priority</b> {result.priority}</span>
         </div>
 
         <p>{result.description}</p>

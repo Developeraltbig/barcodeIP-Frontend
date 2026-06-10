@@ -51,9 +51,9 @@ function RequestOoltoCommentsModal({ project, onClose }) {
             </div>
           </div>
 
-          <button className="rr-modal-close" type="button" onClick={onClose}>
-            <img src={CloseIcon} alt="" className="close-icon" />
-          </button>
+          <img src={CloseIcon} alt="" className="close-icon" onClick={onClose} />
+          {/* <button className="rr-modal-close" onClick={onClose}>
+          </button> */}
         </div>
 
         <div className="rr-comment-case-box">
