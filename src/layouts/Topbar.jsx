@@ -45,85 +45,86 @@ function Topbar({
     };
 
     return (
-        <>
-            <header className="topbar">
-                <div />
+        // <>
+        //     <header className="topbar">
+        //         <div />
 
-                <div className="profile-menu-wrap" ref={menuRef}>
-                    <button
-                        className={`profile-btn ${isProfileMenuOpen ? "active" : ""}`}
-                        type="button"
-                        onClick={() => setIsProfileMenuOpen((prev) => !prev)}
-                    >
-                        <span className="profile-avatar">
-                            <UserIcon />
-                        </span>
+        //         <div className="profile-menu-wrap" ref={menuRef}>
+        //             <button
+        //                 className={`profile-btn ${isProfileMenuOpen ? "active" : ""}`}
+        //                 type="button"
+        //                 onClick={() => setIsProfileMenuOpen((prev) => !prev)}
+        //             >
+        //                 <span className="profile-avatar">
+        //                     <UserIcon />
+        //                 </span>
 
-                        <span>{userName}</span>
+        //                 <span>{userName}</span>
 
-                        <span className="chevron">
-                            <ChevronDownIcon />
-                        </span>
-                    </button>
+        //                 <span className="chevron">
+        //                     <ChevronDownIcon />
+        //                 </span>
+        //             </button>
 
-                    {isProfileMenuOpen && (
-                        <div className="profile-dropdown">
-                            <button
-                                type="button"
-                                className="profile-dropdown-item"
-                                onClick={handleProfileClick}
-                            >
-                                <UserSmallIcon />
-                                <span>Profile</span>
-                            </button>
+        //             {isProfileMenuOpen && (
+        //                 <div className="profile-dropdown">
+        //                     <button
+        //                         type="button"
+        //                         className="profile-dropdown-item"
+        //                         onClick={handleProfileClick}
+        //                     >
+        //                         <UserSmallIcon />
+        //                         <span>Profile</span>
+        //                     </button>
 
-                            <button
-                                type="button"
-                                className="profile-dropdown-item"
-                                onClick={handleLogoutClick}
-                            >
-                                <LogoutIcon />
-                                <span>Log Out</span>
-                            </button>
-                        </div>
-                    )}
-                </div>
-            </header>
+        //                     <button
+        //                         type="button"
+        //                         className="profile-dropdown-item"
+        //                         onClick={handleLogoutClick}
+        //                     >
+        //                         <LogoutIcon />
+        //                         <span>Log Out</span>
+        //                     </button>
+        //                 </div>
+        //             )}
+        //         </div>
+        //     </header>
 
-            {isLogoutModalOpen && (
-                <div className="logout-modal-overlay">
-                    <div className="logout-modal">
-                        <div className="logout-modal-icon">
-                            <LogoutIcon />
-                        </div>
+        //     {isLogoutModalOpen && (
+        //         <div className="logout-modal-overlay">
+        //             <div className="logout-modal">
+        //                 <div className="logout-modal-icon">
+        //                     <LogoutIcon />
+        //                 </div>
 
-                        <h3>Log out?</h3>
+        //                 <h3>Log out?</h3>
 
-                        <p>
-                            Are you sure you want to log out from your BarcodeIP workspace?
-                        </p>
+        //                 <p>
+        //                     Are you sure you want to log out from your BarcodeIP workspace?
+        //                 </p>
 
-                        <div className="logout-modal-actions">
-                            <button
-                                type="button"
-                                className="btn-secondary"
-                                onClick={() => setIsLogoutModalOpen(false)}
-                            >
-                                Cancel
-                            </button>
+        //                 <div className="logout-modal-actions">
+        //                     <button
+        //                         type="button"
+        //                         className="btn-secondary"
+        //                         onClick={() => setIsLogoutModalOpen(false)}
+        //                     >
+        //                         Cancel
+        //                     </button>
 
-                            <button
-                                type="button"
-                                className="btn-danger"
-                                onClick={handleConfirmLogout}
-                            >
-                                Log Out
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </>
+        //                     <button
+        //                         type="button"
+        //                         className="btn-danger"
+        //                         onClick={handleConfirmLogout}
+        //                     >
+        //                         Log Out
+        //                     </button>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     )}
+        // </>
+        <></>
     );
 }
 
