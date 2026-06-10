@@ -3,7 +3,7 @@ import Icon from "./icons";
 
 import DownArrowIcon from "../../../assets/icons/down_arrow.svg";
 import UpArrowIcon from "../../../assets/icons/up_arrow.svg";
-import ViewIcon from "../../../assets/icons/carbon_view.svg";
+import ViewIcon from "../../../assets/icons/icons_view.svg";
 
 
 
@@ -28,7 +28,7 @@ function ProductCard({ item, onViewDetails }) {
         <div className="rr-product-score">{item.score}</div>
 
         <button className="rr-product-details-btn" type="button" onClick={onViewDetails}>
-          <Icon name="eye" />
+          <img src={ViewIcon} alt="" className="viewIcon-icon" />
           View Details
         </button>
       </div>

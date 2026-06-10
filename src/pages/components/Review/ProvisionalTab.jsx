@@ -2,6 +2,7 @@ import React, { memo, useMemo, useState } from "react";
 import ActionButton from "./ActionButton";
 import DraftSectionCard from "./DraftSectionCard";
 import { PROVISIONAL_SECTIONS } from "../../data/draftTabsData";
+import DownloadIcon from "../../../assets/icons/download.svg";
 
 function ProvisionalTab({
   sections = PROVISIONAL_SECTIONS,
@@ -53,7 +54,8 @@ function ProvisionalTab({
             <p>Editable provisional specification sections generated from the invention disclosure.</p>
           </div>
 
-          <ActionButton icon="download" onClick={onDownload}>
+          <ActionButton onClick={onDownload}>
+            <img src={DownloadIcon} alt="" className="download-icon" />
             Download Provisional
           </ActionButton>
         </div>

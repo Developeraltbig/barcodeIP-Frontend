@@ -1,5 +1,10 @@
 import React, { memo, useState } from "react";
 
+import CopyFilesIcon from "../../../assets/icons/copyFile.svg";
+import EditIcon from "../../../assets/icons/edit_icon.svg";
+import RegenerateIcon from "../../../assets/icons/regenerate_icon.svg";
+
+
 function DraftIconButton({ children, label, onClick }) {
   return (
     <button type="button" title={label} aria-label={label} onClick={onClick}>
@@ -39,15 +44,15 @@ function DraftSectionCard({ section, isActive, onFocus }) {
 
         <div className="rr-draft-actions">
           <DraftIconButton label="Copy section" onClick={copySection}>
-            ⧉
+            <img src={CopyFilesIcon} alt="" className="CopyFiles-icon" />
           </DraftIconButton>
 
           <DraftIconButton label="Edit section" onClick={() => setIsEditing((prev) => !prev)}>
-            ✎
+            <img src={EditIcon} alt="" className="edit-icon" />
           </DraftIconButton>
 
           <DraftIconButton label="Regenerate section" onClick={regenerateSection}>
-            ⟳
+            <img src={RegenerateIcon} alt="" className="Regenerate-icon" />
           </DraftIconButton>
         </div>
       </header>
