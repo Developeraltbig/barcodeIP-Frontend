@@ -1,11 +1,8 @@
 import React, { memo, useState } from "react";
-import Icon from "./icons";
 
 import DownArrowIcon from "../../../assets/icons/down_arrow.svg";
 import UpArrowIcon from "../../../assets/icons/up_arrow.svg";
 import ViewIcon from "../../../assets/icons/icons_view.svg";
-
-
 
 function ProductCard({ item, onViewDetails }) {
   const [open, setOpen] = useState(Boolean(item.breakdownOpen));
@@ -13,7 +10,11 @@ function ProductCard({ item, onViewDetails }) {
   return (
     <article className="rr-product-card">
       <div className="rr-product-main-row">
-        <img className="rr-product-image" src={item.image} alt={item.title} />
+        <img
+          className="rr-product-image"
+          src={item.image}
+          alt={item.title}
+        />
 
         <div className="rr-product-content">
           <div className="rr-product-domain">{item.domain}</div>
@@ -22,15 +23,21 @@ function ProductCard({ item, onViewDetails }) {
 
           <p>{item.description}</p>
 
-          <strong>{item.price}</strong>
+          <div className="rr-product-footer">
+            <strong>{item.price}</strong>
+
+            <button
+              className="rr-product-details-btn"
+              type="button"
+              onClick={() => onViewDetails?.(item)}
+            >
+              <img src={ViewIcon} alt="" className="viewIcon-icon" />
+              View Details
+            </button>
+          </div>
         </div>
 
         <div className="rr-product-score">{item.score}</div>
-
-        <button className="rr-product-details-btn" type="button" onClick={onViewDetails}>
-          <img src={ViewIcon} alt="" className="viewIcon-icon" />
-          View Details
-        </button>
       </div>
 
       <button
