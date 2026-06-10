@@ -471,7 +471,7 @@ const Login = () => {
                       disabled={isLoading}
                       sx={{
                         background:
-                          "linear-gradient(90deg, #DF4232 0%, #872319 100%)",
+                          "linear-gradient(to right, #DF4833, #79271C);",
                         "&:hover": {
                           background:
                             "linear-gradient(90deg, #cf3b2d 0%, #741d15 100%)"
