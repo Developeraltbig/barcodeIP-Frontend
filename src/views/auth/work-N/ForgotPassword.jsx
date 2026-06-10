@@ -1,25 +1,33 @@
-import React, { useState } from 'react';
-import { Box, Typography, TextField, Button, Alert, CircularProgress, Link } from '@mui/material';
-import { useForgotPasswordMutation } from '../../../features/slice/auth/authApi';
-import { toast } from 'react-toastify';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState } from "react";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Alert,
+  CircularProgress,
+  Link
+} from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
+import { useForgotPasswordMutation } from "../../../features/slice/auth/authApi";
+import { toast } from "react-toastify";
+
+import Logo from "assets/images/barcodeip-logo.png";
 
 const ForgotPassword = ({ onBack }) => {
-  const [email, setEmail] = useState('');
-  const [forgotPassword, { isLoading, error: apiError }] = useForgotPasswordMutation();
+  const [email, setEmail] = useState("");
+  const [forgotPassword, { isLoading, error: apiError }] =
+    useForgotPasswordMutation();
   const [isSent, setIsSent] = useState(false);
 
-  // Improved Error Handling Logic
   const getErrorMessage = () => {
     if (!apiError) return null;
 
-    // 1. Check if it's a 500 or generic server error
-    if (apiError.status === 500 || apiError.status === 'FETCH_ERROR') {
+    if (apiError.status === 500 || apiError.status === "FETCH_ERROR") {
       return "This email is not registered with us, or the server is unavailable.";
     }
 
-    // 2. Check for specific backend message (e.g., 404 or 400)
-    if ('data' in apiError) {
+    if ("data" in apiError) {
       return apiError.data?.message || "Something went wrong. Please try again.";
     }
 
@@ -28,9 +36,8 @@ const ForgotPassword = ({ onBack }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Basic Client-side check
-    if (!email) {
+
+    if (!email.trim()) {
       toast.error("Please enter your email");
       return;
     }
@@ -40,84 +47,193 @@ const ForgotPassword = ({ onBack }) => {
       toast.success("Reset link sent!");
       setIsSent(true);
     } catch (err) {
-      // We don't need to set state here because RTK Query 
-      // updates the 'apiError' object automatically.
       console.error("Backend Error Object:", err);
     }
   };
 
   return (
-    <div className="container-fluid bg-light min-vh-100 d-flex align-items-center justify-content-center p-3">
-      <Box className="card border-0 shadow-lg p-4 p-md-5 rounded-5 w-100" sx={{ maxWidth: '500px', bgcolor: '#fff' }}>
-        <div className="text-center mb-4">
-          <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>
-            Forgot Password?
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Enter your email to receive a password reset link.
-          </Typography>
-        </div>
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ mb: "18px" }}>
+        <Box
+          component="img"
+          src={Logo}
+          alt="logo"
+          sx={{
+            width: "72px",
+            mb: "14px",
+            filter: "brightness(0)"
+          }}
+        />
 
-        {/* This will show your custom "not registered" message even on 500 errors */}
-        {getErrorMessage() && (
-          <Alert severity="error" variant="outlined" className="mb-4 rounded-3">
-            {getErrorMessage()}
-          </Alert>
-        )}
+        <Typography
+          sx={{
+            fontSize: {
+              xs: "49px",
+              md: "49px"
+            },
+            lineHeight: 1.05,
+            fontWeight: 600,
+            letterSpacing: "-0.045em",
+            color: "#050505",
+            mb: "12px",
+            fontFamily: 'Figtree',
+          }}
+        >
+          Forgot Password?
+        </Typography>
 
-        {isSent ? (
-          <div className="text-center">
-            <Alert severity="success" className="mb-4">
-              Reset link send to <b>{email}</b>, you will receive an email shortly.
-            </Alert>
-            <Button component={RouterLink} to="/pages/auth/login" fullWidth variant="outlined" className="py-2" onClick={onBack}>
-              Back to Login
-            </Button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} noValidate>
-            <div className="mb-4">
-              <label className="form-label small fw-bold text-muted text-uppercase mb-2">Email Address</label>
-              <TextField
-                fullWidth
-                placeholder="name@company.com"
-                variant="outlined"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={!!apiError}
-              />
-            </div>
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isLoading}
-              className="py-3 fw-bold"
-              sx={{ height: '52px', backgroundColor: '#E94E34' }}
-            >
-              {isLoading ? <CircularProgress size={24} color="#E94E34" /> : 'Send Reset Link'}
-            </Button>
-
-            <div className="text-center mt-4">
-              <Link
-                component="button" // Change from RouterLink to button
-                type="button"
-                onClick={onBack} // This triggers the card swap
-                className="text-decoration-none fw-bold small border-0 bg-transparent"
-                sx={{
-                  color: '#E94E34',
-                  cursor: 'pointer',
-                  verticalAlign: 'middle'
-                }}
-              >
-                ← Back to Login
-              </Link>
-            </div>
-          </form>
-        )}
+        <Typography
+          sx={{
+            fontSize: "18.6px",
+            lineHeight: 1.35,
+            color: "#666666",
+            maxWidth: "520px",
+            fontWeight: "400",
+            fontFamily: 'Figtree',
+          }}
+        >
+          Enter your registered email address and we will send you a password
+          reset link.
+        </Typography>
       </Box>
-    </div>
+
+      {getErrorMessage() && (
+        <Alert
+          severity="error"
+          variant="outlined"
+          sx={{
+            mb: 3,
+            borderRadius: "8px",
+            borderColor: "#f3c5c0",
+            backgroundColor: "#fff7f6",
+            color: "#9b2f22"
+          }}
+        >
+          {getErrorMessage()}
+        </Alert>
+      )}
+
+      {isSent ? (
+        <Box>
+          <Alert
+            severity="success"
+            sx={{
+              mb: "28px",
+              borderRadius: "8px",
+              backgroundColor: "#f0fdf4",
+              color: "#166534"
+            }}
+          >
+            Reset link sent to <strong>{email}</strong>. Please check your email
+            inbox shortly.
+          </Alert>
+
+          <Button
+            fullWidth
+            variant="contained"
+            type="button"
+            onClick={onBack}
+            sx={{
+              height: "56px",
+              borderRadius: "8px",
+              fontSize: "18px",
+              fontWeight: 700,
+              textTransform: "none",
+              background: "linear-gradient(90deg, #DF4232 0%, #872319 100%)",
+              boxShadow: "none",
+              "&:hover": {
+                background: "linear-gradient(90deg, #cf3b2d 0%, #741d15 100%)",
+                boxShadow: "none"
+              }
+            }}
+          >
+            Back to Login
+          </Button>
+        </Box>
+      ) : (
+        <Box component="form" onSubmit={handleSubmit} noValidate>
+          <Box sx={{ mb: "28px" }}>
+            <Typography
+              sx={{
+                color: "#333333",
+                fontSize: "20px",
+                fontWeight: 500,
+                mb: "10px"
+              }}
+            >
+              Your email
+            </Typography>
+
+            <TextField
+              fullWidth
+              placeholder=""
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={!!apiError}
+              autoComplete="email"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  height: "62px",
+                  borderRadius: "7px",
+                  backgroundColor: "#ffffff",
+                  boxShadow: "0 12px 26px rgba(0, 0, 0, 0.07)"
+                }
+              }}
+            />
+          </Box>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={isLoading}
+            sx={{
+              height: "56px",
+              borderRadius: "8px",
+              fontSize: "18px",
+              fontWeight: 700,
+              textTransform: "none",
+              background: "linear-gradient(to right, #DF4833, #79271C);",
+              boxShadow: "none",
+              "&:hover": {
+                background: "linear-gradient(90deg, #cf3b2d 0%, #741d15 100%)",
+                boxShadow: "none"
+              }
+            }}
+          >
+            {isLoading ? (
+              <CircularProgress size={24} sx={{ color: "#ffffff" }} />
+            ) : (
+              "Send Reset Link"
+            )}
+          </Button>
+
+          <Box sx={{ textAlign: "center", mt: "26px" }}>
+            <Link
+              component="button"
+              type="button"
+              onClick={onBack}
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                color: "#D94130",
+                textDecoration: "none",
+                fontWeight: 800,
+                fontSize: "15px",
+                border: 0,
+                background: "transparent",
+                cursor: "pointer"
+              }}
+            >
+              <ArrowBack sx={{ fontSize: 18 }} />
+              Back to Login
+            </Link>
+          </Box>
+        </Box>
+      )}
+    </Box>
   );
 };
 
