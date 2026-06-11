@@ -48,7 +48,7 @@ a {
     width: 100%;
     min-height: 100vh;
     overflow-x: hidden;
-    background: #fff;
+    /* background: #fff; */
 }
 
 /* HERO */
@@ -56,9 +56,9 @@ a {
 .landing-hero {
     width: 100%;
     padding: 18px 20px 0;
-    background:
+    /* background:
         radial-gradient(circle at 50% 42%, rgba(255, 116, 48, 0.85) 0%, rgba(255, 152, 85, 0.76) 36%, rgba(255, 223, 190, 0.9) 80%),
-        linear-gradient(180deg, #fff7ef 0%, #ffc19b 100%);
+        linear-gradient(180deg, #fff7ef 0%, #ffc19b 100%); */
     border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
 }
@@ -85,8 +85,8 @@ a {
     gap: 6px;
     padding: 5px;
     border: 1px solid rgba(125, 44, 28, 0.14);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.72);
+    border-radius: 9px;
+    background: #FFFFFF;
     backdrop-filter: blur(10px);
 }
 

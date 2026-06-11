@@ -2,10 +2,13 @@ import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, Clock, UserRound, LogOut } from "lucide-react";
 import { PAGES } from "../views/Home/constants";
 import { navItems } from "../views/Home/data";
+import { useSelector, useDispatch } from 'react-redux';
 
 function Sidebar({ activePage, onPageChange, onLogout }) {
     const [showRecent, setShowRecent] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const dashboard = useSelector((state) => state.auth.user || {});
+    console.log('dashboard --', dashboard);
 
     const profileRef = useRef(null);
 
@@ -154,8 +157,7 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                             <UserRound size={17} />
                         </span>
 
-                        <span className="sidebar-profile-name">Roshan</span>
-
+                        <span className="sidebar-profile-name">{dashboard.email.split('@')[0]}</span>
                         <ChevronDown
                             size={15}
                             className={showProfileMenu ? "profile-chevron open" : "profile-chevron"}

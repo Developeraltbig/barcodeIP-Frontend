@@ -1,5 +1,6 @@
 import React from "react";
 import "./LandingPage.css";
+import background from "../assets/landingPage/Background.jpg";
 
 const navLinks = ["Platform", "Search", "Drafts", "Pricing"];
 
@@ -59,25 +60,28 @@ const testimonials = [
 function LandingPage() {
     return (
         <main className="landing-page">
-            <header className="landing-header">
-                <a href="#home" className="landing-logo" aria-label="Oolto home">
-                    ∞
-                </a>
 
-                <nav className="landing-nav" aria-label="Landing navigation">
-                    {navLinks.map((item) => (
-                        <a key={item} href={`#${item.toLowerCase()}`}>
-                            {item}
-                        </a>
-                    ))}
-                </nav>
+            <section id="home" className="landing-hero" style={{
+                backgroundImage: `url(${background})`,
 
-                <button className="landing-header-btn" type="button">
-                    Start now
-                </button>
-            </header>
+            }}>
+                <header className="landing-header">
+                    <a href="#home" className="landing-logo" aria-label="Oolto home">
+                        ∞
+                    </a>
 
-            <section id="home" className="landing-hero">
+                    <nav className="landing-nav" aria-label="Landing navigation">
+                        {navLinks.map((item) => (
+                            <a key={item} href={`#${item.toLowerCase()}`}>
+                                {item}
+                            </a>
+                        ))}
+                    </nav>
+
+                    <button className="landing-header-btn" type="button">
+                        Start now
+                    </button>
+                </header>
                 <div className="landing-hero-inner">
                     <span className="eyebrow">Built for inventors, teams, and IP workflows</span>
 
