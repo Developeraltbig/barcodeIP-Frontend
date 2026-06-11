@@ -954,10 +954,10 @@ svg {
 }
 
 .projects-search-control {
-    height: 34px;
+    height: 47px;
     width: 100%;
     border: 1px solid #dddddd;
-    border-radius: var(--radius-md);
+    border-radius: 9px;
     background: #ffffff;
     box-shadow: var(--shadow-soft);
     display: flex;
@@ -1509,6 +1509,85 @@ svg {
     color: var(--text-muted);
 }
 
+.projects-filter-control {
+    min-height: 46px;
+    padding: 0 14px;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+}
+
+.projects-filter-control select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    cursor: pointer;
+    margin-left: -1px
+}
+
+.projects-pagination {
+    padding: 18px 20px;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.projects-pagination-info {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.projects-pagination-info strong {
+    color: #0f172a;
+}
+
+.projects-pagination-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.projects-pagination-actions span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.projects-pagination-actions button {
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    background: #ffffff;
+    color: #0f172a;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.projects-pagination-actions button:hover:not(:disabled) {
+    background: #f8fafc;
+}
+
+.projects-pagination-actions button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.request-review-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
 /* -----------------------------
    Responsive
 ----------------------------- */
@@ -1873,6 +1952,25 @@ svg {
 
     .sidebar-profile-btn {
         min-height: 42px;
+    }
+
+    .projects-table-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .projects-search-control,
+    .projects-filter-control {
+        width: 100%;
+    }
+
+    .projects-pagination {
+        align-items: flex-start;
+    }
+
+    .projects-pagination-actions {
+        width: 100%;
+        justify-content: space-between;
     }
 }
 

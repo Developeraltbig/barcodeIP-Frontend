@@ -12,11 +12,11 @@ const MODULE_OPTIONS = [
     "Non-Provisional Draft"
 ];
 
-function RequestCommentsModal({ onClose }) {
+function RequestCommentsModal({ onClose, data }) {
     const [selectedProjectId, setSelectedProjectId] = useState(projects?.[0]?.id || "");
     const [selectedModules, setSelectedModules] = useState([]);
     const [note, setNote] = useState("");
-
+    console.log('data', data)
     const selectedProject = useMemo(() => {
         return projects.find((project) => project.id === selectedProjectId) || projects[0];
     }, [selectedProjectId]);

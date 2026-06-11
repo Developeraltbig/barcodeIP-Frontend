@@ -30,13 +30,27 @@ export const userApi = baseApi.injectEndpoints({
     }),
 
     fetchAllProjects: builder.query({
-      query: () => ({
-        url: '/api/v1/projects/fetchallproject',
-        method: 'GET'
-      }),
-      providesTags: ['AllProjects']
-    }),
+      query: ({ page = 1, limit = 10, search = "", status = "all" } = {}) => {
+        const params = new URLSearchParams();
 
+        params.append("page", page);
+        params.append("limit", limit);
+
+        if (search && search.trim()) {
+          params.append("search", search.trim());
+        }
+
+        if (status && status !== "all") {
+          params.append("status", status);
+        }
+
+        return {
+          url: `/api/v1/projects/fetchallproject?${params.toString()}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["AllProjects"],
+    }),
     // --- Articles ---
     getAllArticles: builder.query({
       query: () => ({
@@ -87,7 +101,7 @@ export const userApi = baseApi.injectEndpoints({
       query: ({ projectId, body }) => ({
         url: `/api/v1/user/Dashboard/support-analyst/${projectId}`,
         method: 'POST',
-        body: body 
+        body: body
       }),
       invalidatesTags: ['AnalystConnection']
     }),
@@ -101,7 +115,7 @@ export const userApi = baseApi.injectEndpoints({
       providesTags: ['SupportAnalysts']
     }),
 
-  
+
 
   }),
   overrideExisting: false
@@ -135,5 +149,5 @@ export const {
 
   useGetRecentThreeProjectsQuery, // For Search History
 
- 
+
 } = userApi;
