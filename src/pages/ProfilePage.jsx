@@ -7,6 +7,7 @@ import { Camera, Eye } from "lucide-react";
 import carbonViewIcons from "../assets/icons/carbon_view1.svg";
 import { useGetUserDetailsQuery, useUpdateImageMutation, useUpdateProfileMutation } from '../features/slice/auth/authApi';
 import { useSelector, useDispatch } from 'react-redux';
+import { useChangePasswordMutation } from '../features/slice/auth/authApi';
 
 function ProfilePage() {
     const fileInputRef = useRef(null);
@@ -20,7 +21,7 @@ function ProfilePage() {
     const [successMsg, setSuccessMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [localImagePreview, setLocalImagePreview] = useState(null);
-
+    const [changePassword, { isLoading: passwordIsLoading }] = useChangePasswordMutation();
     const [profileForm, setProfileForm] = useState({
         firstName: "",
         lastName: "",
@@ -30,13 +31,13 @@ function ProfilePage() {
     });
 
     const [passwordForm, setPasswordForm] = useState({
-        currentPassword: "",
+        oldPassword: "",
         newPassword: "",
         confirmPassword: ""
     });
 
     const [showPassword, setShowPassword] = useState({
-        currentPassword: false,
+        oldPassword: false,
         newPassword: false,
         confirmPassword: false
     });
@@ -153,10 +154,42 @@ function ProfilePage() {
         e.target.value = '';
     };
 
-    const handlePasswordSubmit = (event) => {
+    const handlePasswordSubmit = async (event) => {
         event.preventDefault();
         console.log("Password saved:", passwordForm);
-    };
+
+        // Validation
+        if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+            console.log("Password saved:", passwordForm)
+            return;
+        }
+
+        try {
+            // 1. Call API
+            await changePassword(passwordForm).unwrap();
+
+            // 2. Show Success Message
+            setSuccessMsg('Password Updated Successfully');
+
+            // 3. Clear Form (Optional, since we are navigating away)
+            setPasswordForm({ oldPassword: '', newPassword: '', confirmPassword: '' });
+
+            // 4. Logout Logic (Delayed slightly so user sees the success message)
+            setTimeout(() => {
+                // A. Remove token from storage
+                localStorage.removeItem('token');
+                localStorage.removeItem('user'); // or whatever keys you use
+
+                // B. Dispatch logout action (If using Redux)
+                dispatch(logout());
+
+                // // C. Redirect to Login
+                // navigate('/login'); 
+            }, 1500); // 1.5 second delay
+        } catch (err) {
+            setErrorMsg(`Failed to change password`);
+        }
+    }
 
     const togglePassword = (field) => {
         setShowPassword((prev) => ({
@@ -315,11 +348,11 @@ function ProfilePage() {
             <form className="account-card" onSubmit={handlePasswordSubmit}>
                 <PasswordInput
                     label="Current Password"
-                    name="currentPassword"
-                    value={passwordForm.currentPassword}
-                    visible={showPassword.currentPassword}
+                    name="oldPassword"
+                    value={passwordForm.oldPassword}
+                    visible={showPassword.oldPassword}
                     onChange={handlePasswordChange}
-                    onToggle={() => togglePassword("currentPassword")}
+                    onToggle={() => togglePassword("oldPassword")}
                 />
 
                 <PasswordInput
