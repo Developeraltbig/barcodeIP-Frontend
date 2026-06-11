@@ -1,8 +1,26 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useEffect, useRef } from "react";
+import {
+    Box, Typography, Avatar, Badge, IconButton, Divider,
+    Grid, TextField, Button, Paper, styled, CircularProgress, Alert,
+} from '@mui/material';
 import { Camera, Eye } from "lucide-react";
 import carbonViewIcons from "../assets/icons/carbon_view1.svg";
+import { useGetUserDetailsQuery, useUpdateImageMutation, useUpdateProfileMutation } from '../features/slice/auth/authApi';
+import { useSelector, useDispatch } from 'react-redux';
 
 function ProfilePage() {
+    const fileInputRef = useRef(null);
+    const { user } = useSelector((state) => state.auth);
+    const userId = user?._id || user?.id;
+    const { data, isLoading, isError, refetch } = useGetUserDetailsQuery(userId, {
+        skip: !userId,
+    });
+    const [updateProfile, { isLoading: isSaving }] = useUpdateProfileMutation();
+    const [updateImage, { isLoading: isUploadingImage }] = useUpdateImageMutation();
+    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+    const [localImagePreview, setLocalImagePreview] = useState(null);
+
     const [profileForm, setProfileForm] = useState({
         firstName: "",
         lastName: "",
@@ -12,9 +30,9 @@ function ProfilePage() {
     });
 
     const [passwordForm, setPasswordForm] = useState({
-        currentPassword: "12345678",
-        newPassword: "12345678",
-        confirmPassword: "12345678"
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: ""
     });
 
     const [showPassword, setShowPassword] = useState({
@@ -23,27 +41,116 @@ function ProfilePage() {
         confirmPassword: false
     });
 
+    // Safely sync incoming API data with the profile form state
+    useEffect(() => {
+        if (data?.data) {
+            const u = data?.data?.userDetails || data;
+            setProfileForm({
+                firstName: u?.first_name || u?.name || '',
+                lastName: u?.last_name || '',
+                email: u?.email || '',
+                phone: u?.phone_number || u?.phone || '',
+                gender: u?.gender || '' // Keeps radio buttons safe from 'undefined'
+            });
+            if (u.profile_image) {
+                setLocalImagePreview(u.profile_image)
+            }
+        }
+    }, [data]);
+
     const handleProfileChange = (event) => {
         const { name, value } = event.target;
-
+        setSuccessMsg('');
+        setErrorMsg('');
         setProfileForm((prev) => ({
             ...prev,
-            [name]: value
+            [name]: value ?? '' // Fallback ensures it never goes to undefined
         }));
     };
 
     const handlePasswordChange = (event) => {
         const { name, value } = event.target;
-
         setPasswordForm((prev) => ({
             ...prev,
-            [name]: value
+            [name]: value ?? ''
         }));
     };
 
-    const handleProfileSubmit = (event) => {
-        event.preventDefault();
-        console.log("Profile saved:", profileForm);
+    const handleCancel = () => {
+        if (data?.data) {
+            const u = data?.data?.userDetails || data;
+            setProfileForm({
+                firstName: u?.first_name || u?.name || '',
+                lastName: u?.last_name || '',
+                email: u?.email || '',
+                phone: u?.phone_number || u?.phone || '',
+                gender: u?.gender || ''
+            });
+        }
+        setSuccessMsg('');
+        setErrorMsg('');
+    };
+
+    const handleProfileSubmit = async (e) => {
+        try {
+            e.preventDefault();
+            // FIXED: Pointed payload values to profileForm instead of non-existent formData
+            await updateProfile({
+                first_name: profileForm.firstName,
+                last_name: profileForm.lastName,
+                email: profileForm.email,
+                phone_number: profileForm.phone,
+                gender: profileForm.gender
+            }).unwrap();
+            setSuccessMsg('Profile updated successfully!');
+            setErrorMsg('');
+        } catch (err) {
+            setErrorMsg(err?.data?.message || 'Failed to update profile.');
+            setSuccessMsg('');
+        }
+    };
+
+    const handleImageClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleImageChange = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        const allowedExtensions = '.jpg, .jpeg, .png, .webp';
+
+        if (!allowedTypes.includes(file.type)) {
+            setErrorMsg(`Invalid file type. Only ${allowedExtensions} files are allowed.`);
+            e.target.value = '';
+            return;
+        }
+
+        const maxSizeMB = 5;
+        if (file.size > maxSizeMB * 1024 * 1024) {
+            setErrorMsg(`File size too large. Maximum allowed size is ${maxSizeMB}MB.`);
+            e.target.value = '';
+            return;
+        }
+
+        const previewUrl = URL.createObjectURL(file);
+        setLocalImagePreview(previewUrl);
+
+        const formPayload = new FormData();
+        formPayload.append('profile_image', file);
+
+        try {
+            await updateImage(formPayload).unwrap();
+            setSuccessMsg('Profile image updated!');
+            setErrorMsg('');
+        } catch (err) {
+            console.error('Image upload error:', err);
+            setLocalImagePreview(null);
+            setErrorMsg(err?.data?.message || 'Failed to update image.');
+        }
+
+        e.target.value = '';
     };
 
     const handlePasswordSubmit = (event) => {
@@ -58,6 +165,22 @@ function ProfilePage() {
         }));
     };
 
+    if (isLoading) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
+                <CircularProgress sx={{ color: '#E94E34' }} />
+            </Box>
+        );
+    }
+
+    if (isError) {
+        return (
+            <Box sx={{ maxWidth: 'md', margin: 'auto', p: 3 }}>
+                <Alert severity="error">Failed to load user details. Please try again.</Alert>
+            </Box>
+        );
+    }
+
     return (
         <section className="profile-screen">
             <div className="profile-title-block">
@@ -65,27 +188,39 @@ function ProfilePage() {
                 <p>Manage user information and account security for this BarcodeIP workspace.</p>
             </div>
 
+            {successMsg && <Alert severity="success" sx={{ mb: 2 }}>{successMsg}</Alert>}
+            {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
+
             <form className="profile-info-card" onSubmit={handleProfileSubmit}>
                 <div className="profile-info-top">
-                    <div className="profile-photo-wrap">
+                    <div className="profile-photo-wrap" onClick={handleImageClick} style={{ cursor: 'pointer' }}>
                         <div className="profile-photo">
-                            <span>HN</span>
+                            {localImagePreview ? (
+                                <img src={localImagePreview} alt="Avatar Preview" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                            ) : (
+                                <span>HN</span>
+                            )}
                         </div>
-
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleImageChange}
+                            style={{ display: 'none' }}
+                            accept=".jpg, .jpeg, .png, .webp"
+                        />
                         <button type="button" className="profile-camera-btn">
                             <Camera size={14} />
                         </button>
                     </div>
 
                     <div className="profile-name-actions">
-                        <h2>Roshan</h2>
+                        <h2>{profileForm.firstName || "User"}</h2>
 
                         <div className="profile-upload-actions">
-                            <button type="button" className="profile-upload-btn">
+                            <button type="button" className="profile-upload-btn" onClick={handleImageClick}>
                                 Upload New
                             </button>
-
-                            <button type="button" className="profile-delete-btn">
+                            <button type="button" className="profile-delete-btn" onClick={() => setLocalImagePreview(null)}>
                                 Delete Avatar
                             </button>
                         </div>
@@ -163,10 +298,9 @@ function ProfilePage() {
                 </div>
 
                 <div className="profile-card-actions">
-                    <button type="button" className="profile-cancel-btn">
+                    <button type="button" className="profile-cancel-btn" onClick={handleCancel}>
                         Cancel
                     </button>
-
                     <button type="submit" className="profile-save-btn">
                         Save Changes
                     </button>
@@ -198,7 +332,7 @@ function ProfilePage() {
                 />
 
                 <PasswordInput
-                    label="New Password"
+                    label="Confirm Password"
                     name="confirmPassword"
                     value={passwordForm.confirmPassword}
                     visible={showPassword.confirmPassword}
@@ -218,15 +352,13 @@ function PasswordInput({ label, name, value, visible, onChange, onToggle }) {
     return (
         <div className="profile-form-group password-profile-group">
             <label>{label}</label>
-
             <div className="profile-password-wrap">
                 <input
                     type={visible ? "text" : "password"}
                     name={name}
-                    value={value}
+                    value={value || ""} // Additional safety wrapper
                     onChange={onChange}
                 />
-
                 <button type="button" onClick={onToggle}>
                     <img src={carbonViewIcons} alt="" className="carbon-view-icon" />
                 </button>

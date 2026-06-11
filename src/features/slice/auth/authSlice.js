@@ -15,11 +15,11 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action) => {
       // Expecting { user, accessToken, rememberMe }
-      const { user, accessToken, refreshToken } = action.payload; 
-      
+      const { user, accessToken, refreshToken } = action.payload;
+
       state.user = user;
       state.token = accessToken;
-    
+
       state.isAuthenticated = true;
       state.refreshToken = refreshToken;
 
