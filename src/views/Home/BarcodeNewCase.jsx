@@ -6,7 +6,6 @@ import { PAGES } from "./constants";
 import { navItems } from "./data";
 
 import Sidebar from "../../layouts/Sidebar";
-// import Topbar from "../../layouts/Topbar";
 
 import NewCasePage from "../../pages/NewCasePage";
 import MyProjectsPage from "../../pages/MyProjectsPage";
@@ -14,6 +13,7 @@ import BarcodeCommentsPage from "../../pages/BarcodeCommentsPage";
 import DownloadsPage from "../../pages/DownloadsPage";
 import ReviewPlaceholder from "../../pages/ReviewPlaceholder";
 import ProfilePage from "../../pages/ProfilePage";
+import NotFoundPage from "../../pages/NotFoundPage";
 
 const PAGE_TO_TAB = {
     [PAGES.NEW_CASE]: "new-case",
@@ -21,7 +21,7 @@ const PAGE_TO_TAB = {
     [PAGES.COMMENTS]: "comments",
     [PAGES.DOWNLOADS]: "downloads",
     [PAGES.REVIEW]: "review",
-    [PAGES.PROFILE]: "profile"
+    [PAGES.PROFILE]: "profile",
 };
 
 const TAB_TO_PAGE = {
@@ -30,12 +30,12 @@ const TAB_TO_PAGE = {
     comments: PAGES.COMMENTS,
     downloads: PAGES.DOWNLOADS,
     review: PAGES.REVIEW,
-    profile: PAGES.PROFILE
+    profile: PAGES.PROFILE,
 };
 
 function BarcodeNewCase() {
     const navigate = useNavigate();
-    const { tab } = useParams();
+    const { tab, id } = useParams();
 
     const activePage = TAB_TO_PAGE[tab];
 
@@ -43,11 +43,32 @@ function BarcodeNewCase() {
         return <Navigate to="/project/new-case" replace />;
     }
 
+    const isReviewPage = activePage === PAGES.REVIEW;
+
+    /**
+     * Review page requires project id.
+     * Example valid URL:
+     * /project/review/69fc24be3b92b5925bdd68c9
+     */
+    if (isReviewPage && !id) {
+        return <NotFoundPage />;
+    }
+
     const handlePageChange = useCallback(
-        (page) => {
+        (page, projectId = null) => {
             const tabName = PAGE_TO_TAB[page];
 
             if (!tabName) return;
+
+            if (page === PAGES.REVIEW) {
+                if (!projectId) {
+                    navigate("/project/not-found", { replace: true });
+                    return;
+                }
+
+                navigate(`/project/review/${projectId}`);
+                return;
+            }
 
             if (tabName === tab) return;
 
@@ -55,10 +76,6 @@ function BarcodeNewCase() {
         },
         [navigate, tab]
     );
-
-    const handleProfileClick = useCallback(() => {
-        navigate("/project/profile");
-    }, [navigate]);
 
     const handleLogout = useCallback(() => {
         localStorage.removeItem("token");
@@ -89,19 +106,32 @@ function BarcodeNewCase() {
                 return <DownloadsPage />;
 
             case PAGES.REVIEW:
-                return <ReviewPlaceholder onPageChange={handlePageChange} />;
+                return (
+                    <ReviewPlaceholder
+                        projectId={id}
+                        onPageChange={handlePageChange}
+                    />
+                );
 
             case PAGES.PROFILE:
-                return <ProfilePage onBack={() => handlePageChange(PAGES.NEW_CASE)} />;
+                return (
+                    <ProfilePage
+                        onBack={() => handlePageChange(PAGES.NEW_CASE)}
+                    />
+                );
 
             default:
-                return <NewCasePage onPageChange={handlePageChange} />;
+                return <NotFoundPage />;
         }
-    }, [activePage, handlePageChange]);
+    }, [activePage, handlePageChange, id]);
 
     return (
         <div className="barcode-page">
-            <Sidebar activePage={activePage} onPageChange={handlePageChange} />
+            <Sidebar
+                activePage={activePage}
+                onPageChange={handlePageChange}
+                onLogout={handleLogout}
+            />
 
             <main className="main-area" aria-label={pageTitle}>
                 {renderedPage}

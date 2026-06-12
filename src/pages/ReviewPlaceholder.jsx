@@ -1,5 +1,14 @@
-import React, { memo, useCallback, useMemo, useState } from "react";
+import React, {
+    memo,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
+
 import { PAGES } from "../views/Home/constants";
+import { useDispatch, useSelector } from "react-redux";
 
 import ResultHeader from "./components/Review/ResultHeader";
 import OutputTabs from "./components/Review/OutputTabs";
@@ -25,14 +34,89 @@ import {
     PUBLICATION_RESULTS,
     PRODUCT_RESULTS,
     PROVISIONAL_SECTIONS,
-    NON_PROVISIONAL_SECTIONS
+    NON_PROVISIONAL_SECTIONS,
 } from "./data/reviewResultsData";
 
 import "./ReviewResultsTabs.css";
 
+import {
+    useLazyGetProductByProjectIdQuery,
+    useLazyGetPatentByProjectIdQuery,
+    useLazyGetPublicationByProjectIdQuery,
+    useLazyGetProvisionalByProjectIdQuery,
+    useLazyGetNonProvisionalByProjectIdQuery,
+} from "../features/userApi";
 
+import {
+    setProjectProduct,
+    setProjectPatent,
+    setProjectPublication,
+    setProjectProvisional,
+    setProjectNonProvisional,
+} from "../features/slice/userSlice";
 
-function ReviewPlaceholder({ onPageChange }) {
+const MODULE_KEYS = {
+    PATENT: "patent",
+    PUBLICATIONS: "publications",
+    PRODUCTS: "products",
+    PROVISIONAL: "provisional",
+    NON_PROVISIONAL: "nonProvisional",
+};
+
+const normalizeTabToModuleKey = (tab) => {
+    const value = String(tab || "").trim();
+
+    const aliases = {
+        patent: MODULE_KEYS.PATENT,
+
+        publish: MODULE_KEYS.PUBLICATIONS,
+        publication: MODULE_KEYS.PUBLICATIONS,
+        publications: MODULE_KEYS.PUBLICATIONS,
+
+        product: MODULE_KEYS.PRODUCTS,
+        products: MODULE_KEYS.PRODUCTS,
+
+        provisional: MODULE_KEYS.PROVISIONAL,
+
+        nonProvisional: MODULE_KEYS.NON_PROVISIONAL,
+        nonprovisional: MODULE_KEYS.NON_PROVISIONAL,
+        "non-provisional": MODULE_KEYS.NON_PROVISIONAL,
+        non_provisional: MODULE_KEYS.NON_PROVISIONAL,
+    };
+
+    return aliases[value] || aliases[value.toLowerCase()] || value;
+};
+
+const getResponsePayload = (response) => {
+    return (
+        response?.data ||
+        response?.result ||
+        response?.results ||
+        response?.payload ||
+        response ||
+        null
+    );
+};
+
+const toArray = (value) => {
+    if (Array.isArray(value)) return value;
+
+    if (Array.isArray(value?.data)) return value.data;
+    if (Array.isArray(value?.results)) return value.results;
+    if (Array.isArray(value?.items)) return value.items;
+    if (Array.isArray(value?.sections)) return value.sections;
+    if (Array.isArray(value?.patents)) return value.patents;
+    if (Array.isArray(value?.products)) return value.products;
+    if (Array.isArray(value?.publications)) return value.publications;
+    if (Array.isArray(value?.publication)) return value.publication;
+    if (Array.isArray(value?.draft)) return value.draft;
+
+    return [];
+};
+
+function ReviewPlaceholder({ onPageChange, projectId }) {
+    const dispatch = useDispatch();
+
     const [activeTab, setActiveTab] = useState(TAB_KEYS.PATENT);
     const [activeView, setActiveView] = useState("results");
     const [selectedPatent, setSelectedPatent] = useState(PATENT_RESULTS[0]);
@@ -40,116 +124,367 @@ function ReviewPlaceholder({ onPageChange }) {
     const [strictMode, setStrictMode] = useState(false);
     const [tabRuntime, setTabRuntime] = useState(INITIAL_TAB_RUNTIME);
 
-    const activeTabConfig = useMemo(
-        () => OUTPUT_TABS.find((tab) => tab.key === activeTab),
-        [activeTab]
+    const loadedTabsRef = useRef(new Set());
+    const runningTabsRef = useRef(new Set());
+
+    const DashboardData = useSelector(
+        (state) => state.userDashboard.selectedProject
     );
 
-    /*
-      Future Socket.IO integration:
-      update payload by tab type.
-  
-      {
-        type: "patent" | "publications" | "products" | "provisional" | "nonProvisional",
-        status: "queued" | "processing" | "completed" | "error",
-        progress: 68,
-        message: "Preparing mappings",
-        subMessage: "This can take a few minutes",
-        steps: []
-      }
-    */
-    const handleRealtimeUpdate = useCallback((payload) => {
-        if (!payload?.type) return;
+    const projectPatent = useSelector(
+        (state) => state.userDashboard.projectPatent
+    );
 
-        setTabRuntime((prev) => ({
-            ...prev,
-            [payload.type]: {
-                ...prev[payload.type],
-                ...payload
+    const projectProduct = useSelector(
+        (state) => state.userDashboard.projectProduct
+    );
+
+    const projectPublication = useSelector(
+        (state) => state.userDashboard.projectPublication
+    );
+
+    const projectProvisional = useSelector(
+        (state) => state.userDashboard.projectProvisional
+    );
+
+    const projectNonProvisional = useSelector(
+        (state) => state.userDashboard.projectNonProvisional
+    );
+
+    const currentProjectId = useMemo(() => {
+        return (
+            projectId ||
+            DashboardData?._id ||
+            DashboardData?.project_id ||
+            DashboardData?.id ||
+            null
+        );
+    }, [projectId, DashboardData]);
+
+    const activeModuleKey = useMemo(() => {
+        return normalizeTabToModuleKey(activeTab);
+    }, [activeTab]);
+
+    const activeTabConfig = useMemo(() => {
+        return (
+            OUTPUT_TABS.find((tab) => tab.key === activeTab) ||
+            OUTPUT_TABS.find(
+                (tab) => normalizeTabToModuleKey(tab.key) === activeModuleKey
+            )
+        );
+    }, [activeTab, activeModuleKey]);
+
+    const [getPatents, { isLoading: pLoad }] =
+        useLazyGetPatentByProjectIdQuery();
+
+    const [getProducts, { isLoading: prodLoad }] =
+        useLazyGetProductByProjectIdQuery();
+
+    const [getPubs, { isLoading: pubLoad }] =
+        useLazyGetPublicationByProjectIdQuery();
+
+    const [getProv, { isLoading: provLoad }] =
+        useLazyGetProvisionalByProjectIdQuery();
+
+    const [getNonProv, { isLoading: nonProvLoad }] =
+        useLazyGetNonProvisionalByProjectIdQuery();
+
+    const apiByModuleKey = useMemo(
+        () => ({
+            [MODULE_KEYS.PATENT]: {
+                label: "Patent",
+                trigger: getPatents,
+                action: setProjectPatent,
+            },
+
+            [MODULE_KEYS.PUBLICATIONS]: {
+                label: "Publication",
+                trigger: getPubs,
+                action: setProjectPublication,
+            },
+
+            [MODULE_KEYS.PRODUCTS]: {
+                label: "Product",
+                trigger: getProducts,
+                action: setProjectProduct,
+            },
+
+            [MODULE_KEYS.PROVISIONAL]: {
+                label: "Provisional",
+                trigger: getProv,
+                action: setProjectProvisional,
+            },
+
+            [MODULE_KEYS.NON_PROVISIONAL]: {
+                label: "Non-Provisional",
+                trigger: getNonProv,
+                action: setProjectNonProvisional,
+            },
+        }),
+        [getPatents, getPubs, getProducts, getProv, getNonProv]
+    );
+
+    const loadingByModuleKey = useMemo(
+        () => ({
+            [MODULE_KEYS.PATENT]: pLoad,
+            [MODULE_KEYS.PUBLICATIONS]: pubLoad,
+            [MODULE_KEYS.PRODUCTS]: prodLoad,
+            [MODULE_KEYS.PROVISIONAL]: provLoad,
+            [MODULE_KEYS.NON_PROVISIONAL]: nonProvLoad,
+        }),
+        [pLoad, pubLoad, prodLoad, provLoad, nonProvLoad]
+    );
+
+    const isActiveTabLoading = Boolean(loadingByModuleKey[activeModuleKey]);
+
+    useEffect(() => {
+        console.log("========== REVIEW TAB DEBUG ==========");
+        console.log("Clicked activeTab:", activeTab);
+        console.log("Normalized activeModuleKey:", activeModuleKey);
+        console.log("currentProjectId:", currentProjectId);
+        console.log("DashboardData:", DashboardData);
+        console.log("Available API keys:", Object.keys(apiByModuleKey));
+        console.log("======================================");
+
+        if (!currentProjectId) {
+            console.warn("API not called: currentProjectId missing");
+            return;
+        }
+
+        const activeApi = apiByModuleKey[activeModuleKey];
+
+        if (!activeApi) {
+            console.warn("API not called: activeApi not found", {
+                activeTab,
+                activeModuleKey,
+            });
+            return;
+        }
+
+        const requestKey = `${currentProjectId}-${activeModuleKey}`;
+
+        if (runningTabsRef.current.has(requestKey)) {
+            console.log("API skipped: request already running", requestKey);
+            return;
+        }
+
+        if (loadedTabsRef.current.has(requestKey)) {
+            console.log("API skipped: already loaded", requestKey);
+            return;
+        }
+
+        runningTabsRef.current.add(requestKey);
+
+        const fetchActiveTabData = async () => {
+            try {
+                console.log(`API calling: ${activeApi.label}`, {
+                    projectId: currentProjectId,
+                    activeTab,
+                    activeModuleKey,
+                    requestKey,
+                });
+
+                setTabRuntime((prev) => ({
+                    ...prev,
+                    [activeModuleKey]: {
+                        ...prev[activeModuleKey],
+                        status: "processing",
+                        message: `${activeApi.label} data loading...`,
+                    },
+                }));
+
+                const response = await activeApi
+                    .trigger(currentProjectId, false)
+                    .unwrap();
+
+                console.log(`API success: ${activeApi.label}`, response);
+
+                const payload = getResponsePayload(response);
+
+                console.log(`API normalized payload: ${activeApi.label}`, payload);
+
+                dispatch(activeApi.action(payload));
+
+                loadedTabsRef.current.add(requestKey);
+
+                setTabRuntime((prev) => ({
+                    ...prev,
+                    [activeModuleKey]: {
+                        ...prev[activeModuleKey],
+                        status: "completed",
+                        message: `${activeApi.label} data loaded successfully.`,
+                    },
+                }));
+            } catch (error) {
+                console.error(`API failed: ${activeApi.label}`, error);
+
+                const errorMessage =
+                    error?.data?.message ||
+                    error?.error ||
+                    error?.message ||
+                    "Unable to load data. Please try again.";
+
+                setTabRuntime((prev) => ({
+                    ...prev,
+                    [activeModuleKey]: {
+                        ...prev[activeModuleKey],
+                        status: "error",
+                        message: errorMessage,
+                    },
+                }));
+            } finally {
+                runningTabsRef.current.delete(requestKey);
+
+                console.log("API finished:", {
+                    requestKey,
+                    loadedTabs: Array.from(loadedTabsRef.current),
+                    runningTabs: Array.from(runningTabsRef.current),
+                });
             }
-        }));
-    }, []);
+        };
 
-    const goBackToProjects = () => {
+        fetchActiveTabData();
+    }, [
+        activeTab,
+        activeModuleKey,
+        currentProjectId,
+        DashboardData,
+        apiByModuleKey,
+        dispatch,
+    ]);
+
+    const goBackToProjects = useCallback(() => {
         if (onPageChange) {
             onPageChange(PAGES.PROJECTS || PAGES.NEW_CASE);
         }
-    };
+    }, [onPageChange]);
 
-    const goBackToResults = () => {
+    const goBackToResults = useCallback(() => {
         setActiveView("results");
-    };
+    }, []);
 
-    const openMapping = (patent) => {
+    const openMapping = useCallback((patent) => {
         setSelectedPatent(patent);
         setActiveView("mapping");
-    };
+    }, []);
 
-    const openDetails = (patent) => {
+    const openDetails = useCallback((patent) => {
         setSelectedPatent(patent);
         setActiveView("details");
-    };
+    }, []);
 
-    const openOverlap = (patent) => {
+    const openOverlap = useCallback((patent) => {
         setSelectedPatent(patent);
         setActiveView("overlap");
-    };
+    }, []);
 
-    const renderActiveTab = () => {
-        if (activeTab === TAB_KEYS.PATENT) {
+    const handleTabChange = useCallback((nextTab) => {
+        console.log("OutputTabs onChange nextTab:", nextTab);
+        console.log("Normalized nextTab:", normalizeTabToModuleKey(nextTab));
+
+        setActiveTab(nextTab);
+        setActiveView("results");
+    }, []);
+
+    const patentResults = useMemo(() => {
+        const data = toArray(projectPatent);
+        return data.length > 0 ? data : PATENT_RESULTS;
+    }, [projectPatent]);
+
+    const publicationResults = useMemo(() => {
+        const data = toArray(projectPublication);
+        return data.length > 0 ? data : PUBLICATION_RESULTS;
+    }, [projectPublication]);
+
+    const productResults = useMemo(() => {
+        const data = toArray(projectProduct);
+        return data.length > 0 ? data : PRODUCT_RESULTS;
+    }, [projectProduct]);
+
+    const provisionalSections = useMemo(() => {
+        const data = toArray(projectProvisional);
+        return data.length > 0 ? data : PROVISIONAL_SECTIONS;
+    }, [projectProvisional]);
+
+    const nonProvisionalSections = useMemo(() => {
+        const data = toArray(projectNonProvisional);
+        return data.length > 0 ? data : NON_PROVISIONAL_SECTIONS;
+    }, [projectNonProvisional]);
+
+    const renderActiveTab = useCallback(() => {
+        if (isActiveTabLoading) {
+            return (
+                <ProcessingPlaceholderTab
+                    label={activeTabConfig?.label || "Selected"}
+                    runtime={tabRuntime[activeModuleKey]}
+                />
+            );
+        }
+
+        if (activeModuleKey === MODULE_KEYS.PATENT) {
             return (
                 <PatentTab
-                    runtime={tabRuntime.patent}
-                    results={PATENT_RESULTS}
+                    runtime={tabRuntime[MODULE_KEYS.PATENT]}
+                    results={patentResults}
                     strictMode={strictMode}
                     onStrictModeChange={setStrictMode}
                     onViewMapping={openMapping}
                     onViewDetails={openDetails}
                     onViewOverlap={openOverlap}
-                    onDownloadPatentReport={() => console.log("Download patent report")}
+                    onDownloadPatentReport={() =>
+                        console.log("Download patent report")
+                    }
                 />
             );
         }
 
-        if (activeTab === TAB_KEYS.PUBLICATIONS) {
+        if (activeModuleKey === MODULE_KEYS.PUBLICATIONS) {
             return (
                 <PublicationTab
-                    results={PUBLICATION_RESULTS}
-                    onDownloadPublications={() => console.log("Download publications")}
-                    onViewPublication={(publication) => console.log("View publication:", publication)}
+                    results={publicationResults}
+                    onDownloadPublications={() =>
+                        console.log("Download publications")
+                    }
+                    onViewPublication={(publication) =>
+                        console.log("View publication:", publication)
+                    }
                 />
             );
         }
 
-        if (activeTab === TAB_KEYS.PRODUCTS) {
+        if (activeModuleKey === MODULE_KEYS.PRODUCTS) {
             return (
                 <ProductTab
-                    results={PRODUCT_RESULTS}
-                    onViewProductDetails={(product) => console.log("View product details:", product)}
+                    results={productResults}
+                    onViewProductDetails={(product) =>
+                        console.log("View product details:", product)
+                    }
                 />
             );
         }
 
-        if (activeTab === TAB_KEYS.PROVISIONAL) {
+        if (activeModuleKey === MODULE_KEYS.PROVISIONAL) {
             return (
                 <DraftTab
                     title="Provisional Draft"
                     description="Editable provisional specification sections generated from the invention disclosure."
-                    sections={PROVISIONAL_SECTIONS}
-                    downloadLabel="Download Publications"
+                    sections={provisionalSections}
+                    downloadLabel="Download Provisional Draft"
                     onDownload={() => console.log("Download provisional draft")}
                 />
             );
         }
 
-        if (activeTab === TAB_KEYS.NON_PROVISIONAL) {
+        if (activeModuleKey === MODULE_KEYS.NON_PROVISIONAL) {
             return (
                 <DraftTab
                     title="Non-Provisional Draft"
                     description="Draft sections, representative claims, block diagrams, and flow charts."
-                    sections={NON_PROVISIONAL_SECTIONS}
-                    downloadLabel="Download Publications"
-                    onDownload={() => console.log("Download non-provisional draft")}
+                    sections={nonProvisionalSections}
+                    downloadLabel="Download Non-Provisional Draft"
+                    onDownload={() =>
+                        console.log("Download non-provisional draft")
+                    }
                 />
             );
         }
@@ -157,10 +492,24 @@ function ReviewPlaceholder({ onPageChange }) {
         return (
             <ProcessingPlaceholderTab
                 label={activeTabConfig?.label || "Selected"}
-                runtime={tabRuntime[activeTab]}
+                runtime={tabRuntime[activeModuleKey]}
             />
         );
-    };
+    }, [
+        activeModuleKey,
+        activeTabConfig,
+        isActiveTabLoading,
+        tabRuntime,
+        patentResults,
+        publicationResults,
+        productResults,
+        provisionalSections,
+        nonProvisionalSections,
+        strictMode,
+        openMapping,
+        openDetails,
+        openOverlap,
+    ]);
 
     if (activeView === "mapping") {
         return (
@@ -169,12 +518,14 @@ function ReviewPlaceholder({ onPageChange }) {
                     patent={selectedPatent}
                     onBack={goBackToResults}
                     onOpenOverlap={() => openOverlap(selectedPatent)}
-                    onDownload={() => console.log("Download mapping:", selectedPatent)}
+                    onDownload={() =>
+                        console.log("Download mapping:", selectedPatent)
+                    }
                 />
 
                 {showCommentsModal && (
                     <RequestOoltoCommentsModal
-                        project={PROJECT_INFO}
+                        project={DashboardData || PROJECT_INFO}
                         onClose={() => setShowCommentsModal(false)}
                     />
                 )}
@@ -189,12 +540,14 @@ function ReviewPlaceholder({ onPageChange }) {
                     patent={selectedPatent}
                     onBack={goBackToResults}
                     onViewMapping={() => openMapping(selectedPatent)}
-                    onDownloadMapping={() => console.log("Download mapping:", selectedPatent)}
+                    onDownloadMapping={() =>
+                        console.log("Download mapping:", selectedPatent)
+                    }
                 />
 
                 {showCommentsModal && (
                     <RequestOoltoCommentsModal
-                        project={PROJECT_INFO}
+                        project={DashboardData || PROJECT_INFO}
                         onClose={() => setShowCommentsModal(false)}
                     />
                 )}
@@ -211,12 +564,14 @@ function ReviewPlaceholder({ onPageChange }) {
                     onStrictModeChange={setStrictMode}
                     onBack={goBackToResults}
                     onViewMapping={() => openMapping(selectedPatent)}
-                    onDownloadMapping={() => console.log("Download mapping:", selectedPatent)}
+                    onDownloadMapping={() =>
+                        console.log("Download mapping:", selectedPatent)
+                    }
                 />
 
                 {showCommentsModal && (
                     <RequestOoltoCommentsModal
-                        project={PROJECT_INFO}
+                        project={DashboardData || PROJECT_INFO}
                         onClose={() => setShowCommentsModal(false)}
                     />
                 )}
@@ -227,12 +582,12 @@ function ReviewPlaceholder({ onPageChange }) {
     return (
         <section className="content-wrap rr-page">
             <ResultHeader
-                project={PROJECT_INFO}
+                project={DashboardData || PROJECT_INFO}
                 onBack={goBackToProjects}
                 onViewKeyFeatures={() => {
                     document.getElementById("rr-key-features")?.scrollIntoView({
                         behavior: "smooth",
-                        block: "start"
+                        block: "start",
                     });
                 }}
                 onRequestComments={() => setShowCommentsModal(true)}
@@ -240,15 +595,12 @@ function ReviewPlaceholder({ onPageChange }) {
             />
 
             <OutputTabs
-                tabs={OUTPUT_TABS}
+                tabs={DashboardData}
                 activeTab={activeTab}
-                onChange={(nextTab) => {
-                    setActiveTab(nextTab);
-                    setActiveView("results");
-                }}
+                onChange={handleTabChange}
             />
 
-            {activeTab === TAB_KEYS.PATENT && (
+            {activeModuleKey === MODULE_KEYS.PATENT && (
                 <KeyFeaturesSection
                     primaryFeatures={PRIMARY_FEATURES}
                     secondaryFeatures={SECONDARY_FEATURES}
@@ -259,7 +611,7 @@ function ReviewPlaceholder({ onPageChange }) {
 
             {showCommentsModal && (
                 <RequestOoltoCommentsModal
-                    project={PROJECT_INFO}
+                    project={DashboardData || PROJECT_INFO}
                     onClose={() => setShowCommentsModal(false)}
                 />
             )}

@@ -20,8 +20,8 @@ function ResultHeader({
 
       <div className="rr-project-card">
         <div>
-          <h1>{project.title}</h1>
-          <p>CASE ID : {project.caseId}</p>
+          <h1>{project.project_title}</h1>
+          <p>CASE ID : {project.case_id ?? ""}</p>
         </div>
 
         <div className="rr-project-actions">

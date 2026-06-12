@@ -79,6 +79,10 @@ const MainRoutes = {
       element: <MyProject />
     },
     {
+      path: "/project/:tab/:id",
+      element: <MyProject />
+    },
+    {
       path: '/patent-detail',
       element: <PatentDetail />
     },

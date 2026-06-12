@@ -10,15 +10,17 @@ import SearchIcon from "../assets/icons/searchIcon.svg";
 import { useFetchAllProjectsQuery } from "../features/userApi";
 import RequestCommentsModal from "../components/RequestCommentsModal";
 import "../pages/OoltoComments.css";
+import { setSelectedProject } from '../features/slice/userSlice';
+import { useDispatch } from 'react-redux';
 
 const PAGE_SIZE = 10;
 
 function MyProjectsPage({ onPageChange }) {
+    const dispatch = useDispatch();
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
     const [currentPage, setCurrentPage] = useState(1);
-
     const [showModal, setShowModal] = useState(false);
     const [currentProject, setCurrentProject] = useState(null);
 
@@ -82,8 +84,9 @@ function MyProjectsPage({ onPageChange }) {
 
     const handleProjectDetail = useCallback(
         (project) => {
-            console.log("project detail page", project);
-            onPageChange(PAGES.REVIEW);
+            const projectId = project?._id;
+            onPageChange(PAGES.REVIEW, projectId);
+            dispatch(setSelectedProject(project))
         },
         [onPageChange]
     );
@@ -138,7 +141,7 @@ function MyProjectsPage({ onPageChange }) {
                             alt=""
                             className="new-analysis-icon"
                         />
-                        New Analysis
+                        {"  "}New Analysis
                     </span>
                 </button>
             </div>
