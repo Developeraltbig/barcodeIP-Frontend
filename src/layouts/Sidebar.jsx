@@ -1,27 +1,39 @@
 import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, Clock, UserRound, LogOut } from "lucide-react";
+import { useSelector } from "react-redux";
+
 import { PAGES } from "../views/Home/constants";
 import { navItems } from "../views/Home/data";
-import { useSelector, useDispatch } from 'react-redux';
+import { useGetRecentThreeProjectsQuery } from "../features/userApi";
 
 function Sidebar({ activePage, onPageChange, onLogout }) {
     const [showRecent, setShowRecent] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
-    const dashboard = useSelector((state) => state.auth.user || {});
-    console.log('dashboard --', dashboard);
 
     const profileRef = useRef(null);
 
-    const recentProjects = useMemo(
-        () => [
-            { title: "Bimetallic Clamp and........", caseId: "016" },
-            { title: "Bimetallic Clamp and........", caseId: "016" },
-            { title: "Bimetallic Clamp and........", caseId: "016" },
-            { title: "Bimetallic Clamp and........", caseId: "016" },
-            { title: "Bimetallic Clamp and........", caseId: "016" }
-        ],
-        []
-    );
+    const dashboard = useSelector((state) => state.auth.user || {});
+
+    const {
+        data: getRecentThreeProjects,
+        isLoading: loadingProjects,
+        isError: recentProjectsError,
+    } = useGetRecentThreeProjectsQuery();
+
+    const recentProjects = useMemo(() => {
+        const rawData =
+            getRecentThreeProjects?.data ||
+            getRecentThreeProjects?.projects ||
+            getRecentThreeProjects?.recentProjects ||
+            getRecentThreeProjects;
+
+        return Array.isArray(rawData) ? rawData : [];
+    }, [getRecentThreeProjects]);
+
+    const userName = useMemo(() => {
+        if (!dashboard?.email) return "Profile";
+        return dashboard.email.split("@")[0];
+    }, [dashboard?.email]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -54,6 +66,25 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
         window.location.href = "/login";
     };
 
+    const getProjectTitle = (project) => {
+        return (
+            project?.project_title ||
+            project?.title ||
+            project?.name ||
+            "Untitled Project"
+        );
+    };
+
+    const getProjectCaseId = (project) => {
+        return (
+            project?.case_id ||
+            project?.caseId ||
+            project?.project_id ||
+            project?._id ||
+            "N/A"
+        );
+    };
+
     return (
         <aside className="sidebar">
             <div className="brand">
@@ -77,33 +108,55 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                         className={`nav-item ${activePage === item.id ? "active" : ""}`}
                         onClick={() => onPageChange(item.id)}
                     >
-                        <span className="nav-icon"> <img src={item.icon} alt="" className="" /></span>
-                        <span className="nav-label">{item.label}</span>
+                        <span className="nav-icon">
+                            <img src={item.icon} alt="" />
+                        </span>
 
-                        {/* {item.badge ? (
-                            <strong className="nav-badge">{item.badge}</strong>
-                        ) : null} */}
+                        <span className="nav-label">{item.label}</span>
                     </button>
                 ))}
             </nav>
 
             <div className="sidebar-bottom">
                 <div className="recent-projects-panel">
-                    {showRecent ? (
+                    {showRecent && (
                         <div className="recent-projects-list">
-                            {recentProjects.map((project, index) => (
-                                <button
-                                    key={`${project.caseId}-${index}`}
-                                    type="button"
-                                    className="recent-project-item"
-                                    onClick={() => onPageChange(PAGES.PROJECTS)}
-                                >
-                                    <span>{project.title}</span>
-                                    <small>CASE ID : {project.caseId}</small>
-                                </button>
-                            ))}
+                            {loadingProjects && (
+                                <div className="recent-project-empty">
+                                    Loading projects...
+                                </div>
+                            )}
+
+                            {!loadingProjects && recentProjectsError && (
+                                <div className="recent-project-empty">
+                                    Unable to load projects.
+                                </div>
+                            )}
+
+                            {!loadingProjects &&
+                                !recentProjectsError &&
+                                recentProjects.length > 0 &&
+                                recentProjects.map((project, index) => (
+                                    <button
+                                        key={project?._id || project?.project_id || index}
+                                        type="button"
+                                        className="recent-project-item"
+                                        onClick={() => onPageChange(PAGES.PROJECTS)}
+                                    >
+                                        <span>{getProjectTitle(project)}</span>
+                                        <small>CASE ID : {getProjectCaseId(project)}</small>
+                                    </button>
+                                ))}
+
+                            {!loadingProjects &&
+                                !recentProjectsError &&
+                                recentProjects.length === 0 && (
+                                    <div className="recent-project-empty">
+                                        No recent projects found.
+                                    </div>
+                                )}
                         </div>
-                    ) : null}
+                    )}
 
                     <button
                         type="button"
@@ -123,7 +176,7 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                 </div>
 
                 <div className="sidebar-profile-wrap" ref={profileRef}>
-                    {showProfileMenu ? (
+                    {showProfileMenu && (
                         <div className="sidebar-profile-menu">
                             <button
                                 type="button"
@@ -143,7 +196,7 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                                 <span>Logout</span>
                             </button>
                         </div>
-                    ) : null}
+                    )}
 
                     <button
                         type="button"
@@ -157,10 +210,15 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                             <UserRound size={17} />
                         </span>
 
-                        <span className="sidebar-profile-name">{dashboard.email.split('@')[0]}</span>
+                        <span className="sidebar-profile-name">{userName}</span>
+
                         <ChevronDown
                             size={15}
-                            className={showProfileMenu ? "profile-chevron open" : "profile-chevron"}
+                            className={
+                                showProfileMenu
+                                    ? "profile-chevron open"
+                                    : "profile-chevron"
+                            }
                         />
                     </button>
                 </div>

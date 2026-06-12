@@ -13,7 +13,7 @@ export const userApi = baseApi.injectEndpoints({
 
     getRecentThreeProjects: builder.query({
       query: () => ({
-        url: '/api/v1/user/Dashboard/projects-with-analyst-status',
+        url: '/api/v1/user/Dashboard/project/recent/get',
         method: 'GET'
       }),
       providesTags: ['RecentProject']
