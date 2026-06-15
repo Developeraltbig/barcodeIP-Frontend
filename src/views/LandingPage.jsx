@@ -3,6 +3,8 @@ import "./LandingPage.css";
 import background1 from "../assets/landingPage/Background1.jpg";
 import background from "../assets/landingPage/Background.png";
 import logo from "../assets/landingPage/logo.jpg";
+import background2ndSection from "../assets/landingPage/section2-Background.jpg";
+
 
 
 const navLinks = ["How it works", "Output", "Pricing", "Who it's for"];
@@ -113,7 +115,102 @@ function LandingPage() {
                     <img src={background} alt="Background Feature" />
                 </div>
             </section>
+            {/* 2nd section */}
+            <div className="section-2nd">
+                {/* 1. Main Content Split Section */}
+                <section className="messy-inputs-section">
+                    {/* Left Side: Content Column */}
+                    <div className="section-content-left">
+                        <h2 className="section-title">
+                            Invention work usually <br /> starts messy.
+                        </h2>
+                        <p className="section-description">
+                            Most teams start with notes, emails, PDFs, or rough technical descriptions.
+                            The hard part is turning that into something searchable, reviewable, and shareable.
+                        </p>
 
+                        {/* Feature Cards Group */}
+                        <div className="feature-cards-container">
+                            <div className="feature-card">
+                                <div className="card-icon">🔍</div>
+                                <div className="card-text">
+                                    <h3>Scattered searching</h3>
+                                    <p>Patent, publication, and product checks happen in different places.</p>
+                                </div>
+                            </div>
+
+                            <div className="feature-card">
+                                <div className="card-icon">🔀</div>
+                                <div className="card-text">
+                                    <h3>Unclear features</h3>
+                                    <p>If the invention is not structured, every report becomes harder to review.</p>
+                                </div>
+                            </div>
+
+                            <div className="feature-card">
+                                <div className="card-icon">📤</div>
+                                <div className="card-text">
+                                    <h3>Hard-to-share outputs</h3>
+                                    <p>Teams need clean reports, mapped evidence, and editable drafts.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Side: Image Column */}
+                    <div className="section-image-right">
+                        <div className="dashboard-mockup-container">
+                            <img src={background2ndSection} alt="Invention Workflow Mockup" className="mockup-img" />
+                        </div>
+                    </div>
+                </section>
+
+                {/* 2. New Content Workflow Bar (Steps 1-4) */}
+                <div className="workflow-bar-container">
+                    <div className="workflow-intro">
+                        <span className="workflow-eyebrow">Start simple</span>
+                        <h3 className="workflow-title">Reveal detail only <br /> when needed.</h3>
+                    </div>
+
+                    <div className="workflow-steps">
+                        <div className="workflow-step">
+                            <div className="step-badge">
+                                <span className="step-icon">💡</span>
+                                <span className="step-number">1</span>
+                            </div>
+                            <h4>Describe the invention</h4>
+                            <p>Paste the idea in plain English.</p>
+                        </div>
+
+                        <div className="workflow-step">
+                            <div className="step-badge">
+                                <span className="step-icon">📋</span>
+                                <span className="step-number">2</span>
+                            </div>
+                            <h4>Review the features</h4>
+                            <p>See the extracted invention structure.</p>
+                        </div>
+
+                        <div className="workflow-step">
+                            <div className="step-badge">
+                                <span className="step-icon">📥</span>
+                                <span className="step-number">3</span>
+                            </div>
+                            <h4>Choose outputs</h4>
+                            <p>Run search, comparison, drafts, or all.</p>
+                        </div>
+
+                        <div className="workflow-step">
+                            <div className="step-badge">
+                                <span className="step-icon">📁</span>
+                                <span className="step-number">4</span>
+                            </div>
+                            <h4>Open the case</h4>
+                            <p>Review results, download, reports, or share.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <section className="landing-section clear-structure-section">
                 <SectionHead
                     title="Every result starts with a clear invention structure"

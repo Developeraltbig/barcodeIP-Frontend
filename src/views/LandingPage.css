@@ -48,7 +48,7 @@ a {
     width: 100%;
     min-height: 100vh;
     overflow-x: hidden;
-    /* background: #fff; */
+    background: #fff;
 }
 
 /* HERO */
@@ -99,6 +99,10 @@ a {
     display: block;
     object-fit: contain;
 }
+
+/* .section-2nd {
+    background: #FFFFFF;
+} */
 
 .landing-nav {
     display: flex;
@@ -1132,6 +1136,225 @@ a {
 .footer-links a {
     color: #d9d9d9;
     font-size: 13px;
+}
+
+/* --- New Section Layout --- */
+.messy-inputs-section {
+    max-width: 1200px;
+    margin: 80px auto 40px auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* --- Left Column Elements --- */
+.section-content-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-title {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #050505;
+    margin: 0 0 16px 0;
+}
+
+.section-description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #666666;
+    margin: 0 0 32px 0;
+    max-width: 460px;
+}
+
+/* --- Feature Cards Styling --- */
+.feature-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.feature-card {
+    display: flex;
+    gap: 20px;
+    padding: 24px;
+    background: #FFF9F6;
+    border: 1.5px solid #F5E6E0;
+    border-radius: 12px;
+    align-items: flex-start;
+}
+
+.card-icon {
+    font-size: 22px;
+    color: #FF5A36;
+}
+
+.card-text h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111111;
+    margin: 0 0 6px 0;
+}
+
+.card-text p {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #666666;
+    margin: 0;
+}
+
+/* --- Right Column Layout --- */
+.section-image-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.dashboard-mockup-container {
+    width: 100%;
+    background: #FDF9F7;
+    border-radius: 16px;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.mockup-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* --- BOTTOM NEW WORKFLOW BAR --- */
+.workflow-bar-container {
+    max-width: 1200px;
+    margin: 0 auto 80px auto;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    /* Separates the header block from the 4 steps */
+    gap: 40px;
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 16px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.workflow-intro {
+    display: flex;
+    flex-direction: column;
+}
+
+.workflow-eyebrow {
+    font-size: 14px;
+    font-weight: 600;
+    color: #FF5A36;
+    margin-bottom: 8px;
+}
+
+.workflow-title {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #111111;
+    margin: 0;
+}
+
+.workflow-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Generates 4 equal space blocks side-by-side */
+    gap: 24px;
+}
+
+.workflow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.step-badge {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    background: #C84B31;
+    /* Deep accent rust color from your image */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.step-icon {
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+.step-number {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 18px;
+    height: 18px;
+    background: #FFFFFF;
+    color: #111111;
+    border: 1px solid #E5E5E5;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.workflow-step h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111111;
+    margin: 0 0 6px 0;
+}
+
+.workflow-step p {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #777777;
+    margin: 0;
+}
+
+/* --- Responsive Layout for Smaller Displays --- */
+@media (max-width: 1024px) {
+    .messy-inputs-section {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .workflow-bar-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin: 0 24px 60px 24px;
+    }
+
+    .workflow-steps {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2x2 grid on mobile tablets */
+        gap: 32px;
+    }
+}
+
+@media (max-width: 580px) {
+    .workflow-steps {
+        grid-template-columns: 1fr;
+        /* Stacks completely vertically on small phones */
+    }
 }
 
 /* RESPONSIVE */
