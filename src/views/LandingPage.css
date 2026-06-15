@@ -549,6 +549,263 @@ a {
     object-fit: contain;
 }
 
+/* --- Base Section Styles --- */
+.pricing-section {
+    background-color: #FDF7F5;
+    /* Soft ultra-light warm backdrop hue */
+    width: 100%;
+    padding: 100px 40px;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.pricing-max-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    /* Precise proportional sizing matching the screenshot columns */
+    grid-template-columns: 1fr 1.3fr 0.8fr;
+    gap: 40px;
+    align-items: center;
+}
+
+/* --- Left Column Typography --- */
+.pricing-content-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.pricing-title {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #050505;
+    margin: 0 0 20px 0;
+    letter-spacing: -0.5px;
+}
+
+.pricing-subtitle {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #666666;
+    margin: 0;
+    max-width: 340px;
+}
+
+/* --- Middle Column: Primary Pricing Card --- */
+.pricing-main-card {
+    background: #FFFFFF;
+    border: 1px solid #EAE2DF;
+    border-radius: 16px;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(125, 44, 28, 0.03);
+}
+
+.card-badge-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #C84B31;
+    /* Accent brick red text coloring */
+    margin-bottom: 6px;
+}
+
+.card-price {
+    font-size: 64px;
+    font-weight: 800;
+    color: #111111;
+    line-height: 1;
+}
+
+.card-price-subtext {
+    font-size: 13px;
+    color: #888888;
+    margin-top: 8px;
+    margin-bottom: 28px;
+}
+
+/* --- Formula/Equation Segment inside main card --- */
+.pricing-formula-bar {
+    width: 100%;
+    background: #FFF3F0;
+    /* Soft tinted container block wrapper */
+    border: 1px solid #F3DFD8;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.formula-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.formula-circle {
+    width: 28px;
+    height: 28px;
+    background: #C84B31;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formula-check-circle {
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid #C84B31;
+    color: #C84B31;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formula-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #555555;
+    text-align: center;
+}
+
+.formula-operator {
+    font-size: 14px;
+    font-weight: 600;
+    color: #888888;
+}
+
+.formula-item.bold-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111111;
+}
+
+/* --- Two-Column Features Grid Layout --- */
+.card-features-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    row-gap: 16px;
+    margin-bottom: 36px;
+}
+
+.feature-check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #333333;
+    line-height: 1.4;
+}
+
+.check-icon {
+    color: #C84B31;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+/* Call to Action Primary Button */
+.pricing-cta-btn {
+    width: 100%;
+    background: linear-gradient(180deg, #D4533A 0%, #A93621 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(169, 54, 33, 0.2);
+}
+
+/* --- Right Column: Benefit Grid Layout --- */
+.pricing-benefits-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.benefit-mini-card {
+    background: #FFFFFF;
+    border: 1px solid #EAE2DF;
+    border-radius: 12px;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.benefit-icon {
+    font-size: 24px;
+    margin-bottom: 14px;
+}
+
+.benefit-mini-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 6px 0;
+}
+
+.benefit-mini-card p {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #111111;
+    margin: 0 0 6px 0;
+}
+
+.benefit-mini-card .benefit-subtext {
+    color: #666666;
+    margin: 0;
+}
+
+/* --- Layout Adjustments for Medium Screens --- */
+@media (max-width: 1100px) {
+    .pricing-max-container {
+        grid-template-columns: 1fr;
+        /* Stacks column sections on tablets */
+        gap: 48px;
+    }
+
+    .pricing-content-left {
+        text-align: center;
+        align-items: center;
+    }
+
+    .pricing-subtitle {
+        max-width: 480px;
+    }
+
+    .pricing-benefits-right {
+        flex-direction: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .card-features-list {
+        grid-template-columns: 1fr;
+        /* Single column checkmarks list layout on phone views */
+    }
+
+    .pricing-benefits-right {
+        flex-direction: column;
+    }
+}
+
 /* --- Responsive Layout Breaks --- */
 @media (max-width: 1100px) {
     .structure-row-top {

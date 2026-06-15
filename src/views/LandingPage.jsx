@@ -273,6 +273,97 @@ function LandingPage() {
                 </div>
             </section>
 
+            {/* 4th Section */}
+            <section className="pricing-section">
+                <div className="pricing-max-container">
+
+                    {/* LEFT COLUMN: Heading & Info */}
+                    <div className="pricing-content-left">
+                        <h2 className="pricing-title">
+                            Simple pricing for <br /> every invention <br /> case.
+                        </h2>
+                        <p className="pricing-subtitle">
+                            One submitted invention uses one invention credit. One credit costs $25 and includes all selected outputs for that case.
+                        </p>
+                    </div>
+
+                    {/* MIDDLE COLUMN: Main Featured Pricing Card */}
+                    <div className="pricing-main-card">
+                        <span className="card-badge-title">Invention Credit</span>
+                        <div className="card-price">$25</div>
+                        <span className="card-price-subtext">per submitted invention</span>
+
+                        {/* The Equation/Formula Bar Component */}
+                        <div className="pricing-formula-bar">
+                            <div className="formula-item">
+                                <span className="formula-circle">1</span>
+                                <span className="formula-label">invention</span>
+                            </div>
+                            <span className="formula-operator">=</span>
+                            <div className="formula-item">
+                                <span className="formula-circle">1</span>
+                                <span className="formula-label">project</span>
+                            </div>
+                            <span className="formula-operator">=</span>
+                            <div className="formula-item bold-price">$25</div>
+                            <span className="formula-operator">=</span>
+                            <div className="formula-item">
+                                <span className="formula-check-circle">✓</span>
+                                <span className="formula-label">all selected outputs</span>
+                            </div>
+                        </div>
+
+                        {/* Two-Column Features Grid inside the Card */}
+                        <div className="card-features-list">
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Key Features
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Provisional Draft
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Patent Search
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Non-Provisional Draft
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Publication Search
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Reports and downloads
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Product Comparison
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Attorney review request option
+                            </div>
+                        </div>
+
+                        {/* Call to Action Button */}
+                        <button className="pricing-cta-btn" type="button">
+                            Get Started
+                        </button>
+                    </div>
+
+                    {/* RIGHT COLUMN: Stacked Benefit Cards */}
+                    <div className="pricing-benefits-right">
+                        <div className="benefit-mini-card">
+                            <div className="benefit-icon red-shield">🛡️</div>
+                            <p><strong>Select one output or all outputs.</strong></p>
+                            <p className="benefit-subtext">The same invention case still uses one project.</p>
+                        </div>
+
+                        <div className="benefit-mini-card">
+                            <div className="benefit-icon red-arrow">➡️</div>
+                            <h3>One case, all outputs</h3>
+                            <p className="benefit-subtext">No per-module pricing.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
 
             <footer className="landing-footer">
                 <div>
