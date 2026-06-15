@@ -947,6 +947,163 @@ a {
     }
 }
 
+/* --- Base Layout Styles --- */
+.draft-ready-section {
+    background-color: #FDF7F5;
+    /* Matches the consistent soft warm backdrop background */
+    width: 100%;
+    padding: 100px 40px;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.draft-max-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    /* Balanced 2-column split layout */
+    grid-template-columns: 1.1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+/* --- Left Side Content Alignment --- */
+.draft-content-left {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.draft-header-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.draft-title {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #050505;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.5px;
+}
+
+.draft-subtitle {
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: #666666;
+    margin: 0;
+    max-width: 480px;
+}
+
+/* --- Dual Feature Cards side-by-side --- */
+.draft-subcards-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+}
+
+.draft-feature-card {
+    background: #FFFFFF;
+    border: 1px solid #EAE2DF;
+    border-radius: 12px;
+    padding: 28px 24px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(125, 44, 28, 0.02);
+}
+
+.draft-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.draft-card-icon {
+    font-size: 26px;
+}
+
+.draft-card-header h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0;
+}
+
+/* Internal Card Unordered Lists */
+.draft-card-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.draft-card-list li {
+    font-size: 14px;
+    color: #555555;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.list-bullet {
+    font-weight: 600;
+    color: #C84B31;
+    /* Subtle theme color for indicators */
+    font-size: 14px;
+    width: 18px;
+    display: inline-block;
+}
+
+/* --- Right Side Image Container --- */
+.draft-image-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.draft-mockup-wrapper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.draft-mockup-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* --- Responsive Media Viewports --- */
+@media (max-width: 1100px) {
+    .draft-max-container {
+        grid-template-columns: 1fr;
+        /* Stacks layout to single column grid */
+        gap: 48px;
+    }
+
+    .draft-subtitle {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .draft-subcards-wrapper {
+        grid-template-columns: 1fr;
+        /* Stack standard elements inside cards on mobile devices */
+    }
+
+    .draft-title {
+        font-size: 32px;
+    }
+}
+
 /* --- Responsive Layout Breaks --- */
 @media (max-width: 1100px) {
     .structure-row-top {

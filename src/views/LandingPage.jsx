@@ -432,7 +432,63 @@ function LandingPage() {
             </section>
 
             {/* 6th Section */}
+            <section className="draft-ready-section">
+                <div className="draft-max-container">
 
+                    {/* LEFT COLUMN: Content + Sub-cards */}
+                    <div className="draft-content-left">
+                        <div className="draft-header-block">
+                            <h2 className="draft-title">
+                                Move from invention text <br /> to draft-ready sections.
+                            </h2>
+                            <p className="draft-subtitle">
+                                Oolto can generate editable patent-style content from the same invention description and reviewed features.
+                            </p>
+                        </div>
+
+                        {/* Sub-cards Container */}
+                        <div className="draft-subcards-wrapper">
+                            {/* Card 1 */}
+                            <div className="draft-feature-card">
+                                <div className="draft-card-header">
+                                    <span className="draft-card-icon icon-orange">📄</span>
+                                    <h3>Provisional Draft</h3>
+                                </div>
+                                <ul className="draft-card-list">
+                                    <li><span className="list-bullet">T</span> Title and field</li>
+                                    <li><span className="list-bullet">回</span> Background and summary</li>
+                                    <li><span className="list-bullet">📄</span> Detailed description</li>
+                                    <li><span className="list-bullet">⊞</span> Advantages and abstract</li>
+                                </ul>
+                            </div>
+
+                            {/* Card 2 */}
+                            <div className="draft-feature-card">
+                                <div className="draft-card-header">
+                                    <span className="draft-card-icon icon-red">📝</span>
+                                    <h3>Non-Provisional Draft</h3>
+                                </div>
+                                <ul className="draft-card-list">
+                                    <li><span className="list-bullet">👤</span> Draft sections</li>
+                                    <li><span className="list-bullet">📊</span> Representative claims</li>
+                                    <li><span className="list-bullet">🎯</span> Block diagram cards</li>
+                                    <li><span className="list-bullet">📈</span> Flow chart cards</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* RIGHT COLUMN: Interactive Modal Mockup Image */}
+                    <div className="draft-image-right">
+                        <div className="draft-mockup-wrapper">
+                            <img src={background} alt="Request Oolto Comments Panel" className="draft-mockup-img" />
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            {/* 7th Section */}
 
             {/* Footer Section */}
             <footer className="landing-footer">
