@@ -31,8 +31,10 @@ export const authApi = baseApi.injectEndpoints({
     // }),
 
     logout: builder.query({
-      query: () => '/api/v1/auth/logout',
-      providesTags: ['Auth']
+      query: () => ({
+        url: '/api/v1/auth/logout',
+        method: 'GET'
+      }),
     }),
 
     forgotPassword: builder.mutation({
@@ -59,7 +61,7 @@ export const authApi = baseApi.injectEndpoints({
         body: data
       }),
       invalidatesTags: ['User'],
-      
+
     }),
 
     updateImage: builder.mutation({
@@ -70,7 +72,7 @@ export const authApi = baseApi.injectEndpoints({
         formData: true,
       }),
       // invalidatesTags: ['User'],
-      
+
     }),
 
     // GET: Fetch User Details by ID
@@ -98,7 +100,7 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ['User']
     }),
 
-    
+
   })
 });
 

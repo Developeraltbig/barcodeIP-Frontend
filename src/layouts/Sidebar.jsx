@@ -1,14 +1,17 @@
 import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, Clock, UserRound, LogOut } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { PAGES } from "../views/Home/constants";
 import { navItems } from "../views/Home/data";
 import { useGetRecentThreeProjectsQuery } from "../features/userApi";
+import { useLazyLogoutQuery } from '../features/slice/auth/authApi';
 
 function Sidebar({ activePage, onPageChange, onLogout }) {
+    const dispatch = useDispatch();
     const [showRecent, setShowRecent] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const [LogoutTriggered, { isLoading }] = useLazyLogoutQuery();
 
     const profileRef = useRef(null);
 
@@ -54,14 +57,10 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
         onPageChange(PAGES.PROFILE);
     };
 
-    const handleLogoutClick = () => {
+    const handleLogoutClick = async () => {
+
+        const dataLogout = await LogoutTriggered().unwrap();
         setShowProfileMenu(false);
-
-        if (onLogout) {
-            onLogout();
-            return;
-        }
-
         localStorage.clear();
         window.location.href = "/login";
     };
