@@ -489,6 +489,143 @@ function LandingPage() {
             </section>
 
             {/* 7th Section */}
+            <section className="market-search-section">
+                <div className="layout-split-grid">
+                    {/* Left Side: Publication Search Card Panel */}
+                    <div className="dashboard-side-left">
+                        <div className="publication-container-panel">
+                            <div className="publication-header">
+                                <span className="search-icon">🔍</span>
+                                <div>
+                                    <h3 className="publication-title">Publication Search</h3>
+                                    <p className="publication-subtitle">
+                                        Find technical papers and articles related to your invention and compare key insights.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="publication-cards-stack">
+                                {/* Card 1 */}
+                                <div className="pub-card">
+                                    <div className="pub-card-header">
+                                        <span className="doc-icon">📄</span>
+                                        <h4>Flexible thermal interfaces for wearable devices</h4>
+                                        <span className="share-icon">↗️</span>
+                                    </div>
+                                    <p className="pub-card-desc">
+                                        A review of materials and structures that enable conformal heat transfer in wearable applications.
+                                    </p>
+                                    <span className="pub-card-meta">Journal Article 2024</span>
+                                </div>
+
+                                {/* Card 2 */}
+                                <div className="pub-card">
+                                    <div className="pub-card-header">
+                                        <span className="doc-icon">📄</span>
+                                        <h4>Microfluidic cooling layers in compact electronics</h4>
+                                        <span className="share-icon">↗️</span>
+                                    </div>
+                                    <p className="pub-card-desc">
+                                        Design approaches for integrating microfluidic channels to manage heat in slim devices.
+                                    </p>
+                                    <span className="pub-card-meta">Conference Paper 2023</span>
+                                </div>
+
+                                {/* Card 3 */}
+                                <div className="pub-card">
+                                    <div className="pub-card-header">
+                                        <span className="doc-icon">📄</span>
+                                        <h4>Skin-safe adhesive materials for wearable hardware</h4>
+                                        <span className="share-icon">↗️</span>
+                                    </div>
+                                    <p className="pub-card-desc">
+                                        Formulation and testing of adhesives that ensure long-term wear and skin compatibility.
+                                    </p>
+                                    <span className="pub-card-meta">Technical Report 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Content Side: Main Headers and Product Rankings */}
+                    <div className="content-side-right">
+                        <h2 className="main-section-title">See the market, not only the patent database.</h2>
+                        <p className="main-section-desc">
+                            Some inventions may be close to existing products. Oolto can surface related products and show why they matter through ranked product cards and feature breakdowns.
+                        </p>
+
+                        <div className="ranked-product-cards">
+                            {/* Rank 1 */}
+                            <div className="product-rank-card">
+                                <div className="rank-badge-column">
+                                    <span className="rank-number text-red">1</span>
+                                    <span className="rank-label">Rank</span>
+                                </div>
+                                <div className="product-image-container">
+                                    <img src="/path-to-watch-image.jpg" alt="Wearable cooling patch" className="product-thumb" />
+                                </div>
+                                <div className="product-details-column">
+                                    <h3>Wearable cooling patch</h3>
+                                    <span className="vendor-brand">amazon</span>
+                                    <p className="product-quote">"Reusable adhesive patch delivers up to 8 hours of targeted cooling relief."</p>
+                                    <a href="#breakdown" className="breakdown-link">Show feature breakdown ›</a>
+                                </div>
+                                <div className="score-column">
+                                    <span className="score-label">Relevance Score</span>
+                                    <span className="score-value text-red">92</span>
+                                    <span className="score-badge badge-red-light">Very High</span>
+                                </div>
+                            </div>
+
+                            {/* Rank 2 */}
+                            <div className="product-rank-card">
+                                <div className="rank-badge-column">
+                                    <span className="rank-number">2</span>
+                                    <span className="rank-label">Rank</span>
+                                </div>
+                                <div className="product-image-container">
+                                    <img src="/path-to-solar-image.jpg" alt="Thermal gel pad for electronics" className="product-thumb" />
+                                </div>
+                                <div className="product-details-column">
+                                    <h3>Thermal gel pad for electronics</h3>
+                                    <span className="vendor-brand">amazon</span>
+                                    <p className="product-quote">"High-conductivity gel pad for efficient heat transfer in compact devices."</p>
+                                    <a href="#breakdown" className="breakdown-link">Show feature breakdown ›</a>
+                                </div>
+                                <div className="score-column">
+                                    <span className="score-label">Relevance Score</span>
+                                    <span className="score-value">78</span>
+                                    <span className="score-badge badge-orange-light">High</span>
+                                </div>
+                            </div>
+
+                            {/* Rank 3 */}
+                            <div className="product-rank-card">
+                                <div className="rank-badge-column">
+                                    <span className="rank-number">3</span>
+                                    <span className="rank-label">Rank</span>
+                                </div>
+                                <div className="product-image-container">
+                                    <img src="/path-to-wrap-image.jpg" alt="Smart recovery cooling wrap" className="product-thumb" />
+                                </div>
+                                <div className="product-details-column">
+                                    <h3>Smart recovery cooling wrap</h3>
+                                    <span className="vendor-brand">amazon</span>
+                                    <p className="product-quote">"Wearable wrap with adjustable cooling and app-connected temperature control."</p>
+                                    <a href="#breakdown" className="breakdown-link">Show feature breakdown ›</a>
+                                </div>
+                                <div className="score-column">
+                                    <span className="score-label">Relevance Score</span>
+                                    <span className="score-value">71</span>
+                                    <span className="score-badge badge-orange-light">High</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 8th Section */}
 
             {/* Footer Section */}
             <footer className="landing-footer">

@@ -1080,6 +1080,338 @@ a {
     object-fit: contain;
 }
 
+
+/* Main Section Wrapper */
+.market-search-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #111111;
+    background-color: #ffffff;
+}
+
+/* Core Split Layout Grid */
+.market-search-section .layout-split-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.9fr;
+    /* Left side narrow, right side wide */
+    gap: 48px;
+    align-items: start;
+}
+
+@media (max-width: 968px) {
+    .market-search-section .layout-split-grid {
+        grid-template-columns: 1fr;
+        /* Stack vertically on small screens */
+        gap: 40px;
+    }
+}
+
+/* ==========================================
+   LEFT COLUMN: Publication Search Panel
+   ========================================== */
+.dashboard-side-left .publication-container-panel {
+    background-color: #fef8f8;
+    /* Soft subtle off-red/pinkish hue */
+    border: 1px solid #f3e6e6;
+    border-radius: 12px;
+    padding: 32px 24px;
+}
+
+.publication-header {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+}
+
+.publication-header .search-icon {
+    font-size: 24px;
+    color: #cc3a27;
+    margin-top: 2px;
+}
+
+.publication-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #1c1c1c;
+}
+
+.publication-subtitle {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #616161;
+    margin: 0;
+}
+
+/* Publication Stacked Cards */
+.publication-cards-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pub-card {
+    background: #ffffff;
+    border: 1px solid #ede1e1;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.pub-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.pub-card-header .doc-icon {
+    font-size: 16px;
+    margin-top: 2px;
+    color: #9e9e9e;
+}
+
+.pub-card-header h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+    padding-right: 24px;
+    /* Space for share icon */
+    line-height: 1.4;
+    color: #111111;
+}
+
+.pub-card-header .share-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 14px;
+    color: #e0533c;
+    cursor: pointer;
+}
+
+.pub-card-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #666666;
+    margin: 10px 0 12px 0;
+}
+
+.pub-card-meta {
+    font-size: 11px;
+    color: #9e9e9e;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+
+/* ==========================================
+   RIGHT COLUMN: Headers & Ranked Product Cards
+   ========================================== */
+.content-side-right .main-section-title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px 0;
+    color: #000000;
+}
+
+.content-side-right .main-section-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555555;
+    margin: 0 0 32px 0;
+    max-width: 640px;
+}
+
+/* Ranked Product Stack */
+.ranked-product-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.product-rank-card {
+    display: grid;
+    grid-template-columns: 70px 110px 1fr 130px;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 16px;
+    transition: box-shadow 0.2s ease;
+}
+
+.product-rank-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+@media (max-width: 640px) {
+    .product-rank-card {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .rank-badge-column,
+    .product-image-container,
+    .score-column {
+        justify-content: center;
+        margin: 0 auto;
+    }
+}
+
+/* Column 1: Rank Badge */
+.rank-badge-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.rank-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #222222;
+    line-height: 1;
+}
+
+.rank-number.text-red {
+    color: #d13d2a;
+}
+
+.rank-label {
+    font-size: 12px;
+    color: #888888;
+    margin-top: 2px;
+    text-transform: capitalize;
+}
+
+/* Column 2: Product Image Thumbnail */
+.product-image-container {
+    width: 96px;
+    height: 96px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Column 3: Product Info details */
+.product-details-column {
+    padding: 0 16px;
+}
+
+.product-details-column h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    color: #111111;
+}
+
+.vendor-brand {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111111;
+    letter-spacing: -0.01em;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.product-quote {
+    font-size: 13px;
+    font-style: italic;
+    color: #555555;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+}
+
+.breakdown-link {
+    font-size: 12px;
+    font-weight: 600;
+    color: #cc3a27;
+    text-decoration: none;
+}
+
+.breakdown-link:hover {
+    text-decoration: underline;
+}
+
+/* Column 4: Relevance Scores */
+.score-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 1px solid #eeeeee;
+    height: 80%;
+    justify-content: center;
+}
+
+@media (max-width: 640px) {
+    .score-column {
+        border-left: none;
+        border-top: 1px solid #eeeeee;
+        padding-top: 12px;
+        width: 100%;
+    }
+}
+
+.score-label {
+    font-size: 10px;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+}
+
+.score-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.score-value.text-red {
+    color: #d13d2a;
+}
+
+/* Score Badge Pill variants */
+.score-badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 4px;
+    text-align: center;
+    min-width: 70px;
+}
+
+.badge-red-light {
+    background-color: #fff1f0;
+    color: #d13d2a;
+    border: 1px solid #fcdad7;
+}
+
+.badge-orange-light {
+    background-color: #fff7f0;
+    color: #d46b08;
+    border: 1px solid #ffd8bf;
+}
+
+
 /* --- Responsive Media Viewports --- */
 @media (max-width: 1100px) {
     .draft-max-container {
