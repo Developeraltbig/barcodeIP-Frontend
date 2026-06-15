@@ -4,6 +4,8 @@ import background1 from "../assets/landingPage/Background1.jpg";
 import background from "../assets/landingPage/Background.png";
 import logo from "../assets/landingPage/logo.jpg";
 import background2ndSection from "../assets/landingPage/section2-Background.jpg";
+import background3rdSection from "../assets/landingPage/section3-Background.png";
+
 
 
 
@@ -115,7 +117,8 @@ function LandingPage() {
                     <img src={background} alt="Background Feature" />
                 </div>
             </section>
-            {/* 2nd section */}
+
+            {/* 2nd Section */}
             <div className="section-2nd">
                 {/* 1. Main Content Split Section */}
                 <section className="messy-inputs-section">
@@ -211,317 +214,65 @@ function LandingPage() {
                     </div>
                 </div>
             </div>
-            <section className="landing-section clear-structure-section">
-                <SectionHead
-                    title="Every result starts with a clear invention structure"
-                    text="Oolto first converts messy invention text into a cleaner feature structure that your team can review before reports are created."
-                />
 
-                <div className="feature-board">
-                    <div className="feature-board-head">
-                        <span>Key Features</span>
-                        <button type="button">Edit Features</button>
-                    </div>
+            {/* 3rd Section */}
+            <section className="structure-section-dark">
+                {/* Explicit layout container to match screenshot rows */}
+                <div className="structure-layout-container">
 
-                    <div className="feature-columns">
-                        {featureGroups.map((group) => (
-                            <div key={group.title} className="feature-column">
-                                <h3>{group.title}</h3>
+                    {/* ROW 1: Content Left, Tall Non-Provisional Card Right */}
+                    <div className="structure-row-top">
+                        <div className="structure-header-left">
+                            <h2 className="structure-title-dark">
+                                Every result starts with a clear invention structure
+                            </h2>
+                            <p className="structure-description-dark">
+                                Before creating reports, Oolto identifies the important technical features in your invention.
+                                You can review and edit them before moving ahead.
+                            </p>
+                        </div>
 
-                                {group.items.map((item, index) => (
-                                    <div key={item} className="feature-item">
-                                        <span>{index + 1}</span>
-                                        <p>{item}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="output-strip">
-                        {outputCards.map((item) => (
-                            <div key={item}>
-                                <span>▧</span>
-                                <strong>{item}</strong>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <section id="search" className="landing-section patent-search-section">
-                <SectionHead
-                    title="Patent search built for review, not just result lists."
-                    text="Search outputs are organized around invention features, references, and review-friendly relevance signals."
-                    center
-                />
-
-                <div className="search-layout">
-                    <div className="search-filters">
-                        {["Target Features", "Technical Keywords", "Prior Art Signals", "Search History", "Citations"].map(
-                            (item) => (
-                                <div key={item} className="search-filter-card">
-                                    <span>↗</span>
-                                    <div>
-                                        <strong>{item}</strong>
-                                        <p>Structured information used for better review.</p>
-                                    </div>
-                                </div>
-                            )
-                        )}
-                    </div>
-
-                    <div className="search-results">
-                        {searchRows.map((item, index) => (
-                            <div key={item.title} className="search-result-row">
-                                <div className="result-rank">{index + 1}</div>
-
-                                <div className="result-content">
-                                    <span>Patent reference</span>
-                                    <h4>{item.title}</h4>
-                                    <p>
-                                        Short mapping explanation showing why this reference may be
-                                        relevant to the selected invention features.
-                                    </p>
-                                </div>
-
-                                <div className="result-score">
-                                    <strong>{item.score}</strong>
-                                    <span>Score</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <section id="drafts" className="landing-section draft-section">
-                <div className="split-layout">
-                    <div>
-                        <span className="eyebrow">Draft-ready workflow</span>
-                        <h2>Move from invention text to draft-ready sections.</h2>
-                        <p>
-                            Review key features first, then generate patent search, product comparison,
-                            provisional draft sections, or non-provisional draft sections.
-                        </p>
-
-                        <div className="mini-check-grid">
-                            {["Feature Review", "Patent Search", "Publication Search", "Product Compare"].map(
-                                (item) => (
-                                    <div key={item}>
-                                        <span>✓</span>
-                                        {item}
-                                    </div>
-                                )
-                            )}
+                        <div className="action-card-item tall-card">
+                            <div className="action-card-icon">👤</div>
+                            <h3>Non-Provisional Draft</h3>
+                            <p>Create a non-provisional patent application.</p>
                         </div>
                     </div>
 
-                    <div className="draft-card">
-                        <div className="draft-card-head">
-                            <strong>Generate Draft Sections</strong>
-                            <span>●</span>
+                    {/* ROW 2: The 4 horizontal cards side-by-side */}
+                    <div className="structure-row-bottom-four">
+                        <div className="action-card-item">
+                            <div className="action-card-icon">📄</div>
+                            <h3>Patent Search</h3>
+                            <p>Find relevant patents.</p>
                         </div>
 
-                        <div className="draft-fields">
-                            <span />
-                            <span />
-                            <span />
+                        <div className="action-card-item">
+                            <div className="action-card-icon">💻</div>
+                            <h3>Publication Search</h3>
+                            <p>Find relevant publications.</p>
                         </div>
 
-                        <div className="draft-pills">
-                            {["Summary", "Claims", "Abstract", "Description"].map((item) => (
-                                <span key={item}>{item}</span>
-                            ))}
+                        <div className="action-card-item">
+                            <div className="action-card-icon">📦</div>
+                            <h3>Product Comparison</h3>
+                            <p>Compare products and key features.</p>
                         </div>
 
-                        <button type="button">Generate Draft</button>
-                    </div>
-                </div>
-            </section>
-
-            <section className="landing-section messy-section">
-                <div className="split-layout reverse">
-                    <div>
-                        <span className="eyebrow">Clean start</span>
-                        <h2>Invention work usually starts messy.</h2>
-                        <p>
-                            Oolto gives your team a cleaner place to capture ideas, classify
-                            invention features, and decide which output should be generated next.
-                        </p>
-
-                        <div className="simple-card-list">
-                            <div>
-                                <strong>1. Invention input</strong>
-                                <p>Add the rough invention description.</p>
-                            </div>
-                            <div>
-                                <strong>2. Feature review</strong>
-                                <p>Review generated key features before outputs.</p>
-                            </div>
-                            <div>
-                                <strong>3. Team comments</strong>
-                                <p>Request review and collect comments in one case.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="messy-mockup">
-                        <div className="sticky-note one">problem</div>
-                        <div className="sticky-note two">feature</div>
-                        <div className="mini-table">
-                            {["Patent Search", "Publication Search", "Draft"].map((item) => (
-                                <div key={item}>
-                                    <span>{item}</span>
-                                    <strong>Ready</strong>
-                                </div>
-                            ))}
+                        <div className="action-card-item">
+                            <div className="action-card-icon">✍️</div>
+                            <h3>Provisional Draft</h3>
+                            <p>Create a provisional patent application.</p>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <section id="pricing" className="landing-section pricing-section">
-                <div className="pricing-copy">
-                    <h2>Simple pricing for every invention case.</h2>
-                    <p>
-                        Create a structured IP case and add the outputs your workflow needs.
-                    </p>
-                </div>
-
-                <div className="price-card">
-                    <span className="eyebrow">Starter case</span>
-                    <h3>$25</h3>
-                    <p>per invention case</p>
-
-                    <div className="price-options">
-                        {["Patent Search", "Publication Search", "Product Comparison", "Draft Sections"].map(
-                            (item) => (
-                                <div key={item}>
-                                    <span>✓</span>
-                                    {item}
-                                </div>
-                            )
-                        )}
-                    </div>
-
-                    <button type="button">Get Started</button>
-                </div>
-
-                <div className="pricing-note-card">
-                    <strong>Need more?</strong>
-                    <p>Use add-ons for deeper search, attorney review, or draft support.</p>
+                {/* Bottom Dashboard Table Image */}
+                <div className="structure-dashboard-preview">
+                    <img src={background3rdSection} alt="Key Features Structure Dashboard" className="dashboard-preview-img" />
                 </div>
             </section>
 
-            <section className="landing-section market-section">
-                <div className="market-grid">
-                    <div className="publication-card">
-                        <h3>Publication Search</h3>
-
-                        {[1, 2, 3].map((item) => (
-                            <div key={item} className="publication-row">
-                                <span>{item}</span>
-                                <p>Relevant technical publication result with short reason.</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div>
-                        <h2>See the market, not only the patent database.</h2>
-                        <p>
-                            Compare products and public references to understand where the invention
-                            may connect with real market activity.
-                        </p>
-
-                        <div className="product-list">
-                            {["Product cooling system", "Smart hand tool reference", "Sensor monitoring setup"].map(
-                                (item, index) => (
-                                    <div key={item} className="product-row">
-                                        <div>{index + 1}</div>
-                                        <div className="product-thumb" />
-                                        <div>
-                                            <strong>{item}</strong>
-                                            <span>Product comparison summary</span>
-                                        </div>
-                                        <b>{[92, 78, 71][index]}</b>
-                                    </div>
-                                )
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="landing-section testimonial-section">
-                <SectionHead
-                    title="Why innovators choose Oolto"
-                    text="A clean workspace for invention review, patent search, drafting, and team comments."
-                    center
-                />
-
-                <div className="testimonial-grid">
-                    {testimonials.map((item) => (
-                        <article key={item.name} className="testimonial-card">
-                            <div className="quote-mark">“</div>
-                            <p>{item.text}</p>
-                            <div>
-                                <strong>{item.name}</strong>
-                                <span>{item.role}</span>
-                            </div>
-                        </article>
-                    ))}
-                </div>
-            </section>
-
-            <section className="landing-section reports-section">
-                <div className="report-tile-grid">
-                    {["Patent Search", "Publication Search", "Product Compare", "Draft Sections", "Team Comments", "Downloads"].map(
-                        (item) => (
-                            <div key={item}>
-                                <span>▢</span>
-                                <strong>{item}</strong>
-                            </div>
-                        )
-                    )}
-                </div>
-
-                <div className="report-copy">
-                    <h2>Creates reports your team can actually use.</h2>
-                    <p>
-                        Each output is organized for review, sharing, and follow-up action.
-                    </p>
-                </div>
-            </section>
-
-            <section className="landing-section contact-section">
-                <div className="contact-copy">
-                    <h2>Let’s talk about your invention work.</h2>
-                    <p>
-                        Tell us what your team needs and we’ll help you set up the right workflow.
-                    </p>
-
-                    <div className="contact-points">
-                        <span>📍 Remote IP workflow support</span>
-                        <span>✉️ team@oolto.com</span>
-                        <span>☎️ +91 00000 00000</span>
-                    </div>
-                </div>
-
-                <form className="contact-form">
-                    <h3>Send your requirement</h3>
-
-                    <div className="contact-two-grid">
-                        <input placeholder="Name" />
-                        <input placeholder="Email" />
-                    </div>
-
-                    <input placeholder="Phone" />
-                    <textarea placeholder="Message" />
-
-                    <button type="button">Submit</button>
-                </form>
-            </section>
 
             <footer className="landing-footer">
                 <div>
