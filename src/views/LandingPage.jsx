@@ -718,6 +718,120 @@ function LandingPage() {
                 </div>
             </section>
 
+            {/* 9th Section */}
+            <section className="team-reports-section">
+                {/* Top Grid: Numbered Audience Cards & Section Title */}
+                <div className="audience-layout-grid">
+                    <div className="cards-wrapper-left">
+                        <div className="audience-card-row">
+                            {/* Card 01 */}
+                            <div className="numbered-audience-card">
+                                <span className="card-badge-num">01</span>
+                                <h3>Inventors</h3>
+                                <p>Protect and document ideas.</p>
+                            </div>
+                            {/* Card 02 */}
+                            <div className="numbered-audience-card">
+                                <span className="card-badge-num">02</span>
+                                <h3>Startup founders</h3>
+                                <p>Move IP early and build with confidence.</p>
+                            </div>
+                        </div>
+
+                        <div className="audience-card-row row-three-items">
+                            {/* Card 03 */}
+                            <div className="numbered-audience-card">
+                                <span className="card-badge-num">03</span>
+                                <h3>R&D teams</h3>
+                                <p>Accelerate disclosure review and decisions.</p>
+                            </div>
+                            {/* Card 04 */}
+                            <div className="numbered-audience-card">
+                                <span className="card-badge-num">04</span>
+                                <h3>Patent analysts</h3>
+                                <p>Save time on search and analysis.</p>
+                            </div>
+                            {/* Card 05 */}
+                            <div className="numbered-audience-card">
+                                <span className="card-badge-num">05</span>
+                                <h3>IP teams and attorneys</h3>
+                                <p>Streamline case prep and reporting.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Dynamic Title Column */}
+                    <div className="headline-side-right">
+                        <h2 className="main-section-title">
+                            Creates reports <br /> your team can <br /> actually use.
+                        </h2>
+                    </div>
+                </div>
+
+                {/* Middle Section: Report Grid Options */}
+                <div className="reports-inclusion-wrapper">
+                    <p className="reports-subheading-label">Reports are included with each invention case.</p>
+
+                    <div className="reports-options-grid">
+                        {/* Box 1 */}
+                        <div className="report-option-box">
+                            <span className="report-box-icon">📈</span>
+                            <h4>Patent Search Report</h4>
+                        </div>
+                        {/* Box 2 */}
+                        <div className="report-option-box">
+                            <span className="report-box-icon">📋</span>
+                            <h4>Mapping Report</h4>
+                        </div>
+                        {/* Box 3 */}
+                        <div className="report-option-box">
+                            <span className="report-box-icon">📊</span>
+                            <h4>Patent Comparison Report</h4>
+                        </div>
+                        {/* Box 4 */}
+                        <div className="report-option-box">
+                            <span className="report-box-icon">📝</span>
+                            <h4>Provisional Draft</h4>
+                        </div>
+                        {/* Box 5 */}
+                        <div className="report-option-box">
+                            <span className="report-box-icon">✉️</span>
+                            <h4>Non Provisional Draft</h4>
+                        </div>
+                        {/* Box 6 */}
+                        <div className="report-option-box">
+                            <span className="report-box-icon">💬</span>
+                            <h4>Attorney Review Package</h4>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Bottom Section: Warning/Disclaimer Bar */}
+                <div className="judgment-disclaimer-box">
+                    <span className="shield-check-icon">🛡️</span>
+                    <div className="disclaimer-text">
+                        <strong>Built to support review, not replace professional judgment.</strong>
+                        <p>
+                            Oolto helps organize invention information, search evidence, compare references, generate draft-ready sections, and prepare reports. For legal decisions, users should consult qualified professionals.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Bottom Section: CTA Action Banner Row */}
+                <div className="cta-proceed-banner-row">
+                    <div className="cta-text-left">
+                        <h4>Key features are ready</h4>
+                        <p>Continue to results to review patent search, publications, products, drafts, downloads, and Barcode Comments.</p>
+                    </div>
+                    <button className="btn-proceed-action">
+                        Proceed <span className="arrow-next">›</span>
+                    </button>
+                </div>
+            </section>
+
+            {/* 10th Section */}
+
+
             {/* Footer Section */}
             <footer className="landing-footer">
                 <div>
