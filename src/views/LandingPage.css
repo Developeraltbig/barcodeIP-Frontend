@@ -1412,6 +1412,209 @@ a {
 }
 
 
+/* ============================================================
+   ROTATING HORIZONTAL TRACK: Infinite Marquee (Left to Right)
+   ============================================================ */
+
+/* Hide off-screen spillover and handle spacing */
+.compact-testimonials-marquee-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+    position: relative;
+    /* Optional: creates fading overlay shadows at both edges */
+    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
+/* Master wrapper flexing both card groupings next to each other */
+.marquee-track {
+    display: flex;
+    width: max-content;
+}
+
+/* The card arrangement block */
+.marquee-group {
+    display: flex;
+    gap: 24px;
+    padding-right: 24px;
+    /* Maintain gap layout uniformity between twins */
+    /* To reverse direction from right-to-left, change scroll-left to scroll-right */
+    animation: scroll-right 30s linear infinite;
+}
+
+/* Pause rotating movement on mouse cursor hover */
+.compact-testimonials-marquee-container:hover .marquee-group {
+    animation-play-state: paused;
+}
+
+/* Base sizing rules for rotated marquee cards */
+.card-small {
+    flex-direction: column;
+    padding: 24px 20px;
+    justify-content: space-between;
+    width: 300px;
+    /* Constrain horizontal width so they loop elegantly */
+    flex-shrink: 0;
+    /* Keep them raw from shrinking inside flex dynamics */
+}
+
+/* KEYFRAMES: Clean translation reset calculation for rightward flow */
+@keyframes scroll-right {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+
+/* ==========================================
+   REST OF PRE-EXISTING CSS REMAINS UNCHANGED
+   ========================================== */
+.testimonials-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #fffaf9;
+    color: #111111;
+    box-sizing: border-box;
+}
+
+.section-header-centered {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 48px auto;
+}
+
+.section-header-centered .main-section-title {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px 0;
+    color: #000000;
+}
+
+.section-header-centered .main-section-desc {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666666;
+    margin: 0;
+}
+
+.testimonial-card {
+    background: #ffffff;
+    border: 1px solid #ebdcdc;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+    box-sizing: border-box;
+    display: flex;
+}
+
+.star-rating {
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.testimonial-quote {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #222222;
+    margin: 0 0 20px 0;
+}
+
+.testimonial-author h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 2px 0;
+    color: #111111;
+}
+
+.testimonial-author span {
+    font-size: 11px;
+    color: #888888;
+    font-weight: 500;
+}
+
+.featured-testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.card-large {
+    flex-direction: row;
+    padding: 20px;
+    align-items: stretch;
+}
+
+.card-large .card-image-wrapper {
+    width: 140px;
+    min-width: 140px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #eee;
+}
+
+.card-large .testimonial-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-large .card-content-wrapper {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.author-row-compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid #f7eeee;
+    padding-top: 14px;
+}
+
+.author-avatar-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ddd;
+}
+
+@media (max-width: 768px) {
+    .section-header-centered .main-section-title {
+        font-size: 32px;
+    }
+
+    .featured-testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-large {
+        flex-direction: column;
+    }
+
+    .card-large .card-image-wrapper {
+        width: 100%;
+        height: 180px;
+        margin-bottom: 16px;
+    }
+
+    .card-large .card-content-wrapper {
+        padding-left: 0;
+    }
+}
+
 /* --- Responsive Media Viewports --- */
 @media (max-width: 1100px) {
     .draft-max-container {

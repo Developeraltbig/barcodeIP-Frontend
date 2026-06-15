@@ -626,6 +626,97 @@ function LandingPage() {
             </section>
 
             {/* 8th Section */}
+            <section className="testimonials-section">
+                {/* Section Header */}
+                <div className="section-header-centered">
+                    <h2 className="main-section-title">Why innovators choose Oolto</h2>
+                    <p className="main-section-desc">
+                        Inventors, startups, and IP teams use Oolto to move from raw ideas to patent search, novelty analysis, and draft-ready outputs with more clarity.
+                    </p>
+                </div>
+
+                {/* Top Grid: Large Featured Testimonials */}
+                <div className="featured-testimonials-grid">
+                    <div className="testimonial-card card-large">
+                        <div className="card-image-wrapper">
+                            <img src="/path-to-avatar-1.jpg" alt="Ananya Rao working" className="testimonial-img" />
+                        </div>
+                        <div className="card-content-wrapper">
+                            <div className="star-rating">⭐⭐⭐⭐⭐</div>
+                            <p className="testimonial-quote">
+                                "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
+                            </p>
+                            <div className="testimonial-author">
+                                <h4>Ananya Rao</h4>
+                                <span>Founder @ MedTech Startup</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="testimonial-card card-large">
+                        <div className="card-image-wrapper">
+                            <img src="/path-to-avatar-2.jpg" alt="Team discussing" className="testimonial-img" />
+                        </div>
+                        <div className="card-content-wrapper">
+                            <div className="star-rating">⭐⭐⭐⭐⭐</div>
+                            <p className="testimonial-quote">
+                                "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
+                            </p>
+                            <div className="testimonial-author">
+                                <h4>Ananya Rao</h4>
+                                <span>Founder @ MedTech Startup</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* =========================================================
+       NEW ROTATING HORIZONTAL TRACK (Infinite Left-to-Right Loop)
+       ========================================================= */}
+                <div className="compact-testimonials-marquee-container">
+                    <div className="marquee-track">
+
+                        {/* Originals Set */}
+                        <div className="marquee-group">
+                            {[1, 2, 3, 4].map((item) => (
+                                <div className="testimonial-card card-small" key={`orig-${item}`}>
+                                    <div className="star-rating">⭐⭐⭐⭐⭐</div>
+                                    <p className="testimonial-quote">
+                                        "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
+                                    </p>
+                                    <div className="author-row-compact">
+                                        <img src="/path-to-profile-sm.jpg" alt="Ananya Rao" className="author-avatar-sm" />
+                                        <div className="testimonial-author">
+                                            <h4>Ananya Rao</h4>
+                                            <span>Founder @ MedTech Startup</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Duplicated Set for Seamless Loop Wrapping */}
+                        <div className="marquee-group" aria-hidden="true">
+                            {[1, 2, 3, 4].map((item) => (
+                                <div className="testimonial-card card-small" key={`dup-${item}`}>
+                                    <div className="star-rating">⭐⭐⭐⭐⭐</div>
+                                    <p className="testimonial-quote">
+                                        "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
+                                    </p>
+                                    <div className="author-row-compact">
+                                        <img src="/path-to-profile-sm.jpg" alt="Ananya Rao" className="author-avatar-sm" />
+                                        <div className="testimonial-author">
+                                            <h4>Ananya Rao</h4>
+                                            <span>Founder @ MedTech Startup</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                    </div>
+                </div>
+            </section>
 
             {/* Footer Section */}
             <footer className="landing-footer">
