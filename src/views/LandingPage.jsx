@@ -830,6 +830,96 @@ function LandingPage() {
             </section>
 
             {/* 10th Section */}
+            <section className="contact-requirement-section">
+                <div className="layout-split-grid">
+                    {/* Left Column: Contact Copy & Details */}
+                    <div className="content-side-left">
+                        <h2 className="main-section-title">Let’s talk about your invention work.</h2>
+                        <p className="main-section-desc">
+                            Share your idea, patent document, or project requirement with us. Our team will help you understand the next best step clearly.
+                        </p>
+
+                        <div className="contact-info-list">
+                            {/* Phone Item */}
+                            <div className="contact-info-item">
+                                <div className="icon-circle">
+                                    <span className="info-icon">📞</span>
+                                </div>
+                                <div className="info-text">
+                                    <span className="info-label">PHONE</span>
+                                    <a href="tel:+919876543210" className="info-value">+91 98765 43210</a>
+                                </div>
+                            </div>
+
+                            {/* Email Item */}
+                            <div className="contact-info-item">
+                                <div className="icon-circle">
+                                    <span className="info-icon">✉️</span>
+                                </div>
+                                <div className="info-text">
+                                    <span className="info-label">EMAIL</span>
+                                    <a href="mailto:oolto@gmail.com" className="info-value">oolto@gmail.com</a>
+                                </div>
+                            </div>
+
+                            {/* Location Item */}
+                            <div className="contact-info-item">
+                                <div className="icon-circle">
+                                    <span className="info-icon">📍</span>
+                                </div>
+                                <div className="info-text">
+                                    <span className="info-label">LOCATION</span>
+                                    <span className="info-value">New Delhi, India</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Column: Floating Requirement Form Card */}
+                    <div className="form-side-right">
+                        <div className="requirement-form-panel">
+                            <h3 className="form-title">Send your requirement</h3>
+                            <p className="form-subtitle">
+                                Tell us what you want to create, review, search, or file. We will get back with a clear next step.
+                            </p>
+
+                            <form className="requirement-form" onSubmit={(e) => e.preventDefault()}>
+                                <div className="form-row-twin">
+                                    <div className="form-group">
+                                        <label htmlFor="name">Name</label>
+                                        <input type="text" id="name" name="name" required />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="email">Email</label>
+                                        <input type="email" id="email" name="email" required />
+                                    </div>
+                                </div>
+
+                                <div className="form-row-twin">
+                                    <div className="form-group">
+                                        <label htmlFor="number">Number</label>
+                                        <input type="tel" id="number" name="number" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="projectType">Project Type</label>
+                                        <input type="text" id="projectType" name="projectType" />
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="message">Message</label>
+                                    <textarea id="message" name="message" rows="5" required></textarea>
+                                </div>
+
+                                <button type="submit" className="btn-send-requirement">
+                                    Send
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
 
 
             {/* Footer Section */}
