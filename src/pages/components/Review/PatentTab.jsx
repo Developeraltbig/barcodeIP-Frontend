@@ -68,10 +68,10 @@ function PatentTab({
       </section>
 
       <section className="rr-results-list-panel">
-        {results.map((result) => (
+        {results[0]?.novelty_analysis?.selectedPatentIds?.map((result) => (
           <PatentResultCard
-            key={result.id}
-            result={result}
+            key={result[0]._id}
+            result={result[0]}
             onViewMapping={() => onViewMapping(result)}
             onViewDetails={() => onViewDetails(result)}
             onViewOverlap={() => onViewOverlap(result)}

@@ -23,7 +23,7 @@ html {
 
 body {
     margin: 0;
-    font-family: "Inter", sans-serif;
+    font-family: "Figtree";
     color: var(--text);
     background: var(--bg);
 }
@@ -54,11 +54,10 @@ a {
 /* HERO */
 
 .landing-hero {
+    height: 1230px;
     width: 100%;
     padding: 18px 20px 0;
-    /* background:
-        radial-gradient(circle at 50% 42%, rgba(255, 116, 48, 0.85) 0%, rgba(255, 152, 85, 0.76) 36%, rgba(255, 223, 190, 0.9) 80%),
-        linear-gradient(180deg, #fff7ef 0%, #ffc19b 100%); */
+    background: linear-gradient(to right, #DF4833, #FFFFFF);
     border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
 }
@@ -73,10 +72,32 @@ a {
 }
 
 .landing-logo {
-    font-size: 38px;
-    font-weight: 800;
+    font-size: 100px;
+    /* font-weight: 800; */
     line-height: 1;
     color: #050505;
+}
+
+/* --- New Styles for the Centered Image --- */
+.hero-bg-image-wrapper {
+    display: flex;
+    justify-content: center;
+    /* Centers horizontally */
+    align-items: center;
+    /* Centers vertically */
+    width: 100%;
+    padding: 40px 20px;
+    /* Adds breathing space around the image */
+    box-sizing: border-box;
+}
+
+.hero-bg-image-wrapper img {
+    max-width: 80%;
+    /* Reduces width to your desired size */
+    height: auto;
+    /* Keeps the aspect ratio intact */
+    display: block;
+    object-fit: contain;
 }
 
 .landing-nav {

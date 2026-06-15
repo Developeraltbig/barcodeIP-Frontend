@@ -1,8 +1,11 @@
 import React from "react";
 import "./LandingPage.css";
-import background from "../assets/landingPage/Background.jpg";
+import background1 from "../assets/landingPage/Background1.jpg";
+import background from "../assets/landingPage/Background.png";
+import logo from "../assets/landingPage/logo.jpg";
 
-const navLinks = ["Platform", "Search", "Drafts", "Pricing"];
+
+const navLinks = ["How it works", "Output", "Pricing", "Who it's for"];
 
 const featureGroups = [
     {
@@ -62,12 +65,12 @@ function LandingPage() {
         <main className="landing-page">
 
             <section id="home" className="landing-hero" style={{
-                backgroundImage: `url(${background})`,
+                backgroundImage: `url(${background1})`,
 
             }}>
                 <header className="landing-header">
                     <a href="#home" className="landing-logo" aria-label="Oolto home">
-                        ∞
+                        <img src={logo} alt="Logo Feature" />
                     </a>
 
                     <nav className="landing-nav" aria-label="Landing navigation">
@@ -79,11 +82,10 @@ function LandingPage() {
                     </nav>
 
                     <button className="landing-header-btn" type="button">
-                        Start now
+                        Start New Case
                     </button>
                 </header>
                 <div className="landing-hero-inner">
-                    <span className="eyebrow">Built for inventors, teams, and IP workflows</span>
 
                     <h1>
                         Turn one invention into a <br />
@@ -91,42 +93,24 @@ function LandingPage() {
                     </h1>
 
                     <p>
-                        Oolto helps you organize invention text, identify key features, run
-                        patent-focused search, compare products, and prepare draft-ready sections.
+                        Enter your invention once. Oolto helps organize the idea, search relevant references, compare related products, and prepare reports and draft-ready sections.
                     </p>
 
                     <div className="hero-actions">
                         <button className="primary-btn" type="button">
-                            Start a case
+                            Get Started
                         </button>
                         <button className="secondary-btn" type="button">
-                            View workflow
+                            See how it works
                         </button>
                     </div>
-
-                    <div className="hero-preview">
-                        <MiniSidebar />
-                        <div className="preview-main">
-                            <div className="preview-title-row">
-                                <div>
-                                    <h3>Describe your invention</h3>
-                                    <span>Select the outputs you want Oolto to generate.</span>
-                                </div>
-                                <button type="button">Generate</button>
-                            </div>
-
-                            <div className="preview-textarea" />
-
-                            <div className="preview-output-grid">
-                                {outputCards.map((item) => (
-                                    <div key={item} className="preview-output-card">
-                                        <span />
-                                        <strong>{item}</strong>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+                    <p>
+                        $20 per invention case. All selected outputs included.
+                    </p>
+                </div>
+                {/* New image container placed right after the section closes */}
+                <div className="hero-bg-image-wrapper">
+                    <img src={background} alt="Background Feature" />
                 </div>
             </section>
 

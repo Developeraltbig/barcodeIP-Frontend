@@ -150,6 +150,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
     const projectNonProvisional = useSelector(
         (state) => state.userDashboard.projectNonProvisional
     );
+    console.log('projectPatent--', projectPatent)
 
     const currentProjectId = useMemo(() => {
         return (
@@ -385,11 +386,18 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         setActiveTab(nextTab);
         setActiveView("results");
     }, []);
+    console.log('projectPatent --', projectPatent.length)
 
     const patentResults = useMemo(() => {
-        const data = toArray(projectPatent);
-        return data.length > 0 ? data : PATENT_RESULTS;
+        // Check if projectPatent exists and has at least one key
+        const hasData = projectPatent && Object.keys(projectPatent).length > 0;
+
+        // If it has data, return it inside an array; otherwise, fallback
+        return hasData ? [projectPatent] : PATENT_RESULTS;
     }, [projectPatent]);
+
+    console.log('patentResults11 --', patentResults);
+
 
     const publicationResults = useMemo(() => {
         const data = toArray(projectPublication);
@@ -423,6 +431,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
 
         if (activeModuleKey === MODULE_KEYS.PATENT) {
             return (
+
                 <PatentTab
                     runtime={tabRuntime[MODULE_KEYS.PATENT]}
                     results={patentResults}
