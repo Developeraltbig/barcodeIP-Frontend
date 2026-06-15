@@ -365,6 +365,76 @@ function LandingPage() {
                 </div>
             </section>
 
+            {/* 5th Section */}
+            <section className="review-search-section">
+                <div className="review-max-container">
+
+                    {/* LEFT COLUMN: Vertical Navigation Tabs Stack */}
+                    <div className="review-tabs-left">
+                        <div className="review-tab-item active">
+                            <div className="tab-icon-wrap">📈</div>
+                            <div className="tab-text-wrap">
+                                <h3>Top Patent Results</h3>
+                                <p>Review a wider set of relevant references.</p>
+                            </div>
+                        </div>
+
+                        <div className="review-tab-item">
+                            <div className="tab-icon-wrap">🗂️</div>
+                            <div className="tab-text-wrap">
+                                <h3>Top Mapped Reference</h3>
+                                <p>Prepared for deeper review.</p>
+                            </div>
+                        </div>
+
+                        <div className="review-tab-item">
+                            <div className="tab-icon-wrap">👁️</div>
+                            <div className="tab-text-wrap">
+                                <h3>View Mapping</h3>
+                                <p>Compare invention features against patent evidence.</p>
+                            </div>
+                        </div>
+
+                        <div className="review-tab-item">
+                            <div className="tab-icon-wrap">📊</div>
+                            <div className="tab-text-wrap">
+                                <h3>Overlap Summary</h3>
+                                <p>Understand high, medium or low overlap at a glance.</p>
+                            </div>
+                        </div>
+
+                        <div className="review-tab-item">
+                            <div className="tab-icon-wrap">✏️</div>
+                            <div className="tab-text-wrap">
+                                <h3>Strict Mode</h3>
+                                <p>Compare against patent claims only when needed.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* RIGHT COLUMN: Header Content Top + Mockup Image Bottom */}
+                    <div className="review-content-right">
+                        <div className="review-header-top">
+                            <h2 className="review-title">
+                                Patent search built for review, <br /> not just result lists.
+                            </h2>
+                            <p className="review-subtitle">
+                                Oolto searches relevant patent references, ranks the results, prepares mapped comparisons, and creates a report that is easier to review.
+                            </p>
+                        </div>
+
+                        <div className="review-image-bottom">
+                            <img src={background} alt="Patent Search Results Review List" className="review-mockup-img" />
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            {/* 6th Section */}
+
+
+            {/* Footer Section */}
             <footer className="landing-footer">
                 <div>
                     <div className="footer-logo">∞</div>

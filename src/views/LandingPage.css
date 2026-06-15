@@ -806,6 +806,147 @@ a {
     }
 }
 
+/* --- Base Section Styles --- */
+.review-search-section {
+    background-color: #FFFFFF;
+    /* Clean white backdrop layer */
+    width: 100%;
+    padding: 100px 40px;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.review-max-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    /* Split into specific proportions: Left tabs column is slightly smaller than the right preview column */
+    grid-template-columns: 420px 1fr;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+/* --- Left Column: Vertical Tabs --- */
+.review-tabs-left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.review-tab-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px;
+    background: #FFF9F7;
+    /* Warm soft tint backdrop */
+    border: 1.5px solid #F6E7E2;
+    /* Subtle warm line divider border */
+    border-radius: 14px;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+/* Optional state formatting if you decide to make them clickable features */
+.review-tab-item.active {
+    border-color: #D4533A;
+    box-shadow: 0 4px 12px rgba(212, 83, 58, 0.04);
+}
+
+.tab-icon-wrap {
+    font-size: 22px;
+    color: #D4533A;
+    /* Accent structural color */
+    padding-top: 2px;
+}
+
+.tab-text-wrap h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 6px 0;
+}
+
+.tab-text-wrap p {
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: #666666;
+    margin: 0;
+}
+
+/* --- Right Column: Content + Image Group --- */
+.review-content-right {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    /* Space separating right text headers from the image underneath */
+    width: 100%;
+}
+
+.review-header-top {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-title {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #050505;
+    margin: 0 0 18px 0;
+    letter-spacing: -0.5px;
+}
+
+.review-subtitle {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #777777;
+    margin: 0;
+    max-width: 620px;
+}
+
+/* --- Right Bottom Image Element --- */
+.review-image-bottom {
+    width: 100%;
+    border: 1.5px solid #F6E7E2;
+    /* Warm bounding containment line matching the image structure */
+    border-radius: 14px;
+    overflow: hidden;
+    background: #FFF9F7;
+}
+
+.review-mockup-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* --- Responsive Media Viewport Targets --- */
+@media (max-width: 1024px) {
+    .review-max-container {
+        grid-template-columns: 1fr;
+        /* Collapses columns into single file row layers */
+        gap: 48px;
+    }
+
+    .review-content-right {
+        grid-row: 1;
+        /* Moves content text block above tabs list on smaller displays */
+    }
+}
+
+@media (max-width: 540px) {
+    .review-title {
+        font-size: 32px;
+    }
+
+    .review-search-section {
+        padding: 60px 20px;
+    }
+}
+
 /* --- Responsive Layout Breaks --- */
 @media (max-width: 1100px) {
     .structure-row-top {
