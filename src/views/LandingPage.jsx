@@ -920,19 +920,69 @@ function LandingPage() {
                 </div>
             </section>
 
-
-
+            {/* 11th Section */}
             {/* Footer Section */}
-            <footer className="landing-footer">
-                <div>
-                    <div className="footer-logo">∞</div>
-                    <p>Oolto helps convert invention ideas into structured IP workflows.</p>
-                </div>
+            <footer className="site-footer-section">
+                <div className="footer-dark-card-panel">
+                    <div className="footer-main-layout">
 
-                <div className="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#search">Search</a>
-                    <a href="#pricing">Pricing</a>
+                        {/* Left Column: Brand, Tagline, & Newsletter */}
+                        <div className="footer-brand-column">
+                            <div className="footer-logo-area">
+                                {/* Infinite Logo Symbol Mockup */}
+                                <svg className="footer-infinite-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 9C5.34315 9 4 10.3431 4 12C4 13.6569 5.34315 15 7 15C8.65685 15 10 13.6569 11 12.5C12 11.3431 13.3431 9 15 9C17.2091 9 19 10.7909 19 13C19 15.2091 17.2091 17 15 17C13.3431 17 12 14.6569 11 13.5C10 12.3431 8.65685 9 7 9Z" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </div>
+
+                            <p className="footer-tagline-text">
+                                Receive the latest articles, tips, <br />
+                                and offers from Longevity
+                            </p>
+
+                            <form className="footer-newsletter-form" onSubmit={(e) => e.preventDefault()}>
+                                <div className="input-with-button-wrapper">
+                                    <input
+                                        type="email"
+                                        placeholder="Enter your email address"
+                                        className="newsletter-input"
+                                        required
+                                    />
+                                    <button type="submit" className="newsletter-submit-btn" aria-label="Submit">
+                                        <span className="arrow-icon">→</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        {/* Right Column: Multi-Column Link Navigation lists */}
+                        <div className="footer-nav-links-wrapper">
+                            {/* Column 1 */}
+                            <div className="nav-links-column">
+                                <a href="#product">Product</a>
+                                <a href="#how-it-works">How it works</a>
+                                <a href="#modules">Modules</a>
+                                <a href="#reports">Reports</a>
+                            </div>
+
+                            {/* Column 2 */}
+                            <div className="nav-links-column">
+                                <a href="#pricing">Pricing</a>
+                                <a href="#signin">Sign in</a>
+                                <a href="#signup">Sign up</a>
+                                <a href="#terms">Terms & conditions</a>
+                                <a href="#demo">Request a demo</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* Bottom Horizontal Row: Dividers & Meta Text */}
+                    <div className="footer-bottom-divider-line"></div>
+
+                    <div className="footer-copyright-row">
+                        <p>© 2026 Barcode IP. Oolto is a product by Barcode IP. Built for structured invention review.</p>
+                    </div>
                 </div>
             </footer>
         </main>

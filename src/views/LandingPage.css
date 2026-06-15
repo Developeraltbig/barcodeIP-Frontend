@@ -390,46 +390,204 @@ a {
 }
 
 /* Footer */
+/* Container Base Layout Context */
+.site-footer-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 20px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #fffaf9;
+    /* Canvas body background match */
+    box-sizing: border-box;
+}
 
-.landing-footer {
-    padding: 54px max(24px, calc((100vw - 1080px) / 2 + 24px));
+/* Rounded Dark Panel Block Card */
+.footer-dark-card-panel {
+    background-color: #0b0b0b;
+    /* Crisp clean dark layout block fill */
+    border-radius: 24px 24px 0 0;
+    /* Prominent rounded top canvas corners */
+    padding: 64px 64px 24px 64px;
+    color: #ffffff;
+    box-sizing: border-box;
+}
+
+/* Master Layout Row Flex grid split */
+.footer-main-layout {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 30px;
-    color: #ffffff;
-    background: #050505;
-    border-radius: 12px 12px 0 0;
+    gap: 48px;
+    margin-bottom: 64px;
 }
 
-.footer-logo {
-    margin-bottom: 12px;
-    font-size: 36px;
-    font-weight: 800;
-}
-
-.landing-footer p {
-    max-width: 360px;
-    margin: 0;
-    color: #c8c8c8;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-.footer-links {
+/* ==========================================
+   LEFT SIDE: Branding & Inputs
+   ========================================== */
+.footer-brand-column {
     display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+    flex-direction: column;
+    max-width: 360px;
 }
 
-.footer-links a {
-    color: #d9d9d9;
-    font-size: 13px;
-    transition: color 0.2s ease;
-}
-
-.footer-links a:hover {
+.footer-logo-area {
+    margin-bottom: 24px;
     color: #ffffff;
+}
+
+.footer-infinite-logo {
+    width: 44px;
+    height: 44px;
+}
+
+.footer-tagline-text {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #ffffff;
+    margin: 0 0 20px 0;
+    letter-spacing: -0.01em;
+}
+
+/* Newsletter Input Wrapper elements */
+.footer-newsletter-form {
+    width: 100%;
+}
+
+.input-with-button-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 280px;
+}
+
+.newsletter-input {
+    width: 100%;
+    background-color: #222222;
+    /* Dark input fill style */
+    border: 1px solid #333333;
+    border-radius: 30px;
+    /* High radius pill-shaped */
+    padding: 12px 50px 12px 18px;
+    font-size: 13px;
+    color: #ffffff;
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.newsletter-input::placeholder {
+    color: #777777;
+}
+
+.newsletter-input:focus {
+    border-color: #555555;
+}
+
+.newsletter-submit-btn {
+    position: absolute;
+    right: 5px;
+    width: 32px;
+    height: 32px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.newsletter-submit-btn:hover {
+    transform: scale(1.05);
+}
+
+.newsletter-submit-btn .arrow-icon {
+    color: #0b0b0b;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* ==========================================
+   RIGHT SIDE: Navigation Tree Columns
+   ========================================== */
+.footer-nav-links-wrapper {
+    display: flex;
+    gap: 80px;
+}
+
+.nav-links-column {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.nav-links-column a {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    transition: color 0.15s ease;
+}
+
+.nav-links-column a:hover {
+    color: #ffffff;
+}
+
+/* ==========================================
+   BOTTOM PANEL: Horizontal Lines & Disclaimers
+   ========================================== */
+.footer-bottom-divider-line {
+    width: 100%;
+    height: 1px;
+    background-color: #1a1a1a;
+    margin-bottom: 24px;
+}
+
+.footer-copyright-row {
+    text-align: center;
+}
+
+.footer-copyright-row p {
+    font-size: 12px;
+    color: #777777;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN BREAKPOINTS
+   ========================================== */
+@media (max-width: 768px) {
+    .footer-dark-card-panel {
+        padding: 40px 32px 24px 32px;
+    }
+
+    .footer-main-layout {
+        flex-direction: column;
+        gap: 40px;
+        margin-bottom: 48px;
+    }
+
+    .footer-nav-links-wrapper {
+        gap: 48px;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .input-with-button-wrapper {
+        max-width: 100%;
+        /* Expand to full structural width on phone views */
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-nav-links-wrapper {
+        flex-direction: column;
+        gap: 32px;
+    }
 }
 
 /* --- Base Container --- */
@@ -2234,9 +2392,6 @@ a {
         padding: 26px 20px;
     }
 
-    .landing-footer {
-        flex-direction: column;
-    }
 }
 
 @media (max-width: 520px) {
@@ -2266,9 +2421,5 @@ a {
 
     .workflow-steps {
         grid-template-columns: 1fr;
-    }
-
-    .footer-links {
-        gap: 20px;
     }
 }
