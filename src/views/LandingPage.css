@@ -599,7 +599,6 @@ a {
 
 /* --- Base Container --- */
 .structure-section-dark {
-    background-color: #050505;
     width: 100%;
     padding: 100px 40px;
     box-sizing: border-box;
@@ -621,10 +620,10 @@ a {
 
 /* --- Row 1: Content (Left) & One Card (Right) --- */
 .structure-row-top {
-    display: grid;
-    grid-template-columns: 1fr 285px;
+    /* display: grid; */
+    /* grid-template-columns: 1fr 285px; */
     /* Matches width of individual cards */
-    gap: 40px;
+    /* gap: 40px; */
     align-items: end;
     /* Aligns content to bottom to meet row 2 cleanly */
 }
@@ -636,33 +635,44 @@ a {
 }
 
 .structure-title-dark {
-    font-size: 44px;
-    font-weight: 700;
+    font-size: 50px;
+    font-weight: 600;
     line-height: 1.15;
-    color: #FFFFFF;
+    width: 960px;
+    color: #3E3E3E;
     margin: 0 0 20px 0;
+    font-family: "Inter";
     letter-spacing: -0.5px;
-    max-width: 700px;
 }
 
 .structure-description-dark {
-    font-size: 16px;
+    font-size: 20px;
+    font-family: 'Inter';
+    font-weight: 400;
     line-height: 1.5;
-    color: #A0A0A0;
+    color: #676B6D;
+    width: 960px;
     margin: 0;
-    max-width: 560px;
 }
 
 /* --- Row 2: 4 Tabs Matrix --- */
 .structure-row-bottom-four {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     /* Force exactly 4 columns */
     gap: 20px;
+    border-radius: 3px;
+    border-color: #000000;
+    width: 60%;
+    margin-left: 400px;
+    justify-content: center;
+    align-items: center;
 }
 
 /* --- Reusable Card Styles --- */
 .action-card-item {
+    border: 2px solid #D3D3D3;
+    /* Width, Style, Color */
     background: #FFFFFF;
     border-radius: 12px;
     padding: 32px 24px;
@@ -673,15 +683,6 @@ a {
     align-items: center;
     justify-content: center;
     min-height: 165px;
-}
-
-.action-card-item.tall-card {
-    width: 100%;
-}
-
-.action-card-icon {
-    font-size: 26px;
-    margin-bottom: 12px;
 }
 
 .action-card-item h3 {
@@ -2313,11 +2314,6 @@ a {
     .action-cards-grid {
         grid-template-columns: repeat(2, 1fr);
         /* 2x2 rows layout on mobile views */
-    }
-
-    .action-card-item.tall-card {
-        grid-row: auto;
-        /* Standardize card span values on collapse */
     }
 
     .structure-section-dark {

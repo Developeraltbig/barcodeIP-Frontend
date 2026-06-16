@@ -4,7 +4,7 @@ import background1 from "../assets/landingPage/Background1.jpg";
 import background from "../assets/landingPage/Background.png";
 import logo from "../assets/landingPage/logo.svg";
 import background2ndSection from "../assets/landingPage/section2-Background.jpg";
-import background3rdSection from "../assets/landingPage/section3-Background.png";
+import background3rdSection from "../assets/landingPage/section3-Background.jpg";
 
 
 
@@ -119,6 +119,64 @@ function LandingPage() {
             </section>
 
             {/* 2nd Section */}
+            <section className="structure-section-dark">
+                {/* Explicit layout container to match screenshot rows */}
+                <div className="structure-layout-container">
+
+                    {/* ROW 1: Content Left, Tall Non-Provisional Card Right */}
+                    <div className="structure-row-top">
+                        <div className="structure-header-left">
+                            <h2 className="structure-title-dark">
+                                Every result starts with a clear invention structure
+                            </h2>
+                            <p className="structure-description-dark">
+                                Before creating reports, Oolto identifies the important technical features in your invention.
+                                You can review and edit them before moving ahead.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Bottom Dashboard Table Image */}
+                <div className="structure-dashboard-preview">
+                    <img src={background3rdSection} alt="Key Features Structure Dashboard" className="dashboard-preview-img" />
+                </div>
+
+                {/* ROW 2: The 5 horizontal cards side-by-side */}
+                <div className="structure-row-bottom-four">
+                    <div className="action-card-item">
+                        <div className="action-card-icon">📄</div>
+                        <h3>Patent Search</h3>
+                        <p>Find relevant patents.</p>
+                    </div>
+
+                    <div className="action-card-item">
+                        <div className="action-card-icon">💻</div>
+                        <h3>Publication Search</h3>
+                        <p>Find relevant publications.</p>
+                    </div>
+
+                    <div className="action-card-item">
+                        <div className="action-card-icon">📦</div>
+                        <h3>Product Comparison</h3>
+                        <p>Compare products and key features.</p>
+                    </div>
+
+                    <div className="action-card-item">
+                        <div className="action-card-icon">✍️</div>
+                        <h3>Provisional Draft</h3>
+                        <p>Create a provisional patent application.</p>
+                    </div>
+
+                    <div className="action-card-item">
+                        <div className="action-card-icon">👤</div>
+                        <h3>Non-Provisional Draft</h3>
+                        <p>Create a non-provisional patent application.</p>
+                    </div>
+                </div>
+            </section>
+
+            {/* 3rd Section */}
             <div className="section-2nd">
                 {/* 1. Main Content Split Section */}
                 <section className="messy-inputs-section">
@@ -214,65 +272,6 @@ function LandingPage() {
                     </div>
                 </div>
             </div>
-
-            {/* 3rd Section */}
-            <section className="structure-section-dark">
-                {/* Explicit layout container to match screenshot rows */}
-                <div className="structure-layout-container">
-
-                    {/* ROW 1: Content Left, Tall Non-Provisional Card Right */}
-                    <div className="structure-row-top">
-                        <div className="structure-header-left">
-                            <h2 className="structure-title-dark">
-                                Every result starts with a clear invention structure
-                            </h2>
-                            <p className="structure-description-dark">
-                                Before creating reports, Oolto identifies the important technical features in your invention.
-                                You can review and edit them before moving ahead.
-                            </p>
-                        </div>
-
-                        <div className="action-card-item tall-card">
-                            <div className="action-card-icon">👤</div>
-                            <h3>Non-Provisional Draft</h3>
-                            <p>Create a non-provisional patent application.</p>
-                        </div>
-                    </div>
-
-                    {/* ROW 2: The 4 horizontal cards side-by-side */}
-                    <div className="structure-row-bottom-four">
-                        <div className="action-card-item">
-                            <div className="action-card-icon">📄</div>
-                            <h3>Patent Search</h3>
-                            <p>Find relevant patents.</p>
-                        </div>
-
-                        <div className="action-card-item">
-                            <div className="action-card-icon">💻</div>
-                            <h3>Publication Search</h3>
-                            <p>Find relevant publications.</p>
-                        </div>
-
-                        <div className="action-card-item">
-                            <div className="action-card-icon">📦</div>
-                            <h3>Product Comparison</h3>
-                            <p>Compare products and key features.</p>
-                        </div>
-
-                        <div className="action-card-item">
-                            <div className="action-card-icon">✍️</div>
-                            <h3>Provisional Draft</h3>
-                            <p>Create a provisional patent application.</p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Bottom Dashboard Table Image */}
-                <div className="structure-dashboard-preview">
-                    <img src={background3rdSection} alt="Key Features Structure Dashboard" className="dashboard-preview-img" />
-                </div>
-            </section>
-
             {/* 4th Section */}
             <section className="pricing-section">
                 <div className="pricing-max-container">
