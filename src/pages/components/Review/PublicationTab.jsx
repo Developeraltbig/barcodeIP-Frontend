@@ -4,6 +4,8 @@ import PublicationCard from "./PublicationCard";
 import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 
 function PublicationTab({ results, onDownloadPublications, onViewPublication }) {
+  console.log('results --', results)
+
   return (
     <section className="rr-publication-panel">
       <div className="rr-tab-page-head">
@@ -19,11 +21,19 @@ function PublicationTab({ results, onDownloadPublications, onViewPublication }) 
       </div>
 
       <div className="rr-publication-grid">
-        {results.map((item) => (
+        {results[0].scholarResults.map((item) => (
           <PublicationCard
             key={item.id}
             item={item}
-            onViewMore={() => onViewPublication?.(item)}
+            onViewMore={(selectedPublication) => {
+              if (selectedPublication.scholar_link) {
+                window.open(
+                  selectedPublication.scholar_link,
+                  "_blank",
+                  "noopener,noreferrer"
+                );
+              }
+            }}
           />
         ))}
       </div>

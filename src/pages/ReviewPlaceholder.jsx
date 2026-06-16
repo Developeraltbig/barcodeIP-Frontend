@@ -399,8 +399,11 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
 
 
     const publicationResults = useMemo(() => {
-        const data = toArray(projectPublication);
-        return data.length > 0 ? data : PUBLICATION_RESULTS;
+        const hasData = Object.keys(projectPublication).length > 0;
+
+        // If it has data, return it inside an array; otherwise, fallback
+        return hasData ? [projectPublication] : PATENT_RESULTS;
+
     }, [projectPublication]);
 
     const productResults = useMemo(() => {
