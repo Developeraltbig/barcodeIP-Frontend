@@ -38,6 +38,11 @@ import reviewFeature5thSection from "../assets/landingPage/icons/reviewFeature.s
 import chooseOutput5thSection from "../assets/landingPage/icons/choose-output.svg";
 import openCase5thSection from "../assets/landingPage/icons/open-case.svg";
 
+import invention16thSection from "../assets/landingPage/icons/invention1.svg";
+import circleCheck6thSection from "../assets/landingPage/icons/circle-checked.svg";
+import shieldCheck6thSection from "../assets/landingPage/icons/shield-check.svg";
+import caseOutput6thSection from "../assets/landingPage/icons/case_output.svg";
+import equal6thSection from "../assets/landingPage/icons/equal.svg";
 
 
 const navLinks = ["How it works", "Output", "Pricing", "Who it's for"];
@@ -450,19 +455,19 @@ function LandingPage() {
                         {/* The Equation/Formula Bar Component */}
                         <div className="pricing-formula-bar">
                             <div className="formula-item">
-                                <span className="formula-circle">1</span>
+                                <span className="formula-circle"><img src={invention16thSection} alt="Invention" className="mockup-img" /></span>
                                 <span className="formula-label">invention</span>
                             </div>
-                            <span className="formula-operator">=</span>
+                            <span className="formula-operator"><img src={equal6thSection} alt="equal" className="mockup-img" /></span>
                             <div className="formula-item">
-                                <span className="formula-circle">1</span>
+                                <span className="formula-circle"><img src={invention16thSection} alt="Invention" className="mockup-img" /></span>
                                 <span className="formula-label">project</span>
                             </div>
-                            <span className="formula-operator">=</span>
+                            <span className="formula-operator"><img src={equal6thSection} alt="equal" className="mockup-img" /></span>
                             <div className="formula-item bold-price">$25</div>
-                            <span className="formula-operator">=</span>
+                            <span className="formula-operator"><img src={equal6thSection} alt="equal" className="mockup-img" /></span>
                             <div className="formula-item">
-                                <span className="formula-check-circle">✓</span>
+                                <span className="formula-check-circle"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span>
                                 <span className="formula-label">all selected outputs</span>
                             </div>
                         </div>
@@ -470,28 +475,28 @@ function LandingPage() {
                         {/* Two-Column Features Grid inside the Card */}
                         <div className="card-features-list">
                             <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Key Features
+                                <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Key Features
                             </div>
                             <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Provisional Draft
+                                <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Provisional Draft
                             </div>
                             <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Patent Search
+                                <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Patent Search
                             </div>
                             <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Non-Provisional Draft
+                                <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Non-Provisional Draft
                             </div>
                             <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Publication Search
+                                <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Publication Search
                             </div>
                             <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Reports and downloads
+                                <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Reports and downloads
                             </div>
                             <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Product Comparison
+                                <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Product Comparison
                             </div>
                             <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Attorney review request option
+                                <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Attorney review request option
                             </div>
                         </div>
 
@@ -504,14 +509,14 @@ function LandingPage() {
                     {/* RIGHT COLUMN: Stacked Benefit Cards */}
                     <div className="pricing-benefits-right">
                         <div className="benefit-mini-card">
-                            <div className="benefit-icon red-shield">🛡️</div>
+                            <div className="benefit-icon red-shield"><img src={shieldCheck6thSection} alt="circle checked" className="" /></div>
                             <p><strong>Select one output or all outputs.</strong></p>
                             <p className="benefit-subtext">The same invention case still uses one project.</p>
                         </div>
 
                         <div className="benefit-mini-card">
-                            <div className="benefit-icon red-arrow">➡️</div>
-                            <h3>One case, all outputs</h3>
+                            <div className="benefit-icon red-arrow"><img src={caseOutput6thSection} alt="circle checked" className="" /></div>
+                            <p><strong>One case, all outputs</strong></p>
                             <p className="benefit-subtext">No per-module pricing.</p>
                         </div>
                     </div>

@@ -730,12 +730,12 @@ a {
 }
 
 .pricing-max-container {
-    max-width: 1200px;
+    max-width: 1250px;
     margin: 0 auto;
     display: grid;
     /* Precise proportional sizing matching the screenshot columns */
     grid-template-columns: 1fr 1.3fr 0.8fr;
-    gap: 40px;
+    gap: 10px;
     align-items: center;
 }
 
@@ -746,8 +746,9 @@ a {
 }
 
 .pricing-title {
-    font-size: 42px;
-    font-weight: 700;
+    font-size: 39px;
+    font-weight: 600;
+    font-family: 'Inter';
     line-height: 1.15;
     color: #050505;
     margin: 0 0 20px 0;
@@ -755,7 +756,9 @@ a {
 }
 
 .pricing-subtitle {
-    font-size: 15px;
+    font-size: 17px;
+    font-family: 'Inter';
+    font-weight: 400;
     line-height: 1.5;
     color: #666666;
     margin: 0;
@@ -775,17 +778,19 @@ a {
 }
 
 .card-badge-title {
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Inter';
     color: #C84B31;
     /* Accent brick red text coloring */
     margin-bottom: 6px;
 }
 
 .card-price {
-    font-size: 64px;
-    font-weight: 800;
-    color: #111111;
+    font-size: 70px;
+    font-weight: 700;
+    font-family: 'Inter';
+    color: #3E3E3E;
     line-height: 1;
 }
 
@@ -845,9 +850,10 @@ a {
 }
 
 .formula-label {
-    font-size: 10px;
-    font-weight: 600;
-    color: #555555;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Inter';
+    color: #3E3E3E;
     text-align: center;
 }
 
@@ -858,9 +864,10 @@ a {
 }
 
 .formula-item.bold-price {
-    font-size: 18px;
+    font-size: 25px;
+    font-family: 'Inter';
     font-weight: 700;
-    color: #111111;
+    color: #3E3E3E;
 }
 
 /* --- Two-Column Features Grid Layout --- */
@@ -877,9 +884,10 @@ a {
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    font-size: 13px;
+    font-size: 18px;
     font-weight: 500;
-    color: #333333;
+    font-family: 'Inter';
+    color: #3E3E3E;
     line-height: 1.4;
 }
 
@@ -892,7 +900,7 @@ a {
 /* Call to Action Primary Button */
 .pricing-cta-btn {
     width: 100%;
-    background: linear-gradient(180deg, #D4533A 0%, #A93621 100%);
+    background: linear-gradient(to right, #DF4833 0%, #79271C 100%);
     border: none;
     border-radius: 8px;
     padding: 14px;
@@ -923,17 +931,12 @@ a {
     margin-bottom: 14px;
 }
 
-.benefit-mini-card h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #111111;
-    margin: 0 0 6px 0;
-}
-
 .benefit-mini-card p {
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Inter';
     line-height: 1.4;
-    color: #111111;
+    color: #676B6D;
     margin: 0 0 6px 0;
 }
 
@@ -947,7 +950,7 @@ a {
     .pricing-max-container {
         grid-template-columns: 1fr;
         /* Stacks column sections on tablets */
-        gap: 48px;
+        gap: 30px;
     }
 
     .pricing-content-left {
