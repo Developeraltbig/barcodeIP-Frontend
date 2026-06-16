@@ -386,12 +386,10 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         setActiveTab(nextTab);
         setActiveView("results");
     }, []);
-    console.log('projectPatent --', projectPatent)
 
-    return
     const patentResults = useMemo(() => {
         // Check if projectPatent exists and has at least one key
-        const hasData = projectPatent && Object.keys(projectPatent).length > 0;
+        const hasData = Object.keys(projectPatent).length > 0;
 
         // If it has data, return it inside an array; otherwise, fallback
         return hasData ? [projectPatent] : PATENT_RESULTS;
@@ -432,7 +430,6 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
 
         if (activeModuleKey === MODULE_KEYS.PATENT) {
             return (
-
                 <PatentTab
                     runtime={tabRuntime[MODULE_KEYS.PATENT]}
                     results={patentResults}
@@ -526,6 +523,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
             <section className="content-wrap rr-page">
                 <FeatureMappingView
                     patent={selectedPatent}
+                    data={projectPatent}
                     onBack={goBackToResults}
                     onOpenOverlap={() => openOverlap(selectedPatent)}
                     onDownload={() =>
@@ -570,6 +568,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
             <section className="content-wrap rr-page">
                 <OverlapSummaryView
                     patent={selectedPatent}
+                    data={projectPatent}
                     strictMode={strictMode}
                     onStrictModeChange={setStrictMode}
                     onBack={goBackToResults}

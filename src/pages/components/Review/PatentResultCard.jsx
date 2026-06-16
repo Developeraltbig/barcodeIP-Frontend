@@ -6,13 +6,15 @@ import viewMappingIcon from "../../../assets/icons/viewMapping.svg";
 import carbonViewIcon from "../../../assets/icons/carbon_view.svg";
 
 function PatentResultCard({ result, onViewMapping, onViewDetails, onViewOverlap }) {
+
+  console.log('result---', result)
   return (
     <article className="rr-patent-card">
       <div className="rr-result-left">
         <div className="rr-result-meta">
           <strong>#{result.id}</strong>
-          <span>{result.publication}</span>
-          <em>{result.date}</em>
+          <span>{result.patent_id}</span>
+          <em>{result.publication_date}</em>
           <b>Mapping Ready</b>
         </div>
 
@@ -20,21 +22,21 @@ function PatentResultCard({ result, onViewMapping, onViewDetails, onViewOverlap 
 
         <div className="rr-result-submeta">
           <span><b>Assignee</b> {result.assignee}</span>
-          <span><b>Priority</b> {result.priority}</span>
+          <span><b>Priority</b> {result.filing_date}</span>
         </div>
 
-        <p>{result.description}</p>
+        <p>{result.abstract}</p>
 
-        <div className="rr-result-tags">
+        {/* <div className="rr-result-tags">
           {result.tags.map((tag) => (
             <span key={tag}>{tag}</span>
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className="rr-result-actions">
         <div className="rr-score-row">
-          <span>{result.risk}</span>
+          <span>{"High"}</span>
           <em>{result.overall} overall</em>
         </div>
 

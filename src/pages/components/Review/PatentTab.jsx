@@ -37,6 +37,8 @@ function PatentTab({
   onViewOverlap,
   onDownloadPatentReport
 }) {
+
+  console.log('test', results)
   return (
     <>
       <section className="rr-results-summary">
@@ -68,10 +70,10 @@ function PatentTab({
       </section>
 
       <section className="rr-results-list-panel">
-        {results[0]?.novelty_analysis?.selectedPatentIds?.map((result) => (
+        {results[0]?.novelty_analysis?.selectedPatentIds?.map((result, index) => (
           <PatentResultCard
-            key={result[0]._id}
-            result={result[0]}
+            key={index}
+            result={result}
             onViewMapping={() => onViewMapping(result)}
             onViewDetails={() => onViewDetails(result)}
             onViewOverlap={() => onViewOverlap(result)}
