@@ -975,8 +975,7 @@ a {
 
 /* --- Base Section Styles --- */
 .review-search-section {
-    background-color: #FFFFFF;
-    /* Clean white backdrop layer */
+    background-color: #FCF5F5;
     width: 100%;
     padding: 100px 40px;
     box-sizing: border-box;
@@ -986,18 +985,59 @@ a {
 .review-max-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    /* Split into specific proportions: Left tabs column is slightly smaller than the right preview column */
-    grid-template-columns: 420px 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 60px;
-    align-items: flex-start;
+    /* Space between centered header and content grid */
+}
+
+/* --- Top Centered Header --- */
+.review-header-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centers elements horizontally */
+    text-align: center;
+    /* Centers inline text content */
+    width: 100%;
+}
+
+.review-title {
+    font-size: 50px;
+    font-weight: 600;
+    font-family: 'Inter';
+    line-height: 1.15;
+    color: #000000;
+    margin: 0 0 18px 0;
+    letter-spacing: -0.5px;
+    max-width: 800px;
+    /* Limits headline width to prevent excessive stretching */
+}
+
+.review-subtitle {
+    font-size: 20px;
+    font-family: 'Inter';
+    font-weight: 400;
+    line-height: 1.5;
+    color: #676B6D;
+    margin: 0;
+    max-width: 770px;
+}
+
+/* --- Main Layout Grid --- */
+.review-grid-body {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 40px;
+    align-items: center;
+    /* Aligns left menu and right image nicely on their center axis */
 }
 
 /* --- Left Column: Vertical Tabs --- */
 .review-tabs-left {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 8px;
     width: 100%;
 }
 
@@ -1006,81 +1046,47 @@ a {
     align-items: flex-start;
     gap: 20px;
     padding: 24px;
-    background: #FFF9F7;
-    /* Warm soft tint backdrop */
+    background: #ffff;
     border: 1.5px solid #F6E7E2;
-    /* Subtle warm line divider border */
     border-radius: 14px;
     box-sizing: border-box;
     transition: all 0.2s ease;
+    border-color: #D4533A;
+    height: 135px;
 }
 
-/* Optional state formatting if you decide to make them clickable features */
-.review-tab-item.active {
-    border-color: #D4533A;
-    box-shadow: 0 4px 12px rgba(212, 83, 58, 0.04);
-}
 
 .tab-icon-wrap {
     font-size: 22px;
     color: #D4533A;
-    /* Accent structural color */
     padding-top: 2px;
 }
 
 .tab-text-wrap h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: #111111;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Figtree';
+    color: #0A0A0A;
     margin: 0 0 6px 0;
 }
 
 .tab-text-wrap p {
-    font-size: 13.5px;
+    font-size: 18px;
+    font-family: 'Figtree';
     line-height: 1.4;
-    color: #666666;
+    color: #6E6D6D;
     margin: 0;
 }
 
-/* --- Right Column: Content + Image Group --- */
-.review-content-right {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    /* Space separating right text headers from the image underneath */
-    width: 100%;
-}
-
-.review-header-top {
-    display: flex;
-    flex-direction: column;
-}
-
-.review-title {
-    font-size: 42px;
-    font-weight: 700;
-    line-height: 1.15;
-    color: #050505;
-    margin: 0 0 18px 0;
-    letter-spacing: -0.5px;
-}
-
-.review-subtitle {
-    font-size: 15px;
-    line-height: 1.5;
-    color: #777777;
-    margin: 0;
-    max-width: 620px;
-}
-
-/* --- Right Bottom Image Element --- */
-.review-image-bottom {
+/* --- Right Column: Image Structure --- */
+.review-image-right {
     width: 100%;
     border: 1.5px solid #F6E7E2;
-    /* Warm bounding containment line matching the image structure */
     border-radius: 14px;
     overflow: hidden;
     background: #FFF9F7;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
+    /* Smooth soft depth below mock image */
 }
 
 .review-mockup-img {
@@ -1090,17 +1096,12 @@ a {
     object-fit: contain;
 }
 
-/* --- Responsive Media Viewport Targets --- */
+/* --- Responsive Layout Breakpoints --- */
 @media (max-width: 1024px) {
-    .review-max-container {
+    .review-grid-body {
         grid-template-columns: 1fr;
-        /* Collapses columns into single file row layers */
-        gap: 48px;
-    }
-
-    .review-content-right {
-        grid-row: 1;
-        /* Moves content text block above tabs list on smaller displays */
+        /* Stack elements on smaller screen viewports */
+        gap: 40px;
     }
 }
 

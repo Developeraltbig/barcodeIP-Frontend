@@ -3,14 +3,25 @@ import "./LandingPage.css";
 import background1 from "../assets/landingPage/Background1.jpg";
 import background from "../assets/landingPage/Background.png";
 import logo from "../assets/landingPage/logo.svg";
-import background2ndSection from "../assets/landingPage/section3-Background.jpg";
+import background2ndSection from "../assets/landingPage/section2nd-Background.jpg";
 import edit2ndSection from "../assets/landingPage/icons/edit.svg";
 import guidance2ndSection from "../assets/landingPage/icons/guidance.svg";
 import pageSearch2ndSection from "../assets/landingPage/icons/page-search.svg";
 import personEdit2ndSection from "../assets/landingPage/icons/person-edit.svg";
 import productVarient2ndSection from "../assets/landingPage/icons/product-varient.svg";
 
-import background3rdSection from "../assets/landingPage/section2-Background.jpg";
+import background3rdSection from "../assets/landingPage/section3rd.jpg";
+import patentResult3rdSection from "../assets/landingPage/icons/patent-result.svg";
+import topMapped3rdSection from "../assets/landingPage/icons/top-mapped.svg";
+import viewMapped3rdSection from "../assets/landingPage/icons/view-mapping.svg";
+import overlap3rdSection from "../assets/landingPage/icons/overlap-summary.svg";
+import strictMode3rdSection from "../assets/landingPage/icons/strict-mode.svg";
+
+
+
+
+
+import background3rdSectionss from "../assets/landingPage/section2-Background.jpg";
 
 
 
@@ -183,101 +194,76 @@ function LandingPage() {
             </section>
 
             {/* 3rd Section */}
-            <div className="section-2nd">
-                {/* 1. Main Content Split Section */}
-                <section className="messy-inputs-section">
-                    {/* Left Side: Content Column */}
-                    <div className="section-content-left">
-                        <h2 className="section-title">
-                            Invention work usually <br /> starts messy.
+
+            <section className="review-search-section">
+                <div className="review-max-container">
+
+                    {/* TOP HEADER: Centered title and description stretching across full width */}
+                    <div className="review-header-top">
+                        <h2 className="review-title">
+                            Patent search built for review, not just result lists.
                         </h2>
-                        <p className="section-description">
-                            Most teams start with notes, emails, PDFs, or rough technical descriptions.
-                            The hard part is turning that into something searchable, reviewable, and shareable.
+                        <p className="review-subtitle">
+                            Oolto searches relevant patent references, ranks the results, prepares mapped comparisons, and creates a report that is easier to review.
                         </p>
+                    </div>
 
-                        {/* Feature Cards Group */}
-                        <div className="feature-cards-container">
-                            <div className="feature-card">
-                                <div className="card-icon">🔍</div>
-                                <div className="card-text">
-                                    <h3>Scattered searching</h3>
-                                    <p>Patent, publication, and product checks happen in different places.</p>
+                    {/* BOTTOM CONTENT GRID: Holds the left list stack and right image side-by-side */}
+                    <div className="review-grid-body">
+
+                        {/* LEFT COLUMN: Vertical Navigation Tabs Stack */}
+                        <div className="review-tabs-left">
+                            <div className="review-tab-item active">
+                                <div className="tab-icon-wrap"><img src={patentResult3rdSection} alt="patent Result" className="page-search-img" /></div>
+                                <div className="tab-text-wrap">
+                                    <h3>Top Patent Results</h3>
+                                    <p>Review a wider set of relevant references.</p>
                                 </div>
                             </div>
 
-                            <div className="feature-card">
-                                <div className="card-icon">🔀</div>
-                                <div className="card-text">
-                                    <h3>Unclear features</h3>
-                                    <p>If the invention is not structured, every report becomes harder to review.</p>
+                            <div className="review-tab-item">
+                                <div className="tab-icon-wrap"><img src={topMapped3rdSection} alt="top mapped" className="page-search-img" /></div>
+                                <div className="tab-text-wrap">
+                                    <h3>Top Mapped Reference</h3>
+                                    <p>Prepared for deeper review.</p>
                                 </div>
                             </div>
 
-                            <div className="feature-card">
-                                <div className="card-icon">📤</div>
-                                <div className="card-text">
-                                    <h3>Hard-to-share outputs</h3>
-                                    <p>Teams need clean reports, mapped evidence, and editable drafts.</p>
+                            <div className="review-tab-item">
+                                <div className="tab-icon-wrap"><img src={viewMapped3rdSection} alt="view mapped" className="page-search-img" /></div>
+                                <div className="tab-text-wrap">
+                                    <h3>View Mapping</h3>
+                                    <p>Compare invention features against patent evidence.</p>
+                                </div>
+                            </div>
+
+                            <div className="review-tab-item">
+                                <div className="tab-icon-wrap"><img src={overlap3rdSection} alt="overlap summary" className="page-search-img" /></div>
+                                <div className="tab-text-wrap">
+                                    <h3>Overlap Summary</h3>
+                                    <p>Understand high, medium or low overlap at a glance.</p>
+                                </div>
+                            </div>
+
+                            <div className="review-tab-item">
+                                <div className="tab-icon-wrap"><img src={strictMode3rdSection} alt="strict mode" className="page-search-img" /></div>
+                                <div className="tab-text-wrap">
+                                    <h3>Strict Mode</h3>
+                                    <p>Compare against patent claims only when needed.</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Right Side: Image Column */}
-                    <div className="section-image-right">
-                        <div className="dashboard-mockup-container">
-                            <img src={background3rdSection} alt="Invention Workflow Mockup" className="mockup-img" />
-                        </div>
-                    </div>
-                </section>
-
-                {/* 2. New Content Workflow Bar (Steps 1-4) */}
-                <div className="workflow-bar-container">
-                    <div className="workflow-intro">
-                        <span className="workflow-eyebrow">Start simple</span>
-                        <h3 className="workflow-title">Reveal detail only <br /> when needed.</h3>
-                    </div>
-
-                    <div className="workflow-steps">
-                        <div className="workflow-step">
-                            <div className="step-badge">
-                                <span className="step-icon">💡</span>
-                                <span className="step-number">1</span>
-                            </div>
-                            <h4>Describe the invention</h4>
-                            <p>Paste the idea in plain English.</p>
+                        {/* RIGHT COLUMN: Mockup Image */}
+                        <div className="review-image-right">
+                            <img src={background3rdSection} alt="Patent Search Results Review List" className="review-mockup-img" />
                         </div>
 
-                        <div className="workflow-step">
-                            <div className="step-badge">
-                                <span className="step-icon">📋</span>
-                                <span className="step-number">2</span>
-                            </div>
-                            <h4>Review the features</h4>
-                            <p>See the extracted invention structure.</p>
-                        </div>
-
-                        <div className="workflow-step">
-                            <div className="step-badge">
-                                <span className="step-icon">📥</span>
-                                <span className="step-number">3</span>
-                            </div>
-                            <h4>Choose outputs</h4>
-                            <p>Run search, comparison, drafts, or all.</p>
-                        </div>
-
-                        <div className="workflow-step">
-                            <div className="step-badge">
-                                <span className="step-icon">📁</span>
-                                <span className="step-number">4</span>
-                            </div>
-                            <h4>Open the case</h4>
-                            <p>Review results, download, reports, or share.</p>
-                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+
             {/* 4th Section */}
             <section className="pricing-section">
                 <div className="pricing-max-container">
@@ -371,70 +357,102 @@ function LandingPage() {
             </section>
 
             {/* 5th Section */}
-            <section className="review-search-section">
-                <div className="review-max-container">
 
-                    {/* LEFT COLUMN: Vertical Navigation Tabs Stack */}
-                    <div className="review-tabs-left">
-                        <div className="review-tab-item active">
-                            <div className="tab-icon-wrap">📈</div>
-                            <div className="tab-text-wrap">
-                                <h3>Top Patent Results</h3>
-                                <p>Review a wider set of relevant references.</p>
+            <div className="section-2nd">
+                {/* 1. Main Content Split Section */}
+                <section className="messy-inputs-section">
+                    {/* Left Side: Content Column */}
+                    <div className="section-content-left">
+                        <h2 className="section-title">
+                            Invention work usually <br /> starts messy.
+                        </h2>
+                        <p className="section-description">
+                            Most teams start with notes, emails, PDFs, or rough technical descriptions.
+                            The hard part is turning that into something searchable, reviewable, and shareable.
+                        </p>
+
+                        {/* Feature Cards Group */}
+                        <div className="feature-cards-container">
+                            <div className="feature-card">
+                                <div className="card-icon">🔍</div>
+                                <div className="card-text">
+                                    <h3>Scattered searching</h3>
+                                    <p>Patent, publication, and product checks happen in different places.</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="review-tab-item">
-                            <div className="tab-icon-wrap">🗂️</div>
-                            <div className="tab-text-wrap">
-                                <h3>Top Mapped Reference</h3>
-                                <p>Prepared for deeper review.</p>
+                            <div className="feature-card">
+                                <div className="card-icon">🔀</div>
+                                <div className="card-text">
+                                    <h3>Unclear features</h3>
+                                    <p>If the invention is not structured, every report becomes harder to review.</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="review-tab-item">
-                            <div className="tab-icon-wrap">👁️</div>
-                            <div className="tab-text-wrap">
-                                <h3>View Mapping</h3>
-                                <p>Compare invention features against patent evidence.</p>
-                            </div>
-                        </div>
-
-                        <div className="review-tab-item">
-                            <div className="tab-icon-wrap">📊</div>
-                            <div className="tab-text-wrap">
-                                <h3>Overlap Summary</h3>
-                                <p>Understand high, medium or low overlap at a glance.</p>
-                            </div>
-                        </div>
-
-                        <div className="review-tab-item">
-                            <div className="tab-icon-wrap">✏️</div>
-                            <div className="tab-text-wrap">
-                                <h3>Strict Mode</h3>
-                                <p>Compare against patent claims only when needed.</p>
+                            <div className="feature-card">
+                                <div className="card-icon">📤</div>
+                                <div className="card-text">
+                                    <h3>Hard-to-share outputs</h3>
+                                    <p>Teams need clean reports, mapped evidence, and editable drafts.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* RIGHT COLUMN: Header Content Top + Mockup Image Bottom */}
-                    <div className="review-content-right">
-                        <div className="review-header-top">
-                            <h2 className="review-title">
-                                Patent search built for review, <br /> not just result lists.
-                            </h2>
-                            <p className="review-subtitle">
-                                Oolto searches relevant patent references, ranks the results, prepares mapped comparisons, and creates a report that is easier to review.
-                            </p>
-                        </div>
-
-                        <div className="review-image-bottom">
-                            <img src={background} alt="Patent Search Results Review List" className="review-mockup-img" />
+                    {/* Right Side: Image Column */}
+                    <div className="section-image-right">
+                        <div className="dashboard-mockup-container">
+                            <img src={background3rdSectionss} alt="Invention Workflow Mockup" className="mockup-img" />
                         </div>
                     </div>
+                </section>
 
+                {/* 2. New Content Workflow Bar (Steps 1-4) */}
+                <div className="workflow-bar-container">
+                    <div className="workflow-intro">
+                        <span className="workflow-eyebrow">Start simple</span>
+                        <h3 className="workflow-title">Reveal detail only <br /> when needed.</h3>
+                    </div>
+
+                    <div className="workflow-steps">
+                        <div className="workflow-step">
+                            <div className="step-badge">
+                                <span className="step-icon">💡</span>
+                                <span className="step-number">1</span>
+                            </div>
+                            <h4>Describe the invention</h4>
+                            <p>Paste the idea in plain English.</p>
+                        </div>
+
+                        <div className="workflow-step">
+                            <div className="step-badge">
+                                <span className="step-icon">📋</span>
+                                <span className="step-number">2</span>
+                            </div>
+                            <h4>Review the features</h4>
+                            <p>See the extracted invention structure.</p>
+                        </div>
+
+                        <div className="workflow-step">
+                            <div className="step-badge">
+                                <span className="step-icon">📥</span>
+                                <span className="step-number">3</span>
+                            </div>
+                            <h4>Choose outputs</h4>
+                            <p>Run search, comparison, drafts, or all.</p>
+                        </div>
+
+                        <div className="workflow-step">
+                            <div className="step-badge">
+                                <span className="step-icon">📁</span>
+                                <span className="step-number">4</span>
+                            </div>
+                            <h4>Open the case</h4>
+                            <p>Review results, download, reports, or share.</p>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
 
             {/* 6th Section */}
             <section className="draft-ready-section">
