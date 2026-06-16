@@ -2,7 +2,7 @@ import React from "react";
 import "./LandingPage.css";
 import background1 from "../assets/landingPage/Background1.jpg";
 import background from "../assets/landingPage/Background.png";
-import logo from "../assets/landingPage/logo.jpg";
+import logo from "../assets/landingPage/logo.svg";
 import background2ndSection from "../assets/landingPage/section2-Background.jpg";
 import background3rdSection from "../assets/landingPage/section3-Background.png";
 

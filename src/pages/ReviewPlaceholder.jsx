@@ -386,8 +386,9 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         setActiveTab(nextTab);
         setActiveView("results");
     }, []);
-    console.log('projectPatent --', projectPatent.length)
+    console.log('projectPatent --', projectPatent)
 
+    return
     const patentResults = useMemo(() => {
         // Check if projectPatent exists and has at least one key
         const hasData = projectPatent && Object.keys(projectPatent).length > 0;

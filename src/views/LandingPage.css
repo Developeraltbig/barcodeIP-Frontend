@@ -98,9 +98,10 @@ a {
 .landing-nav a {
     padding: 8px 14px;
     border-radius: 8px;
-    color: #3a2c28;
-    font-size: 12px;
-    font-weight: 600;
+    color: #3E3E3E;
+    font-size: 16px;
+    font-family: 'Inter';
+    font-weight: 500;
     transition:
         background-color 0.2s ease,
         color 0.2s ease;
@@ -137,16 +138,22 @@ a {
 .landing-hero h1 {
     margin: 0 0 18px;
     font-size: clamp(42px, 5vw, 72px);
-    font-weight: 800;
+    font-weight: 600;
     line-height: 0.98;
     letter-spacing: -0.06em;
+}
+
+.landing-hero-inner h1 {
+    color: black;
+    font-family: 'Figtree';
 }
 
 .landing-hero-inner>p {
     width: min(100%, 700px);
     margin: 0 auto;
-    color: #6d4037;
-    font-size: 14px;
+    color: #6E6D6D;
+    font-size: 20px;
+    font-family: 'Figtree';
     line-height: 1.65;
 }
 
