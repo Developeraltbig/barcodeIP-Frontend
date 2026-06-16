@@ -17,7 +17,17 @@ import viewMapped3rdSection from "../assets/landingPage/icons/view-mapping.svg";
 import overlap3rdSection from "../assets/landingPage/icons/overlap-summary.svg";
 import strictMode3rdSection from "../assets/landingPage/icons/strict-mode.svg";
 
-
+import background4thSection from "../assets/landingPage/section4th.jpg";
+import provisionalDraft4thSection from "../assets/landingPage/icons/provisional-draft.svg";
+import titleField4thSection from "../assets/landingPage/icons/title-field.svg";
+import backgroundSummary4thSection from "../assets/landingPage/icons/background-summary.svg";
+import detailDescription4thSection from "../assets/landingPage/icons/detail-description.svg";
+import advantageAbstract4thSection from "../assets/landingPage/icons/advantage-abstract.svg";
+import nonprovisionalDraft4thSection from "../assets/landingPage/icons/non-provisional-draft.svg";
+import draft4thSection from "../assets/landingPage/icons/draft-section.svg";
+import representativeClaim4thSection from "../assets/landingPage/icons/representative-claim.svg";
+import blockDiagram4thSection from "../assets/landingPage/icons/block-diagram.svg";
+import flowChart4thSection from "../assets/landingPage/icons/flow-chart.svg";
 
 
 
@@ -265,96 +275,63 @@ function LandingPage() {
 
 
             {/* 4th Section */}
-            <section className="pricing-section">
-                <div className="pricing-max-container">
+            <section className="draft-ready-section">
+                <div className="draft-max-container">
 
-                    {/* LEFT COLUMN: Heading & Info */}
-                    <div className="pricing-content-left">
-                        <h2 className="pricing-title">
-                            Simple pricing for <br /> every invention <br /> case.
-                        </h2>
-                        <p className="pricing-subtitle">
-                            One submitted invention uses one invention credit. One credit costs $25 and includes all selected outputs for that case.
-                        </p>
+                    {/* LEFT COLUMN: Content + Sub-cards */}
+                    <div className="draft-content-left">
+                        <div className="draft-header-block">
+                            <h2 className="draft-title">
+                                Move from invention text <br /> to draft-ready sections.
+                            </h2>
+                            <p className="draft-subtitle">
+                                Oolto can generate editable patent-style content from the same invention description and reviewed features.
+                            </p>
+                        </div>
+
+                        {/* Sub-cards Container */}
+                        <div className="draft-subcards-wrapper">
+                            {/* Card 1 */}
+                            <div className="draft-feature-card">
+                                <div className="draft-card-header">
+                                    <span className="draft-card-icon icon-orange"><img src={provisionalDraft4thSection} alt="provisional" className="page-search-img" /></span>
+                                    <h3>Provisional Draft</h3>
+                                </div>
+                                <ul className="draft-card-list">
+                                    <li><span className="list-bullet"><img src={titleField4thSection} alt="title" className="page-search-img" /></span> Title and field</li>
+                                    <li><span className="list-bullet"><img src={backgroundSummary4thSection} alt="background summary" className="page-search-img" /></span> Background and summary</li>
+                                    <li><span className="list-bullet"><img src={detailDescription4thSection} alt="detail description" className="page-search-img" /></span> Detailed description</li>
+                                    <li><span className="list-bullet"><img src={advantageAbstract4thSection} alt="advantage Abstract" className="page-search-img" /></span> Advantages and abstract</li>
+                                </ul>
+                            </div>
+
+                            {/* Card 2 */}
+                            <div className="draft-feature-card">
+                                <div className="draft-card-header">
+                                    <span className="draft-card-icon icon-red"><img src={nonprovisionalDraft4thSection} alt="Non provisional" className="page-search-img" /></span>
+                                    <h3>Non-Provisional Draft</h3>
+                                </div>
+                                <ul className="draft-card-list">
+                                    <li><span className="list-bullet"><img src={draft4thSection} alt="draft section" className="page-search-img" /></span> Draft sections</li>
+                                    <li><span className="list-bullet"><img src={representativeClaim4thSection} alt="representative claim" className="page-search-img" /></span> Representative claims</li>
+                                    <li><span className="list-bullet"><img src={blockDiagram4thSection} alt="block diagram" className="page-search-img" /></span> Block diagram cards</li>
+                                    <li><span className="list-bullet"><img src={flowChart4thSection} alt="flow chart" className="page-search-img" /></span> Flow chart cards</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 
-                    {/* MIDDLE COLUMN: Main Featured Pricing Card */}
-                    <div className="pricing-main-card">
-                        <span className="card-badge-title">Invention Credit</span>
-                        <div className="card-price">$25</div>
-                        <span className="card-price-subtext">per submitted invention</span>
-
-                        {/* The Equation/Formula Bar Component */}
-                        <div className="pricing-formula-bar">
-                            <div className="formula-item">
-                                <span className="formula-circle">1</span>
-                                <span className="formula-label">invention</span>
-                            </div>
-                            <span className="formula-operator">=</span>
-                            <div className="formula-item">
-                                <span className="formula-circle">1</span>
-                                <span className="formula-label">project</span>
-                            </div>
-                            <span className="formula-operator">=</span>
-                            <div className="formula-item bold-price">$25</div>
-                            <span className="formula-operator">=</span>
-                            <div className="formula-item">
-                                <span className="formula-check-circle">✓</span>
-                                <span className="formula-label">all selected outputs</span>
-                            </div>
-                        </div>
-
-                        {/* Two-Column Features Grid inside the Card */}
-                        <div className="card-features-list">
-                            <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Key Features
-                            </div>
-                            <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Provisional Draft
-                            </div>
-                            <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Patent Search
-                            </div>
-                            <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Non-Provisional Draft
-                            </div>
-                            <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Publication Search
-                            </div>
-                            <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Reports and downloads
-                            </div>
-                            <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Product Comparison
-                            </div>
-                            <div className="feature-check-item">
-                                <span className="check-icon">✓</span> Attorney review request option
-                            </div>
-                        </div>
-
-                        {/* Call to Action Button */}
-                        <button className="pricing-cta-btn" type="button">
-                            Get Started
-                        </button>
-                    </div>
-
-                    {/* RIGHT COLUMN: Stacked Benefit Cards */}
-                    <div className="pricing-benefits-right">
-                        <div className="benefit-mini-card">
-                            <div className="benefit-icon red-shield">🛡️</div>
-                            <p><strong>Select one output or all outputs.</strong></p>
-                            <p className="benefit-subtext">The same invention case still uses one project.</p>
-                        </div>
-
-                        <div className="benefit-mini-card">
-                            <div className="benefit-icon red-arrow">➡️</div>
-                            <h3>One case, all outputs</h3>
-                            <p className="benefit-subtext">No per-module pricing.</p>
+                    {/* RIGHT COLUMN: Interactive Modal Mockup Image */}
+                    <div className="draft-image-right">
+                        <div className="draft-mockup-wrapper">
+                            <img src={background4thSection} alt="Request Oolto Comments Panel" className="draft-mockup-img" />
                         </div>
                     </div>
 
                 </div>
             </section>
+            <hr />
+
 
             {/* 5th Section */}
 
@@ -455,56 +432,91 @@ function LandingPage() {
             </div>
 
             {/* 6th Section */}
-            <section className="draft-ready-section">
-                <div className="draft-max-container">
+            <section className="pricing-section">
+                <div className="pricing-max-container">
 
-                    {/* LEFT COLUMN: Content + Sub-cards */}
-                    <div className="draft-content-left">
-                        <div className="draft-header-block">
-                            <h2 className="draft-title">
-                                Move from invention text <br /> to draft-ready sections.
-                            </h2>
-                            <p className="draft-subtitle">
-                                Oolto can generate editable patent-style content from the same invention description and reviewed features.
-                            </p>
-                        </div>
-
-                        {/* Sub-cards Container */}
-                        <div className="draft-subcards-wrapper">
-                            {/* Card 1 */}
-                            <div className="draft-feature-card">
-                                <div className="draft-card-header">
-                                    <span className="draft-card-icon icon-orange">📄</span>
-                                    <h3>Provisional Draft</h3>
-                                </div>
-                                <ul className="draft-card-list">
-                                    <li><span className="list-bullet">T</span> Title and field</li>
-                                    <li><span className="list-bullet">回</span> Background and summary</li>
-                                    <li><span className="list-bullet">📄</span> Detailed description</li>
-                                    <li><span className="list-bullet">⊞</span> Advantages and abstract</li>
-                                </ul>
-                            </div>
-
-                            {/* Card 2 */}
-                            <div className="draft-feature-card">
-                                <div className="draft-card-header">
-                                    <span className="draft-card-icon icon-red">📝</span>
-                                    <h3>Non-Provisional Draft</h3>
-                                </div>
-                                <ul className="draft-card-list">
-                                    <li><span className="list-bullet">👤</span> Draft sections</li>
-                                    <li><span className="list-bullet">📊</span> Representative claims</li>
-                                    <li><span className="list-bullet">🎯</span> Block diagram cards</li>
-                                    <li><span className="list-bullet">📈</span> Flow chart cards</li>
-                                </ul>
-                            </div>
-                        </div>
+                    {/* LEFT COLUMN: Heading & Info */}
+                    <div className="pricing-content-left">
+                        <h2 className="pricing-title">
+                            Simple pricing for <br /> every invention <br /> case.
+                        </h2>
+                        <p className="pricing-subtitle">
+                            One submitted invention uses one invention credit. One credit costs $25 and includes all selected outputs for that case.
+                        </p>
                     </div>
 
-                    {/* RIGHT COLUMN: Interactive Modal Mockup Image */}
-                    <div className="draft-image-right">
-                        <div className="draft-mockup-wrapper">
-                            <img src={background} alt="Request Oolto Comments Panel" className="draft-mockup-img" />
+                    {/* MIDDLE COLUMN: Main Featured Pricing Card */}
+                    <div className="pricing-main-card">
+                        <span className="card-badge-title">Invention Credit</span>
+                        <div className="card-price">$25</div>
+                        <span className="card-price-subtext">per submitted invention</span>
+
+                        {/* The Equation/Formula Bar Component */}
+                        <div className="pricing-formula-bar">
+                            <div className="formula-item">
+                                <span className="formula-circle">1</span>
+                                <span className="formula-label">invention</span>
+                            </div>
+                            <span className="formula-operator">=</span>
+                            <div className="formula-item">
+                                <span className="formula-circle">1</span>
+                                <span className="formula-label">project</span>
+                            </div>
+                            <span className="formula-operator">=</span>
+                            <div className="formula-item bold-price">$25</div>
+                            <span className="formula-operator">=</span>
+                            <div className="formula-item">
+                                <span className="formula-check-circle">✓</span>
+                                <span className="formula-label">all selected outputs</span>
+                            </div>
+                        </div>
+
+                        {/* Two-Column Features Grid inside the Card */}
+                        <div className="card-features-list">
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Key Features
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Provisional Draft
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Patent Search
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Non-Provisional Draft
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Publication Search
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Reports and downloads
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Product Comparison
+                            </div>
+                            <div className="feature-check-item">
+                                <span className="check-icon">✓</span> Attorney review request option
+                            </div>
+                        </div>
+
+                        {/* Call to Action Button */}
+                        <button className="pricing-cta-btn" type="button">
+                            Get Started
+                        </button>
+                    </div>
+
+                    {/* RIGHT COLUMN: Stacked Benefit Cards */}
+                    <div className="pricing-benefits-right">
+                        <div className="benefit-mini-card">
+                            <div className="benefit-icon red-shield">🛡️</div>
+                            <p><strong>Select one output or all outputs.</strong></p>
+                            <p className="benefit-subtext">The same invention case still uses one project.</p>
+                        </div>
+
+                        <div className="benefit-mini-card">
+                            <div className="benefit-icon red-arrow">➡️</div>
+                            <h3>One case, all outputs</h3>
+                            <p className="benefit-subtext">No per-module pricing.</p>
                         </div>
                     </div>
 

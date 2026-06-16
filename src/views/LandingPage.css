@@ -1117,7 +1117,7 @@ a {
 
 /* --- Base Layout Styles --- */
 .draft-ready-section {
-    background-color: #FDF7F5;
+    background-color: #ffff;
     /* Matches the consistent soft warm backdrop background */
     width: 100%;
     padding: 100px 40px;
@@ -1126,7 +1126,7 @@ a {
 }
 
 .draft-max-container {
-    max-width: 1200px;
+    max-width: 1260px;
     margin: 0 auto;
     display: grid;
     /* Balanced 2-column split layout */
@@ -1148,20 +1148,23 @@ a {
 }
 
 .draft-title {
-    font-size: 42px;
-    font-weight: 700;
+    font-size: 50px;
+    font-family: 'Inter';
+    font-weight: 600;
     line-height: 1.15;
-    color: #050505;
+    color: #000000;
     margin: 0 0 16px 0;
     letter-spacing: -0.5px;
 }
 
 .draft-subtitle {
-    font-size: 15.5px;
+    font-size: 20px;
+    font-family: 'Inter';
+    font-weight: 400;
     line-height: 1.5;
-    color: #666666;
+    color: #676B6D;
     margin: 0;
-    max-width: 480px;
+    max-width: 600px;
 }
 
 /* --- Dual Feature Cards side-by-side --- */
@@ -1193,9 +1196,10 @@ a {
 }
 
 .draft-card-header h3 {
-    font-size: 17px;
-    font-weight: 700;
-    color: #111111;
+    font-size: 22px;
+    font-weight: 600;
+    font-family: 'Inter';
+    color: #3E3E3E;
     margin: 0;
 }
 
@@ -1210,8 +1214,10 @@ a {
 }
 
 .draft-card-list li {
-    font-size: 14px;
-    color: #555555;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'Inter';
+    color: #676B6D;
     display: flex;
     align-items: center;
     gap: 12px;
