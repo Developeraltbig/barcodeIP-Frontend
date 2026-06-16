@@ -3,8 +3,14 @@ import "./LandingPage.css";
 import background1 from "../assets/landingPage/Background1.jpg";
 import background from "../assets/landingPage/Background.png";
 import logo from "../assets/landingPage/logo.svg";
-import background2ndSection from "../assets/landingPage/section2-Background.jpg";
-import background3rdSection from "../assets/landingPage/section3-Background.jpg";
+import background2ndSection from "../assets/landingPage/section3-Background.jpg";
+import edit2ndSection from "../assets/landingPage/icons/edit.svg";
+import guidance2ndSection from "../assets/landingPage/icons/guidance.svg";
+import pageSearch2ndSection from "../assets/landingPage/icons/page-search.svg";
+import personEdit2ndSection from "../assets/landingPage/icons/person-edit.svg";
+import productVarient2ndSection from "../assets/landingPage/icons/product-varient.svg";
+
+import background3rdSection from "../assets/landingPage/section2-Background.jpg";
 
 
 
@@ -139,37 +145,37 @@ function LandingPage() {
 
                 {/* Bottom Dashboard Table Image */}
                 <div className="structure-dashboard-preview">
-                    <img src={background3rdSection} alt="Key Features Structure Dashboard" className="dashboard-preview-img" />
+                    <img src={background2ndSection} alt="Key Features Structure Dashboard" className="dashboard-preview-img" />
                 </div>
 
                 {/* ROW 2: The 5 horizontal cards side-by-side */}
                 <div className="structure-row-bottom-four">
                     <div className="action-card-item">
-                        <div className="action-card-icon">📄</div>
+                        <div className="action-card-icon"><img src={pageSearch2ndSection} alt="page search" className="page-search-img" /></div>
                         <h3>Patent Search</h3>
                         <p>Find relevant patents.</p>
                     </div>
 
                     <div className="action-card-item">
-                        <div className="action-card-icon">💻</div>
+                        <div className="action-card-icon"><img src={guidance2ndSection} alt="publication" className="publication-img" /></div>
                         <h3>Publication Search</h3>
                         <p>Find relevant publications.</p>
                     </div>
 
                     <div className="action-card-item">
-                        <div className="action-card-icon">📦</div>
+                        <div className="action-card-icon"><img src={productVarient2ndSection} alt="product" className="product-img" /></div>
                         <h3>Product Comparison</h3>
                         <p>Compare products and key features.</p>
                     </div>
 
                     <div className="action-card-item">
-                        <div className="action-card-icon">✍️</div>
+                        <div className="action-card-icon"><img src={edit2ndSection} alt="edit" className="edit-img" /></div>
                         <h3>Provisional Draft</h3>
                         <p>Create a provisional patent application.</p>
                     </div>
 
                     <div className="action-card-item">
-                        <div className="action-card-icon">👤</div>
+                        <div className="action-card-icon"><img src={personEdit2ndSection} alt="personEdit" className="personEdit-img" /></div>
                         <h3>Non-Provisional Draft</h3>
                         <p>Create a non-provisional patent application.</p>
                     </div>
@@ -221,7 +227,7 @@ function LandingPage() {
                     {/* Right Side: Image Column */}
                     <div className="section-image-right">
                         <div className="dashboard-mockup-container">
-                            <img src={background2ndSection} alt="Invention Workflow Mockup" className="mockup-img" />
+                            <img src={background3rdSection} alt="Invention Workflow Mockup" className="mockup-img" />
                         </div>
                     </div>
                 </section>

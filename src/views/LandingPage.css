@@ -675,7 +675,6 @@ a {
     /* Width, Style, Color */
     background: #FFFFFF;
     border-radius: 12px;
-    padding: 32px 24px;
     text-align: center;
     box-sizing: border-box;
     display: flex;
@@ -686,16 +685,18 @@ a {
 }
 
 .action-card-item h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: #111111;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Inter';
+    color: #0A0A0A;
     margin: 0 0 8px 0;
 }
 
 .action-card-item p {
     font-size: 13px;
+    font-family: 'Inter';
     line-height: 1.4;
-    color: #666666;
+    color: #676B6D;
     margin: 0;
 }
 
