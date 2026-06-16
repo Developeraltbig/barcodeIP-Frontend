@@ -29,10 +29,14 @@ import representativeClaim4thSection from "../assets/landingPage/icons/represent
 import blockDiagram4thSection from "../assets/landingPage/icons/block-diagram.svg";
 import flowChart4thSection from "../assets/landingPage/icons/flow-chart.svg";
 
-
-
-import background3rdSectionss from "../assets/landingPage/section2-Background.jpg";
-
+import background5thSection from "../assets/landingPage/section5-Background.jpg";
+import scatterSearching5thSection from "../assets/landingPage/icons/scatter-searching.svg";
+import unclearFeature5thSection from "../assets/landingPage/icons/unclear-feature.svg";
+import hardToShare5thSection from "../assets/landingPage/icons/hard-to-share-output.svg";
+import describeInvention5thSection from "../assets/landingPage/icons/describe-invention.svg";
+import reviewFeature5thSection from "../assets/landingPage/icons/reviewFeature.svg";
+import chooseOutput5thSection from "../assets/landingPage/icons/choose-output.svg";
+import openCase5thSection from "../assets/landingPage/icons/open-case.svg";
 
 
 
@@ -332,9 +336,7 @@ function LandingPage() {
             </section>
             <hr />
 
-
             {/* 5th Section */}
-
             <div className="section-2nd">
                 {/* 1. Main Content Split Section */}
                 <section className="messy-inputs-section">
@@ -351,7 +353,7 @@ function LandingPage() {
                         {/* Feature Cards Group */}
                         <div className="feature-cards-container">
                             <div className="feature-card">
-                                <div className="card-icon">🔍</div>
+                                <div className="card-icon"><img src={scatterSearching5thSection} alt="scatterSearch" className="page-search-img" /></div>
                                 <div className="card-text">
                                     <h3>Scattered searching</h3>
                                     <p>Patent, publication, and product checks happen in different places.</p>
@@ -359,7 +361,7 @@ function LandingPage() {
                             </div>
 
                             <div className="feature-card">
-                                <div className="card-icon">🔀</div>
+                                <div className="card-icon"><img src={unclearFeature5thSection} alt="unclear feature" className="page-search-img" /></div>
                                 <div className="card-text">
                                     <h3>Unclear features</h3>
                                     <p>If the invention is not structured, every report becomes harder to review.</p>
@@ -367,7 +369,7 @@ function LandingPage() {
                             </div>
 
                             <div className="feature-card">
-                                <div className="card-icon">📤</div>
+                                <div className="card-icon"><img src={hardToShare5thSection} alt="hard to share" className="page-search-img" /></div>
                                 <div className="card-text">
                                     <h3>Hard-to-share outputs</h3>
                                     <p>Teams need clean reports, mapped evidence, and editable drafts.</p>
@@ -378,9 +380,7 @@ function LandingPage() {
 
                     {/* Right Side: Image Column */}
                     <div className="section-image-right">
-                        <div className="dashboard-mockup-container">
-                            <img src={background3rdSectionss} alt="Invention Workflow Mockup" className="mockup-img" />
-                        </div>
+                        <img src={background5thSection} alt="Invention Workflow Mockup" className="mockup-img" />
                     </div>
                 </section>
 
@@ -394,8 +394,7 @@ function LandingPage() {
                     <div className="workflow-steps">
                         <div className="workflow-step">
                             <div className="step-badge">
-                                <span className="step-icon">💡</span>
-                                <span className="step-number">1</span>
+                                <span className="step-icon"><img src={describeInvention5thSection} alt="describe Invention" className="page-search-img" /></span>
                             </div>
                             <h4>Describe the invention</h4>
                             <p>Paste the idea in plain English.</p>
@@ -403,8 +402,7 @@ function LandingPage() {
 
                         <div className="workflow-step">
                             <div className="step-badge">
-                                <span className="step-icon">📋</span>
-                                <span className="step-number">2</span>
+                                <span className="step-icon"><img src={reviewFeature5thSection} alt="review feature" className="page-search-img" /></span>
                             </div>
                             <h4>Review the features</h4>
                             <p>See the extracted invention structure.</p>
@@ -412,8 +410,7 @@ function LandingPage() {
 
                         <div className="workflow-step">
                             <div className="step-badge">
-                                <span className="step-icon">📥</span>
-                                <span className="step-number">3</span>
+                                <span className="step-icon"><img src={chooseOutput5thSection} alt="choose output" className="page-search-img" /></span>
                             </div>
                             <h4>Choose outputs</h4>
                             <p>Run search, comparison, drafts, or all.</p>
@@ -421,8 +418,7 @@ function LandingPage() {
 
                         <div className="workflow-step">
                             <div className="step-badge">
-                                <span className="step-icon">📁</span>
-                                <span className="step-number">4</span>
+                                <span className="step-icon"><img src={openCase5thSection} alt="open case" className="page-search-img" /></span>
                             </div>
                             <h4>Open the case</h4>
                             <p>Review results, download, reports, or share.</p>

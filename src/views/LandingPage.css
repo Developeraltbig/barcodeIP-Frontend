@@ -211,7 +211,7 @@ a {
 }
 
 .messy-inputs-section {
-    width: min(100%, 1200px);
+    width: min(100%, 1300px);
     margin: 0 auto;
     padding: 90px 40px 52px;
     display: grid;
@@ -228,9 +228,10 @@ a {
 
 .section-title {
     margin: 0 0 16px;
-    color: #050505;
-    font-size: clamp(34px, 4vw, 48px);
-    font-weight: 700;
+    color: #000000;
+    font-size: 50px;
+    font-weight: 600;
+    font-family: 'Inter';
     line-height: 1.12;
     letter-spacing: -0.04em;
 }
@@ -239,7 +240,9 @@ a {
     max-width: 500px;
     margin: 0 0 32px;
     color: var(--landing-muted);
-    font-size: 16px;
+    font-size: 20px;
+    font-family: 'Inter';
+    font-weight: 400;
     line-height: 1.6;
 }
 
@@ -267,15 +270,18 @@ a {
 
 .card-text h3 {
     margin: 0 0 6px;
-    color: var(--landing-text);
-    font-size: 16px;
+    color: #0A0A0A;
+    font-size: 20px;
     font-weight: 600;
+    font-family: 'Figtree';
 }
 
 .card-text p {
     margin: 0;
-    color: var(--landing-muted);
-    font-size: 14px;
+    color: #6E6D6D;
+    font-size: 17.99px;
+    font-family: 'Figtree';
+    font-weight: 400;
     line-height: 1.5;
 }
 
@@ -286,14 +292,6 @@ a {
     align-items: center;
 }
 
-.dashboard-mockup-container {
-    width: 100%;
-    padding: 24px;
-    border: 1px solid var(--landing-line);
-    border-radius: 16px;
-    background: #fdf9f7;
-    box-shadow: var(--landing-shadow);
-}
 
 .mockup-img {
     display: block;
@@ -325,15 +323,17 @@ a {
 .workflow-eyebrow {
     margin-bottom: 8px;
     color: var(--landing-accent);
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 600;
+    font-family: 'Inter';
 }
 
 .workflow-title {
     margin: 0;
     color: var(--landing-text);
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 30px;
+    font-weight: 500;
+    font-family: 'Inter';
     line-height: 1.25;
 }
 
@@ -385,14 +385,17 @@ a {
 .workflow-step h4 {
     margin: 0 0 6px;
     color: var(--landing-text);
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Inter';
 }
 
 .workflow-step p {
     margin: 0;
-    color: #777777;
-    font-size: 12px;
+    color: #676B6D;
+    font-size: 14px;
+    font-family: 'Inter';
+    font-weight: 400;
     line-height: 1.45;
 }
 
@@ -2424,10 +2427,6 @@ a {
 
     .feature-card {
         padding: 18px;
-    }
-
-    .dashboard-mockup-container {
-        padding: 12px;
     }
 
     .workflow-steps {
