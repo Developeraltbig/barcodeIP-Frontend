@@ -6,6 +6,11 @@ import RegenerateIcon from "../../../assets/icons/regenerate_icon.svg";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 
+import {
+  useUpdateProposalDraftSectionMutation,
+  useRegenerateProposalDraftSectionMutation,
+} from "../../../features/proposalDraftApi";
+
 function DraftIconButton({
   children,
   label,
@@ -39,7 +44,15 @@ function DraftSectionCard({
   const [content, setContent] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
+  const [
+    updateSection,
+    { isLoading: isUpdating }
+  ] = useUpdateProposalDraftSectionMutation();
 
+  const [
+    regenerateSectionApi,
+    { isLoading: isRegenerating }
+  ] = useRegenerateProposalDraftSectionMutation();
   const [draftContent, setDraftContent] =
     useState("");
 
@@ -70,9 +83,26 @@ function DraftSectionCard({
     setIsEditing(true);
   };
 
-  const handleSave = () => {
-    setContent(draftContent);
-    setIsEditing(false);
+  const handleSave = async () => {
+    try {
+
+      await updateSection({
+        projectId: section._id,
+        field: section.id,
+        content: draftContent,
+      }).unwrap();
+
+      setContent(draftContent);
+      setIsEditing(false);
+
+      console.log("Section Updated");
+
+    } catch (error) {
+      console.error(
+        "Update Failed:",
+        error
+      );
+    }
   };
 
   const handleCancel = () => {
@@ -80,11 +110,28 @@ function DraftSectionCard({
     setIsEditing(false);
   };
 
-  const regenerateSection = (e) => {
+  const regenerateSection = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    onRegenerate?.(section.id);
+    try {
+
+      await regenerateSectionApi({
+        projectId: section._id,
+        field: section.id,
+      }).unwrap();
+
+      console.log(
+        "Regeneration Started:",
+        section.id
+      );
+
+    } catch (error) {
+      console.error(
+        "Regenerate Failed:",
+        error
+      );
+    }
   };
 
   const quillModules = {
@@ -178,8 +225,11 @@ function DraftSectionCard({
                 type="button"
                 className="draft-btn-save"
                 onClick={handleSave}
+                disabled={isUpdating}
               >
-                Save Changes
+                {isUpdating
+                  ? "Saving..."
+                  : "Save Changes"}
               </button>
 
             </div>

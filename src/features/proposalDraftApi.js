@@ -3,25 +3,42 @@ import { baseApi } from "../services/baseApi";
 export const proposalDraftApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
-   
-
-    // GET: getbyId
     getProposalDraftById: builder.query({
       query: (id) => ({
-        url: `/api/v1/provisionalDraft/upload/${id}`, // Adjusted based on folder structure
+        url: `/api/v1/provisionalDraft/upload/${id}`,
         method: "GET",
       }),
       providesTags: ["ProposalDraft"],
     }),
 
-    // GET: generateAll
-    // Using Lazy Query in exports is recommended for this so it doesn't run automatically
     generateAllProposalDraft: builder.query({
       query: (id) => ({
         url: `/api/v1/provisionalDraft/generateall/${id}`,
         method: "GET",
       }),
-      // Invalidates tags because generating might update the status/content
+      providesTags: ["ProposalDraft"],
+    }),
+
+    updateProposalDraftSection: builder.mutation({
+      query: ({ projectId, field, content }) => ({
+        url: `/api/v1/provisionalDraft/update/${projectId}`,
+        method: "PUT",
+        body: {
+          field,
+          content,
+        },
+      }),
+      invalidatesTags: ["ProposalDraft"],
+    }),
+
+    regenerateProposalDraftSection: builder.mutation({
+      query: ({ projectId, field }) => ({
+        url: `/api/v1/provisionalDraft/regenerate/${projectId}`,
+        method: "POST", // Recommended
+        body: {
+          field,
+        },
+      }),
       invalidatesTags: ["ProposalDraft"],
     }),
 
@@ -31,5 +48,9 @@ export const proposalDraftApi = baseApi.injectEndpoints({
 
 export const {
   useGetProposalDraftByIdQuery,
-  useLazyGenerateAllProposalDraftQuery, // Lazy is better for "Generate" buttons
+  useLazyGenerateAllProposalDraftQuery,
+
+  useUpdateProposalDraftSectionMutation,
+  useRegenerateProposalDraftSectionMutation,
+
 } = proposalDraftApi;
