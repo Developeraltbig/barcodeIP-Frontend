@@ -1,6 +1,8 @@
 import React, { memo, useMemo, useState, useEffect } from "react";
 import ActionButton from "./ActionButton";
 import DraftSectionCard from "./DraftSectionCard";
+import axios from "axios";
+
 
 function DraftTab({
   title,
@@ -9,7 +11,6 @@ function DraftTab({
   downloadLabel = "Download Draft",
   onDownload
 }) {
-
   console.log("sectionsData", sectionsData);
   const sections = useMemo(() => {
     if (!sectionsData?.length) return [];
@@ -96,6 +97,72 @@ function DraftTab({
     });
   };
 
+  const handleDownload = async () => {
+    try {
+
+      const projectId = sectionsData?.[0]?.project_id;
+
+      if (!projectId) {
+        console.error("Project ID missing");
+        return;
+      }
+
+
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/v1/provisionalDraft/download-pdf/${projectId}`,
+        {
+          responseType: "arraybuffer",
+
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTUxZDYxODFhNmFiYTgyMTY5ZGM3ZCIsImlhdCI6MTc4MTY5NTM5NywiZXhwIjoxNzgxNzgxNzk3fQ.Blaw1WiG8eDorMq-HQzHt7yrec9MkcZ3xIIMWZ_i6EQ`,
+            Accept: "application/pdf",
+          },
+        }
+      );
+
+
+      const pdfBlob = new Blob(
+        [response.data],
+        {
+          type: "application/pdf",
+        }
+      );
+
+
+      console.log("PDF size:", pdfBlob.size);
+
+
+      const url = window.URL.createObjectURL(pdfBlob);
+
+
+      const a = document.createElement("a");
+
+      a.href = url;
+
+      a.download = "Provisional-Draft.pdf";
+
+
+      document.body.appendChild(a);
+
+      a.click();
+
+      a.remove();
+
+
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+      }, 1000);
+
+
+    } catch (error) {
+
+      console.error(
+        "PDF download error:",
+        error
+      );
+
+    }
+  };
 
   console.log("sections", sections);
 
@@ -130,7 +197,7 @@ function DraftTab({
             <p>{description}</p>
           </div>
 
-          <ActionButton icon="download" onClick={onDownload}>
+          <ActionButton icon="download" onClick={handleDownload} >
             {downloadLabel}
           </ActionButton>
         </div>

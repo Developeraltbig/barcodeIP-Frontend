@@ -38,7 +38,9 @@ function PatentTab({
   onDownloadPatentReport
 }) {
 
-  console.log('test', results)
+  if (!results) {
+    return null;
+  }
   return (
     <>
       <section className="rr-results-summary">
