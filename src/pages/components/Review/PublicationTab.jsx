@@ -6,6 +6,10 @@ import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 function PublicationTab({ results, onDownloadPublications, onViewPublication }) {
   console.log('results --', results)
 
+  if (!results) {
+    return null
+  }
+
   return (
     <section className="rr-publication-panel">
       <div className="rr-tab-page-head">

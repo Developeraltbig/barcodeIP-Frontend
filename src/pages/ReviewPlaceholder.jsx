@@ -17,6 +17,7 @@ import PatentTab from "./components/Review/PatentTab";
 import PublicationTab from "./components/Review/PublicationTab";
 import ProductTab from "./components/Review/ProductTab";
 import DraftTab from "./components/Review/DraftTab";
+import NonProvisionalTab from "./components/Review/NonProvisionalTab";
 import ProcessingPlaceholderTab from "./components/Review/ProcessingPlaceholderTab";
 import RequestOoltoCommentsModal from "./components/Review/RequestOoltoCommentsModal";
 import FeatureMappingView from "./components/Review/FeatureMappingView";
@@ -389,20 +390,20 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
 
     const patentResults = useMemo(() => {
         // Check if projectPatent exists and has at least one key
-        const hasData = Object.keys(projectPatent).length > 0;
+        const hasData = projectPatent && Object.keys(projectPatent).length > 0;
 
         // If it has data, return it inside an array; otherwise, fallback
-        return hasData ? [projectPatent] : PATENT_RESULTS;
+        return hasData ? [projectPatent] : null;
     }, [projectPatent]);
 
     console.log('patentResults11 --', patentResults);
 
 
     const publicationResults = useMemo(() => {
-        const hasData = Object.keys(projectPublication).length > 0;
+        const hasData = projectPublication && Object.keys(projectPublication).length > 0;
 
         // If it has data, return it inside an array; otherwise, fallback
-        return hasData ? [projectPublication] : PATENT_RESULTS;
+        return hasData ? [projectPublication] : null;
 
     }, [projectPublication]);
 
@@ -412,13 +413,17 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
     }, [projectProduct]);
 
     const provisionalSections = useMemo(() => {
-        const data = toArray(projectProvisional);
-        return data.length > 0 ? data : PROVISIONAL_SECTIONS;
+        const hasData = projectProvisional && Object.keys(projectProvisional).length > 0;
+
+        // If it has data, return it inside an array; otherwise, fallback
+        return hasData ? [projectProvisional] : null;
     }, [projectProvisional]);
 
     const nonProvisionalSections = useMemo(() => {
-        const data = toArray(projectNonProvisional);
-        return data.length > 0 ? data : NON_PROVISIONAL_SECTIONS;
+        const hasData = projectNonProvisional && Object.keys(projectNonProvisional).length > 0;
+
+        // If it has data, return it inside an array; otherwise, fallback
+        return hasData ? [projectNonProvisional] : null;
     }, [projectNonProvisional]);
 
     const renderActiveTab = useCallback(() => {
@@ -478,7 +483,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
                 <DraftTab
                     title="Provisional Draft"
                     description="Editable provisional specification sections generated from the invention disclosure."
-                    sections={provisionalSections}
+                    sectionsData={provisionalSections}
                     downloadLabel="Download Provisional Draft"
                     onDownload={() => console.log("Download provisional draft")}
                 />
@@ -487,10 +492,10 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
 
         if (activeModuleKey === MODULE_KEYS.NON_PROVISIONAL) {
             return (
-                <DraftTab
+                <NonProvisionalTab
                     title="Non-Provisional Draft"
                     description="Draft sections, representative claims, block diagrams, and flow charts."
-                    sections={nonProvisionalSections}
+                    sectionsData={nonProvisionalSections}
                     downloadLabel="Download Non-Provisional Draft"
                     onDownload={() =>
                         console.log("Download non-provisional draft")
