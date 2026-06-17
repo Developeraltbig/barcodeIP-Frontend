@@ -18,42 +18,49 @@ function DraftTab({
 
     return [
       {
+        _id: patent.project_id,
         id: "title_of_invention",
         number: "01",
         title: "Title of Invention",
         content: patent.title_of_invention || ""
       },
       {
+        _id: patent.project_id,
         id: "background_of_invention",
         number: "02",
         title: "Background of Invention",
         content: patent.background_of_invention || ""
       },
       {
+        _id: patent.project_id,
         id: "summary_of_invention",
         number: "03",
         title: "Summary of Invention",
         content: patent.summary_of_invention || ""
       },
       {
+        _id: patent.project_id,
         id: "fields_of_invention",
         number: "04",
         title: "Field of Invention",
         content: patent.fields_of_invention || ""
       },
       {
+        _id: patent.project_id,
         id: "detailed_description",
         number: "05",
         title: "Detailed Description",
         content: patent.detailed_description || ""
       },
       {
+        _id: patent.project_id,
         id: "advantages_of_invention",
         number: "06",
         title: "Advantages of Invention",
         content: patent.advantages_of_invention || ""
       },
       {
+        _id: patent.project_id,
         id: "abstract",
         number: "07",
         title: "Abstract",

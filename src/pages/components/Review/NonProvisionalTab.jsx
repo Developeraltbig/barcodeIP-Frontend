@@ -2,6 +2,8 @@ import React, { memo, useMemo, useState, useEffect } from "react";
 import ActionButton from "./ActionButton";
 import NonDraftSectionCard from "./NonDraftSectionCard";
 
+
+
 function NonProvisionalTab({
   title,
   description,
@@ -15,87 +17,102 @@ function NonProvisionalTab({
     if (!sectionsData?.length) return [];
 
     const patent = sectionsData[0];
+    console.log('patent==', patent)
 
     return [
       {
+        _id: patent.project_id,
         id: "title_of_invention",
         number: "01",
         title: "Title of Invention",
         content: patent.title_of_invention
       },
       {
+        _id: patent.project_id,
         id: "abstract",
         number: "02",
         title: "Abstract",
         content: patent.abstract
       },
       {
+        _id: patent.project_id,
         id: "background_of_invention",
         number: "03",
         title: "Background of Invention",
         content: patent.background_of_invention
       },
       {
+        _id: patent.project_id,
         id: "summary_of_invention",
         number: "04",
         title: "Summary of Invention",
         content: patent.summary_of_invention
       },
       {
+        _id: patent.project_id,
         id: "fields_of_invention",
         number: "05",
         title: "Field of Invention",
         content: patent.fields_of_invention
       },
       {
+        _id: patent.project_id,
         id: "claims",
         number: "06",
         title: "Claims",
         content: patent.claims
       },
       {
+        _id: patent.project_id,
         id: "brief_description",
         number: "07",
         title: "Brief Description",
         content: patent.brief_description
       },
       {
+        _id: patent.project_id,
         id: "flow_chart",
         number: "08",
         title: "Flow Chart",
         content: patent.flow_chart
       },
       {
+        _id: patent.project_id,
         id: "block_diagram",
         number: "09",
         title: "Block Diagram",
         content: patent.block_diagram
       },
       {
+        _id: patent.project_id,
         id: "detailed_descriptions",
         number: "10",
         title: "Detailed Description",
         content: patent.detailed_descriptions
       },
       {
+        _id: patent.project_id,
         id: "embodiments",
         number: "11",
         title: "Embodiments",
         content: patent.embodiments
       },
       {
+        _id: patent.project_id,
         id: "sequence_listing",
         number: "12",
         title: "Sequence Listing",
         content: patent.sequence_listing
       },
       {
+        _id: patent.project_id,
         id: "industrial_applicability",
         number: "13",
         title: "Industrial Applicability",
         content: patent.industrial_applicability
       },
       {
+        _id: patent.project_id,
         id: "custom_paragraphs",
         number: "14",
         title: "Custom Paragraphs",
@@ -181,6 +198,7 @@ function NonProvisionalTab({
               key={section.id}
               section={section}
               isActive={activeSection?.id === section.id}
+
             />
           ))}
         </div>

@@ -2,11 +2,10 @@ import { baseApi } from "../services/baseApi";
 
 export const nonProvisionalDraftApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    
-    // GET ALL (Pagination & Filtering - Standard Pattern)
+
     getNonProvisionalDraft: builder.query({
-      query: ({ page, limit, sortBy, sortOrder, search, status, role }) => ({
-        url: "/api/nonprovisionaldraft/all", 
+      query: ({ page, limit, sortBy, sortOrder, search, status }) => ({
+        url: "/api/nonprovisionaldraft/all",
         method: "GET",
         params: {
           page,
@@ -14,36 +13,60 @@ export const nonProvisionalDraftApi = baseApi.injectEndpoints({
           sortBy,
           sortOrder,
           ...(search && { search }),
-          ...(status && { status }),
-        },
+          ...(status && { status })
+        }
       }),
-      providesTags: ["NonProvisionalDraft"],
+      providesTags: ["NonProvisionalDraft"]
     }),
 
-    // GET BY ID (Details) - Matches 'getById' from screenshot
     getNonProvisionalDraftDetails: builder.query({
       query: (id) => ({
         url: `/api/nonprovisionaldraft/getbyId/${id}`,
-        method: "GET",
+        method: "GET"
       }),
-      providesTags: (result, error, id) => [{ type: "NonProvisionalDraft", id }],
+      providesTags: (result, error, id) => [
+        { type: "NonProvisionalDraft", id }
+      ]
     }),
 
-    // GENERATE ALL - Matches 'GenerateAll' from screenshot
     generateAllNonProvisionalDraft: builder.query({
       query: (id) => ({
         url: `/api/nonprovisionaldraft/generateall/${id}`,
-        method: "GET",
-      }),
-      // Invalidate tags so the UI refreshes with the generated content
-      invalidatesTags: ["NonProvisionalDraft"],
+        method: "GET"
+      })
     }),
-  }),
-  overrideExisting: false,
+
+    updateNonProvisionalSection: builder.mutation({
+      query: ({ projectId, field, content }) => ({
+        url: `/api/v1/nonProvisionalDraft/update/${projectId}`,
+        method: "PUT",
+        body: {
+          field,
+          content
+        }
+      }),
+      invalidatesTags: ["NonProvisionalDraft"]
+    }),
+
+    regenerateNonProvisionalSection: builder.mutation({
+      query: ({ projectId, field }) => ({
+        url: `/api/v1/nonProvisionalDraft/regenerate/${projectId}`,
+        method: "POST",
+        body: {
+          field
+        }
+      })
+    })
+
+  })
 });
 
 export const {
   useGetNonProvisionalDraftQuery,
   useGetNonProvisionalDraftDetailsQuery,
-  useLazyGenerateAllNonProvisionalDraftQuery, // 'Lazy' is best for manual triggers like "Generate"
+  useLazyGenerateAllNonProvisionalDraftQuery,
+
+  useUpdateNonProvisionalSectionMutation,
+  useRegenerateNonProvisionalSectionMutation
+
 } = nonProvisionalDraftApi;

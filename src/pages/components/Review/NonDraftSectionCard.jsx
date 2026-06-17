@@ -12,6 +12,11 @@ import EditIcon from "../../../assets/icons/edit_icon.svg";
 import RegenerateIcon from "../../../assets/icons/regenerate_icon.svg";
 import './Draft.css'
 
+import {
+  useUpdateNonProvisionalSectionMutation,
+  useRegenerateNonProvisionalSectionMutation
+} from "../../../features/nonProvisionalDraftApi";
+
 function DraftIconButton({
   children,
   label,
@@ -41,6 +46,7 @@ function NonDraftSectionCard({
   onFocus,
   onRegenerate
 }) {
+  console.log('section---', section)
   const [isEditing, setIsEditing] =
     useState(false);
 
@@ -49,6 +55,16 @@ function NonDraftSectionCard({
 
   const [draftContent, setDraftContent] =
     useState("");
+
+  const [
+    updateSection,
+    { isLoading: isUpdating }
+  ] = useUpdateNonProvisionalSectionMutation();
+
+  const [
+    regenerateSectionApi,
+    { isLoading: isRegenerating }
+  ] = useRegenerateNonProvisionalSectionMutation();
 
   useEffect(() => {
     const value = section?.content || "";
@@ -98,9 +114,23 @@ function NonDraftSectionCard({
     setIsEditing(true);
   };
 
-  const handleSave = () => {
-    setContent(draftContent);
-    setIsEditing(false);
+  const handleSave = async () => {
+    try {
+
+      await updateSection({
+        projectId: section._id,
+        field: section.id,
+        content: draftContent
+      }).unwrap();
+
+      setContent(draftContent);
+      setIsEditing(false);
+
+      console.log("Updated Successfully");
+
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleCancel = () => {
@@ -108,11 +138,25 @@ function NonDraftSectionCard({
     setIsEditing(false);
   };
 
-  const regenerateSection = (e) => {
+  const regenerateSection = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    onRegenerate?.(section.id);
+    try {
+
+      await regenerateSectionApi({
+        projectId,
+        field: section.id
+      }).unwrap();
+
+      console.log(
+        "Regeneration Started:",
+        section.id
+      );
+
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const quillModules = {
@@ -190,6 +234,7 @@ function NonDraftSectionCard({
             type="button"
             className="draft-card-action-btn"
             onClick={regenerateSection}
+            disabled={isRegenerating}
           >
             <img
               src={RegenerateIcon}
@@ -222,8 +267,12 @@ function NonDraftSectionCard({
                 type="button"
                 className="draft-btn-save"
                 onClick={handleSave}
+                disabled={isUpdating}
+
               >
-                Save Changes
+                {isUpdating
+                  ? "Saving..."
+                  : "Save Changes"}
               </button>
             </div>
 
