@@ -45,6 +45,24 @@ import caseOutput6thSection from "../assets/landingPage/icons/case_output.svg";
 import equal6thSection from "../assets/landingPage/icons/equal.svg";
 
 
+import smartRecovery7thSection from "../assets/landingPage/smart_recovery.jpg";
+import thermalGel7thSection from "../assets/landingPage/thermal_gel.jpg";
+import wearable7thSection from "../assets/landingPage/wearable.jpg";
+import one7thSection from "../assets/landingPage/icons/1.svg";
+import two7thSection from "../assets/landingPage/icons/2.svg";
+import three7thSection from "../assets/landingPage/icons/3.svg";
+import seventyOne7thSection from "../assets/landingPage/icons/71.svg";
+import seventyEight7thSection from "../assets/landingPage/icons/78.svg";
+import nintyTwo7thSection from "../assets/landingPage/icons/92.svg";
+import liveShare7thSection from "../assets/landingPage/icons/live-share.svg";
+import publishSearch7thSection from "../assets/landingPage/icons/publish_search.svg";
+import draftOutline7thSection from "../assets/landingPage/icons/draft-outline.svg";
+import showFeature7thSection from "../assets/landingPage/icons/show_feature.svg";
+import amazon7thSection from "../assets/landingPage/icons/amazon.svg";
+
+
+
+
 const navLinks = ["How it works", "Output", "Pricing", "Who it's for"];
 
 const featureGroups = [
@@ -531,7 +549,7 @@ function LandingPage() {
                     <div className="dashboard-side-left">
                         <div className="publication-container-panel">
                             <div className="publication-header">
-                                <span className="search-icon">🔍</span>
+                                <span className="search-icon"><img src={publishSearch7thSection} alt="publish search" className="page-search-img" /></span>
                                 <div>
                                     <h3 className="publication-title">Publication Search</h3>
                                     <p className="publication-subtitle">
@@ -544,9 +562,9 @@ function LandingPage() {
                                 {/* Card 1 */}
                                 <div className="pub-card">
                                     <div className="pub-card-header">
-                                        <span className="doc-icon">📄</span>
+                                        <span className="doc-icon"><img src={draftOutline7thSection} alt="draft outline" className="page-search-img" /></span>
                                         <h4>Flexible thermal interfaces for wearable devices</h4>
-                                        <span className="share-icon">↗️</span>
+                                        <span className="share-icon"><img src={liveShare7thSection} alt="live share" className="page-search-img" /></span>
                                     </div>
                                     <p className="pub-card-desc">
                                         A review of materials and structures that enable conformal heat transfer in wearable applications.
@@ -557,9 +575,9 @@ function LandingPage() {
                                 {/* Card 2 */}
                                 <div className="pub-card">
                                     <div className="pub-card-header">
-                                        <span className="doc-icon">📄</span>
+                                        <span className="doc-icon"><img src={draftOutline7thSection} alt="draft outline" className="page-search-img" /></span>
                                         <h4>Microfluidic cooling layers in compact electronics</h4>
-                                        <span className="share-icon">↗️</span>
+                                        <span className="share-icon"><img src={liveShare7thSection} alt="live share" className="page-search-img" /></span>
                                     </div>
                                     <p className="pub-card-desc">
                                         Design approaches for integrating microfluidic channels to manage heat in slim devices.
@@ -570,9 +588,9 @@ function LandingPage() {
                                 {/* Card 3 */}
                                 <div className="pub-card">
                                     <div className="pub-card-header">
-                                        <span className="doc-icon">📄</span>
+                                        <span className="doc-icon"><img src={draftOutline7thSection} alt="draft outline" className="page-search-img" /></span>
                                         <h4>Skin-safe adhesive materials for wearable hardware</h4>
-                                        <span className="share-icon">↗️</span>
+                                        <span className="share-icon"><img src={liveShare7thSection} alt="live share" className="page-search-img" /></span>
                                     </div>
                                     <p className="pub-card-desc">
                                         Formulation and testing of adhesives that ensure long-term wear and skin compatibility.
@@ -594,21 +612,21 @@ function LandingPage() {
                             {/* Rank 1 */}
                             <div className="product-rank-card">
                                 <div className="rank-badge-column">
-                                    <span className="rank-number text-red">1</span>
+                                    <span className="rank-number text-red"><img src={one7thSection} alt="one section" className="page-search-img" /></span>
                                     <span className="rank-label">Rank</span>
                                 </div>
                                 <div className="product-image-container">
-                                    <img src="/path-to-watch-image.jpg" alt="Wearable cooling patch" className="product-thumb" />
+                                    <img src={wearable7thSection} alt="wearable watch" className="page-search-img" />
                                 </div>
                                 <div className="product-details-column">
                                     <h3>Wearable cooling patch</h3>
-                                    <span className="vendor-brand">amazon</span>
+                                    <span className="vendor-brand"><img src={amazon7thSection} alt="amazon" className="page-search-img" /></span>
                                     <p className="product-quote">"Reusable adhesive patch delivers up to 8 hours of targeted cooling relief."</p>
-                                    <a href="#breakdown" className="breakdown-link">Show feature breakdown ›</a>
+                                    <img src={showFeature7thSection} alt="show feature" className="page-search-img" />
                                 </div>
                                 <div className="score-column">
                                     <span className="score-label">Relevance Score</span>
-                                    <span className="score-value text-red">92</span>
+                                    <span className="score-value text-red"><img src={nintyTwo7thSection} alt="ninty two" className="page-search-img" /></span>
                                     <span className="score-badge badge-red-light">Very High</span>
                                 </div>
                             </div>
@@ -616,21 +634,21 @@ function LandingPage() {
                             {/* Rank 2 */}
                             <div className="product-rank-card">
                                 <div className="rank-badge-column">
-                                    <span className="rank-number">2</span>
+                                    <span className="rank-number"><img src={two7thSection} alt="two section" className="page-search-img" /></span>
                                     <span className="rank-label">Rank</span>
                                 </div>
                                 <div className="product-image-container">
-                                    <img src="/path-to-solar-image.jpg" alt="Thermal gel pad for electronics" className="product-thumb" />
+                                    <img src={thermalGel7thSection} alt="thermal gel" className="page-search-img" />
                                 </div>
                                 <div className="product-details-column">
                                     <h3>Thermal gel pad for electronics</h3>
-                                    <span className="vendor-brand">amazon</span>
+                                    <span className="vendor-brand"><img src={amazon7thSection} alt="amazon" className="page-search-img" /></span>
                                     <p className="product-quote">"High-conductivity gel pad for efficient heat transfer in compact devices."</p>
-                                    <a href="#breakdown" className="breakdown-link">Show feature breakdown ›</a>
+                                    <img src={showFeature7thSection} alt="show feature" className="page-search-img" />
                                 </div>
                                 <div className="score-column">
                                     <span className="score-label">Relevance Score</span>
-                                    <span className="score-value">78</span>
+                                    <span className="score-value"><img src={seventyEight7thSection} alt="seventy eight" className="page-search-img" /></span>
                                     <span className="score-badge badge-orange-light">High</span>
                                 </div>
                             </div>
@@ -638,21 +656,21 @@ function LandingPage() {
                             {/* Rank 3 */}
                             <div className="product-rank-card">
                                 <div className="rank-badge-column">
-                                    <span className="rank-number">3</span>
+                                    <span className="rank-number"><img src={three7thSection} alt="three section" className="page-search-img" /></span>
                                     <span className="rank-label">Rank</span>
                                 </div>
                                 <div className="product-image-container">
-                                    <img src="/path-to-wrap-image.jpg" alt="Smart recovery cooling wrap" className="product-thumb" />
+                                    <img src={smartRecovery7thSection} alt="smart recovery" className="page-search-img" />
                                 </div>
                                 <div className="product-details-column">
                                     <h3>Smart recovery cooling wrap</h3>
-                                    <span className="vendor-brand">amazon</span>
+                                    <span className="vendor-brand"><img src={amazon7thSection} alt="amazon" className="page-search-img" /></span>
                                     <p className="product-quote">"Wearable wrap with adjustable cooling and app-connected temperature control."</p>
-                                    <a href="#breakdown" className="breakdown-link">Show feature breakdown ›</a>
+                                    <img src={showFeature7thSection} alt="show feature" className="page-search-img" />
                                 </div>
                                 <div className="score-column">
                                     <span className="score-label">Relevance Score</span>
-                                    <span className="score-value">71</span>
+                                    <span className="score-value"><img src={seventyOne7thSection} alt="seventy one" className="page-search-img" /></span>
                                     <span className="score-badge badge-orange-light">High</span>
                                 </div>
                             </div>
