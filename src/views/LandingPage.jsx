@@ -60,6 +60,11 @@ import draftOutline7thSection from "../assets/landingPage/icons/draft-outline.sv
 import showFeature7thSection from "../assets/landingPage/icons/show_feature.svg";
 import amazon7thSection from "../assets/landingPage/icons/amazon.svg";
 
+import left8thSection from "../assets/landingPage/section8th-left.jpg";
+import right8thSection from "../assets/landingPage/section8th-right.jpg";
+import starReview8thSection from "../assets/landingPage/icons/star_review.svg";
+import personReview8thSection from "../assets/landingPage/icons/person_review.svg";
+
 
 
 
@@ -693,10 +698,10 @@ function LandingPage() {
                 <div className="featured-testimonials-grid">
                     <div className="testimonial-card card-large">
                         <div className="card-image-wrapper">
-                            <img src="/path-to-avatar-1.jpg" alt="Ananya Rao working" className="testimonial-img" />
+                            <img src={left8thSection} alt="Ananya Rao working" className="page-search-img" />
                         </div>
                         <div className="card-content-wrapper">
-                            <div className="star-rating">⭐⭐⭐⭐⭐</div>
+                            <div className="star-rating"><img src={starReview8thSection} alt="Star Review" className="page-search-img" /></div>
                             <p className="testimonial-quote">
                                 "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
                             </p>
@@ -709,10 +714,10 @@ function LandingPage() {
 
                     <div className="testimonial-card card-large">
                         <div className="card-image-wrapper">
-                            <img src="/path-to-avatar-2.jpg" alt="Team discussing" className="testimonial-img" />
+                            <img src={right8thSection} alt="Team Disscussing" className="page-search-img" />
                         </div>
                         <div className="card-content-wrapper">
-                            <div className="star-rating">⭐⭐⭐⭐⭐</div>
+                            <div className="star-rating"><img src={starReview8thSection} alt="Star Review" className="page-search-img" /></div>
                             <p className="testimonial-quote">
                                 "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
                             </p>
@@ -734,12 +739,12 @@ function LandingPage() {
                         <div className="marquee-group">
                             {[1, 2, 3, 4].map((item) => (
                                 <div className="testimonial-card card-small" key={`orig-${item}`}>
-                                    <div className="star-rating">⭐⭐⭐⭐⭐</div>
+                                    <div className="star-rating"><img src={starReview8thSection} alt="Star Review" className="page-search-img" /></div>
                                     <p className="testimonial-quote">
                                         "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
                                     </p>
                                     <div className="author-row-compact">
-                                        <img src="/path-to-profile-sm.jpg" alt="Ananya Rao" className="author-avatar-sm" />
+                                        <img src={personReview8thSection} alt="Ananya Avatar" className="page-search-img" />
                                         <div className="testimonial-author">
                                             <h4>Ananya Rao</h4>
                                             <span>Founder @ MedTech Startup</span>
