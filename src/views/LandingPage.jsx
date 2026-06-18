@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import "./LandingPage.css";
 import background1 from "../assets/landingPage/Background1.jpg";
 import background from "../assets/landingPage/Background.png";
@@ -145,6 +146,8 @@ const testimonials = [
 ];
 
 function LandingPage() {
+    const navigate = useNavigate();
+
     return (
         <main className="landing-page">
 
@@ -165,8 +168,8 @@ function LandingPage() {
                         ))}
                     </nav>
 
-                    <button className="landing-header-btn" type="button">
-                        Start New Case
+                    <button className="landing-header-btn" type="button" onClick={() => navigate("/pages/auth/login")}>
+                        Sign In
                     </button>
                 </header>
                 <div className="landing-hero-inner">
@@ -181,7 +184,7 @@ function LandingPage() {
                     </p>
 
                     <div className="hero-actions">
-                        <button className="primary-btn" type="button">
+                        <button className="primary-btn" type="button" onClick={() => navigate("/pages/auth/register")}>
                             Get Started
                         </button>
                         <button className="secondary-btn" type="button">
