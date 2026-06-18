@@ -79,6 +79,14 @@ import provisionalDraft8thSection from "../assets/landingPage/icons/provisional-
 import reportFinance8thSection from "../assets/landingPage/icons/report-finance.svg";
 import reportLibrary8thSection from "../assets/landingPage/icons/report-library.svg";
 
+import footerLine10thSection from '../assets/landingPage/footer-line.png'
+import footerLogo10thSection from "../assets/landingPage/icons/footer-logo.svg";
+import footerRightArrow10thSection from "../assets/landingPage/icons/footer-rightArrow.svg";
+
+import emailIconSection from "../assets/landingPage/icons/email-icon.svg";
+import locationIconSection from "../assets/landingPage/icons/location-icon.svg";
+import phoneIconSection from "../assets/landingPage/icons/phone-icon.svg";
+
 
 
 const navLinks = ["How it works", "Output", "Pricing", "Who it's for"];
@@ -896,7 +904,7 @@ function LandingPage() {
                 <div className="layout-split-grid">
                     {/* Left Column: Contact Copy & Details */}
                     <div className="content-side-left">
-                        <h2 className="main-section-title">Let’s talk about your invention work.</h2>
+                        <h2 className="main-section-title">Let's talk about your invention work.</h2>
                         <p className="main-section-desc">
                             Share your idea, patent document, or project requirement with us. Our team will help you understand the next best step clearly.
                         </p>
@@ -905,7 +913,7 @@ function LandingPage() {
                             {/* Phone Item */}
                             <div className="contact-info-item">
                                 <div className="icon-circle">
-                                    <span className="info-icon">📞</span>
+                                    <span className="info-icon"><img src={phoneIconSection} alt="phone icon" className="page-search-img" /></span>
                                 </div>
                                 <div className="info-text">
                                     <span className="info-label">PHONE</span>
@@ -916,7 +924,7 @@ function LandingPage() {
                             {/* Email Item */}
                             <div className="contact-info-item">
                                 <div className="icon-circle">
-                                    <span className="info-icon">✉️</span>
+                                    <span className="info-icon"><img src={emailIconSection} alt="email icon" className="page-search-img" /></span>
                                 </div>
                                 <div className="info-text">
                                     <span className="info-label">EMAIL</span>
@@ -927,7 +935,7 @@ function LandingPage() {
                             {/* Location Item */}
                             <div className="contact-info-item">
                                 <div className="icon-circle">
-                                    <span className="info-icon">📍</span>
+                                    <span className="info-icon"><img src={locationIconSection} alt="location icon" className="page-search-img" /></span>
                                 </div>
                                 <div className="info-text">
                                     <span className="info-label">LOCATION</span>
@@ -992,9 +1000,7 @@ function LandingPage() {
                         <div className="footer-brand-column">
                             <div className="footer-logo-area">
                                 {/* Infinite Logo Symbol Mockup */}
-                                <svg className="footer-infinite-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7 9C5.34315 9 4 10.3431 4 12C4 13.6569 5.34315 15 7 15C8.65685 15 10 13.6569 11 12.5C12 11.3431 13.3431 9 15 9C17.2091 9 19 10.7909 19 13C19 15.2091 17.2091 17 15 17C13.3431 17 12 14.6569 11 13.5C10 12.3431 8.65685 9 7 9Z" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
+                                <img src={footerLogo10thSection} alt="footer logo" className="page-search-img" />
                             </div>
 
                             <p className="footer-tagline-text">
@@ -1011,7 +1017,7 @@ function LandingPage() {
                                         required
                                     />
                                     <button type="submit" className="newsletter-submit-btn" aria-label="Submit">
-                                        <span className="arrow-icon">→</span>
+                                        <span className="arrow-icon"><img src={footerRightArrow10thSection} alt="footer line" className="page-search-img" /></span>
                                     </button>
                                 </div>
                             </form>
@@ -1040,7 +1046,7 @@ function LandingPage() {
                     </div>
 
                     {/* Bottom Horizontal Row: Dividers & Meta Text */}
-                    <div className="footer-bottom-divider-line"></div>
+                    <img src={footerLine10thSection} alt="footer arrow" className="page-search-img" />
 
                     <div className="footer-copyright-row">
                         <p>© 2026 Barcode IP. Oolto is a product by Barcode IP. Built for structured invention review.</p>
