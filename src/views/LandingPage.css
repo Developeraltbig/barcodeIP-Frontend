@@ -1691,17 +1691,20 @@ a {
 }
 
 .section-header-centered .main-section-title {
-    font-size: 42px;
-    font-weight: 700;
+    font-size: 50px;
+    font-weight: 600;
+    font-family: 'Inter';
     letter-spacing: -0.02em;
     margin: 0 0 16px 0;
     color: #000000;
 }
 
 .section-header-centered .main-section-desc {
-    font-size: 16px;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'Inter';
     line-height: 1.6;
-    color: #666666;
+    color: #676B6D;
     margin: 0;
 }
 
@@ -1721,23 +1724,27 @@ a {
 }
 
 .testimonial-quote {
-    font-size: 13px;
+    font-size: 18px;
+    font-family: 'Inter';
+    font-weight: 500;
     line-height: 1.6;
-    color: #222222;
+    color: #3E3E3E;
     margin: 0 0 20px 0;
 }
 
 .testimonial-author h4 {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Inter';
     margin: 0 0 2px 0;
-    color: #111111;
+    color: #3E3E3E;
 }
 
 .testimonial-author span {
-    font-size: 11px;
-    color: #888888;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 400;
+    font-family: 'Inter';
+    color: #676B6D;
 }
 
 .featured-testimonials-grid {
