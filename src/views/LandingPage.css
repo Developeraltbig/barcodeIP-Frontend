@@ -1797,6 +1797,14 @@ a {
     background-color: #ddd;
 }
 
+.circle-number {
+    width: 14%;
+}
+
+.circle-number3 {
+    width: 22%
+}
+
 @media (max-width: 768px) {
     .section-header-centered .main-section-title {
         font-size: 32px;
@@ -1838,7 +1846,7 @@ a {
    ========================================== */
 .audience-layout-grid {
     display: grid;
-    grid-template-columns: 1.8fr 1.2fr;
+    grid-template-columns: 1.8fr;
     /* Cards left, giant title right */
     gap: 40px;
     align-items: center;
@@ -1887,14 +1895,17 @@ a {
 }
 
 .numbered-audience-card h3 {
-    font-size: 15px;
+    font-size: 24px;
     font-weight: 600;
+    font-family: 'Figtree';
     margin: 0 0 6px 0;
-    color: #111111;
+    color: #0A0A0A;
 }
 
 .numbered-audience-card p {
-    font-size: 12px;
+    font-size: 16px;
+    font-family: 'Figtree';
+    font-weight: 400;
     line-height: 1.4;
     color: #777777;
     margin: 0;
@@ -1905,7 +1916,7 @@ a {
     padding-left: 20px;
 }
 
-.headline-side-right .main-section-title {
+.main-section-title {
     font-size: 38px;
     font-weight: 700;
     line-height: 1.15;
@@ -1923,7 +1934,9 @@ a {
 }
 
 .reports-subheading-label {
-    font-size: 15px;
+    font-size: 25px;
+    font-family: 'Inter';
+    font-weight: 500;
     color: #666666;
     margin-bottom: 24px;
 }
@@ -1952,9 +1965,10 @@ a {
 }
 
 .report-option-box h4 {
-    font-size: 13px;
+    font-size: 18px;
     font-weight: 500;
-    color: #555555;
+    font-family: 'Inter';
+    color: #676B6D;
     margin: 0;
 }
 
@@ -1979,29 +1993,20 @@ a {
 
 .disclaimer-text strong {
     display: block;
-    font-size: 14px;
+    font-size: 18px;
+    font-family: 'Inter';
     font-weight: 600;
-    color: #222222;
+    color: #3E3E3E;
     margin-bottom: 4px;
 }
 
 .disclaimer-text p {
-    font-size: 12px;
+    font-size: 18px;
+    font-family: 'Inter';
+    font-weight: 400;
     line-height: 1.5;
-    color: #777777;
+    color: #787878;
     margin: 0;
-}
-
-/* Final Action Proceed Banner block wrapper */
-.cta-proceed-banner-row {
-    background-color: #fff9f8;
-    border: 1px solid #f7ecea;
-    border-radius: 12px;
-    padding: 24px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 40px;
 }
 
 .cta-text-left h4 {
@@ -2044,6 +2049,10 @@ a {
     line-height: 1;
 }
 
+.ninth-section-bottom {
+    width: 100%
+}
+
 /* ==========================================
    RESPONSIVE DESIGN BREAKPOINTS
    ========================================== */
@@ -2073,13 +2082,6 @@ a {
 
     .reports-options-grid {
         grid-template-columns: 1fr;
-    }
-
-    .cta-proceed-banner-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-        padding: 24px;
     }
 
     .btn-proceed-action {

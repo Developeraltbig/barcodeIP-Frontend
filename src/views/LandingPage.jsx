@@ -65,6 +65,19 @@ import right8thSection from "../assets/landingPage/section8th-right.jpg";
 import starReview8thSection from "../assets/landingPage/icons/star_review.svg";
 import personReview8thSection from "../assets/landingPage/icons/person_review.svg";
 
+import bottom9thSection from '../assets/landingPage/section-nine.png'
+import carbonReview8thSection from "../assets/landingPage/icons/carbon_review.svg";
+import checkShield8thSection from "../assets/landingPage/icons/check-shield.svg";
+import circleOne8thSection from "../assets/landingPage/icons/circle-one.svg";
+import circleTwo8thSection from "../assets/landingPage/icons/circle-two.svg";
+import circleThree8thSection from "../assets/landingPage/icons/circle-three.svg";
+import circleFour8thSection from "../assets/landingPage/icons/circle-four.svg";
+import circleFive8thSection from "../assets/landingPage/icons/circle-five.svg";
+import NonDraftOutline8thSection from "../assets/landingPage/icons/non-draft-outline.svg";
+import patentSearchReport8thSection from "../assets/landingPage/icons/patent-search-report.svg";
+import provisionalDraft8thSection from "../assets/landingPage/icons/provisional-draft-icon.svg";
+import reportFinance8thSection from "../assets/landingPage/icons/report-finance.svg";
+import reportLibrary8thSection from "../assets/landingPage/icons/report-library.svg";
 
 
 
@@ -782,48 +795,46 @@ function LandingPage() {
                 {/* Top Grid: Numbered Audience Cards & Section Title */}
                 <div className="audience-layout-grid">
                     <div className="cards-wrapper-left">
-                        <div className="audience-card-row">
+                        <div className="audience-card-row row-three-items">
                             {/* Card 01 */}
                             <div className="numbered-audience-card">
-                                <span className="card-badge-num">01</span>
+                                <span className=""><img src={circleOne8thSection} alt="circle one" className="circle-number" /></span>
                                 <h3>Inventors</h3>
                                 <p>Protect and document ideas.</p>
                             </div>
                             {/* Card 02 */}
                             <div className="numbered-audience-card">
-                                <span className="card-badge-num">02</span>
+                                <span className=""><img src={circleTwo8thSection} alt="circle two" className="circle-number" /></span>
                                 <h3>Startup founders</h3>
                                 <p>Move IP early and build with confidence.</p>
+                            </div>
+                            <div className="">
+                                <h2 className="main-section-title">
+                                    Creates reports <br /> your team can <br /> actually use.
+                                </h2>
                             </div>
                         </div>
 
                         <div className="audience-card-row row-three-items">
                             {/* Card 03 */}
                             <div className="numbered-audience-card">
-                                <span className="card-badge-num">03</span>
+                                <span className=""><img src={circleThree8thSection} alt="circle three" className="circle-number3" /></span>
                                 <h3>R&D teams</h3>
                                 <p>Accelerate disclosure review and decisions.</p>
                             </div>
                             {/* Card 04 */}
                             <div className="numbered-audience-card">
-                                <span className="card-badge-num">04</span>
+                                <span className=""><img src={circleFour8thSection} alt="circle four" className="circle-number3" /></span>
                                 <h3>Patent analysts</h3>
                                 <p>Save time on search and analysis.</p>
                             </div>
                             {/* Card 05 */}
                             <div className="numbered-audience-card">
-                                <span className="card-badge-num">05</span>
+                                <span className=""><img src={circleFive8thSection} alt="circle five" className="circle-number3" /></span>
                                 <h3>IP teams and attorneys</h3>
                                 <p>Streamline case prep and reporting.</p>
                             </div>
                         </div>
-                    </div>
-
-                    {/* Dynamic Title Column */}
-                    <div className="headline-side-right">
-                        <h2 className="main-section-title">
-                            Creates reports <br /> your team can <br /> actually use.
-                        </h2>
                     </div>
                 </div>
 
@@ -834,32 +845,32 @@ function LandingPage() {
                     <div className="reports-options-grid">
                         {/* Box 1 */}
                         <div className="report-option-box">
-                            <span className="report-box-icon">📈</span>
+                            <span className="report-box-icon"><img src={patentSearchReport8thSection} alt="patent search report" className="page-search-img" /></span>
                             <h4>Patent Search Report</h4>
                         </div>
                         {/* Box 2 */}
                         <div className="report-option-box">
-                            <span className="report-box-icon">📋</span>
+                            <span className="report-box-icon"><img src={reportLibrary8thSection} alt="report library" className="page-search-img" /></span>
                             <h4>Mapping Report</h4>
                         </div>
                         {/* Box 3 */}
                         <div className="report-option-box">
-                            <span className="report-box-icon">📊</span>
+                            <span className="report-box-icon"><img src={reportFinance8thSection} alt="report finance" className="page-search-img" /></span>
                             <h4>Patent Comparison Report</h4>
                         </div>
                         {/* Box 4 */}
                         <div className="report-option-box">
-                            <span className="report-box-icon">📝</span>
+                            <span className="report-box-icon"><img src={provisionalDraft8thSection} alt="provisional draft" className="page-search-img" /></span>
                             <h4>Provisional Draft</h4>
                         </div>
                         {/* Box 5 */}
                         <div className="report-option-box">
-                            <span className="report-box-icon">✉️</span>
+                            <span className="report-box-icon"><img src={NonDraftOutline8thSection} alt="non provisional draft" className="page-search-img" /></span>
                             <h4>Non Provisional Draft</h4>
                         </div>
                         {/* Box 6 */}
                         <div className="report-option-box">
-                            <span className="report-box-icon">💬</span>
+                            <span className="report-box-icon"><img src={carbonReview8thSection} alt="carbon review" className="page-search-img" /></span>
                             <h4>Attorney Review Package</h4>
                         </div>
                     </div>
@@ -867,7 +878,7 @@ function LandingPage() {
 
                 {/* Bottom Section: Warning/Disclaimer Bar */}
                 <div className="judgment-disclaimer-box">
-                    <span className="shield-check-icon">🛡️</span>
+                    <span className="shield-check-icon"><img src={checkShield8thSection} alt="check shield" className="page-search-img" /></span>
                     <div className="disclaimer-text">
                         <strong>Built to support review, not replace professional judgment.</strong>
                         <p>
@@ -876,16 +887,8 @@ function LandingPage() {
                     </div>
                 </div>
 
-                {/* Bottom Section: CTA Action Banner Row */}
-                <div className="cta-proceed-banner-row">
-                    <div className="cta-text-left">
-                        <h4>Key features are ready</h4>
-                        <p>Continue to results to review patent search, publications, products, drafts, downloads, and Barcode Comments.</p>
-                    </div>
-                    <button className="btn-proceed-action">
-                        Proceed <span className="arrow-next">›</span>
-                    </button>
-                </div>
+                <img src={bottom9thSection} alt="ninth section" className="ninth-section-bottom" />
+
             </section>
 
             {/* 10th Section */}
