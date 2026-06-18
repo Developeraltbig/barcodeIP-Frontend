@@ -34,7 +34,7 @@ const AccountActions = () => {
       localStorage.removeItem('persist:userDashboard');
 
       // 4. Force a hard refresh to clear the Redux state in memory
-      window.location.href = '/pages/auth/login';
+      window.location.href = '/auth/login';
     }
   };
 
@@ -47,7 +47,7 @@ const AccountActions = () => {
     try {
       await deleteAccount().unwrap();
       // Clear local storage/session if your app doesn't do it automatically on logout
-      navigate('/pages/auth/login');
+      navigate('/auth/login');
     } catch (err) {
       console.error("Failed to delete account:", err);
     }

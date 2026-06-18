@@ -7,7 +7,7 @@ export default function AuthGuard({ children }) {
   );
 
   if (!isAuthenticated) {
-    return <Navigate to="/pages/auth/login" replace />;
+    return <Navigate to="/auth/login" replace />;
   }
 
   return children;

@@ -78,7 +78,7 @@ export default function Header() {
       localStorage.removeItem('persist:userDashboard');
 
       // 4. Force a hard refresh to clear the Redux state in memory
-      window.location.href = '/pages/auth/login';
+      window.location.href = '/auth/login';
     }
   };
 

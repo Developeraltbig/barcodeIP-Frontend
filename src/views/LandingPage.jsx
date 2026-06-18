@@ -168,7 +168,7 @@ function LandingPage() {
                         ))}
                     </nav>
 
-                    <button className="landing-header-btn" type="button" onClick={() => navigate("/pages/auth/login")}>
+                    <button className="landing-header-btn" type="button" onClick={() => navigate("/auth/login")}>
                         Sign In
                     </button>
                 </header>

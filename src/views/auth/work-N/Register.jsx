@@ -151,7 +151,7 @@ const Register = () => {
       }).unwrap();
 
       toast.success('Successfully Registered!');
-      navigate('/pages/auth/login');
+      navigate('/auth/login');
     } catch (err) {
       console.error('Registration failed:', err);
     }
@@ -452,7 +452,7 @@ const Register = () => {
                   Already have an account?{' '}
                   <Link
                     component={RouterLink}
-                    to="/pages/auth/login"
+                    to="/auth/login"
                     underline="none"
                     sx={{
                       color: '#d94231',

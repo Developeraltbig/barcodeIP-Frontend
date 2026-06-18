@@ -13,23 +13,29 @@ import ForgotPassword from '../views/auth/work-N/ForgotPassword';
 import ResetPassword from '../views/auth/work-N/ResetPassword';
 import LandingPage from '../views/LandingPage';
 
-// pages
 // const LoginPage = Loadable(lazy(() => import('views/auth/Login')));
 const RegisterPage = Loadable(lazy(() => import('views/auth/Register')));
 
-// ==============================|| PAGES ROUTES ||============================== //
-
 const PagesRoutes = {
-  path: 'pages',
+  path: '/',
   element: <MinimalLayout />,
   children: [
+    // Default route => "/"
+    {
+      index: true,
+      element: <LandingPage />
+    },
+
+    // Optional: "/landing"
+    {
+      path: 'landing',
+      element: <LandingPage />
+    },
+
+    // Auth Routes
     {
       path: 'auth',
       children: [
-        {
-          path: 'landing',
-          element: <LandingPage />
-        },
         {
           path: 'login',
           element: <LoginN />
@@ -61,8 +67,7 @@ const PagesRoutes = {
         {
           path: 'result2',
           element: <Result_2 />
-        },
-
+        }
 
         // {
         //   path: 'register',

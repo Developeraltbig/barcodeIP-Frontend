@@ -8,13 +8,13 @@ const ResetPassword = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const token = searchParams.get('token'); // Gets token from URL
-  
+
   const [passwords, setPasswords] = useState({ password: '', confirmPassword: '' });
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
-    
+
   //   if (passwords.password !== passwords.confirmPassword) {
   //     return toast.error("Passwords do not match");
   //   }
@@ -25,52 +25,52 @@ const ResetPassword = () => {
   //       newPassword: passwords.password,
   //       confirmPassword: passwords.confirmPassword 
   //     }).unwrap();
-      
+
   //     toast.success("Password reset successfully!");
-  //     navigate('/pages/auth/login');
+  //     navigate('/auth/login');
   //   } catch (err) {
   //     toast.error(err?.data?.message || "Link expired or invalid");
   //   }
   // };
 
-console.log("hello")
+  console.log("hello")
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  // 1. Client-side Validation
-  if (!token) {
-    return toast.error("Reset token is missing. Please click the link from your email again.");
-  }
+    e.preventDefault();
 
-  if (passwords.password !== passwords.confirmPassword) {
-    return toast.error("Passwords do not match");
-  }
+    // 1. Client-side Validation
+    if (!token) {
+      return toast.error("Reset token is missing. Please click the link from your email again.");
+    }
 
-  if (passwords.password.length < 6) {
-    return toast.error("Password must be at least 6 characters");
-  }
+    if (passwords.password !== passwords.confirmPassword) {
+      return toast.error("Passwords do not match");
+    }
 
- try {
-    // We pass ONE object containing all three keys
-    await resetPassword({ 
-      token: token, 
-      newPassword: passwords.password, 
-      confirmPassword: passwords.confirmPassword 
-    }).unwrap();
+    if (passwords.password.length < 6) {
+      return toast.error("Password must be at least 6 characters");
+    }
 
-    
-    
-    toast.success("Password reset successfully!");
-    navigate('/pages/auth/login');
-  } catch (err) {
-    toast.error(err?.data?.message || "Reset failed");
-  }
+    try {
+      // We pass ONE object containing all three keys
+      await resetPassword({
+        token: token,
+        newPassword: passwords.password,
+        confirmPassword: passwords.confirmPassword
+      }).unwrap();
 
-   console.log("token--", token)
+
+
+      toast.success("Password reset successfully!");
+      navigate('/auth/login');
+    } catch (err) {
+      toast.error(err?.data?.message || "Reset failed");
+    }
+
+    console.log("token--", token)
     console.log("pass--", newPassword);
     console.log("pass--", confirmPassword)
-};
-  
+  };
+
 
 
   return (
@@ -86,7 +86,7 @@ console.log("hello")
           fullWidth
           type="password"
           placeholder="••••••••"
-          onChange={(e) => setPasswords({...passwords, password: e.target.value})}
+          onChange={(e) => setPasswords({ ...passwords, password: e.target.value })}
           sx={{ mb: 3 }}
         />
 
@@ -95,7 +95,7 @@ console.log("hello")
           fullWidth
           type="password"
           placeholder="••••••••"
-          onChange={(e) => setPasswords({...passwords, confirmPassword: e.target.value})}
+          onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })}
           sx={{ mb: 3 }}
         />
 

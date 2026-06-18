@@ -45,7 +45,7 @@ const pages = {
           id: 'login-1',
           title: 'login',
           type: 'item',
-          url: '/pages/auth/login',
+          url: '/auth/login',
           target: '_blank'
         },
         {
