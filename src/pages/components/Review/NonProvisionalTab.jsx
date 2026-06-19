@@ -4,6 +4,7 @@ import NonDraftSectionCard from "./NonDraftSectionCard";
 import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from "react-toastify";
+import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 
 function NonProvisionalTab({
   title,
@@ -233,9 +234,23 @@ function NonProvisionalTab({
             <h2>{title}</h2>
             <p>{description}</p>
           </div>
-          {downloading ? "Loading..." : <ActionButton icon="download" onClick={handleDownload}>
-            {downloadLabel}
-          </ActionButton>}
+          <ActionButton
+            onClick={handleDownload}
+            disabled={downloading}
+          >
+            {downloading ? (
+              "Loading..."
+            ) : (
+              <>
+                <img
+                  src={DownloadIcon}
+                  alt=""
+                  className="download-icon"
+                />
+                Download NonProvisional
+              </>
+            )}
+          </ActionButton>
 
         </div>
 

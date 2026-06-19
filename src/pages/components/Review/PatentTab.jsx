@@ -117,9 +117,23 @@ function PatentTab({
               Strict Mode
             </button>
 
-            {downloading ? "Loading..." : <ActionButton onClick={handleDownload}>
-              <img src={DownloadIcon} alt="" className="Download-icon" /> Patent Report
-            </ActionButton>}
+            <ActionButton
+              onClick={handleDownload}
+              disabled={downloading}
+            >
+              {downloading ? (
+                "Loading..."
+              ) : (
+                <>
+                  <img
+                    src={DownloadIcon}
+                    alt=""
+                    className="download-icon"
+                  />
+                  Patent Report
+                </>
+              )}
+            </ActionButton>
 
 
           </div>

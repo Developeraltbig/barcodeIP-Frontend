@@ -70,10 +70,23 @@ function PublicationTab({ results, onDownloadPublications, onViewPublication }) 
           <p>Related non-patent literature, papers, public disclosures, and technical references.</p>
         </div>
 
-        {downloading ? "Loading..." : <ActionButton onClick={handleDownload}>
-          <img src={DownloadIcon} alt="" className="download-icon" />
-          Download Publications
-        </ActionButton>}
+        <ActionButton
+          onClick={handleDownload}
+          disabled={downloading}
+        >
+          {downloading ? (
+            "Loading..."
+          ) : (
+            <>
+              <img
+                src={DownloadIcon}
+                alt=""
+                className="download-icon"
+              />
+              Download Publications
+            </>
+          )}
+        </ActionButton>
 
       </div>
 

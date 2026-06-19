@@ -4,6 +4,7 @@ import DraftSectionCard from "./DraftSectionCard";
 import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from "react-toastify";
+import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 
 function DraftTab({
   title,
@@ -181,9 +182,23 @@ function DraftTab({
             <p>{description}</p>
           </div>
 
-          {downloading ? "Loading..." : <ActionButton icon="download" onClick={handleDownload}>
-            {downloadLabel}
-          </ActionButton>}
+          <ActionButton
+            onClick={handleDownload}
+            disabled={downloading}
+          >
+            {downloading ? (
+              "Loading..."
+            ) : (
+              <>
+                <img
+                  src={DownloadIcon}
+                  alt=""
+                  className="download-icon"
+                />
+                Download Provisional
+              </>
+            )}
+          </ActionButton>
         </div>
 
         <div className="rr-draft-section-stack">
