@@ -5,20 +5,19 @@ import { useCreateOrderMutation, useVerifyPaymentOrderMutation } from '../featur
 import { toast } from "react-toastify";
 
 function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
-    const [amount, setAmount] = useState('1'); // Standardized default tier value string
+    // Standardized default tier value to $5 to prevent rendering disabled button elements on load
+    const [amount, setAmount] = useState('5');
     const [createPayPalOrder, { isLoading: isCreating }] = useCreateOrderMutation();
     const [verifyPaymentOrder, { isLoading: isVerifying }] = useVerifyPaymentOrderMutation();
 
     const presets = [50, 100, 200, 500];
 
-    // Synced configuration handler: syncs selection matrices directly to the input values
     const handlePresetSelection = (value) => {
         setAmount(value.toString());
     };
 
     const handleCustomInput = (e) => {
         const val = e.target.value;
-        // Strict evaluation matching valid numeric entries or empty strings
         if (val === '' || /^\d+$/.test(val)) {
             setAmount(val);
         }
@@ -27,9 +26,8 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
     const parsedNumericAmount = amount ? parseInt(amount, 10) : 0;
     const isBelowMinimumLimit = parsedNumericAmount < 5;
 
-    // Set fallback credentials. Use sandbox parameters for testing
     const paypalOptions = {
-        "client-id": "ARp7PXThS37t807OY1Qa6Uu3LgIyON8a4lZ51Cf-umfbklKfFG2uh1VqdQkaO4HjP6ziZlyiZoSn7-Fz", // Replace with your actual PayPal Client ID
+        "client-id": "ARp7PXThS37t807OY1Qa6Uu3LgIyON8a4lZ51Cf-umfbklKfFG2uh1VqdQkaO4HjP6ziZlyiZoSn7-Fz",
         currency: "USD",
         intent: "capture"
     };
@@ -38,8 +36,9 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
 
     return (
         <PayPalScriptProvider options={paypalOptions}>
-            <div className="wallet-modal-overlay">
-                <div className="wallet-modal-container animate-fade-in">
+            <div className="wallet-modal-overlay" onClick={onClose}>
+                {/* Prevent click bubbling cutting off nested inputs */}
+                <div className="wallet-modal-container animate-fade-in" onClick={(e) => e.stopPropagation()}>
 
                     {/* Header Controls Banner */}
                     <div className="wallet-modal-header">
@@ -109,12 +108,10 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                                 ) : (
                                     <PayPalButtons
                                         style={{ layout: "vertical", shape: "rect", color: "gold", label: "pay" }}
-                                        forceReRender={[parsedNumericAmount]} // Forces checkout reconfiguration parameters to update instantly
-                                        // SERVER-SIDE INITIALIZATION: No 'actions' used here
+                                        forceReRender={[parsedNumericAmount]}
                                         createOrder={async () => {
                                             try {
                                                 const response = await createPayPalOrder({ amount: parsedNumericAmount }).unwrap();
-                                                // PayPal expects the exact Order ID string back from this function
                                                 return response.id;
                                             } catch (err) {
                                                 console.error("Order initiation failure:", err);
@@ -122,12 +119,11 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                                                 throw err;
                                             }
                                         }}
-                                        onApprove={async (data, actions) => {
+                                        // REMOVED 'actions' argument context block to cleanly stay compliant with server workflows
+                                        onApprove={async (data) => {
                                             try {
-                                                // Trigger server verification route endpoints asynchronously
                                                 await verifyPaymentOrder({ orderID: data.orderID }).unwrap();
 
-                                                // 2. TRIGGER BALANCING UPDATE HERE
                                                 if (typeof onPaymentSuccess === 'function') {
                                                     onPaymentSuccess();
                                                 }
@@ -140,7 +136,7 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                                         }}
                                         onError={(err) => {
                                             console.error("PayPal Execution Lifecycle Failure:", err);
-                                            toast.success("An error occurred with the PayPal window interface. Please try again.");
+                                            toast.error("An error occurred with the PayPal window interface. Please try again.");
                                         }}
                                     />
                                 )}
