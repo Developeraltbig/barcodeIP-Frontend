@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { X, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useVerifyPaymentOrderMutation } from '../features/userApi';
+import { toast } from "react-toastify";
 
-function WalletModal({ isOpen, onClose, currentBalance }) {
+function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
     const [amount, setAmount] = useState('100'); // Standardized default tier value string
     const [verifyPaymentOrder, { isLoading: isVerifying }] = useVerifyPaymentOrderMutation();
 
@@ -123,16 +124,21 @@ function WalletModal({ isOpen, onClose, currentBalance }) {
                                             try {
                                                 // Trigger server verification route endpoints asynchronously
                                                 await verifyPaymentOrder({ orderID: data.orderID }).unwrap();
-                                                alert(`Payment Confirmed! Successfully added ${parsedNumericAmount} credits.`);
+
+                                                // 2. TRIGGER BALANCING UPDATE HERE
+                                                if (typeof onPaymentSuccess === 'function') {
+                                                    onPaymentSuccess();
+                                                }
+                                                toast.success("Payment Confirmed! Successfully added ${parsedNumericAmount} credits.");
                                                 onClose();
                                             } catch (err) {
                                                 console.error("Order fulfillment sync error:", err);
-                                                alert("Payment went through, but your wallet balance failed to synchronize. Please contact support.");
+                                                toast.error("Payment went through, but your wallet balance failed to synchronize. Please contact support.");
                                             }
                                         }}
                                         onError={(err) => {
                                             console.error("PayPal Execution Lifecycle Failure:", err);
-                                            alert("An error occurred with the PayPal window interface. Please try again.");
+                                            toast.success("An error occurred with the PayPal window interface. Please try again.");
                                         }}
                                     />
                                 )}

@@ -12,7 +12,7 @@ const persistConfig = {
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
-const persistedUserReducer =  persistReducer(persistConfig, userReducer)
+const persistedUserReducer = persistReducer(persistConfig, userReducer)
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
@@ -21,6 +21,11 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
+
+      // Adjusts the safety verification limit to accommodate large data models
+      immutableCheck: { warnAfter: 130 },
+      serializableCheck: false, // Prevents errors when caching heavy complex objects
+
       serializableCheck: false
     }).concat(baseApi.middleware)
 });

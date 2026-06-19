@@ -124,8 +124,26 @@ export const userApi = baseApi.injectEndpoints({
       invalidatesTags: ['VerifyPaymentOrder']
     }),
 
+    getWalletDetails: builder.query({
+      query: () => ({
+        url: '/api/v1/user/Dashboard/getWallet',
+        method: 'GET',
+      }),
+      providesTags: ['GetWalletDetails']
+    }),
+
+    getTransactionDetails: builder.query({
+      // Accept an argument object containing page and limit configurations
+      query: ({ page = 1, limit = 10 } = {}) => ({
+        url: `/api/v1/user/Dashboard/getPaginatedTransactions?page=${page}&limit=${limit}`,
+        method: 'GET',
+      }),
+      // Re-runs the query automatically if the tags are invalidated somewhere else
+      providesTags: ['GetTransactionDetails']
+    }),
 
   }),
+
   overrideExisting: false
 });
 
@@ -157,5 +175,7 @@ export const {
 
   useGetRecentThreeProjectsQuery, // For Search History
 
-  useVerifyPaymentOrderMutation
+  useVerifyPaymentOrderMutation,
+  useGetWalletDetailsQuery,
+  useGetTransactionDetailsQuery
 } = userApi;

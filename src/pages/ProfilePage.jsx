@@ -8,6 +8,7 @@ import carbonViewIcons from "../assets/icons/carbon_view1.svg";
 import { useGetUserDetailsQuery, useUpdateImageMutation, useUpdateProfileMutation } from '../features/slice/auth/authApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { useChangePasswordMutation } from '../features/slice/auth/authApi';
+import TransactionTable from '../views/Home/TransactionHistoryTable';
 
 function ProfilePage() {
     const fileInputRef = useRef(null);
@@ -315,6 +316,7 @@ function ProfilePage() {
                             value={profileForm.email}
                             onChange={handleProfileChange}
                             placeholder="Email"
+                            disabled
                         />
                     </div>
 
@@ -377,6 +379,8 @@ function ProfilePage() {
                     Save Password
                 </button>
             </form>
+            <br />
+            <TransactionTable />
         </section>
     );
 }

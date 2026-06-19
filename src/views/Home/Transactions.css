@@ -1,0 +1,194 @@
+/* ==========================================================================
+   Transaction History Component Styles Matrix
+   ========================================================================== */
+
+.transaction-history-section {
+    width: 100%;
+    margin-top: 1.5rem;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Table Containment & Responsive Configuration Wrapper */
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.transaction-history-section table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+/* Header Cells Matrix */
+.transaction-history-section th {
+    background-color: #f9fafb;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: #4b5563;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+/* Body Data Rows */
+.transaction-history-section td {
+    padding: 0.875rem 1rem;
+    color: #1f2937;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+    white-space: nowrap;
+    max-width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.transaction-history-section tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Badge Layout Micro-structures */
+.transaction-history-section .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    text-transform: capitalize;
+}
+
+.transaction-history-section .badge.bg-green {
+    background-color: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.transaction-history-section .badge.bg-red {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+/* ==========================================================================
+   Pagination Control Dock
+   ========================================================================== */
+
+.pagination-controls-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background-color: #ffffff;
+    border-top: 1px solid #e5e7eb;
+}
+
+.pagination-controls-footer span {
+    color: #4b5563;
+    font-size: 0.875rem;
+}
+
+/* Interactive Navigation Action Hooks */
+.pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+    color: #111827;
+}
+
+.pagination-btn:disabled {
+    background-color: #f3f4f6;
+    border-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Utility layout utilities matching standard utility variables */
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.p-8 {
+    padding: 2rem;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.text-red-500 {
+    color: #ef4444;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.py-4 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.text-gray-400 {
+    color: #9ca3af;
+}
+
+/* Micro Animation Utilities */
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

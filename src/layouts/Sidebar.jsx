@@ -4,26 +4,24 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { PAGES } from "../views/Home/constants";
 import { navItems } from "../views/Home/data";
-// import { useGetRecentThreeProjectsQuery, useGetWalletDetailsQuery } from "../features/userApi";
-import { useGetRecentThreeProjectsQuery } from "../features/userApi";
+import { useGetRecentThreeProjectsQuery, useGetWalletDetailsQuery } from "../features/userApi";
 import { useLazyLogoutQuery } from '../features/slice/auth/authApi';
-import WalletModal from "../components/WalletModal"; // Imported custom modal container
+import WalletModal from "../components/WalletModal";
 
 function Sidebar({ activePage, onPageChange, onLogout }) {
     const dispatch = useDispatch();
     const [showRecent, setShowRecent] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
-    const [isWalletOpen, setIsWalletOpen] = useState(false); // Modal state flag
+    const [isWalletOpen, setIsWalletOpen] = useState(false);
     const [LogoutTriggered, { isLoading }] = useLazyLogoutQuery();
 
     const profileRef = useRef(null);
 
     const dashboard = useSelector((state) => state.auth.user || {});
 
-    // Hook to fetch wallet data
-    // const { data: walletData } = useGetWalletDetailsQuery();
-    const currentCredits = 20;
-    // const currentCredits = walletData?.balance ?? 0;
+    // FIX: Destructure the refetch function out of your wallet details query hook
+    const { data: walletData, refetch: refetchWallet } = useGetWalletDetailsQuery();
+    const currentCredits = walletData?.balance ?? 0;
 
     const {
         data: getRecentThreeProjects,
@@ -221,7 +219,7 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
 
                         <button
                             type="button"
-                            className={`sidebar-profile-btn ${activePage === PAGES.PROFILE ? "active" : ""}`}
+                            className="sidebar-profile-btn"
                             onClick={() => setShowProfileMenu((prev) => !prev)}
                             aria-expanded={showProfileMenu}
                             aria-haspopup="menu"
@@ -239,11 +237,12 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                 </div>
             </aside>
 
-            {/* Wallet Modal Mount Entry Point */}
+            {/* FIX: Passed down refetchWallet to execute on topup fulfillment */}
             <WalletModal
                 isOpen={isWalletOpen}
                 onClose={() => setIsWalletOpen(false)}
                 currentBalance={currentCredits}
+                onPaymentSuccess={refetchWallet}
             />
         </>
     );

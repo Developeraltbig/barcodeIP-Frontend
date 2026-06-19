@@ -1589,6 +1589,398 @@ svg {
 }
 
 
+/* Wallet Widget Wrapper inside the Sidebar */
+.sidebar-wallet-widget {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wallet-meta-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wallet-meta-labels .title-text {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: #a0a0a0;
+    font-weight: 600;
+}
+
+.wallet-meta-labels .numeric-balance-pill {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ef4444;
+    /* barcodeIP Brand Accent Red Highlight */
+}
+
+.sidebar-topup-trigger-btn {
+    width: 100%;
+    background: linear-gradient(to right, #DF4833, #79271C);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.sidebar-topup-trigger-btn:hover {
+    background: #dc2626;
+}
+
+.sidebar-topup-trigger-btn:active {
+    transform: scale(0.98);
+}
+
+/* Wallet Flow Modals and Layers Overlay Overlay */
+.wallet-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.wallet-modal-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 840px;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    color: #1f2937;
+}
+
+.wallet-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 24px 28px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.wallet-modal-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 4px 0;
+}
+
+.wallet-modal-header p {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.close-modal-btn {
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+}
+
+.close-modal-btn:hover {
+    background: #f3f4f6;
+    color: #4b5563;
+}
+
+.wallet-modal-body {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+}
+
+/* Left Interactive Selection Panel */
+.wallet-pane-left {
+    padding: 28px;
+    border-right: 1px solid #f3f4f6;
+}
+
+.section-input-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.subtext-mute {
+    font-size: 12px;
+    color: #9ca3af;
+    margin: 2px 0 16px 0;
+}
+
+.presets-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.preset-card-btn {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.preset-card-btn:hover {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.02);
+}
+
+.preset-card-btn.active {
+    border-color: #ef4444;
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.custom-input-wrapper {
+    margin-bottom: 20px;
+}
+
+.custom-input-wrapper label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4b5563;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.input-icon-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-field .currency-symbol {
+    position: absolute;
+    left: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.input-icon-field input {
+    width: 100%;
+    padding: 12px 12px 12px 30px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+    outline: none;
+}
+
+.input-icon-field input:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.summary-calculation-box {
+    background: rgba(239, 68, 68, 0.03);
+    border: 1px dashed rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.highlighted-orange-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ef4444;
+}
+
+.primary-action-recharge-btn {
+    width: 100%;
+    background: #ef4444;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: background 0.2s;
+}
+
+.primary-action-recharge-btn:hover:not(:disabled) {
+    background: #dc2626;
+}
+
+.primary-action-recharge-btn:disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.secondary-payment-gateways-btn {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #4b5563;
+    border-radius: 8px;
+    padding: 11px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.secondary-payment-gateways-btn:hover {
+    background: #f9fafb;
+    color: #111827;
+}
+
+/* Right Marketing & Descriptive Metrics Context Panel */
+.wallet-pane-right {
+    background: #111827;
+    color: #ffffff;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+}
+
+.wallet-pane-right h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: #f9fafb;
+}
+
+.module-rate-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.rate-row-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rate-row-item .module-name {
+    font-size: 12px;
+    color: #d1d5db;
+    font-weight: 500;
+}
+
+.rate-row-item .badge-rate-pill {
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #f9fafb;
+}
+
+.perks-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: auto;
+    /* Pushes the security section to the bottom */
+}
+
+.perk-bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12px;
+    color: #9ca3af;
+    line-height: 1.4;
+}
+
+.check-orange {
+    color: #ef4444;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.encryption-disclaimer-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #6b7280;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Animations Layout Entry Definition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.2s ease-out forwards;
+}
+
+.input-validation-error {
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 6px 0 0 0;
+}
+
+.paypal-smart-buttons-wrapper {
+    margin-top: 15px;
+    min-height: 150px;
+}
+
+.paypal-disabled-placeholder {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #9ca3af;
+    font-weight: 500;
+}
+
 /* -----------------------------
    Responsive
 ----------------------------- */
