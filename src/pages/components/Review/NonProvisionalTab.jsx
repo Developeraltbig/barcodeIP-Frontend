@@ -201,6 +201,8 @@ function NonProvisionalTab({
 
     }
   };
+
+
   return (
     <section className="rr-draft-shell">
       <aside className="rr-draft-sidebar">
