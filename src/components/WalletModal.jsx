@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { X, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useVerifyPaymentOrderMutation } from '../features/userApi';
+import { useCreateOrderMutation, useVerifyPaymentOrderMutation } from '../features/userApi';
 import { toast } from "react-toastify";
 
 function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
-    const [amount, setAmount] = useState('100'); // Standardized default tier value string
+    const [amount, setAmount] = useState('1'); // Standardized default tier value string
+    const [createPayPalOrder, { isLoading: isCreating }] = useCreateOrderMutation();
     const [verifyPaymentOrder, { isLoading: isVerifying }] = useVerifyPaymentOrderMutation();
 
     const presets = [50, 100, 200, 500];
@@ -109,16 +110,17 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                                     <PayPalButtons
                                         style={{ layout: "vertical", shape: "rect", color: "gold", label: "pay" }}
                                         forceReRender={[parsedNumericAmount]} // Forces checkout reconfiguration parameters to update instantly
-                                        createOrder={(data, actions) => {
-                                            return actions.order.create({
-                                                purchase_units: [{
-                                                    amount: {
-                                                        currency_code: "USD",
-                                                        value: parsedNumericAmount.toString(),
-                                                    },
-                                                    description: `BarcodeIP Platform Wallet Recharge - ${parsedNumericAmount} Credits`
-                                                }],
-                                            });
+                                        // SERVER-SIDE INITIALIZATION: No 'actions' used here
+                                        createOrder={async () => {
+                                            try {
+                                                const response = await createPayPalOrder({ amount: parsedNumericAmount }).unwrap();
+                                                // PayPal expects the exact Order ID string back from this function
+                                                return response.id;
+                                            } catch (err) {
+                                                console.error("Order initiation failure:", err);
+                                                toast.error("Failed to start transaction window with PayPal.");
+                                                throw err;
+                                            }
                                         }}
                                         onApprove={async (data, actions) => {
                                             try {
@@ -129,7 +131,7 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                                                 if (typeof onPaymentSuccess === 'function') {
                                                     onPaymentSuccess();
                                                 }
-                                                toast.success("Payment Confirmed! Successfully added ${parsedNumericAmount} credits.");
+                                                toast.success(`Payment Confirmed! Successfully added ${parsedNumericAmount} credits.`);
                                                 onClose();
                                             } catch (err) {
                                                 console.error("Order fulfillment sync error:", err);

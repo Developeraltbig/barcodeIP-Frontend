@@ -114,6 +114,14 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ['SupportAnalysts']
     }),
+    createOrder: builder.mutation({
+      query: ({ amount }) => ({
+        url: `/api/v1/user/Dashboard/create-order`,
+        method: 'POST',
+        body: { amount: amount }
+      }),
+      invalidatesTags: ['VerifyPaymentOrder']
+    }),
 
     verifyPaymentOrder: builder.mutation({
       query: ({ orderID }) => ({
@@ -175,6 +183,7 @@ export const {
 
   useGetRecentThreeProjectsQuery, // For Search History
 
+  useCreateOrderMutation,
   useVerifyPaymentOrderMutation,
   useGetWalletDetailsQuery,
   useGetTransactionDetailsQuery
