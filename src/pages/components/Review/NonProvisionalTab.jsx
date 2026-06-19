@@ -2,8 +2,8 @@ import React, { memo, useMemo, useState, useEffect } from "react";
 import ActionButton from "./ActionButton";
 import NonDraftSectionCard from "./NonDraftSectionCard";
 import axios from "axios";
-
-
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from "react-toastify";
 
 function NonProvisionalTab({
   title,
@@ -12,8 +12,7 @@ function NonProvisionalTab({
   downloadLabel = "Download Draft",
   onDownload
 }) {
-
-  console.log("sectionsData", sectionsData);
+  const { token } = useSelector((state) => state.auth);
   const sections = useMemo(() => {
     if (!sectionsData?.length) return [];
 
@@ -128,7 +127,7 @@ function NonProvisionalTab({
   }, [sectionsData]);
 
   const [activeSectionId, setActiveSectionId] = useState("");
-
+  const [downloading, setDownloading] = useState(false)
   useEffect(() => {
     console.log('sections')
     if (sections.length > 0) {
@@ -156,63 +155,45 @@ function NonProvisionalTab({
 
   const handleDownload = async () => {
     try {
-
+      setDownloading(true)
       const projectId = sectionsData?.[0]?.project_id;
 
       if (!projectId) {
-        console.error("Project ID missing");
+        toast.error("Project ID missing");
         return;
       }
-
-
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/api/v1/nonProvisionalDraft/download-pdf/${projectId}`,
         {
           responseType: "arraybuffer",
-
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTUxZDYxODFhNmFiYTgyMTY5ZGM3ZCIsImlhdCI6MTc4MTY5NTM5NywiZXhwIjoxNzgxNzgxNzk3fQ.Blaw1WiG8eDorMq-HQzHt7yrec9MkcZ3xIIMWZ_i6EQ`,
+            Authorization: `Bearer ${token}`,
             Accept: "application/pdf",
           },
         }
       );
-
-
       const pdfBlob = new Blob(
         [response.data],
         {
           type: "application/pdf",
         }
       );
-
-
-      console.log("PDF size:", pdfBlob.size);
-
-
+      // console.log("PDF size:", pdfBlob.size);
       const url = window.URL.createObjectURL(pdfBlob);
-
-
       const a = document.createElement("a");
-
       a.href = url;
-
       a.download = "Provisional-Draft.pdf";
-
-
       document.body.appendChild(a);
-
       a.click();
-
       a.remove();
-
-
       setTimeout(() => {
         window.URL.revokeObjectURL(url);
       }, 1000);
-
-
+      toast.success("NonProvisional Draft Generated is Successfully");
+      setDownloading(false)
     } catch (error) {
-
+      setDownloading(false)
+      toast.error("PDF download error: Contact administration");
       console.error(
         "PDF download error:",
         error
@@ -220,10 +201,6 @@ function NonProvisionalTab({
 
     }
   };
-
-
-  console.log("sections", sections);
-
   return (
     <section className="rr-draft-shell">
       <aside className="rr-draft-sidebar">
@@ -254,10 +231,10 @@ function NonProvisionalTab({
             <h2>{title}</h2>
             <p>{description}</p>
           </div>
-
-          <ActionButton icon="download" onClick={handleDownload}>
+          {downloading ? "Loading..." : <ActionButton icon="download" onClick={handleDownload}>
             {downloadLabel}
-          </ActionButton>
+          </ActionButton>}
+
         </div>
 
         <div className="rr-draft-section-stack">
