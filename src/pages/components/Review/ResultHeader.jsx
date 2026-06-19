@@ -18,7 +18,7 @@ function ResultHeader({
   const { token } = useSelector((state) => state.auth);
   const [downloading, setDownloading] = useState(false)
 
-  // console.log('project --', project)
+  console.log('project eee--', project)
   const handleDownloadAllReport = async () => {
     try {
       setDownloading(true)
@@ -223,10 +223,11 @@ function ResultHeader({
           <ActionButton variant="light" onClick={onViewKeyFeatures}>
             <img src={FeatureSearchIcon} alt="" className="featureSearch-icon" /> View Key Features
           </ActionButton>
-
-          <ActionButton variant="outline" onClick={onRequestComments}>
-            <img src={requestOoltoCommentIcon} alt="" className="requestOolto-icon" /> Request Oolto Comments
-          </ActionButton>
+          {project.analyst_status === "notRequested" ? (
+            <ActionButton variant="outline" onClick={onRequestComments}>
+              <img src={requestOoltoCommentIcon} alt="" className="requestOolto-icon" /> Request Oolto Comments
+            </ActionButton>
+          ) : <></>}
 
           {downloading ? "Loading..." : <ActionButton onClick={handleDownloadAllReport}>
             <img src={DownloadIcon} alt="" className="Download-icon" /> Download Report

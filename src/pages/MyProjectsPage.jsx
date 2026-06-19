@@ -8,10 +8,11 @@ import FilterIcon from "../assets/icons/filter.svg";
 import SearchIcon from "../assets/icons/searchIcon.svg";
 
 import { useFetchAllProjectsQuery } from "../features/userApi";
-import RequestCommentsModal from "../components/RequestCommentsModal";
+// import RequestCommentsModal from "../components/RequestCommentsModal";
 import "../pages/OoltoComments.css";
 import { setSelectedProject } from '../features/slice/userSlice';
 import { useDispatch } from 'react-redux';
+import RequestOoltoCommentsModal from "./components/Review/RequestOoltoCommentsModal";
 
 const PAGE_SIZE = 10;
 
@@ -39,6 +40,7 @@ function MyProjectsPage({ onPageChange }) {
         isFetching,
         isError,
         error,
+        refetch
     } = useFetchAllProjectsQuery({
         page: currentPage,
         limit: PAGE_SIZE,
@@ -80,6 +82,7 @@ function MyProjectsPage({ onPageChange }) {
     const handleCloseModal = useCallback(() => {
         setShowModal(false);
         setCurrentProject(null);
+        refetch();
     }, []);
 
     const handleProjectDetail = useCallback(
@@ -263,9 +266,12 @@ function MyProjectsPage({ onPageChange }) {
             </div>
 
             {showModal && currentProject && (
-                <RequestCommentsModal
-                    onClose={handleCloseModal}
-                    data={currentProject}
+                <RequestOoltoCommentsModal
+                    project={currentProject || PROJECT_INFO}
+                    onClose={() => handleCloseModal()}
+
+                // onClose={handleCloseModal}
+                // data={currentProject}
                 />
             )}
         </section>
