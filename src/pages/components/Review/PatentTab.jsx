@@ -1,7 +1,11 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import ActionButton from "./ActionButton";
 import PatentResultCard from "./PatentResultCard";
 import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from "react-toastify";
+import axios from "axios";
+
 
 function ProcessingSteps({ steps }) {
   if (!steps?.length) return null;
@@ -38,9 +42,60 @@ function PatentTab({
   onDownloadPatentReport
 }) {
 
+  const { token } = useSelector((state) => state.auth);
+  const [downloading, setDownloading] = useState(false)
+
   if (!results) {
     return null;
   }
+
+  const handleDownload = async () => {
+    try {
+      setDownloading(true)
+      const projectId = results[0]?.project_id;
+      if (!projectId) {
+        console.error("Project ID missing");
+        return;
+      }
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/v1/patents/download-pdf/${projectId}`,
+        {
+          responseType: "arraybuffer",
+
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/pdf",
+          },
+        }
+      );
+      const pdfBlob = new Blob(
+        [response.data],
+        {
+          type: "application/pdf",
+        }
+      );
+      const url = window.URL.createObjectURL(pdfBlob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Patent-Draft.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+      }, 1000);
+      toast.success("Patent Draft Generated is Successfully");
+      setDownloading(false)
+    } catch (error) {
+      setDownloading(false)
+      toast.error("PDF download error: Contact administration");
+      console.error(
+        "PDF download error:",
+        error
+      );
+    }
+  };
+
   return (
     <>
       <section className="rr-results-summary">
@@ -62,9 +117,11 @@ function PatentTab({
               Strict Mode
             </button>
 
-            <ActionButton onClick={onDownloadPatentReport}>
+            {downloading ? "Loading..." : <ActionButton onClick={handleDownload}>
               <img src={DownloadIcon} alt="" className="Download-icon" /> Patent Report
-            </ActionButton>
+            </ActionButton>}
+
+
           </div>
         </div>
 

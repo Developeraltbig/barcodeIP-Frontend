@@ -182,7 +182,7 @@ function NonProvisionalTab({
       const url = window.URL.createObjectURL(pdfBlob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "Provisional-Draft.pdf";
+      a.download = "Non-Provisional-Draft.pdf";
       document.body.appendChild(a);
       a.click();
       a.remove();
