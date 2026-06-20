@@ -43,7 +43,7 @@ function BarcodeCommentsPage() {
                     <p>Requests sent for product, patent, publication, and draft comments.</p>
                 </div>
 
-                <button
+                {/* <button
                     className="oc-primary-action-btn"
                     type="button"
                     onClick={openModal}
@@ -56,7 +56,7 @@ function BarcodeCommentsPage() {
                         />
                     </span>
                     Request Oolto Comments
-                </button>
+                </button> */}
             </div>
 
             {loadingAnalysts && (

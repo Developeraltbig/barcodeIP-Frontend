@@ -124,7 +124,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
     const [showCommentsModal, setShowCommentsModal] = useState(false);
     const [strictMode, setStrictMode] = useState(false);
     const [tabRuntime, setTabRuntime] = useState(INITIAL_TAB_RUNTIME);
-
+    const [showKeyFeature, setShowKeyFeature] = useState(false)
     const loadedTabsRef = useRef(new Set());
     const runningTabsRef = useRef(new Set());
 
@@ -606,6 +606,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
                         behavior: "smooth",
                         block: "start",
                     });
+                    setShowKeyFeature(prev => !prev)
                 }}
                 onRequestComments={() => setShowCommentsModal(true)}
                 onDownloadReport={() => console.log("Download full report")}
@@ -617,7 +618,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
                 onChange={handleTabChange}
             />
 
-            {activeModuleKey === MODULE_KEYS.PATENT && (
+            {showKeyFeature && activeModuleKey === MODULE_KEYS.PATENT && (
                 <KeyFeaturesSection
                     primaryFeatures={PRIMARY_FEATURES}
                     secondaryFeatures={SECONDARY_FEATURES}
