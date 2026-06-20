@@ -138,7 +138,7 @@ a {
 .landing-hero h1 {
     margin: 0 0 18px;
     font-size: clamp(42px, 5vw, 72px);
-    font-weight: 600;
+    font-weight: 500;
     line-height: 0.98;
     letter-spacing: -0.06em;
 }
@@ -540,7 +540,7 @@ a {
     text-decoration: none;
     font-size: 16px;
     /* font-weight: 400; */
-    font-family: 'Figtree';
+    /* font-family: 'Figtree'; */
     transition: color 0.15s ease;
 }
 
@@ -2255,6 +2255,7 @@ a {
 }
 
 .form-group input,
+.form-group select,
 .form-group textarea {
     width: 100%;
     background-color: #ffffff;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./LandingPage.css";
 import background1 from "../assets/landingPage/Background1.jpg";
@@ -87,6 +87,8 @@ import footerRightArrow10thSection from "../assets/landingPage/icons/footer-righ
 import emailIconSection from "../assets/landingPage/icons/email-icon.svg";
 import locationIconSection from "../assets/landingPage/icons/location-icon.svg";
 import phoneIconSection from "../assets/landingPage/icons/phone-icon.svg";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 
 
@@ -147,10 +149,114 @@ const testimonials = [
 
 function LandingPage() {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        number: "",
+        projectType: "",
+        message: "",
+    });
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState("");
+
+    const projectTypes = [
+        "Patent Search",
+        "Publication Search",
+        "Product Search",
+        "Provisional Draft",
+        "Nonprovisional Draft",
+    ];
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+
+        setErrors({
+            ...errors,
+            [e.target.name]: "",
+        });
+    };
+
+
+    const validateForm = () => {
+        let newErrors = {};
+
+        if (!formData.name.trim()) {
+            newErrors.name = "Name is required";
+        }
+
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
+        ) {
+            newErrors.email = "Invalid email address";
+        }
+
+        if (!formData.number.trim()) {
+            newErrors.number = "Phone number is required";
+        } else if (!/^\d{10}$/.test(formData.number)) {
+            newErrors.number = "Enter valid 10 digit phone number";
+        }
+
+        if (!formData.projectType) {
+            newErrors.projectType = "Please select project type";
+        }
+
+        if (!formData.message.trim()) {
+            newErrors.message = "Message is required";
+        } else if (formData.message.length < 10) {
+            newErrors.message = "Message should be at least 10 characters";
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!validateForm()) return;
+        console.log('formData', formData);
+
+        try {
+            setLoading(true);
+
+            const response = await axios.post(
+                "http://localhost:5000/api/v1/auth/contact",
+                formData
+            );
+            console.log('response', response)
+            if (response.data.success) {
+                toast.success(response.data.message);
+
+                setFormData({
+                    name: "",
+                    email: "",
+                    number: "",
+                    projectType: "",
+                    message: "",
+                });
+            } else {
+                toast.error("Kindly Contact Adminstration");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <main className="landing-page">
-
+            {success && (
+                <div className="alert alert-success mb-3">{success}</div>
+            )}
             <section id="home" className="landing-hero" style={{
                 backgroundImage: `url(${background1})`,
 
@@ -956,36 +1062,96 @@ function LandingPage() {
                                 Tell us what you want to create, review, search, or file. We will get back with a clear next step.
                             </p>
 
-                            <form className="requirement-form" onSubmit={(e) => e.preventDefault()}>
+                            <form className="requirement-form" onSubmit={handleSubmit}>
                                 <div className="form-row-twin">
                                     <div className="form-group">
-                                        <label htmlFor="name">Name</label>
-                                        <input type="text" id="name" name="name" required />
+                                        <label>Name</label>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                        />
+                                        {errors.name && (
+                                            <small className="text-danger">{errors.name}</small>
+                                        )}
                                     </div>
+
                                     <div className="form-group">
-                                        <label htmlFor="email">Email</label>
-                                        <input type="email" id="email" name="email" required />
+                                        <label>Email</label>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                        />
+                                        {errors.email && (
+                                            <small className="text-danger">{errors.email}</small>
+                                        )}
                                     </div>
                                 </div>
 
                                 <div className="form-row-twin">
                                     <div className="form-group">
-                                        <label htmlFor="number">Number</label>
-                                        <input type="tel" id="number" name="number" />
+                                        <label>Number</label>
+                                        <input
+                                            type="number"
+                                            name="number"
+                                            value={formData.number}
+                                            onChange={handleChange}
+                                            maxLength={14}
+                                        />
+                                        {errors.number && (
+                                            <small className="text-danger">{errors.number}</small>
+                                        )}
                                     </div>
+
                                     <div className="form-group">
-                                        <label htmlFor="projectType">Project Type</label>
-                                        <input type="text" id="projectType" name="projectType" />
+                                        <label>Project Type</label>
+
+                                        <select
+                                            name="projectType"
+                                            value={formData.projectType}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Select Project Type</option>
+
+                                            {projectTypes.map((item) => (
+                                                <option key={item} value={item}>
+                                                    {item}
+                                                </option>
+                                            ))}
+                                        </select>
+
+                                        {errors.projectType && (
+                                            <small className="text-danger">
+                                                {errors.projectType}
+                                            </small>
+                                        )}
                                     </div>
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="message">Message</label>
-                                    <textarea id="message" name="message" rows="5" required></textarea>
+                                    <label>Message</label>
+
+                                    <textarea
+                                        rows="5"
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                    />
+
+                                    {errors.message && (
+                                        <small className="text-danger">{errors.message}</small>
+                                    )}
                                 </div>
 
-                                <button type="submit" className="btn-send-requirement">
-                                    Send
+                                <button
+                                    type="submit"
+                                    className="btn-send-requirement"
+                                    disabled={loading}
+                                >
+                                    {loading ? "Sending..." : "Send"}
                                 </button>
                             </form>
                         </div>
