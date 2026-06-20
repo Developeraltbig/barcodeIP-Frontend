@@ -12,28 +12,6 @@ const ResetPassword = () => {
   const [passwords, setPasswords] = useState({ password: '', confirmPassword: '' });
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (passwords.password !== passwords.confirmPassword) {
-  //     return toast.error("Passwords do not match");
-  //   }
-
-  //   try {
-  //     await resetPassword({ 
-  //       token, 
-  //       newPassword: passwords.password,
-  //       confirmPassword: passwords.confirmPassword 
-  //     }).unwrap();
-
-  //     toast.success("Password reset successfully!");
-  //     navigate('/auth/login');
-  //   } catch (err) {
-  //     toast.error(err?.data?.message || "Link expired or invalid");
-  //   }
-  // };
-
-  console.log("hello")
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -65,13 +43,7 @@ const ResetPassword = () => {
     } catch (err) {
       toast.error(err?.data?.message || "Reset failed");
     }
-
-    console.log("token--", token)
-    console.log("pass--", newPassword);
-    console.log("pass--", confirmPassword)
   };
-
-
 
   return (
     <Box sx={{ maxWidth: '450px', mx: 'auto', mt: 10, p: 4, bgcolor: '#fff', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
