@@ -43,8 +43,8 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                     {/* Header Controls Banner */}
                     <div className="wallet-modal-header">
                         <div className="title-group">
-                            <h2>Top-up Credits</h2>
-                            <p>Select a pre-configured package or type your amount. Credits apply globally across modules.</p>
+                            <h2>Purchase Invention Credits</h2>
+                            <p>Choose the modules you need. Each selected module costs 5 credits per invention case. For example, selecting all 5 modules will require 25 credits for one invention.</p>
                         </div>
                         <button type="button" onClick={onClose} className="close-modal-btn" aria-label="Close modal">
                             <X size={20} />
@@ -57,7 +57,8 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                         {/* Interactive Left Input Interface Column */}
                         <div className="wallet-pane-left">
                             <label className="section-input-label">Recharge Credits</label>
-                            <p className="subtext-mute">Select an automated package tier below</p>
+                            <p className="subtext-mute">Choose a package or enter a custom amount.
+                                1 credit = 1 invention case.</p>
 
                             <div className="presets-grid">
                                 {presets.map((presetValue) => (
@@ -145,41 +146,81 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
 
                         {/* Informational Right Context Branding Column */}
                         <div className="wallet-pane-right">
-                            <h3>How Credits Work</h3>
+                            <h3>Credit Usage</h3>
 
                             <div className="module-rate-list">
+
                                 <div className="rate-row-item">
-                                    <span className="module-name">FTO & Patent Analysis</span>
-                                    <span className="badge-rate-pill">1 Credit = 1 Analysis</span>
+                                    <span className="module-name">
+                                        Patent Search
+                                    </span>
+                                    <span className="badge-rate-pill">
+                                        5 Credit
+                                    </span>
                                 </div>
+
                                 <div className="rate-row-item">
-                                    <span className="module-name">Infringement AI Mapping</span>
-                                    <span className="badge-rate-pill">1 Credit = 1 Analysis</span>
+                                    <span className="module-name">
+                                        Publication Search
+                                    </span>
+                                    <span className="badge-rate-pill">
+                                        5 Credit
+                                    </span>
                                 </div>
+
                                 <div className="rate-row-item">
-                                    <span className="module-name">Portfolio Intelligence Search</span>
-                                    <span className="badge-rate-pill">1 Credit = 1 Analysis</span>
+                                    <span className="module-name">
+                                        Product Search
+                                    </span>
+                                    <span className="badge-rate-pill">
+                                        5 Credit
+                                    </span>
                                 </div>
+
+                                <div className="rate-row-item">
+                                    <span className="module-name">
+                                        Provisional Draft
+                                    </span>
+                                    <span className="badge-rate-pill">
+                                        5 Credit
+                                    </span>
+                                </div>
+
+                                <div className="rate-row-item">
+                                    <span className="module-name">
+                                        Non-Provisional Draft
+                                    </span>
+                                    <span className="badge-rate-pill">
+                                        5 Credit
+                                    </span>
+                                </div>
+
                             </div>
 
                             <div className="perks-checklist">
+
                                 <div className="perk-bullet">
-                                    <CheckCircle2 size={15} className="check-orange" />
-                                    <span>Access all operational analytics modules</span>
+                                    <CheckCircle2 size={15} />
+                                    <span>Use credits across all invention modules</span>
                                 </div>
+
                                 <div className="perk-bullet">
-                                    <CheckCircle2 size={15} className="check-orange" />
-                                    <span>Priority Email and Analyst support desk queues</span>
+                                    <CheckCircle2 size={15} />
+                                    <span>One credit supports one invention case</span>
                                 </div>
+
                                 <div className="perk-bullet">
-                                    <CheckCircle2 size={15} className="check-orange" />
-                                    <span>Export directly to parsed Microsoft Word tables</span>
+                                    <CheckCircle2 size={15} />
+                                    <span>Download reports and generated outputs</span>
                                 </div>
+
                             </div>
 
                             <div className="encryption-disclaimer-footer">
                                 <ShieldCheck size={16} />
-                                <span>Payments are secure, automated, and encrypted via PayPal.</span>
+                                <span>
+                                    Secure payment processing powered by PayPal.
+                                </span>
                             </div>
                         </div>
 

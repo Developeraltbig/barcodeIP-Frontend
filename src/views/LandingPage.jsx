@@ -92,7 +92,25 @@ import axios from "axios";
 
 
 
-const navLinks = ["How it works", "Output", "Pricing", "Who it's for"];
+const navLinks = [
+    {
+        label: "How it works",
+        id: "key-Feature"
+    },
+    {
+        label: "Output",
+        id: "search-section"
+    },
+    {
+        label: "Pricing",
+        id: "pricing"
+    },
+    {
+        label: "Who it's for",
+        id: "invention-messy"
+    }
+];
+
 
 const featureGroups = [
     {
@@ -254,9 +272,6 @@ function LandingPage() {
 
     return (
         <main className="landing-page">
-            {success && (
-                <div className="alert alert-success mb-3">{success}</div>
-            )}
             <section id="home" className="landing-hero" style={{
                 backgroundImage: `url(${background1})`,
 
@@ -268,8 +283,8 @@ function LandingPage() {
 
                     <nav className="landing-nav" aria-label="Landing navigation">
                         {navLinks.map((item) => (
-                            <a key={item} href={`#${item.toLowerCase()}`}>
-                                {item}
+                            <a key={item.id} href={`#${item.id}`}>
+                                {item.label}
                             </a>
                         ))}
                     </nav>
@@ -308,7 +323,7 @@ function LandingPage() {
             </section>
 
             {/* 2nd Section */}
-            <section className="structure-section-dark">
+            <section id="key-Feature" className="structure-section-dark">
                 {/* Explicit layout container to match screenshot rows */}
                 <div className="structure-layout-container">
 
@@ -367,7 +382,7 @@ function LandingPage() {
 
             {/* 3rd Section */}
 
-            <section className="review-search-section">
+            <section id="search-section" className="review-search-section">
                 <div className="review-max-container">
 
                     {/* TOP HEADER: Centered title and description stretching across full width */}
@@ -437,7 +452,7 @@ function LandingPage() {
 
 
             {/* 4th Section */}
-            <section className="draft-ready-section">
+            <section id="draft-ready-section" className="draft-ready-section">
                 <div className="draft-max-container">
 
                     {/* LEFT COLUMN: Content + Sub-cards */}
@@ -495,7 +510,7 @@ function LandingPage() {
             <hr />
 
             {/* 5th Section */}
-            <div className="section-2nd">
+            <div id="invention-messy" className="section-2nd">
                 {/* 1. Main Content Split Section */}
                 <section className="messy-inputs-section">
                     {/* Left Side: Content Column */}
@@ -586,7 +601,7 @@ function LandingPage() {
             </div>
 
             {/* 6th Section */}
-            <section className="pricing-section">
+            <section id="pricing" className="pricing-section">
                 <div className="pricing-max-container">
 
                     {/* LEFT COLUMN: Heading & Info */}
@@ -678,7 +693,7 @@ function LandingPage() {
             </section>
 
             {/* 7th Section */}
-            <section className="market-search-section">
+            <section id="market-search" className="market-search-section">
                 <div className="layout-split-grid">
                     {/* Left Side: Publication Search Card Panel */}
                     <div className="dashboard-side-left">
@@ -815,7 +830,7 @@ function LandingPage() {
             </section>
 
             {/* 8th Section */}
-            <section className="testimonials-section">
+            <section id="testimonial-section" className="testimonials-section">
                 {/* Section Header */}
                 <div className="section-header-centered">
                     <h2 className="main-section-title">Why innovators choose Oolto</h2>
@@ -908,7 +923,7 @@ function LandingPage() {
             </section>
 
             {/* 9th Section */}
-            <section className="team-reports-section">
+            <section id="team-report" className="team-reports-section">
                 {/* Top Grid: Numbered Audience Cards & Section Title */}
                 <div className="audience-layout-grid">
                     <div className="cards-wrapper-left">
@@ -1009,7 +1024,7 @@ function LandingPage() {
             </section>
 
             {/* 10th Section */}
-            <section className="contact-requirement-section">
+            <section id="contact" className="contact-requirement-section">
                 <div className="layout-split-grid">
                     {/* Left Column: Contact Copy & Details */}
                     <div className="content-side-left">
@@ -1161,7 +1176,7 @@ function LandingPage() {
 
             {/* 11th Section */}
             {/* Footer Section */}
-            <footer className="site-footer-section">
+            <footer id="footer" className="site-footer-section">
                 <div className="footer-dark-card-panel">
                     <div className="footer-main-layout">
 
@@ -1196,22 +1211,20 @@ function LandingPage() {
                         <div className="footer-nav-links-wrapper">
                             {/* Column 1 */}
                             <div className="nav-links-column">
-                                <a href="#product">Product</a>
-                                <a href="#how-it-works">How it works</a>
-                                <a href="#modules">Modules</a>
-                                <a href="#reports">Reports</a>
+                                <a className="footer-link" href="#draft-ready-section">Product</a>
+                                <a className="footer-link" href="#home">How it works</a>
+                                <a className="footer-link" href="#key-Feature">Modules</a>
+                                <a className="footer-link" href="#team-report">Reports</a>
                             </div>
 
-                            {/* Column 2 */}
                             <div className="nav-links-column">
-                                <a href="#pricing">Pricing</a>
-                                <a href="#signin">Sign in</a>
-                                <a href="#signup">Sign up</a>
-                                <a href="#terms">Terms & conditions</a>
-                                <a href="#demo">Request a demo</a>
+                                <a className="footer-link" href="#pricing">Pricing</a>
+                                <a className="footer-link" onClick={() => navigate("/auth/login")}>Sign in</a>
+                                <a className="footer-link" onClick={() => navigate("/auth/register")}>Sign up</a>
+                                <a className="footer-link" href="#terms">Terms & conditions</a>
+                                <a className="footer-link" onClick={() => navigate("/auth/register")}>Request a demo</a>
                             </div>
                         </div>
-
                     </div>
 
                     {/* Bottom Horizontal Row: Dividers & Meta Text */}

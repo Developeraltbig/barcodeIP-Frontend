@@ -571,6 +571,18 @@ a {
     letter-spacing: 0.01em;
 }
 
+.footer-link {
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #ff5a5f;
+    /* your brand color */
+    transform: translateX(3px);
+}
+
 /* ==========================================
    RESPONSIVE DESIGN BREAKPOINTS
    ========================================== */

@@ -495,7 +495,7 @@ const Login = () => {
                         Don&apos;t have an account?{" "}
                         <Link
                           component={RouterLink}
-                          to="/pages/auth/register"
+                          to="/auth/register"
                           sx={{
                             color: "#D94130",
                             textDecoration: "none",
