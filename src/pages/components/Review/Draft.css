@@ -97,3 +97,7 @@
     border-color: #2563eb;
     background: #eff6ff;
 }
+
+.rr-draft-html-content p {
+    padding: 10px;
+}
