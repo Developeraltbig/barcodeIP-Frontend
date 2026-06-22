@@ -1,74 +1,147 @@
-import React, { useState } from 'react';
-import { useGetTransactionDetailsQuery } from '../../features/userApi'; // Adjust path to your API slice
-import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
-import './Transactions.css';
-
+import React, { useState } from "react";
+import { useGetTransactionDetailsQuery } from "../../features/userApi";
+import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
+import "./Transactions.css";
 
 function TransactionHistoryTable() {
-    // 1. Manage pagination local variables
     const [currentPage, setCurrentPage] = useState(1);
     const limitPerPage = 10;
 
-    // 2. Pass dynamic parameters as an argument to your RTK Query hook
     const {
         data,
         error,
         isLoading,
         isFetching
-    } = useGetTransactionDetailsQuery({ page: currentPage, limit: limitPerPage });
+    } = useGetTransactionDetailsQuery({
+        page: currentPage,
+        limit: limitPerPage
+    });
+
+    const transactions = data?.transactions || [];
+    const totalPages = data?.totalPages || 1;
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center p-8">
-                <Loader2 className="animate-spin text-orange-500" size={24} />
+            <div className="transaction-loader">
+                <Loader2 size={24} className="loader-spin" />
+                <span>Loading transactions...</span>
             </div>
         );
     }
 
     if (error) {
-        return <p className="text-red-500 text-sm">Failed to load transactions history.</p>;
+        return (
+            <div className="transaction-error">
+                Failed to load transactions history.
+            </div>
+        );
     }
-
-    // Extract values returned from your Express paginated response
-    const transactions = data?.transactions || [];
-    const totalPages = data?.totalPages || 1;
 
     return (
         <div className="transaction-history-section">
-            <div className="table-responsive-wrapper" style={{ opacity: isFetching ? 0.6 : 1 }}>
-                <table className="min-w-full divide-y divide-gray-200">
+            <div
+                className="table-responsive-wrapper"
+                style={{
+                    opacity: isFetching ? 0.6 : 1
+                }}
+            >
+                <table className="transaction-table">
                     <thead>
                         <tr>
-                            <th>Sr no.</th>
-                            <th>Transaction ID</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Credits Used/Added</th>
-                            <th>Module</th>
-                            <th>Date</th>
+                            <th>SR NO.</th>
+                            <th>TRANSACTION ID</th>
+                            <th>TYPE</th>
+                            <th>DESCRIPTION</th>
+                            <th>CREDITS USED/ADDED</th>
+                            <th>MODULE</th>
+                            <th>DATE</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         {transactions.length === 0 ? (
                             <tr>
-                                <td colSpan="6" className="text-center py-4 text-gray-400">
-                                    No transactions recorded yet.
+                                <td
+                                    colSpan="7"
+                                    className="empty-state"
+                                >
+                                    No transactions found.
                                 </td>
                             </tr>
                         ) : (
                             transactions.map((tx, index) => (
                                 <tr key={tx._id}>
-                                    <td>{index + 1}</td>
-                                    <td>{tx._id}</td>
                                     <td>
-                                        <span className={`badge ${tx.type === 'credit' ? 'bg-green' : 'bg-red'}`}>
+                                        {(currentPage - 1) *
+                                            limitPerPage +
+                                            index +
+                                            1}
+                                    </td>
+
+                                    <td>
+                                        <span className="transaction-id">
+                                            {tx._id}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span
+                                            className={`transaction-badge ${tx.type === "credit"
+                                                ? "credit"
+                                                : "debit"
+                                                }`}
+                                        >
                                             {tx.type}
                                         </span>
                                     </td>
-                                    <td>{tx.description}</td>
-                                    <td>{tx.credits}</td>
-                                    <td>{tx.moduleName || '—'}</td>
-                                    <td>{new Date(tx.createdAt).toLocaleDateString()}</td>
+
+                                    <td>
+                                        <div
+                                            className="transaction-description"
+                                            title={tx.description}
+                                        >
+                                            {tx.description}
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <span
+                                            className={`credit-value ${tx.type === "credit"
+                                                ? "credit"
+                                                : "debit"
+                                                }`}
+                                        >
+                                            {tx.type === "credit"
+                                                ? "+"
+                                                : "-"}
+                                            {tx.credits}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        {Array.isArray(tx.moduleName) && tx.moduleName.length > 0 ? (
+                                            <div className="module-list">
+                                                {tx.moduleName.map((module, idx) => (
+                                                    <span
+                                                        key={idx}
+                                                        className="module-pill"
+                                                    >
+                                                        {module}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <span className="module-pill">—</span>
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        {new Date(
+                                            tx.createdAt
+                                        ).toLocaleDateString(
+                                            "en-GB"
+                                        )}
+                                    </td>
                                 </tr>
                             ))
                         )}
@@ -76,28 +149,46 @@ function TransactionHistoryTable() {
                 </table>
             </div>
 
-            {/* Pagination Controls Interface */}
-            <div className="pagination-controls-footer flex items-center justify-between mt-4">
+            <div className="transaction-pagination">
                 <button
                     type="button"
                     className="pagination-btn"
-                    disabled={currentPage === 1 || isFetching}
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={
+                        currentPage === 1 ||
+                        isFetching
+                    }
+                    onClick={() =>
+                        setCurrentPage((prev) =>
+                            Math.max(prev - 1, 1)
+                        )
+                    }
                 >
-                    <ArrowLeft size={16} /> Previous
+                    <ArrowLeft size={16} />
+                    Previous
                 </button>
 
-                <span className="text-sm font-medium">
+                <div className="page-info">
                     Page {currentPage} of {totalPages}
-                </span>
+                </div>
 
                 <button
                     type="button"
                     className="pagination-btn"
-                    disabled={currentPage === totalPages || isFetching}
-                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={
+                        currentPage === totalPages ||
+                        isFetching
+                    }
+                    onClick={() =>
+                        setCurrentPage((prev) =>
+                            Math.min(
+                                prev + 1,
+                                totalPages
+                            )
+                        )
+                    }
                 >
-                    Next <ArrowRight size={16} />
+                    Next
+                    <ArrowRight size={16} />
                 </button>
             </div>
         </div>

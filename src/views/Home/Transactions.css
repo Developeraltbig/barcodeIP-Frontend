@@ -1,186 +1,164 @@
-/* ==========================================================================
-   Transaction History Component Styles Matrix
-   ========================================================================== */
-
 .transaction-history-section {
-    width: 100%;
-    margin-top: 1.5rem;
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    background: #fff;
+    border: 1px solid #ead9d6;
+    border-radius: 12px;
     overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin-top: 24px;
 }
 
-/* Table Containment & Responsive Configuration Wrapper */
 .table-responsive-wrapper {
-    width: 100%;
     overflow-x: auto;
-    transition: opacity 0.2s ease-in-out;
 }
 
-.transaction-history-section table {
+.transaction-table {
     width: 100%;
     border-collapse: collapse;
-    text-align: left;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
 }
 
-/* Header Cells Matrix */
-.transaction-history-section th {
-    background-color: #f9fafb;
-    padding: 0.75rem 1rem;
-    font-weight: 600;
+.transaction-table thead {
+    background: #faf6f5;
+}
+
+.transaction-table th {
+    padding: 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #666;
     text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    color: #4b5563;
-    border-bottom: 1px solid #e5e7eb;
-    white-space: nowrap;
+    letter-spacing: 0.5px;
+    text-align: left;
 }
 
-/* Body Data Rows */
-.transaction-history-section td {
-    padding: 0.875rem 1rem;
-    color: #1f2937;
-    border-bottom: 1px solid #f3f4f6;
+.transaction-table td {
+    padding: 16px;
+    border-top: 1px solid #f1e5e3;
     vertical-align: middle;
-    white-space: nowrap;
-    max-width: 300px;
-    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.transaction-table tbody tr {
+    transition: all 0.25s ease;
+}
+
+.transaction-table tbody tr:hover {
+    background: #fcf8f7;
+}
+
+.transaction-id {
+    font-family: monospace;
+    font-size: 13px;
+    color: #666;
+}
+
+.transaction-description {
+    max-width: 350px;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.transaction-history-section tbody tr:hover {
-    background-color: #f9fafb;
-}
-
-/* Badge Layout Micro-structures */
-.transaction-history-section .badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.125rem 0.5rem;
-    font-size: 0.75rem;
+.transaction-badge {
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
     font-weight: 600;
-    border-radius: 9999px;
     text-transform: capitalize;
 }
 
-.transaction-history-section .badge.bg-green {
-    background-color: #ecfdf5;
-    color: #065f46;
-    border: 1px solid #a7f3d0;
+.transaction-badge.credit {
+    background: #e8f8ee;
+    color: #1f8a4d;
 }
 
-.transaction-history-section .badge.bg-red {
-    background-color: #fef2f2;
-    color: #991b1b;
-    border: 1px solid #fca5a5;
+.transaction-badge.debit {
+    background: #fff0ed;
+    color: #d8432e;
 }
 
-/* ==========================================================================
-   Pagination Control Dock
-   ========================================================================== */
-
-.pagination-controls-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 1rem;
-    background-color: #ffffff;
-    border-top: 1px solid #e5e7eb;
+.credit-value {
+    font-weight: 700;
+    font-size: 15px;
 }
 
-.pagination-controls-footer span {
-    color: #4b5563;
-    font-size: 0.875rem;
+.credit-value.credit {
+    color: #1f8a4d;
 }
 
-/* Interactive Navigation Action Hooks */
-.pagination-btn {
+.credit-value.debit {
+    color: #d8432e;
+}
+
+.module-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.375rem 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #374151;
-    background-color: #ffffff;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: #faf6f5;
+    border: 1px solid #ead9d6;
+    font-size: 12px;
+    color: #555;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+
+.transaction-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: #faf6f5;
+    border-top: 1px solid #ead9d6;
+}
+
+.pagination-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid #ead9d6;
+    border-radius: 8px;
+    padding: 10px 16px;
     cursor: pointer;
-    transition: all 0.15s ease-in-out;
+    transition: all 0.25s ease;
 }
 
 .pagination-btn:hover:not(:disabled) {
-    background-color: #f9fafb;
-    border-color: #9ca3af;
-    color: #111827;
+    border-color: #d84a32;
+    color: #d84a32;
 }
 
 .pagination-btn:disabled {
-    background-color: #f3f4f6;
-    border-color: #e5e7eb;
-    color: #9ca3af;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
-/* Utility layout utilities matching standard utility variables */
-.flex {
+.page-info {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+}
+
+.transaction-loader {
     display: flex;
-}
-
-.items-center {
     align-items: center;
-}
-
-.justify-between {
-    justify-content: space-between;
-}
-
-.justify-center {
     justify-content: center;
+    gap: 12px;
+    padding: 40px;
 }
 
-.mt-4 {
-    margin-top: 1rem;
-}
-
-.p-8 {
-    padding: 2rem;
-}
-
-.text-sm {
-    font-size: 0.875rem;
-}
-
-.font-medium {
-    font-weight: 500;
-}
-
-.text-red-500 {
-    color: #ef4444;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.py-4 {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.text-gray-400 {
-    color: #9ca3af;
-}
-
-/* Micro Animation Utilities */
-.animate-spin {
+.loader-spin {
     animation: spin 1s linear infinite;
+    color: #d84a32;
+}
+
+.transaction-error {
+    padding: 20px;
+    color: #d84a32;
+    text-align: center;
 }
 
 @keyframes spin {

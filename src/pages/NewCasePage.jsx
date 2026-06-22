@@ -126,9 +126,9 @@ function NewCasePage({ onPageChange }) {
                     <div className="input-footer">
                         <span>{inventionText.length} characters</span>
 
-                        <button type="button" className="upload-btn" aria-label="Upload file">
-                            <img src={UploadIcon} alt="" className="upload-icon" />
-                        </button>
+                        <img src={UploadIcon} alt="" className="upload-icon" />
+                        {/* <button type="button" className="upload-btn" aria-label="Upload file">
+                        </button> */}
                     </div>
                 </div>
 

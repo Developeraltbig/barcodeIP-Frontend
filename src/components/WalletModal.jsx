@@ -44,7 +44,8 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                     <div className="wallet-modal-header">
                         <div className="title-group">
                             <h2>Purchase Invention Credits</h2>
-                            <p>Choose the modules you need. Each selected module costs 5 credits per invention case. For example, selecting all 5 modules will require 25 credits for one invention.</p>
+                            <p>Choose the modules you need. Each selected module costs 5 credits per invention case. <br />
+                                For example, selecting all 5 modules will require 25 credits for one invention.</p>
                         </div>
                         <button type="button" onClick={onClose} className="close-modal-btn" aria-label="Close modal">
                             <X size={20} />
@@ -57,8 +58,7 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                         {/* Interactive Left Input Interface Column */}
                         <div className="wallet-pane-left">
                             <label className="section-input-label">Recharge Credits</label>
-                            <p className="subtext-mute">Choose a package or enter a custom amount.
-                                1 credit = 1 invention case.</p>
+                            <p className="subtext-mute">One invention case costs 5 credits per selected module. Selecting all 5 modules requires 25 credits.</p>
 
                             <div className="presets-grid">
                                 {presets.map((presetValue) => (

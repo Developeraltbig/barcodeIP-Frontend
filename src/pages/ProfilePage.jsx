@@ -254,9 +254,9 @@ function ProfilePage() {
                             <button type="button" className="profile-upload-btn" onClick={handleImageClick}>
                                 Upload New
                             </button>
-                            <button type="button" className="profile-delete-btn" onClick={() => setLocalImagePreview(null)}>
+                            {/* <button type="button" className="profile-delete-btn" onClick={() => setLocalImagePreview(null)}>
                                 Delete Avatar
-                            </button>
+                            </button> */}
                         </div>
                     </div>
 
