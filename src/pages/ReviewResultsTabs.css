@@ -415,7 +415,7 @@
   background: #FFFFFF;
   color: #676B6D;
   padding: 5px 12px;
-  font-size: 8px;
+  font-size: 11px;
   line-height: 1;
   font-weight: 500;
   font-family: 'Inter';
@@ -480,9 +480,9 @@
 
 .rr-result-meta em {
   color: #676B6D;
-  font-size: 10px;
+  font-size: 12px;
   font-family: 'Inter';
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .rr-result-meta b {
@@ -493,7 +493,7 @@
   padding: 0 12px;
   display: inline-flex;
   align-items: center;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
   font-family: 'Inter';
 }
@@ -501,9 +501,9 @@
 .rr-result-left h3 {
   margin: 0 0 5px;
   color: #3E3E3E;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.25;
-  font-weight: 600;
+  font-weight: 700;
   font-family: 'Inter';
 }
 
@@ -516,8 +516,8 @@
 
 .rr-result-submeta span {
   color: #676B6D;
-  font-size: 10px;
-  font-weight: 400;
+  font-size: 12px;
+  font-weight: 600;
   font-family: 'Inter';
 }
 
@@ -527,7 +527,7 @@
   color: #676B6D;
   font-size: 10px;
   line-height: 1.45;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .rr-result-tags {
@@ -587,9 +587,9 @@
 
 .rr-score-row em {
   color: #676B6D;
-  font-size: 10px;
+  font-size: 13px;
   font-family: 'Inter';
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .rr-view-mapping-btn,
@@ -855,7 +855,7 @@
 .rr-overlap-top-card p {
   margin: 0;
   color: #777;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .rr-subpage-header p span,
@@ -903,7 +903,7 @@
   background: #fff7f6;
   color: #d84635;
   text-align: left;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 800;
   padding: 18px 26px;
   border-bottom: 1px solid #e1d1ce;
@@ -913,7 +913,8 @@
   padding: 24px 26px;
   border-bottom: 1px solid #dedede;
   color: #5f5f5f;
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: 500;
   line-height: 1.45;
   vertical-align: middle;
 }
@@ -926,7 +927,7 @@
   display: block;
   margin-top: 13px;
   color: #333;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.28;
 }
 
@@ -942,7 +943,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
 }
 
