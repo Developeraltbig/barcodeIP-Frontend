@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { useGetTransactionDetailsQuery } from "../../features/userApi";
-import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import "./Transactions.css";
+import {
+    ArrowLeft,
+    ArrowRight,
+    Loader2,
+    Download
+} from "lucide-react";
+
 
 function TransactionHistoryTable() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -37,6 +43,16 @@ function TransactionHistoryTable() {
         );
     }
 
+    const handleInvoiceDownload = (transactionId) => {
+        console.log("Download invoice:", transactionId);
+
+        // Call your API here
+        // downloadInvoice(transactionId);
+
+        // Example:
+        // dispatch(downloadInvoice(transactionId));
+    };
+
     return (
         <div className="transaction-history-section">
             <div
@@ -48,13 +64,14 @@ function TransactionHistoryTable() {
                 <table className="transaction-table">
                     <thead>
                         <tr>
-                            <th>SR NO.</th>
+                            <th className="sr-column">SR NO.</th>
                             <th>TRANSACTION ID</th>
                             <th>TYPE</th>
                             <th>DESCRIPTION</th>
                             <th>CREDITS USED/ADDED</th>
                             <th>MODULE</th>
                             <th>DATE</th>
+                            <th className="invoice-column">INVOICE</th>
                         </tr>
                     </thead>
 
@@ -62,7 +79,7 @@ function TransactionHistoryTable() {
                         {transactions.length === 0 ? (
                             <tr>
                                 <td
-                                    colSpan="7"
+                                    colSpan="8"
                                     className="empty-state"
                                 >
                                     No transactions found.
@@ -71,7 +88,7 @@ function TransactionHistoryTable() {
                         ) : (
                             transactions.map((tx, index) => (
                                 <tr key={tx._id}>
-                                    <td>
+                                    <td className="sr-column">
                                         {(currentPage - 1) *
                                             limitPerPage +
                                             index +
@@ -141,6 +158,16 @@ function TransactionHistoryTable() {
                                         ).toLocaleDateString(
                                             "en-GB"
                                         )}
+                                    </td>
+                                    <td className="invoice-column">
+                                        <button
+                                            type="button"
+                                            className="invoice-download-btn"
+                                            onClick={() => handleInvoiceDownload(tx._id)}
+                                            title="Download Invoice"
+                                        >
+                                            <Download size={18} />
+                                        </button>
                                     </td>
                                 </tr>
                             ))
