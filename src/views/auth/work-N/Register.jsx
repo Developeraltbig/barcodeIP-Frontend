@@ -20,7 +20,7 @@ import { toast } from 'react-toastify';
 import { useRegisterMutation } from '../../../features/slice/auth/authApi';
 
 // assets
-import Logo from 'assets/images/barcodeip-logo.png';
+import Logo from 'assets/images/login-background.png';
 
 const theme = createTheme({
   palette: {
@@ -204,12 +204,11 @@ const Register = () => {
             borderRadius: '20px',
             overflow: 'hidden',
             p: { md: '58px 92px 82px' },
-            background:
-              'radial-gradient(circle at 42% 48%, rgba(255, 105, 40, 0.92) 0%, rgba(255, 117, 54, 0.9) 32%, rgba(255, 160, 92, 0.88) 58%, rgba(255, 226, 187, 0.9) 100%)',
+            background: `url(${Logo})`,
             position: 'relative'
           }}
         >
-          <Box>
+          {/* <Box>
             <Box
               component="img"
               src={Logo}
@@ -222,9 +221,9 @@ const Register = () => {
                 display: 'block'
               }}
             />
-          </Box>
+          </Box> */}
 
-          <Box sx={{ maxWidth: 600 }}>
+          {/* <Box sx={{ maxWidth: 600 }}>
             <Typography
               sx={{
                 fontSize: '32px',
@@ -253,7 +252,7 @@ const Register = () => {
               <br />
               productivity.
             </Typography>
-          </Box>
+          </Box> */}
         </Box>
 
         {/* RIGHT PANEL */}
@@ -274,7 +273,7 @@ const Register = () => {
               maxWidth: '590px'
             }}
           >
-            <Box
+            {/* <Box
               component="img"
               src={Logo}
               alt="logo"
@@ -286,7 +285,7 @@ const Register = () => {
                 display: 'block',
                 mb: 2
               }}
-            />
+            /> */}
 
             <Typography
               component="h2"

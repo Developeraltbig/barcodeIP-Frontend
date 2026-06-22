@@ -25,7 +25,7 @@ import { useLoginMutation } from "../../../features/slice/auth/authApi";
 import { setCredentials } from "../../../features/slice/auth/authSlice";
 import FullPageLoader from "../../../components/FullPageLoader";
 import ForgotPassword from "./ForgotPassword";
-import Logo from "assets/images/barcodeip-logo.png";
+import Logo from "assets/images/login-background.png";
 
 const theme = createTheme({
   palette: {
@@ -212,11 +212,10 @@ const Login = () => {
               borderRadius: "18px",
               position: "relative",
               overflow: "hidden",
-              background:
-                "radial-gradient(circle at 50% 55%, rgba(255, 145, 55, 0.95) 0%, rgba(255, 125, 55, 0.98) 34%, rgba(255, 164, 91, 0.95) 63%, rgba(255, 241, 191, 0.9) 100%)"
+              backgroundImage: `url(${Logo})`
             }}
           >
-            <Box
+            {/* <Box
               component="img"
               src={Logo}
               alt="logo"
@@ -227,9 +226,9 @@ const Login = () => {
                 left: "85px",
                 filter: "brightness(0)"
               }}
-            />
+            /> */}
 
-            <Box
+            {/* <Box
               sx={{
                 position: "absolute",
                 left: "85px",
@@ -263,7 +262,7 @@ const Login = () => {
               >
                 Get access your personal hub for clarity and productivity.
               </Typography>
-            </Box>
+            </Box> */}
           </Box>
         </Box>
 
@@ -293,7 +292,7 @@ const Login = () => {
               {view === "login" ? (
                 <>
                   <Box sx={{ mb: "18px" }}>
-                    <Box
+                    {/* <Box
                       component="img"
                       src={Logo}
                       alt="logo"
@@ -302,7 +301,7 @@ const Login = () => {
                         mb: "14px",
                         filter: "brightness(0)"
                       }}
-                    />
+                    /> */}
 
                     <Typography
                       sx={{
