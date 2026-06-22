@@ -1451,7 +1451,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 8px;
+  font-size: 11px;
   line-height: 1;
   font-weight: 500;
   font-family: 'Inter';
@@ -1459,7 +1459,7 @@
 
 .rr-publication-top em {
   color: #d84635;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1;
   font-family: 'Inter';
   font-weight: 500;
@@ -1504,7 +1504,7 @@
   background: linear-gradient(to right, #DF4833, #79271C);
   color: #fff;
   padding: 0 14px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   font-family: 'Inter';
   cursor: pointer;
