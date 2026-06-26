@@ -1713,9 +1713,11 @@ svg {
 }
 
 .wallet-modal-header p {
-    font-size: 13px;
-    color: #6b7280;
-    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Inter';
+    color: #676B6D;
+    margin-left: 45px;
 }
 
 .close-modal-btn {
@@ -1743,18 +1745,72 @@ svg {
     border-right: 1px solid #f3f4f6;
 }
 
+/* The Container Wrapper (We style the label and text inside a clean card) */
+/* Note: Since there isn't a wrapper div around just these two in your original JSX, 
+   we style the elements individually to form the card shape, or style the paragraph. 
+   To perfectly get the white container box background with padding, we target the subtext. */
+
 .section-input-label {
-    font-size: 14px;
-    font-weight: 700;
-    color: #374151;
+    display: block;
+    font-size: 24px;
+    /* Enlarged to match the image heading */
+    font-weight: 600;
+    color: #4a4a4a;
+    /* Dark gray text */
+    background: #fff8f8;
+    /* Light pink/red tinted background */
+    border: 1px solid #f3e8e8;
+    /* Matching top border boundary */
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    /* Round only top corners */
+    padding: 24px 24px 0 24px;
+    /* Inward spacing */
+    margin: 0;
 }
 
 .subtext-mute {
-    font-size: 12px;
-    color: #9ca3af;
-    margin: 2px 0 16px 0;
+    display: block;
+    background: #fff8f8;
+    /* Match the label background */
+    border: 1px solid #f3e8e8;
+    /* Matching bottom border boundary */
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    /* Round only bottom corners */
+    padding: 12px 24px 24px 24px;
+    /* Inward spacing to close the box */
+    margin: 0 0 24px 0;
+    /* Push the preset grid down */
+
+    /* Text layout overrides */
+    font-size: 14px;
+    font-weight: 500;
+    color: #c85a4b;
+    /* Reddish-orange text color */
+    line-height: 1.8;
 }
 
+/* Target the text lines inside the paragraph to split them and apply the diamond bullets */
+.subtext-mute {
+    text-indent: -18px;
+    /* Pull text back to align with lines */
+    padding-left: 42px;
+    /* Pad left side specifically for bullets */
+    white-space: pre-line;
+    /* Forces line breaks inside the string to render properly */
+}
+
+/* Adding the diamond bullet to the start of the block */
+.subtext-mute::before {
+    content: "◆  ";
+    color: #e26a5a;
+    font-size: 10px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Presets Grid & buttons remain unchanged below */
 .presets-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1889,18 +1945,27 @@ svg {
 
 /* Right Marketing & Descriptive Metrics Context Panel */
 .wallet-pane-right {
-    background: #111827;
-    color: #ffffff;
+    background: #ffffff;
     padding: 28px;
     display: flex;
     flex-direction: column;
+
+    /* Adds smooth rounded corners */
+    border-radius: 12px;
+
+    /* Adds a soft shadow to separate the white panel from the white background */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05);
+
+    /* Optional: Adds a very faint border if you want extra definition */
+    border: 1px solid #f0f0f0;
 }
 
 .wallet-pane-right h3 {
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 20px;
+    font-family: 'Inter';
+    font-weight: 500;
     margin: 0 0 18px 0;
-    color: #f9fafb;
+    color: #3E3E3E;
 }
 
 .module-rate-list {
@@ -1911,7 +1976,7 @@ svg {
 }
 
 .rate-row-item {
-    background: rgba(255, 255, 255, 0.04);
+    background: #FCF5F5;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 6px;
     padding: 10px 14px;
@@ -1922,17 +1987,21 @@ svg {
 
 .rate-row-item .module-name {
     font-size: 12px;
-    color: #d1d5db;
+    color: black;
     font-weight: 500;
+
 }
 
 .rate-row-item .badge-rate-pill {
     font-size: 11px;
-    background: rgba(255, 255, 255, 0.1);
     padding: 4px 8px;
     border-radius: 4px;
-    font-weight: 600;
-    color: #f9fafb;
+    font-weight: 400;
+    color: white;
+    background: linear-gradient(to right, #DF4833, #79271C);
+    width: 80px;
+    justify-content: center;
+    align-items: center;
 }
 
 .perks-checklist {
@@ -1947,8 +2016,9 @@ svg {
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    font-size: 12px;
-    color: #9ca3af;
+    font-family: 'Inter';
+    font-size: 13px;
+    color: #676B6D;
     line-height: 1.4;
 }
 
@@ -1962,8 +2032,9 @@ svg {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 11px;
-    color: #6b7280;
+    font-size: 13px;
+    font-family: 'Inter';
+    color: #676B6D;
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
 }

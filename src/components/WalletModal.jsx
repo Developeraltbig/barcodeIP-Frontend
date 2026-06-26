@@ -3,6 +3,10 @@ import { X, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useCreateOrderMutation, useVerifyPaymentOrderMutation } from '../features/userApi';
 import { toast } from "react-toastify";
+import creditPurchase from "../assets/icons/credit_purchase.svg";
+import closeIcon from "../assets/icons/closeIcon.svg";
+import circleChecked from "../assets/icons/circle_checked.svg";
+import shieldChecked from "../assets/icons/shield_checked.svg";
 
 function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
     // Standardized default tier value to $5 to prevent rendering disabled button elements on load
@@ -43,12 +47,12 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                     {/* Header Controls Banner */}
                     <div className="wallet-modal-header">
                         <div className="title-group">
-                            <h2>Purchase Invention Credits</h2>
+                            <h2><img src={creditPurchase} alt="credit_purchase" className="" /> Purchase Invention Credits</h2>
                             <p>Choose the modules you need. Each selected module costs 5 credits per invention case. <br />
                                 For example, selecting all 5 modules will require 25 credits for one invention.</p>
                         </div>
                         <button type="button" onClick={onClose} className="close-modal-btn" aria-label="Close modal">
-                            <X size={20} />
+                            <img src={closeIcon} alt="close" className="" />
                         </button>
                     </div>
 
@@ -58,7 +62,8 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                         {/* Interactive Left Input Interface Column */}
                         <div className="wallet-pane-left">
                             <label className="section-input-label">Recharge Credits</label>
-                            <p className="subtext-mute">One invention case costs 5 credits per selected module. Selecting all 5 modules requires 25 credits.</p>
+                            <p className="subtext-mute">One invention case costs 5 credits per selected module.<br />
+                                Selecting all 5 modules requires 25 credits.</p>
 
                             <div className="presets-grid">
                                 {presets.map((presetValue) => (
@@ -154,8 +159,10 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                                     <span className="module-name">
                                         Patent Search
                                     </span>
-                                    <span className="badge-rate-pill">
-                                        5 Credit
+                                    <span >
+                                        <button className="badge-rate-pill">
+                                            5 Credit
+                                        </button>
                                     </span>
                                 </div>
 
@@ -163,8 +170,10 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                                     <span className="module-name">
                                         Publication Search
                                     </span>
-                                    <span className="badge-rate-pill">
-                                        5 Credit
+                                    <span >
+                                        <button className="badge-rate-pill">
+                                            5 Credit
+                                        </button>
                                     </span>
                                 </div>
 
@@ -172,8 +181,10 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                                     <span className="module-name">
                                         Product Search
                                     </span>
-                                    <span className="badge-rate-pill">
-                                        5 Credit
+                                    <span >
+                                        <button className="badge-rate-pill">
+                                            5 Credit
+                                        </button>
                                     </span>
                                 </div>
 
@@ -181,8 +192,10 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                                     <span className="module-name">
                                         Provisional Draft
                                     </span>
-                                    <span className="badge-rate-pill">
-                                        5 Credit
+                                    <span >
+                                        <button className="badge-rate-pill">
+                                            5 Credit
+                                        </button>
                                     </span>
                                 </div>
 
@@ -190,8 +203,10 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                                     <span className="module-name">
                                         Non-Provisional Draft
                                     </span>
-                                    <span className="badge-rate-pill">
-                                        5 Credit
+                                    <span >
+                                        <button className="badge-rate-pill">
+                                            5 Credit
+                                        </button>
                                     </span>
                                 </div>
 
@@ -200,24 +215,24 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                             <div className="perks-checklist">
 
                                 <div className="perk-bullet">
-                                    <CheckCircle2 size={15} />
+                                    <img src={circleChecked} alt="circleChecked" className="" />
                                     <span>Use credits across all invention modules</span>
                                 </div>
 
                                 <div className="perk-bullet">
-                                    <CheckCircle2 size={15} />
+                                    <img src={circleChecked} alt="circleChecked" className="" />
                                     <span>One credit supports one invention case</span>
                                 </div>
 
                                 <div className="perk-bullet">
-                                    <CheckCircle2 size={15} />
+                                    <img src={circleChecked} alt="circleChecked" className="" />
                                     <span>Download reports and generated outputs</span>
                                 </div>
 
                             </div>
-
+                            <hr />
                             <div className="encryption-disclaimer-footer">
-                                <ShieldCheck size={16} />
+                                <img src={shieldChecked} alt="shieldChecked" className="" />
                                 <span>
                                     Secure payment processing powered by PayPal.
                                 </span>

@@ -1188,7 +1188,7 @@ function LandingPage() {
                             </div>
 
                             <p className="footer-tagline-text">
-                                Receive the latest articles, tips, <br />
+                                Receive the latest articles, tips <br />
                                 and offers from Longevity
                             </p>
 
