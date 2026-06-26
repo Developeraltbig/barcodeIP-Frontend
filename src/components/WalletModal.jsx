@@ -62,7 +62,7 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
                         {/* Interactive Left Input Interface Column */}
                         <div className="wallet-pane-left">
                             <label className="section-input-label">Recharge Credits</label>
-                            <p className="subtext-mute">One invention case costs 5 credits per selected module.<br />
+                            <p className="subtext-mute">One invention case costs 5 credits per selected module.
                                 Selecting all 5 modules requires 25 credits.</p>
 
                             <div className="presets-grid">
