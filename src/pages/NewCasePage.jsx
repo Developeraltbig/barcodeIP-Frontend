@@ -7,19 +7,26 @@ import KeyFeaturesReview from "../views/Home/KeyFeaturesReview";
 import {
     useCreateProjectMutation,
     useFetchAllProjectsQuery,
+    useStartProcessMutation
 } from "../features/userApi";
-
+import { useDispatch } from 'react-redux';
 import SearchIcon from "../assets/icons/searchIcon.svg";
 import UploadIcon from "../assets/icons/uploadIcon.svg";
 import AiGeneratedKeyIcon from "../assets/icons/ai-generated-key-feature.svg";
+import FullPageLoader from "../components/FullPageLoader";
+import { setSelectedProject } from '../features/slice/userSlice';
+
 
 function NewCasePage({ onPageChange }) {
+    const dispatch = useDispatch();
     const [inventionText, setInventionText] = useState("");
     const [selectedModules, setSelectedModules] = useState([]);
     const [showKeyFeatures, setShowKeyFeatures] = useState(false);
+    const [currentProject, setCurrentProject] = useState(null);
 
     const { data: projectsData } = useFetchAllProjectsQuery();
-    const [createProject, { isLoading }] = useCreateProjectMutation();
+    const [createProject, { isLoading: isCreatingProject }] = useCreateProjectMutation();
+    const [startProcess, { isLoading: isStartingProcess }] = useStartProcessMutation();
 
     const projects = useMemo(() => {
         if (!projectsData) return null;
@@ -47,47 +54,54 @@ function NewCasePage({ onPageChange }) {
     }, []);
 
     const handleGenerate = async () => {
-        setShowKeyFeatures(true);
 
-        // if (!inventionText.trim()) {
-        //     alert("Please describe your invention first.");
-        //     return;
-        // }
+        if (!inventionText.trim()) {
+            alert("Please describe your invention first.");
+            return;
+        }
 
-        // if (selectedModules.length === 0) {
-        //     alert("Please select at least one output.");
-        //     return;
-        // }
+        if (selectedModules.length === 0) {
+            alert("Please select at least one output.");
+            return;
+        }
 
-        // const formData = new FormData();
-        // formData.append("text", inventionText);
-        // formData.append("checked", JSON.stringify(selectedModules));
+        const formData = new FormData();
+        formData.append("text", inventionText);
+        formData.append("checked", JSON.stringify(selectedModules));
 
-        // try {
-        //     const response = await createProject(formData).unwrap();
+        try {
+            const response = await createProject(formData).unwrap();
 
-        //     const newProjectData = response?.data || response;
-        //     const newProjectId =
-        //         newProjectData?.project_id ||
-        //         newProjectData?.id ||
-        //         newProjectData?._id;
+            const newProjectData = response?.data || response;
+            const newProjectId =
+                newProjectData?.project_id ||
+                newProjectData?.id ||
+                newProjectData?._id;
 
-        //     console.log("Newly Generated Project ID:", newProjectId);
+            console.log("Newly Generated Project ID:", newProjectId);
+            console.log('all module', selectedModules);
+            const hasPatent = selectedModules.includes("patent");
+            dispatch(setSelectedProject(newProjectData))
 
-        // } catch (err) {
-        //     console.error("Project Generation Failed:", err);
+            if (hasPatent) {
+                setShowKeyFeatures(true);
+            } else {
+                onPageChange(PAGES.REVIEW, newProjectId);
+            }
+        } catch (err) {
+            console.error("Project Generation Failed:", err);
 
-        //     if (err?.status === 400) {
-        //         alert(err?.data?.error || "Something went wrong.");
-        //     } else {
-        //         alert("Project generation failed. Please try again.");
-        //     }
-        // }
+            if (err?.status === 400) {
+                alert(err?.data?.error || "Something went wrong.");
+            } else {
+                alert("Project generation failed. Please try again.");
+            }
+        }
     };
 
     const handleContinueFromKeyFeatures = (features) => {
         console.log("Final key features:", features);
-        onPageChange(PAGES.REVIEW);
+        // onPageChange(PAGES.REVIEW);
     };
 
     if (showKeyFeatures) {
@@ -97,13 +111,20 @@ function NewCasePage({ onPageChange }) {
                 selectedModules={selectedModules}
                 modules={modules}
                 onBack={() => setShowKeyFeatures(false)}
-                onContinue={handleContinueFromKeyFeatures}
+                onContinue={() => handleContinueFromKeyFeatures(data)}
             />
         );
     }
 
     return (
         <section className="content-wrap new-case-wrap">
+            {(isCreatingProject || isStartingProcess) && (
+                <FullPageLoader
+                    colors={["#D94130", "#D94130", "#D94130"]}
+                    label="Loading..."
+                />
+            )}
+
             <div className="section-heading">
                 <h1>Describe your invention</h1>
                 <p>Select the outputs you want BarcodeIP to generate.</p>
@@ -148,14 +169,14 @@ function NewCasePage({ onPageChange }) {
                         className="generate-btn"
                         type="button"
                         onClick={handleGenerate}
-                        disabled={isLoading}
+                        disabled={isCreatingProject}
                     >
                         <img
                             src={AiGeneratedKeyIcon}
                             alt=""
                             className="AiGeneratedKey-icon"
                         />
-                        {isLoading ? "Generating..." : "Generate Key Features"}
+                        {isCreatingProject ? "Generating..." : "Generate Key Features"}
                     </button>
                 </div>
             </div>

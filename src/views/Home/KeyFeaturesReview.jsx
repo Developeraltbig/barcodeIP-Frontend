@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useMemo, useState } from "react";
 import "./GeneratedKeyFeatures.css";
-
+import { useSelector, useDispatch } from "react-redux";
 import EditIcon from "../../assets/icons/editicon.svg";
 import newAnalysisIcon from "../../assets/icons/newAnalysis.svg";
 import CloseIcon from "../../assets/icons/closeIcon.svg";
@@ -173,55 +173,94 @@ const INITIAL_KEY_STRINGS = [
     }
 ];
 
-function FeatureList({ title, items, variant, isEditing, onChange }) {
+function FeatureList({
+    title,
+    items,
+    variant,
+    isEditing,
+    onChange,
+}) {
     return (
-        <div className={`kf-feature-panel ${variant === "primary" ? "is-primary" : ""}`}>
+        <div
+            className={`kf-feature-panel ${variant === "primary" ? "is-primary" : ""
+                }`}
+        >
             <h3 className="kf-feature-panel-title">{title}</h3>
 
             <div className="kf-feature-list-shell">
                 <div className="kf-feature-list">
-                    {items.map((item, index) => (
-                        <div className="kf-feature-item" key={`${variant}-${index}`}>
-                            <div className="kf-feature-number">
-                                {String(index + 1).padStart(2, "0")}
-                            </div>
-
-                            {isEditing ? (
-                                <textarea
-                                    value={item}
-                                    onChange={(e) => onChange(index, e.target.value)}
-                                />
-                            ) : (
-                                <p>{item}</p>
-                            )}
+                    {items.length === 0 ? (
+                        <div className="kf-empty">
+                            No {title.toLowerCase()} found.
                         </div>
-                    ))}
+                    ) : (
+                        items.map((item, index) => (
+                            <div
+                                className="kf-feature-item"
+                                key={`${variant}-${index}`}
+                            >
+                                <div className="kf-feature-number">
+                                    {String(index + 1).padStart(2, "0")}
+                                </div>
+
+                                {isEditing ? (
+                                    <textarea
+                                        value={item}
+                                        onChange={(e) =>
+                                            onChange(index, e.target.value)
+                                        }
+                                    />
+                                ) : (
+                                    <p>{item}</p>
+                                )}
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
         </div>
     );
 }
 
-function KeyStringCard({ item, index, onCopy, onEdit }) {
+function KeyStringCard({
+    query,
+    index,
+    onCopy,
+    onEdit,
+}) {
     return (
         <div className="kf-string-card">
             <div className="kf-string-top">
-                <span>Key String {String(index + 1).padStart(2, "0")}</span>
-                <h4>{item.title}</h4>
+                <span>
+                    Search Query {String(index + 1).padStart(2, "0")}
+                </span>
             </div>
-
-            <pre>{item.string}</pre>
-
+            <pre>{query?.string || query}</pre>
             <div className="kf-string-actions">
-                <em className={item.tag === "Strict" ? "strict" : ""}>{item.tag}</em>
-
                 <div>
-                    <button type="button" className="copy" onClick={() => onCopy(item.string)}>
-                        <img src={CopyIcon} alt="" className="copy-icon" /> Copy
+                    <button
+                        type="button"
+                        className="copy"
+                        onClick={() => onCopy(query?.string || query)}
+                    >
+                        <img
+                            src={CopyIcon}
+                            alt=""
+                            className="copy-icon"
+                        />
+                        Copy
                     </button>
-
-                    <button type="button" className="edit" onClick={() => onEdit(index)}>
-                        <img src={EditIcon} alt="" className="edit-icon" /> Edit
+                    <button
+                        type="button"
+                        className="edit"
+                        onClick={() => onEdit(index)}
+                    >
+                        <img
+                            src={EditIcon}
+                            alt=""
+                            className="edit-icon"
+                        />
+                        Edit
                     </button>
                 </div>
             </div>
@@ -477,23 +516,65 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
 }
 
 function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed }) {
-    const [primaryFeatures, setPrimaryFeatures] = useState(INITIAL_PRIMARY_FEATURES);
-    const [secondaryFeatures, setSecondaryFeatures] = useState(INITIAL_SECONDARY_FEATURES);
-    const [keyStrings, setKeyStrings] = useState(INITIAL_KEY_STRINGS);
+    const SelectedProject = useSelector((state) => state.userDashboard.selectedProject)
+    const [primaryFeatures, setPrimaryFeatures] = useState([]);
+    const [secondaryFeatures, setSecondaryFeatures] = useState([]);
     const [isEditingFeatures, setIsEditingFeatures] = useState(false);
     const [showAdvanced, setShowAdvanced] = useState(true);
-    const [editingKeyStringIndex, setEditingKeyStringIndex] = useState(null);
+    const [queries, setQueries] = useState([]);
+    const [editingQueryIndex, setEditingQueryIndex] = useState(null);
 
-    const activeKeyString =
-        editingKeyStringIndex !== null ? keyStrings[editingKeyStringIndex] : null;
 
-    const allKeyStringsText = useMemo(
-        () =>
-            keyStrings
-                .map((item, index) => `KEY STRING ${index + 1}: ${item.title}\n${item.string}`)
-                .join("\n\n"),
-        [keyStrings]
-    );
+    const parseKeyFeatures = (html = "") => {
+        if (!html) {
+            return {
+                primary: [],
+                secondary: [],
+            };
+        }
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const result = {
+            primary: [],
+            secondary: [],
+        };
+
+        let currentSection = "";
+
+        Array.from(doc.body.childNodes).forEach((node) => {
+
+            if (node.nodeType === Node.TEXT_NODE) {
+                const text = node.textContent.trim();
+
+                if (text.includes("Primary Features")) {
+                    currentSection = "primary";
+                }
+
+                if (text.includes("Secondary Features")) {
+                    currentSection = "secondary";
+                }
+            }
+
+            if (node.nodeName === "OL") {
+                const items = Array.from(node.querySelectorAll("li")).map(li =>
+                    li.textContent.trim()
+                );
+
+                if (currentSection === "primary") {
+                    result.primary = items;
+                }
+
+                if (currentSection === "secondary") {
+                    result.secondary = items;
+                }
+            }
+        });
+
+        return result;
+    };
+
 
     const updatePrimaryFeature = (index, value) => {
         setPrimaryFeatures((prev) =>
@@ -507,14 +588,6 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
         );
     };
 
-    const updateKeyString = (index, updatedItem) => {
-        setKeyStrings((prev) =>
-            prev.map((item, itemIndex) =>
-                itemIndex === index ? { ...item, ...updatedItem } : item
-            )
-        );
-    };
-
     const copyText = async (text) => {
         try {
             await navigator.clipboard.writeText(text);
@@ -523,6 +596,46 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
         }
     };
 
+    useEffect(() => {
+        const html =
+            SelectedProject?.patent_details?.key_features || "";
+        const parsed = parseKeyFeatures(html);
+        setPrimaryFeatures(parsed.primary);
+        setSecondaryFeatures(parsed.secondary);
+
+        if (SelectedProject?.patent_details?.queries) {
+            const formattedQueries = SelectedProject.patent_details.queries.map((query) => ({
+                title: "",
+                tag: "",
+                string: query,
+                dateRange: "Priority",
+                startDate: "",
+                endDate: "",
+                inventors: [],
+                assignees: [],
+                patentOffice: "Patent Office",
+                language: "Language",
+                status: "Status",
+                type: "Type",
+                litigation: "Litigation"
+            }));
+
+            setQueries(formattedQueries);
+        }
+
+    }, [SelectedProject]);
+
+    const updateQuery = (index, value) => {
+        setQueries(prev => {
+            const updated = [...prev];
+            updated[index] = value;
+            return updated;
+        });
+    };
+
+    const onproceeding = () => {
+        console.log('hello', queries)
+    }
     return (
         <>
             <section className="content-wrap key-feature-page">
@@ -536,9 +649,9 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
                         </p>
                     </div>
 
-                    <button type="button" className="kf-start-btn" onClick={onStartAnotherCase}>
+                    {/* <button type="button" className="kf-start-btn" onClick={onStartAnotherCase}>
                         <span><img src={newAnalysisIcon} alt="" className="newAnalysis-icon" /></span> Start New Analysis
-                    </button>
+                    </button> */}
                 </div>
 
                 <div className="kf-section-head">
@@ -598,20 +711,20 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
                             <button
                                 type="button"
                                 className="kf-copy-all-btn"
-                                onClick={() => copyText(allKeyStringsText)}
+                                onClick={() => copyText("allKeyStringsText")}
                             >
                                 <img src={CopyIcon} alt="" className="copy-icon" /> Copy All
                             </button>
                         </div>
 
                         <div className="kf-strings-grid">
-                            {keyStrings.map((item, index) => (
+                            {queries.map((query, index) => (
                                 <KeyStringCard
-                                    key={`${item.title}-${index}`}
-                                    item={item}
+                                    key={index}
+                                    query={query}
                                     index={index}
                                     onCopy={copyText}
-                                    onEdit={setEditingKeyStringIndex}
+                                    onEdit={setEditingQueryIndex}
                                 />
                             ))}
                         </div>
@@ -627,18 +740,22 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
                         </p>
                     </div>
 
-                    <button type="button" onClick={onProceed}>
+                    <button type="button" onClick={() => onProceed(queries)}>
                         <img src={ArrowRightIconIcon} alt="" className="proceed-icon" /> Proceed
                     </button>
                 </div>
             </section>
 
             <KeyStringEditModal
-                open={editingKeyStringIndex !== null}
-                item={activeKeyString}
-                index={editingKeyStringIndex || 0}
-                onClose={() => setEditingKeyStringIndex(null)}
-                onUpdate={updateKeyString}
+                open={editingQueryIndex !== null}
+                item={
+                    editingQueryIndex !== null
+                        ? queries[editingQueryIndex]
+                        : null
+                }
+                index={editingQueryIndex}
+                onClose={() => setEditingQueryIndex(null)}
+                onUpdate={updateQuery}
             />
         </>
     );

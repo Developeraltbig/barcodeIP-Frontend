@@ -28,6 +28,14 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['UserProject']
     }),
+    startProcess: builder.mutation({
+      query: (data) => ({
+        url: '/api/v1/user/Dashboard/start-processing',
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: ['startProcessing']
+    }),
 
     fetchAllProjects: builder.query({
       query: ({ page = 1, limit = 10, search = "", status = "all" } = {}) => {
@@ -159,6 +167,7 @@ export const userApi = baseApi.injectEndpoints({
 export const {
   useGetLatestContentQuery,
   useCreateProjectMutation,
+  useStartProcessMutation,
   useCreateAnalystConnectionsMutation,
   useGetAllArticlesQuery,
   useGetSupportAnalystsQuery,
