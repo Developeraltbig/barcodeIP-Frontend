@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from "react";
 
-function ModuleCard({ item, checked, onToggle }) {
+function ModuleCard({ item, checked, onToggle, disabled }) {
     const handleClick = useCallback(() => {
         onToggle(item.id);
     }, [item.id, onToggle]);
@@ -10,6 +10,7 @@ function ModuleCard({ item, checked, onToggle }) {
             type="button"
             className={`module-card ${checked ? "selected" : ""}`}
             onClick={handleClick}
+            disabled={disabled}
         >
             <span className={`checkbox ${checked ? "checked" : ""}`}>
                 {checked ? "✓" : ""}

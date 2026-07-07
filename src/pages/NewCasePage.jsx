@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { PAGES } from "../views/Home/constants";
 import { modules } from "../views/Home/data";
+import { useSelector, useDispatch } from "react-redux";
 
 import ModuleCard from "../components/ModuleCard";
 import KeyFeaturesReview from "../views/Home/KeyFeaturesReview";
@@ -9,7 +10,6 @@ import {
     useFetchAllProjectsQuery,
     useStartProcessMutation
 } from "../features/userApi";
-import { useDispatch } from 'react-redux';
 import SearchIcon from "../assets/icons/searchIcon.svg";
 import UploadIcon from "../assets/icons/uploadIcon.svg";
 import AiGeneratedKeyIcon from "../assets/icons/ai-generated-key-feature.svg";
@@ -21,8 +21,10 @@ function NewCasePage({ onPageChange }) {
     const dispatch = useDispatch();
     const [inventionText, setInventionText] = useState("");
     const [selectedModules, setSelectedModules] = useState([]);
+    const [selectedModulesDisabled, setSelectedModulesDisabled] = useState(false)
     const [showKeyFeatures, setShowKeyFeatures] = useState(false);
     const [currentProject, setCurrentProject] = useState(null);
+    const SelectedProject = useSelector((state) => state.userDashboard.selectedProject)
 
     const { data: projectsData } = useFetchAllProjectsQuery();
     const [createProject, { isLoading: isCreatingProject }] = useCreateProjectMutation();
@@ -80,13 +82,43 @@ function NewCasePage({ onPageChange }) {
 
             console.log("Newly Generated Project ID:", newProjectId);
             console.log('all module', selectedModules);
+            newProjectData.module = newProjectData.checked;
             const hasPatent = selectedModules.includes("patent");
             dispatch(setSelectedProject(newProjectData))
 
             if (hasPatent) {
+                setSelectedModulesDisabled(true)
                 setShowKeyFeatures(true);
             } else {
                 onPageChange(PAGES.REVIEW, newProjectId);
+            }
+        } catch (err) {
+            console.error("Create Project is failed", err);
+
+            if (err?.status === 400) {
+                alert(err?.data?.error || "Something went wrong.");
+            } else {
+                alert("Create failed. Please try again.");
+            }
+        }
+    };
+
+    const handleContinueFromKeyFeatures = async (features) => {
+        console.log("Final key features:", features);
+        // const formData = new FormData();
+        let data = {
+            project_id: SelectedProject?.project_id,
+            query: features,
+            checked: selectedModules
+        }
+        // formData.append("project_id", SelectedProject?.project_id);
+        // formData.append("query", features);
+        // formData.append("checked", JSON.stringify(selectedModules));
+        try {
+            const response = await startProcess(data).unwrap();
+            console.log("response:", response);
+            if (response.success) {
+                onPageChange(PAGES.REVIEW, SelectedProject?.project_id);
             }
         } catch (err) {
             console.error("Project Generation Failed:", err);
@@ -97,11 +129,7 @@ function NewCasePage({ onPageChange }) {
                 alert("Project generation failed. Please try again.");
             }
         }
-    };
 
-    const handleContinueFromKeyFeatures = (features) => {
-        console.log("Final key features:", features);
-        // onPageChange(PAGES.REVIEW);
     };
 
     if (showKeyFeatures) {
@@ -111,7 +139,7 @@ function NewCasePage({ onPageChange }) {
                 selectedModules={selectedModules}
                 modules={modules}
                 onBack={() => setShowKeyFeatures(false)}
-                onContinue={() => handleContinueFromKeyFeatures(data)}
+                onContinue={handleContinueFromKeyFeatures}
             />
         );
     }
@@ -160,6 +188,7 @@ function NewCasePage({ onPageChange }) {
                             item={item}
                             checked={selectedModuleSet.has(item.id)}
                             onToggle={toggleModule}
+                            disabled={selectedModulesDisabled}
                         />
                     ))}
                 </div>

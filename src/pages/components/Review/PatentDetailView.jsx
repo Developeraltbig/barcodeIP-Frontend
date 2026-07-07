@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import ActionButton from "./ActionButton";
 import {
   BIBLIOGRAPHIC_DATA,
@@ -9,6 +9,27 @@ import {
 import viewMappingIcon from "../../../assets/icons/carbon_view1.svg";
 import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 import LeftArrowIcon from "../../../assets/icons/leftArrow.svg";
+import {
+  useGetBibilioDataMutation,
+} from "../../../features/patentApi";
+
+function ClassificationTable({ rows }) {
+  return (
+    <div className="classification-table">
+      {rows?.map((item, index) => (
+        <div key={index} className="classification-row">
+          <div className="classification-code">
+            {item.code}
+          </div>
+
+          <div className="classification-description">
+            {item.description}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function DataTable({ rows }) {
   return (
@@ -24,6 +45,54 @@ function DataTable({ rows }) {
 }
 
 function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) {
+  const patentId = patent?.patent_id;
+  const [descriptionHtml, setDescriptionHtml] = useState("");
+  const [getBibilioData, { data, isLoading, error }] =
+    useGetBibilioDataMutation();
+
+  useEffect(() => {
+    if (patent?.patent_id) {
+      getBibilioData(patent.patent_id);
+    }
+  }, [patent]);
+
+  console.log("Patent:", patent);
+  const images = data?.data?.data[0]?.images || [];
+
+
+  const biblioRows = [
+    ["Publication Number", data?.data?.data[0]?.publication_number || "-"],
+    ["Publication Date", data?.data?.data[0]?.publication_date || "-"],
+    ["Application Number", data?.data?.data[0]?.application_number || "-"],
+    ["Inventor", data?.data?.data[0]?.inventors?.join(", ") || "-"],
+    ["Assignee", data?.data?.data[0]?.assignees?.join(", ") || "-"],
+    ["Patent", data?.data?.patent_id || "-"],
+  ];
+
+  useEffect(() => {
+    const loadDescription = async () => {
+      const url = data?.data?.data?.[0]?.description_link;
+
+      if (!url) return;
+
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch description");
+        }
+
+        const html = await response.text();
+
+        setDescriptionHtml(html);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    loadDescription();
+  }, [data]);
+
   return (
     <>
       <button className="rr-back-btn" type="button" onClick={onBack}>
@@ -34,7 +103,7 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
         <div>
           <h1>{patent.title}</h1>
           <p>
-            <span>{patent.publication}</span> · {patent.assignee}
+            <span>{data?.data?.data[0].publication_date}</span> · {data?.data?.data[0].assignees}
           </p>
           <em>Patent Details</em>
         </div>
@@ -53,36 +122,51 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
       </div>
 
       <div className="rr-figure-tabs">
-        {Array.from({ length: 7 }).map((_, index) => (
-          <button key={index} type="button">
-            Patent Figure {index + 1}
-          </button>
-        ))}
+        {images.length > 0 ? (
+          images.map((image, index) => (
+            <button
+              key={index}
+              type="button"
+              className="rr-figure-tab"
+            >
+              <img
+                src={image}
+                alt={`Patent Figure ${index + 1}`}
+                loading="lazy"
+              />
+              <span>Patent Figure {index + 1}</span>
+            </button>
+          ))
+        ) : (
+          <div className="rr-no-images">
+            No patent figures available.
+          </div>
+        )}
       </div>
 
       <div className="rr-detail-grid">
         <section className="rr-detail-card">
           <h2>Bibliographic Data</h2>
-          <DataTable rows={BIBLIOGRAPHIC_DATA} />
+          <DataTable rows={biblioRows} />
         </section>
 
         <section className="rr-detail-card">
           <h2>Classifications</h2>
-          <DataTable rows={CLASSIFICATIONS} />
+          <ClassificationTable
+            rows={data?.data?.data[0]?.classifications || []}
+          />
         </section>
       </div>
 
       <section className="rr-detail-card">
         <h2>Description</h2>
-        <p className="rr-description-text">
-          Discloses a high-voltage drainage wire clamp and live installation tool with
-          clamping base, pressing block, tightening shaft, spring, support rod, and wrench
-          operating rod. The disclosed tool includes a hot stick body, torque connector,
-          drive shaft, and clamp engagement interface. The apparatus allows a lineworker
-          to position and operate a clamp at an overhead conductor from a safer distance.
-          The description includes examples of jaws, rotatable members, and threaded
-          actuation for clamp operation.
-        </p>
+
+        {/* <div
+          className="rr-description-text"
+          dangerouslySetInnerHTML={{
+            __html: descriptionHtml,
+          }}
+        /> */}
       </section>
 
       <section className="rr-detail-card">
@@ -99,14 +183,22 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
           </thead>
 
           <tbody>
-            {PATENT_CITATIONS.map(([publication, priority, assignee, title]) => (
-              <tr key={publication}>
-                <td>{publication}</td>
-                <td>{priority}</td>
-                <td>{assignee}</td>
-                <td>{title}</td>
+            {data?.data?.data?.[0]?.patent_citations?.original?.length > 0 ? (
+              data.data.data[0].patent_citations.original.map((citation, index) => (
+                <tr key={citation.publication_number || index}>
+                  <td>{citation.publication_number || "-"}</td>
+                  <td>{citation.priority_date || "-"}</td>
+                  <td>{citation.assignee_original || "-"}</td>
+                  <td>{citation.title || "-"}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" style={{ textAlign: "center" }}>
+                  No Patent Citations Found
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </section>

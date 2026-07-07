@@ -12,6 +12,15 @@ export const patentApi = baseApi.injectEndpoints({
       providesTags: ["Patent"],
     }),
 
+    getBibilioData: builder.mutation({
+      query: (patent_id) => ({
+        url: "/api/v1/patents/bibilioData",
+        method: "POST",
+        body: {
+          patent_id,
+        },
+      }),
+    }),
     // GET: GenerateAll
     generateAllPatent: builder.query({
       query: (id) => ({
@@ -29,6 +38,7 @@ export const patentApi = baseApi.injectEndpoints({
 
 export const {
   useGetPatentByIdQuery,
+  useGetBibilioDataMutation,
   useLazyGenerateAllPatentQuery, // Use Lazy for actions triggered by events
 
 } = patentApi;

@@ -515,7 +515,7 @@ function KeyStringEditModal({ open, item, index, onClose, onUpdate }) {
     );
 }
 
-function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed }) {
+function GeneratedKeyFeatures({ inventionText, selectedModules, modules, onBack, onContinue }) {
     const SelectedProject = useSelector((state) => state.userDashboard.selectedProject)
     const [primaryFeatures, setPrimaryFeatures] = useState([]);
     const [secondaryFeatures, setSecondaryFeatures] = useState([]);
@@ -633,15 +633,13 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
         });
     };
 
-    const onproceeding = () => {
-        console.log('hello', queries)
-    }
+
     return (
         <>
             <section className="content-wrap key-feature-page">
                 <div className="kf-header-card">
                     <div>
-                        <span className="kf-case-badge">CASE {caseId}</span>
+                        <span className="kf-case-badge">CASE</span>
                         <h1>Review generated key features</h1>
                         <p>
                             The input step is complete. Review the extracted features, optionally check
@@ -740,7 +738,7 @@ function GeneratedKeyFeatures({ caseId = "016", onStartAnotherCase, onProceed })
                         </p>
                     </div>
 
-                    <button type="button" onClick={() => onProceed(queries)}>
+                    <button type="button" onClick={() => onContinue(queries)}>
                         <img src={ArrowRightIconIcon} alt="" className="proceed-icon" /> Proceed
                     </button>
                 </div>
