@@ -73,16 +73,23 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
     const loadDescription = async () => {
       const url = data?.data?.data?.[0]?.description_link;
 
-      if (!url) return;
+      console.log("URL:", url);
+
+      if (!url) {
+        console.log("No description link found");
+        return;
+      }
 
       try {
-        const response = await fetch(url);
+        const response = await fetch(
+          `http://localhost:5000/api/v1/patents/description?url=${encodeURIComponent(url)}`
+        );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch description");
-        }
+        console.log("Response:", response);
 
         const html = await response.text();
+
+        console.log("HTML:", html);
 
         setDescriptionHtml(html);
       } catch (err) {
