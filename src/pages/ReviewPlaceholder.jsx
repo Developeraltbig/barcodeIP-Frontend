@@ -6,6 +6,7 @@ import React, {
     useRef,
     useState,
 } from "react";
+import { useParams } from 'react-router-dom';
 
 import { PAGES } from "../views/Home/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -63,6 +64,7 @@ const MODULE_KEYS = {
     PROVISIONAL: "provisional",
     NON_PROVISIONAL: "nonProvisional",
 };
+import { socket } from "../utils/socket";
 
 const normalizeTabToModuleKey = (tab) => {
     const value = String(tab || "").trim();
@@ -116,8 +118,8 @@ const toArray = (value) => {
 };
 
 function ReviewPlaceholder({ onPageChange, projectId }) {
+    const { id } = useParams();
     const dispatch = useDispatch();
-
     const [activeTab, setActiveTab] = useState(TAB_KEYS.PATENT);
     const [activeView, setActiveView] = useState("results");
     const [selectedPatent, setSelectedPatent] = useState(PATENT_RESULTS[0]);
@@ -238,6 +240,14 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
     );
 
     const isActiveTabLoading = Boolean(loadingByModuleKey[activeModuleKey]);
+
+    const [workerProgress, setWorkerProgress] = useState({
+        provisional: 0,
+        nonProvisional: 0,
+        patent: 0,
+        publish: 0,
+        product: 0
+    })
 
     useEffect(() => {
         console.log("========== REVIEW TAB DEBUG ==========");
@@ -425,6 +435,71 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         // If it has data, return it inside an array; otherwise, fallback
         return hasData ? [projectNonProvisional] : null;
     }, [projectNonProvisional]);
+
+
+    useEffect(() => {
+        if (!id) return;
+
+        console.log("📡 Joining room:", id);
+
+        socket.emit("joinProject", id);
+
+        const handleJobUpdate = (event) => {
+            console.log("🔥 Job update received:", event);
+
+            if (event.projectId !== id) return;
+
+            const normalizeType = (type) => {
+                switch (type) {
+                    case 'nonProvisional':
+                    case 'non-provisional':
+                        return 'nonProvisional';
+                    case 'publish':
+                        return 'publish';
+                    case 'product':
+                        return 'product';
+                    case 'patent':
+                        return 'patent';
+                    case 'provisional':
+                        return 'provisional';
+                    default:
+                        return type;
+                }
+            };
+
+            const key = normalizeType(event.type);
+
+            // 🚀 STARTED
+            if (event.event === "started") {
+                setWorkerProgress((prev) => ({
+                    ...prev,
+                    [key]: 0
+                }));
+            }
+
+            // 📊 PROGRESS
+            if (event.event === "progress") {
+                setWorkerProgress((prev) => ({
+                    ...prev,
+                    [key]: event.progress
+                }));
+            }
+
+            // ✅ COMPLETED
+            if (event.event === "completed") {
+                setWorkerProgress((prev) => ({
+                    ...prev,
+                    [key]: 100
+                }));
+            }
+        };
+
+        socket.off("jobUpdate").on("jobUpdate", handleJobUpdate);
+
+        return () => {
+            socket.off("jobUpdate", handleJobUpdate);
+        };
+    }, [id]);
 
     const renderActiveTab = useCallback(() => {
         if (isActiveTabLoading) {

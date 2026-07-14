@@ -1,122 +1,103 @@
-// import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-// import { logout } from '../features/slice/auth/authSlice';
-
-// const baseQuery = fetchBaseQuery({
-//   baseUrl: import.meta.env.VITE_API_URL,
-//   credentials: 'include',
-//   prepareHeaders: (headers, { getState }) => {
-//     const token = getState().auth.token;
-//     console.log('token--', token);
-//     if (token) headers.set('authorization', `Bearer ${token}`);
-//     return headers;
-//   }
-// });
-
-// const baseQueryWithAuth = async (args, api, extraOptions) => {
-//   const result = await baseQuery(args, api, extraOptions);
-
-//   if (result?.error?.status === 401) {
-//     api.dispatch(logout); // auto logout
-//   }
-
-//   return result;
-// };
-
-// export const baseApi = createApi({
-//   reducerPath: 'api',
-//   baseQuery: baseQueryWithAuth,
-//   endpoints: () => ({})
-// });
-
-
-import axios from 'axios';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { logout, setCredentials } from '../features/slice/auth/authSlice';
-import { useSelector } from 'react-redux';
+import axios from "axios";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { logout, setCredentials } from "../features/slice/auth/authSlice";
 
 // let api_url = "http://54.146.252.18:5000";
+const api_url = "http://localhost:5000";
 
-let api_url = "http://localhost:5000";
+let isRefreshing = false;
+let failedQueue = [];
 
-// A basic fetchBaseQuery instance
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+
+  failedQueue = [];
+};
+
 const baseQuery = fetchBaseQuery({
   baseUrl: api_url,
-  credentials: 'include',
+  credentials: "include", // Sends HttpOnly cookies automatically
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
-    if (token) headers.set('authorization', `Bearer ${token}`);
+
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+
     return headers;
-  }
+  },
 });
-
-
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  // If the error is 401, try to refresh
-  if (result.error && result.error.status === 401) {
-    console.log("1")
-    let refresh_token = localStorage.getItem("rememberMe");
-    // PREVENT LOOP: Check if the failed request was actually the refresh request itself
-    // Adjust the URL string to match your refresh endpoint exactly
-    if (args.url === "/api/v1/auth/refresh-token") {
-      api.dispatch(logout());
-      return result;
-    }
-
-
-    if (refresh_token === true) {
-      console.log('ddd');
-      const response = await axios.post(`${api_url}/api/v1/auth/refresh-token`, {
-        refreshToken: api.getState().auth.refreshToken
-      })
-
-      if (response.status === 200) {
-        // Refresh worked!
-        api.dispatch(setCredentials({
-          user: api.getState().auth.user,
-          refreshToken: api.getState().auth.refreshToken,
-          accessToken: response.data.data.accessToken,
-          // rememberMe: !!localStorage.getItem('token') 
-        }));
-
-        // Retry the original request
-        result = await baseQuery(args, api, extraOptions);
-
-      }
-
-    } else {
-
-      api.dispatch(logout());
-      return;
-
-    }
+  if (result.error?.status !== 401) {
+    return result;
   }
+
+  // Prevent infinite loop
+  if (
+    typeof args === "object" &&
+    args.url === "/api/v1/auth/refresh-token"
+  ) {
+    api.dispatch(logout());
+    return result;
+  }
+
+  // If another refresh is already running
+  if (isRefreshing) {
+    return new Promise((resolve, reject) => {
+      failedQueue.push({
+        resolve,
+        reject,
+      });
+    }).then(async () => {
+      return await baseQuery(args, api, extraOptions);
+    });
+  }
+
+  isRefreshing = true;
+
+  try {
+    const refreshResult = await axios.post(
+      `${api_url}/api/v1/auth/refresh-token`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+
+    const newAccessToken = refreshResult.data.data.accessToken;
+
+    api.dispatch(
+      setCredentials({
+        ...api.getState().auth,
+        accessToken: newAccessToken,
+      })
+    );
+
+    processQueue(null, newAccessToken);
+
+    result = await baseQuery(args, api, extraOptions);
+  } catch (error) {
+    processQueue(error, null);
+
+    api.dispatch(logout());
+  } finally {
+    isRefreshing = false;
+  }
+
   return result;
 };
 
 export const baseApi = createApi({
-  reducerPath: 'api',
+  reducerPath: "api",
   baseQuery: baseQueryWithReauth,
   endpoints: () => ({}),
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

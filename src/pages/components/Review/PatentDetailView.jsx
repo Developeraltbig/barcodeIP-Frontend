@@ -1,5 +1,7 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect } from "react";
 import ActionButton from "./ActionButton";
+// 🌟 1. IMPORT skipToken FROM REDUX TOOLKIT
+import { skipToken } from "@reduxjs/toolkit/query";
 import {
   BIBLIOGRAPHIC_DATA,
   CLASSIFICATIONS,
@@ -11,6 +13,7 @@ import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 import LeftArrowIcon from "../../../assets/icons/leftArrow.svg";
 import {
   useGetBibilioDataMutation,
+  useGetPatentDescriptionQuery
 } from "../../../features/patentApi";
 
 function ClassificationTable({ rows }) {
@@ -18,13 +21,8 @@ function ClassificationTable({ rows }) {
     <div className="classification-table">
       {rows?.map((item, index) => (
         <div key={index} className="classification-row">
-          <div className="classification-code">
-            {item.code}
-          </div>
-
-          <div className="classification-description">
-            {item.description}
-          </div>
+          <div className="classification-code">{item.code}</div>
+          <div className="classification-description">{item.description}</div>
         </div>
       ))}
     </div>
@@ -46,19 +44,16 @@ function DataTable({ rows }) {
 
 function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) {
   const patentId = patent?.patent_id;
-  const [descriptionHtml, setDescriptionHtml] = useState("");
-  const [getBibilioData, { data, isLoading, error }] =
-    useGetBibilioDataMutation();
+  const [getBibilioData, { data, isLoading }] = useGetBibilioDataMutation();
 
   useEffect(() => {
     if (patent?.patent_id) {
       getBibilioData(patent.patent_id);
     }
-  }, [patent]);
+  }, [patent, getBibilioData]);
 
   console.log("Patent:", patent);
   const images = data?.data?.data[0]?.images || [];
-
 
   const biblioRows = [
     ["Publication Number", data?.data?.data[0]?.publication_number || "-"],
@@ -69,36 +64,17 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
     ["Patent", data?.data?.patent_id || "-"],
   ];
 
-  useEffect(() => {
-    const loadDescription = async () => {
-      const url = data?.data?.data?.[0]?.description_link;
+  const descriptionUrl = data?.data?.data?.[0]?.description_link;
+  console.log('descriptionUrl --', descriptionUrl);
 
-      console.log("URL:", url);
+  // 🌟 2. USE skipToken SO IT NEVER FIRES AN EMPTY OR "UNDEFINED" REQ
+  const {
+    data: descriptionHtml,
+    isLoading: isDescLoading,
+    error: descError
+  } = useGetPatentDescriptionQuery(descriptionUrl ? descriptionUrl : skipToken);
 
-      if (!url) {
-        console.log("No description link found");
-        return;
-      }
-
-      try {
-        const response = await fetch(
-          `http://localhost:5000/api/v1/patents/description?url=${encodeURIComponent(url)}`
-        );
-
-        console.log("Response:", response);
-
-        const html = await response.text();
-
-        console.log("HTML:", html);
-
-        setDescriptionHtml(html);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    loadDescription();
-  }, [data]);
+  console.log('descriptionHtml --', descriptionHtml);
 
   return (
     <>
@@ -110,7 +86,7 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
         <div>
           <h1>{patent.title}</h1>
           <p>
-            <span>{data?.data?.data[0].publication_date}</span> · {data?.data?.data[0].assignees}
+            <span>{data?.data?.data[0]?.publication_date}</span> · {data?.data?.data[0]?.assignees}
           </p>
           <em>Patent Details</em>
         </div>
@@ -131,23 +107,13 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
       <div className="rr-figure-tabs">
         {images.length > 0 ? (
           images.map((image, index) => (
-            <button
-              key={index}
-              type="button"
-              className="rr-figure-tab"
-            >
-              <img
-                src={image}
-                alt={`Patent Figure ${index + 1}`}
-                loading="lazy"
-              />
+            <button key={index} type="button" className="rr-figure-tab">
+              <img src={image} alt={`Patent Figure ${index + 1}`} loading="lazy" />
               <span>Patent Figure {index + 1}</span>
             </button>
           ))
         ) : (
-          <div className="rr-no-images">
-            No patent figures available.
-          </div>
+          <div className="rr-no-images">No patent figures available.</div>
         )}
       </div>
 
@@ -159,26 +125,28 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
 
         <section className="rr-detail-card">
           <h2>Classifications</h2>
-          <ClassificationTable
-            rows={data?.data?.data[0]?.classifications || []}
-          />
+          <ClassificationTable rows={data?.data?.data[0]?.classifications || []} />
         </section>
       </div>
 
       <section className="rr-detail-card">
         <h2>Description</h2>
 
-        {/* <div
-          className="rr-description-text"
-          dangerouslySetInnerHTML={{
-            __html: descriptionHtml,
-          }}
-        /> */}
+        {isDescLoading && <p>Loading description text...</p>}
+        {descError && <p style={{ color: "red" }}>Error rendering description details.</p>}
+
+        {descriptionHtml ? (
+          <div
+            className="rr-description-text"
+            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+          />
+        ) : (
+          !isDescLoading && !descError && <p>No description available.</p>
+        )}
       </section>
 
       <section className="rr-detail-card">
         <h2>Patent Citations</h2>
-
         <table className="rr-citation-table">
           <thead>
             <tr>
@@ -188,7 +156,6 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
               <th>Title</th>
             </tr>
           </thead>
-
           <tbody>
             {data?.data?.data?.[0]?.patent_citations?.original?.length > 0 ? (
               data.data.data[0].patent_citations.original.map((citation, index) => (
@@ -201,9 +168,7 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
               ))
             ) : (
               <tr>
-                <td colSpan="4" style={{ textAlign: "center" }}>
-                  No Patent Citations Found
-                </td>
+                <td colSpan="4" style={{ textAlign: "center" }}>No Patent Citations Found</td>
               </tr>
             )}
           </tbody>

@@ -74,7 +74,7 @@ function NewCasePage({ onPageChange }) {
         try {
             const response = await createProject(formData).unwrap();
 
-            const newProjectData = response?.data || response;
+            const newProjectData = { ...(response?.data || response) };
             const newProjectId =
                 newProjectData?.project_id ||
                 newProjectData?.id ||
@@ -82,7 +82,7 @@ function NewCasePage({ onPageChange }) {
 
             console.log("Newly Generated Project ID:", newProjectId);
             console.log('all module', selectedModules);
-            newProjectData.module = newProjectData.checked;
+            newProjectData.module = selectedModules;
             const hasPatent = selectedModules.includes("patent");
             dispatch(setSelectedProject(newProjectData))
 

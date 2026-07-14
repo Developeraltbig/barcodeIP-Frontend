@@ -21,6 +21,14 @@ export const patentApi = baseApi.injectEndpoints({
         },
       }),
     }),
+    getPatentDescription: builder.query({
+      query: (url) => ({
+        url: `/api/v1/patents/description?url=${encodeURIComponent(url)}`,
+        method: "GET",
+      }),
+      // 🌟 ADD THIS: Forces RTK Query to treat the response data as raw text/HTML
+      responseHandler: (response) => response.text(),
+    }),
     // GET: GenerateAll
     generateAllPatent: builder.query({
       query: (id) => ({
@@ -38,6 +46,7 @@ export const patentApi = baseApi.injectEndpoints({
 
 export const {
   useGetPatentByIdQuery,
+  useGetPatentDescriptionQuery,
   useGetBibilioDataMutation,
   useLazyGenerateAllPatentQuery, // Use Lazy for actions triggered by events
 
