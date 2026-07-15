@@ -12,16 +12,16 @@ function ProductCard({ item, onViewDetails }) {
       <div className="rr-product-main-row">
         <img
           className="rr-product-image"
-          src={item.image}
+          src={item.thumbnail}
           alt={item.title}
         />
 
         <div className="rr-product-content">
-          <div className="rr-product-domain">{item.domain}</div>
+          <div className="rr-product-domain">{item.source}</div>
 
           <h3>{item.title}</h3>
 
-          <p>{item.description}</p>
+          <p>{item.reason}</p>
 
           <div className="rr-product-footer">
             <strong>{item.price}</strong>
@@ -48,9 +48,9 @@ function ProductCard({ item, onViewDetails }) {
         {open ? "Hide" : "Show"} feature breakdown {open ? <img src={DownArrowIcon} alt="" className="downArrow-icon" /> : <img src={UpArrowIcon} alt="" className="UpArrow-icon" />}
       </button>
 
-      {open && item.features?.length > 0 && (
+      {open && item.matchedFeatures?.length > 0 && (
         <div className="rr-product-breakdown">
-          {item.features.map((feature) => {
+          {item.matchedFeatures.map((feature) => {
             const [title, description] = feature.split(" — ");
 
             return (
