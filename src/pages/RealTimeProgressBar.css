@@ -38,8 +38,8 @@
     font-weight: 700;
     padding: 0.25rem 0.75rem;
     border-radius: 9999px;
-    background-color: #eff6ff;
-    color: #2563eb;
+    background-color: #e1d3d1;
+    color: #DF4833;
 }
 
 .rr-progress-badge.failed {
@@ -64,7 +64,7 @@
 }
 
 .rr-progress-bar-fill {
-    background-color: #2563eb;
+    background-color: #DF4833;
     height: 100%;
     border-radius: 9999px;
     transition: width 0.4s ease-out;
@@ -88,7 +88,7 @@
     width: 16px;
     height: 16px;
     border: 2px solid #e5e7eb;
-    border-top-color: #2563eb;
+    border-top-color: #DF4833;
     border-radius: 50%;
     animation: progress-spin 1s linear infinite;
     flex-shrink: 0;
