@@ -101,3 +101,7 @@
 .rr-draft-html-content p {
     padding: 10px;
 }
+
+.rr-draft-html-content {
+    margin-left: 12px;
+}

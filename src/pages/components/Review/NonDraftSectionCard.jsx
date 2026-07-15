@@ -190,9 +190,9 @@ function NonDraftSectionCard({
     >
       <header className="rr-section-header">
         <div className="rr-section-title">
-          <span>
+          {/* <span>
             {section.number || ""}
-          </span>
+          </span> */}
 
           <h3>{section.title}</h3>
         </div>

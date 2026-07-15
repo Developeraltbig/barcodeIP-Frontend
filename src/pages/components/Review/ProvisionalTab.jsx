@@ -51,7 +51,7 @@ function ProvisionalTab({
         <div className="rr-draft-head">
           <div>
             <h2>Provisional Draft</h2>
-            <p>Editable provisional specification sections generated from the invention disclosure.</p>
+            <p>Editable provisional specification sections generated from the invention disclosure.qq</p>
           </div>
 
           <ActionButton onClick={onDownload}>
