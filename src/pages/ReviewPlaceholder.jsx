@@ -3,7 +3,6 @@ import React, {
     useCallback,
     useEffect,
     useMemo,
-    useRef,
     useState,
 } from "react";
 import { useParams } from 'react-router-dom';
@@ -98,6 +97,48 @@ const toArray = (value) => {
     return [];
 };
 
+/**
+ * Evaluates the response payload to determine if data is complete.
+ * If data is null or incomplete, it falls back to the running progress state.
+ */
+const getProgressFromPayload = (payload) => {
+    if (!payload) {
+        // If there is no data in the database, initialize with 0% progress and show progress bar
+        return { progress: 0, status: "running" };
+    }
+
+    // Check progress values (e.g. status_progress or progress)
+    const rawProgress = payload.status_progress !== undefined
+        ? payload.status_progress
+        : (payload.progress !== undefined ? payload.progress : null);
+
+    if (rawProgress !== null) {
+        const progressNumber = Number(rawProgress);
+        if (progressNumber < 100) {
+            return { progress: progressNumber, status: "running" };
+        }
+        return { progress: 100, status: "completed" };
+    }
+
+    // Verify completeness using content arrays/objects
+    const hasSubstantialContent =
+        (Array.isArray(payload.scholarResults) && payload.scholarResults.length > 0) ||
+        (Array.isArray(payload.patents) && payload.patents.length > 0) ||
+        (payload.sections && Object.keys(payload.sections).length > 0) ||
+        (payload.claims && payload.claims.length > 0) ||
+        (Array.isArray(payload) && payload.length > 0);
+
+    if (hasSubstantialContent) {
+        return { progress: 100, status: "completed" };
+    }
+
+    // Default to running if metadata exists but actual content is not yet complete
+    return {
+        progress: 0,
+        status: "running"
+    };
+};
+
 function ReviewPlaceholder({ onPageChange, projectId }) {
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -110,13 +151,13 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
     const [tabRuntime, setTabRuntime] = useState(INITIAL_TAB_RUNTIME);
     const [showKeyFeature, setShowKeyFeature] = useState(false);
 
-    // Global tracking of progress states for each module (for refresh recovery & live tracking)
+    // Dynamic state mapping to capture real-time updates for each tab
     const [progressState, setProgressState] = useState({
-        [MODULE_KEYS.PATENT]: { progress: 0, status: "idle", message: "" },
-        [MODULE_KEYS.PUBLICATIONS]: { progress: 0, status: "idle", message: "" },
-        [MODULE_KEYS.PRODUCTS]: { progress: 0, status: "idle", message: "" },
-        [MODULE_KEYS.PROVISIONAL]: { progress: 0, status: "idle", message: "" },
-        [MODULE_KEYS.NON_PROVISIONAL]: { progress: 0, status: "idle", message: "" },
+        [MODULE_KEYS.PATENT]: { progress: 0, status: "running", message: "" },
+        [MODULE_KEYS.PUBLICATIONS]: { progress: 0, status: "running", message: "" },
+        [MODULE_KEYS.PRODUCTS]: { progress: 0, status: "running", message: "" },
+        [MODULE_KEYS.PROVISIONAL]: { progress: 0, status: "running", message: "" },
+        [MODULE_KEYS.NON_PROVISIONAL]: { progress: 0, status: "running", message: "" },
     });
 
     const DashboardData = useSelector((state) => state.userDashboard.selectedProject);
@@ -163,7 +204,6 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
 
     const isActiveTabLoading = Boolean(loadingByModuleKey[activeModuleKey]);
 
-    // Format results safe for consumption inside components
     const patentResults = useMemo(() => {
         const hasData = projectPatent && Object.keys(projectPatent).length > 0;
         return hasData ? [projectPatent] : null;
@@ -189,7 +229,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         return hasData ? [projectNonProvisional] : null;
     }, [projectNonProvisional]);
 
-    // API Invoker Function
+    // Isolated lazy fetching wrapper
     const loadTabData = useCallback(async (moduleKey) => {
         if (!currentProjectId) return;
         const target = apiByModuleKey[moduleKey];
@@ -198,39 +238,53 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         try {
             const response = await target.trigger(currentProjectId).unwrap();
             const payload = getResponsePayload(response);
+
+            const { progress, status } = getProgressFromPayload(payload);
+
             if (payload) {
                 dispatch(target.action(payload));
-                setProgressState(prev => ({
-                    ...prev,
-                    [moduleKey]: { progress: 100, status: "completed", message: "" }
-                }));
             }
+
+            setProgressState(prev => ({
+                ...prev,
+                [moduleKey]: { progress, status, message: "" }
+            }));
         } catch (error) {
             console.error(`Error loading data for module ${moduleKey}:`, error);
+            // Default to running with progress 0 if backend is uncooperative on initial check
+            setProgressState(prev => ({
+                ...prev,
+                [moduleKey]: { progress: 0, status: "running", message: "" }
+            }));
         }
     }, [currentProjectId, apiByModuleKey, dispatch]);
 
-    // Handle Active Tab Change & Trigger Fetches
+    // 🚀 INITIALIZATION: Fetch status for ALL tabs in parallel on mount/project load
     useEffect(() => {
-        if (activeModuleKey && currentProjectId) {
-            loadTabData(activeModuleKey);
-        }
-    }, [activeModuleKey, currentProjectId, loadTabData]);
+        if (!currentProjectId) return;
 
-    // Sync Redux values to local ProgressState to verify completed content on refresh
+        Object.keys(apiByModuleKey).forEach((moduleKey) => {
+            loadTabData(moduleKey);
+        });
+    }, [currentProjectId, loadTabData, apiByModuleKey]);
+
+    // Redux synchronization to update local state hooks when changes occur
     useEffect(() => {
         const syncModule = (dataState, moduleKey) => {
-            const hasData = dataState && (Array.isArray(dataState) ? dataState.length > 0 : Object.keys(dataState).length > 0);
+            if (!dataState) return;
+            const { progress, status } = getProgressFromPayload(dataState);
 
             setProgressState(prev => {
-                // Do not override progress bar if socket says it is actively running
-                if (prev[moduleKey]?.status === "running") return prev;
+                // Avoid overriding active sockets if they are tracking a higher progress value
+                if (prev[moduleKey]?.status === "running" && prev[moduleKey]?.progress > progress) {
+                    return prev;
+                }
 
                 return {
                     ...prev,
                     [moduleKey]: {
-                        progress: hasData ? 100 : 0,
-                        status: hasData ? "completed" : "idle",
+                        progress,
+                        status,
                         message: ""
                     }
                 };
@@ -244,7 +298,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         syncModule(projectNonProvisional, MODULE_KEYS.NON_PROVISIONAL);
     }, [projectPatent, projectPublication, projectProduct, projectProvisional, projectNonProvisional]);
 
-    // WebSocket integration
+    // WebSocket event coordinator
     useEffect(() => {
         if (!id) return;
 
@@ -266,10 +320,19 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
                     break;
 
                 case "progress":
-                    setProgressState((prev) => ({
-                        ...prev,
-                        [key]: { progress: event.progress, status: "running", message: "" }
-                    }));
+                    const incomingProgress = Number(event.progress || 0);
+                    if (incomingProgress < 100) {
+                        setProgressState((prev) => ({
+                            ...prev,
+                            [key]: { progress: incomingProgress, status: "running", message: "" }
+                        }));
+                    } else {
+                        setProgressState((prev) => ({
+                            ...prev,
+                            [key]: { progress: 100, status: "completed", message: "" }
+                        }));
+                        loadTabData(key);
+                    }
                     break;
 
                 case "completed":
@@ -277,7 +340,6 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
                         ...prev,
                         [key]: { progress: 100, status: "completed", message: "" }
                     }));
-                    // Trigger refetch once worker signals it has saved everything into DB
                     loadTabData(key);
                     break;
 
@@ -316,7 +378,6 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         setActiveView("results");
     }, []);
 
-    // Return custom sub-views if not displaying main results dashboard
     if (activeView !== "results") {
         return (
             <ReviewViewManager
