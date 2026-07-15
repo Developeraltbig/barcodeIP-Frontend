@@ -1,0 +1,101 @@
+.rr-progress-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    width: 100%;
+    background-color: var(--background-secondary, #f9fafb);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.rr-progress-card {
+    background: var(--background-primary, #ffffff);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.rr-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.rr-progress-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary, #111827);
+}
+
+.rr-progress-badge {
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.rr-progress-badge.failed {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+.rr-progress-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-secondary, #4b5563);
+    margin: 0 0 1.5rem 0;
+}
+
+.rr-progress-bar-track {
+    background-color: var(--track-color, #e5e7eb);
+    border-radius: 9999px;
+    height: 8px;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.rr-progress-bar-fill {
+    background-color: #2563eb;
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.4s ease-out;
+}
+
+.rr-progress-bar-fill.failed {
+    background-color: #dc2626;
+    width: 100% !important;
+}
+
+.rr-progress-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-tertiary, #6b7280);
+}
+
+/* Dynamic spinner animation for active processing */
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e5e7eb;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: progress-spin 1s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes progress-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -125,12 +125,15 @@ const Login = () => {
     }
 
     try {
-      const userData = await login({
+      const response = await login({
         email: formData.email,
         password: formData.password
       }).unwrap();
 
-      dispatch(setCredentials({ ...userData.data }));
+      dispatch(setCredentials({
+        user: response.data.user,
+        accessToken: response.data.accessToken,
+      }));
       localStorage.setItem("rememberMe", rememberMe);
 
       toast.success("Successfully logged in!");

@@ -1,7 +1,7 @@
 export const TAB_KEYS = {
   PATENT: "patent",
-  PUBLICATIONS: "publications",
-  PRODUCTS: "products",
+  PUBLICATIONS: "publish",
+  PRODUCTS: "product",
   PROVISIONAL: "provisional",
   NON_PROVISIONAL: "nonProvisional"
 };

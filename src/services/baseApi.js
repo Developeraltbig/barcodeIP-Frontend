@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { logout, setCredentials } from "../features/slice/auth/authSlice";
+import { logout, updateAccessToken } from "../features/slice/auth/authSlice";
 
 // let api_url = "http://54.146.252.18:5000";
 const api_url = "http://localhost:5000";
@@ -72,14 +72,12 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
         withCredentials: true,
       }
     );
+    console.log('refreshResult ', refreshResult)
 
     const newAccessToken = refreshResult.data.data.accessToken;
 
     api.dispatch(
-      setCredentials({
-        ...api.getState().auth,
-        accessToken: newAccessToken,
-      })
+      updateAccessToken(newAccessToken)
     );
 
     processQueue(null, newAccessToken);
