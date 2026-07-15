@@ -380,6 +380,10 @@ function ProfilePage() {
                 </button>
             </form>
             <br />
+            <div className="profile-title-block">
+                <h1>Transactions</h1>
+                <p>View and track your workspace credits, including recent top-ups, case creation deductions, and full transaction logs.</p>
+            </div>
             <TransactionTable />
         </section>
     );

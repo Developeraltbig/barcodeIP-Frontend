@@ -313,7 +313,7 @@ function LandingPage() {
                         </button>
                     </div>
                     <p>
-                        $20 per invention case. All selected outputs included.
+                        $25 per invention case. All selected outputs included.
                     </p>
                 </div>
                 {/* New image container placed right after the section closes */}

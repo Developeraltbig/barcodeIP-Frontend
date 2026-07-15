@@ -71,7 +71,7 @@ function TransactionHistoryTable() {
                             <th>CREDITS USED/ADDED</th>
                             <th>MODULE</th>
                             <th>DATE</th>
-                            <th className="invoice-column">INVOICE</th>
+                            {/* <th className="invoice-column">INVOICE</th> */}
                         </tr>
                     </thead>
 
@@ -159,7 +159,7 @@ function TransactionHistoryTable() {
                                             "en-GB"
                                         )}
                                     </td>
-                                    <td className="invoice-column">
+                                    {/* <td className="invoice-column">
                                         <button
                                             type="button"
                                             className="invoice-download-btn"
@@ -168,7 +168,7 @@ function TransactionHistoryTable() {
                                         >
                                             <Download size={18} />
                                         </button>
-                                    </td>
+                                    </td> */}
                                 </tr>
                             ))
                         )}
