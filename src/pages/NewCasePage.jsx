@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useRef } from "react";
 import { PAGES } from "../views/Home/constants";
 import { modules } from "../views/Home/data";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,7 +25,8 @@ function NewCasePage({ onPageChange }) {
     const [showKeyFeatures, setShowKeyFeatures] = useState(false);
     const [currentProject, setCurrentProject] = useState(null);
     const SelectedProject = useSelector((state) => state.userDashboard.selectedProject)
-
+    const fileInputRef = useRef(null);
+    const [selectedFile, setSelectedFile] = useState(null);
     const { data: projectsData } = useFetchAllProjectsQuery();
     const [createProject, { isLoading: isCreatingProject }] = useCreateProjectMutation();
     const [startProcess, { isLoading: isStartingProcess }] = useStartProcessMutation();
@@ -55,10 +56,33 @@ function NewCasePage({ onPageChange }) {
         );
     }, []);
 
+    const handleUploadClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
+
+        if (!file) return;
+
+        const allowedTypes = [
+            "application/pdf",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            alert("Please upload a PDF or DOCX file.");
+            e.target.value = "";
+            return;
+        }
+
+        setSelectedFile(file);
+    };
+
     const handleGenerate = async () => {
 
-        if (!inventionText.trim()) {
-            alert("Please describe your invention first.");
+        if (!inventionText.trim() && !selectedFile) {
+            alert("Please describe your invention or upload a file.");
             return;
         }
 
@@ -67,9 +91,15 @@ function NewCasePage({ onPageChange }) {
             return;
         }
 
+
         const formData = new FormData();
+
         formData.append("text", inventionText);
         formData.append("checked", JSON.stringify(selectedModules));
+
+        if (selectedFile) {
+            formData.append("file", selectedFile);
+        }
 
         try {
             const response = await createProject(formData).unwrap();
@@ -173,11 +203,25 @@ function NewCasePage({ onPageChange }) {
                     </div>
 
                     <div className="input-footer">
-                        <span>{inventionText.length} characters</span>
-
-                        <img src={UploadIcon} alt="" className="upload-icon" />
-                        {/* <button type="button" className="upload-btn" aria-label="Upload file">
-                        </button> */}
+                        <span>
+                            {selectedFile
+                                ? `Selected: ${selectedFile.name}`
+                                : `${inventionText.length} characters`}
+                        </span>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            accept=".pdf,.docx"
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                        />
+                        <img
+                            src={UploadIcon}
+                            alt=""
+                            className="upload-icon"
+                            onClick={handleUploadClick}
+                            style={{ cursor: "pointer" }}
+                        />
                     </div>
                 </div>
 

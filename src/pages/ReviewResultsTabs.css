@@ -144,7 +144,7 @@
 
 /* Tabs */
 .rr-tabs-shell {
-  width: min(960px, calc(100% - 96px));
+  width: min(940px, calc(100% - 96px));
   min-height: 65px;
   margin: -28px auto 34px;
   padding: 14px 60px;
