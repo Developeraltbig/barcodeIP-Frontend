@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { logout, updateAccessToken } from "../features/slice/auth/authSlice";
 
 // let api_url = "http://54.146.252.18:5000";
-const api_url = "http://localhost:5000";
+const api_url = import.meta.env.VITE_API_URL;
 
 let isRefreshing = false;
 let failedQueue = [];

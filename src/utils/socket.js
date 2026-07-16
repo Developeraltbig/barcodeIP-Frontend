@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 //   withCredentials: true
 // });
 
-export const socket = io("http://localhost:5000", {
+export const socket = io(import.meta.env.VITE_API_URL, {
   transports: ["websocket", "polling"], // fallback if websocket fails
   withCredentials: true
 });

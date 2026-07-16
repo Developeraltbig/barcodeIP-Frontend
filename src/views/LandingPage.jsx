@@ -245,7 +245,7 @@ function LandingPage() {
             setLoading(true);
 
             const response = await axios.post(
-                "http://localhost:5000/api/v1/auth/contact",
+                `${import.meta.env.VITE_API_URL}/api/v1/auth/contact`,
                 formData
             );
             console.log('response', response)
