@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
+import "./OoltoComment.css";
 import { useGetSupportAnalystsQuery } from "../features/userApi";
-import "./OoltoComments.css";
 import CommentCard from "../components/CommentCard";
 import RequestCommentsModal from "../components/RequestCommentsModal";
 import RequestOoltoCommentIcon from "../assets/icons/requestOoltoComment.svg";
