@@ -1,9 +1,8 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useGetSupportAnalystsQuery } from "../features/userApi";
-
+import "./OoltoComments.css";
 import CommentCard from "../components/CommentCard";
 import RequestCommentsModal from "../components/RequestCommentsModal";
-import "./OoltoComments.css";
 import RequestOoltoCommentIcon from "../assets/icons/requestOoltoComment.svg";
 
 function BarcodeCommentsPage() {
