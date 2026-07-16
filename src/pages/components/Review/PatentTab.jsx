@@ -106,7 +106,7 @@ function PatentTab({
           </div>
 
           <div className="rr-results-actions">
-            <button
+            {/* <button
               type="button"
               className="rr-strict-toggle"
               onClick={() => onStrictModeChange((prev) => !prev)}
@@ -115,7 +115,7 @@ function PatentTab({
                 <i />
               </span>
               Strict Mode
-            </button>
+            </button> */}
 
             <ActionButton
               onClick={handleDownload}

@@ -300,7 +300,7 @@ function FeatureMappingView({
         </div>
 
         <div className="rr-subpage-actions">
-          <button
+          {/* <button
             type="button"
             className={`rr-strict-toggle ${strictMode ? "active" : ""
               }`}
@@ -313,7 +313,7 @@ function FeatureMappingView({
               <i />
             </span>
             Strict Mode
-          </button>
+          </button> */}
 
           <ActionButton
             variant="outline"

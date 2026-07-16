@@ -427,7 +427,7 @@ function OverlapSummaryView({
             </div>
 
             <div className="rr-subpage-actions">
-              <button
+              {/* <button
                 type="button"
                 className="rr-strict-toggle"
                 aria-pressed={Boolean(strictMode)}
@@ -447,7 +447,7 @@ function OverlapSummaryView({
                 </span>
 
                 Strict Mode
-              </button>
+              </button> */}
 
               <ActionButton
                 variant="outline"
