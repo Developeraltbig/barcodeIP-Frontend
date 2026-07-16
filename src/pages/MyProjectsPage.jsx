@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { PAGES } from "../views/Home/constants";
 import ProjectTableRow from "../components/ProjectTableRow";
-
+import "./OoltoComments.css";
 import NewAnalysisIcon from "../assets/icons/newAnalysis.svg";
 import LeftArrowIcon from "../assets/icons/leftArrow.svg";
 import FilterIcon from "../assets/icons/filter.svg";
@@ -9,7 +9,6 @@ import SearchIcon from "../assets/icons/searchIcon.svg";
 
 import { useFetchAllProjectsQuery } from "../features/userApi";
 // import RequestCommentsModal from "../components/RequestCommentsModal";
-import "../pages/OoltoComments.css";
 import { setSelectedProject } from '../features/slice/userSlice';
 import { useDispatch } from 'react-redux';
 import RequestOoltoCommentsModal from "./components/Review/RequestOoltoCommentsModal";
