@@ -76,7 +76,15 @@ function TabContentRenderer({
             return (
                 <ProductTab
                     results={data.productResults}
-                    onViewProductDetails={(product) => console.log("View product details:", product)}
+                    onViewProductDetails={(product) => {
+                        if (product && product.link) {
+                            // '_blank' opens the URL in a new tab/window
+                            // 'noopener,noreferrer' is a security best-practice for external links
+                            window.open(product.link, "_blank", "noopener,noreferrer");
+                        } else {
+                            console.warn("No link available for this product:", product);
+                        }
+                    }}
                 />
             );
 

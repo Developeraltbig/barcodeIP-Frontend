@@ -7,7 +7,20 @@ import { io } from "socket.io-client";
 
 export const socket = io(import.meta.env.VITE_API_URL, {
   transports: ["websocket", "polling"], // fallback if websocket fails
-  withCredentials: true
+  withCredentials: true,
+  // Connection
+  autoConnect: true,
+  timeout: 20000,
+
+  // Reconnection
+  reconnection: true,
+  reconnectionAttempts: Infinity,
+  reconnectionDelay: 1000,
+  reconnectionDelayMax: 10000,
+  randomizationFactor: 0.5,
+
+  // Always create a new Manager if needed
+  forceNew: false,
 });
 
 socket.on("connect", () => {

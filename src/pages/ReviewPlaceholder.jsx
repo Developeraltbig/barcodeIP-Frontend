@@ -97,17 +97,11 @@ const toArray = (value) => {
     return [];
 };
 
-/**
- * Evaluates the response payload to determine if data is complete.
- * If data is null or incomplete, it falls back to the running progress state.
- */
 const getProgressFromPayload = (payload) => {
     if (!payload) {
-        // If there is no data in the database, initialize with 0% progress and show progress bar
         return { progress: 0, status: "running" };
     }
 
-    // Check progress values (e.g. status_progress or progress)
     const rawProgress = payload.status_progress !== undefined
         ? payload.status_progress
         : (payload.progress !== undefined ? payload.progress : null);
@@ -120,7 +114,6 @@ const getProgressFromPayload = (payload) => {
         return { progress: 100, status: "completed" };
     }
 
-    // Verify completeness using content arrays/objects
     const hasSubstantialContent =
         (Array.isArray(payload.scholarResults) && payload.scholarResults.length > 0) ||
         (Array.isArray(payload.patents) && payload.patents.length > 0) ||
@@ -132,11 +125,26 @@ const getProgressFromPayload = (payload) => {
         return { progress: 100, status: "completed" };
     }
 
-    // Default to running if metadata exists but actual content is not yet complete
     return {
         progress: 0,
         status: "running"
     };
+};
+
+// Helper to determine the default active tab from the project data properties
+const getFirstAvailableTab = (project) => {
+    if (!project) return TAB_KEYS.PATENT;
+
+    const firstMatchingTab = OUTPUT_TABS.find((tab) => {
+        const key = normalizeTabToModuleKey(tab.key);
+        return (
+            project[key] !== undefined ||
+            project[tab.key] !== undefined ||
+            (Array.isArray(project.modules) && project.modules.includes(key))
+        );
+    });
+
+    return firstMatchingTab ? firstMatchingTab.key : (OUTPUT_TABS[0]?.key || TAB_KEYS.PATENT);
 };
 
 function ReviewPlaceholder({ onPageChange, projectId }) {
@@ -151,7 +159,6 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
     const [tabRuntime, setTabRuntime] = useState(INITIAL_TAB_RUNTIME);
     const [showKeyFeature, setShowKeyFeature] = useState(false);
 
-    // Dynamic state mapping to capture real-time updates for each tab
     const [progressState, setProgressState] = useState({
         [MODULE_KEYS.PATENT]: { progress: 0, status: "running", message: "" },
         [MODULE_KEYS.PUBLICATIONS]: { progress: 0, status: "running", message: "" },
@@ -170,6 +177,16 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
     const currentProjectId = useMemo(() => {
         return projectId || DashboardData?._id || DashboardData?.project_id || DashboardData?.id || id || null;
     }, [projectId, DashboardData, id]);
+
+    // Handle dynamic selection of the active tab based on project configuration
+    useEffect(() => {
+        if (DashboardData) {
+            const defaultTab = getFirstAvailableTab(DashboardData);
+            if (defaultTab && defaultTab !== activeTab) {
+                setActiveTab(defaultTab);
+            }
+        }
+    }, [DashboardData]);
 
     const activeModuleKey = useMemo(() => normalizeTabToModuleKey(activeTab), [activeTab]);
 
@@ -229,7 +246,6 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         return hasData ? [projectNonProvisional] : null;
     }, [projectNonProvisional]);
 
-    // Isolated lazy fetching wrapper
     const loadTabData = useCallback(async (moduleKey) => {
         if (!currentProjectId) return;
         const target = apiByModuleKey[moduleKey];
@@ -251,7 +267,6 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
             }));
         } catch (error) {
             console.error(`Error loading data for module ${moduleKey}:`, error);
-            // Default to running with progress 0 if backend is uncooperative on initial check
             setProgressState(prev => ({
                 ...prev,
                 [moduleKey]: { progress: 0, status: "running", message: "" }
@@ -259,23 +274,19 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         }
     }, [currentProjectId, apiByModuleKey, dispatch]);
 
-    // 🚀 INITIALIZATION: Fetch status for ALL tabs in parallel on mount/project load
+    // Fetch API data ONLY for the active module when it transitions
     useEffect(() => {
-        if (!currentProjectId) return;
+        if (currentProjectId && activeModuleKey) {
+            loadTabData(activeModuleKey);
+        }
+    }, [currentProjectId, activeModuleKey, loadTabData]);
 
-        Object.keys(apiByModuleKey).forEach((moduleKey) => {
-            loadTabData(moduleKey);
-        });
-    }, [currentProjectId, loadTabData, apiByModuleKey]);
-
-    // Redux synchronization to update local state hooks when changes occur
     useEffect(() => {
         const syncModule = (dataState, moduleKey) => {
             if (!dataState) return;
             const { progress, status } = getProgressFromPayload(dataState);
 
             setProgressState(prev => {
-                // Avoid overriding active sockets if they are tracking a higher progress value
                 if (prev[moduleKey]?.status === "running" && prev[moduleKey]?.progress > progress) {
                     return prev;
                 }
@@ -298,7 +309,6 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         syncModule(projectNonProvisional, MODULE_KEYS.NON_PROVISIONAL);
     }, [projectPatent, projectPublication, projectProduct, projectProvisional, projectNonProvisional]);
 
-    // WebSocket event coordinator
     useEffect(() => {
         if (!id) return;
 
