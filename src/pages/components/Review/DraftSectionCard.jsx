@@ -1,10 +1,11 @@
 import React, { memo, useState, useEffect } from "react";
-
+import { useParams } from 'react-router-dom';
 import CopyFilesIcon from "../../../assets/icons/copyFile.svg";
 import EditIcon from "../../../assets/icons/edit_icon.svg";
 import RegenerateIcon from "../../../assets/icons/regenerate_icon.svg";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
+import { socket } from "../../../utils/socket";
 
 import {
   useUpdateProposalDraftSectionMutation,
@@ -41,6 +42,7 @@ function DraftSectionCard({
   isActive,
   onFocus
 }) {
+  const { id } = useParams();
   const [content, setContent] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
@@ -62,6 +64,42 @@ function DraftSectionCard({
     setContent(value);
     setDraftContent(value);
   }, [section?.id, section?.content]);
+
+
+  const handleGenerated = (data) => {
+    // console.log("Socket Response:", data);
+
+    // Ignore events for other projects
+    if (data.projectId !== id) return;
+
+    // console.log("Socket field:", data.field);
+    // console.log("Section field:", section.id);
+
+    // Ignore events for other sections
+    if (data.field !== section.id) return;
+
+    // Update this section
+    setContent(data.content);
+    setDraftContent(data.content);
+
+    // console.log("Updated:", section.id);
+  };
+
+  useEffect(() => {
+    if (!id) return;
+
+    // console.log("Provisional room", id);
+    socket.on(
+      "provisional_field_generated",
+      handleGenerated
+    );
+    return () => {
+      socket.off(
+        "provisional_field_generated",
+        handleGenerated
+      );
+    };
+  }, [id, section.id]);
 
   const copySection = async () => {
     try {
