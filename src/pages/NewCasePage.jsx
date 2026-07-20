@@ -16,6 +16,7 @@ import UploadIcon from "../assets/icons/uploadIcon.svg";
 import AiGeneratedKeyIcon from "../assets/icons/ai-generated-key-feature.svg";
 import FullPageLoader from "../components/FullPageLoader";
 import { setSelectedProject } from '../features/slice/userSlice';
+import { toast } from "react-toastify";
 
 
 function NewCasePage({ onPageChange }) {
@@ -84,12 +85,12 @@ function NewCasePage({ onPageChange }) {
     const handleGenerate = async () => {
 
         if (!inventionText.trim() && !selectedFile) {
-            alert("Please describe your invention or upload a file.");
+            toast.error("Please describe your invention or upload a file.");
             return;
         }
 
         if (selectedModules.length === 0) {
-            alert("Please select at least one output.");
+            toast.error("Please select at least one output.");
             return;
         }
 
@@ -105,7 +106,6 @@ function NewCasePage({ onPageChange }) {
 
         try {
             const response = await createProject(formData).unwrap();
-
             const newProjectData = { ...(response?.data || response) };
             const newProjectId =
                 newProjectData?.project_id ||
@@ -130,9 +130,9 @@ function NewCasePage({ onPageChange }) {
             console.error("Create Project is failed", err);
 
             if (err?.status === 400) {
-                alert(err?.data?.error || "Something went wrong.");
+                toast.error(err?.data?.error || "Something went wrong.");
             } else {
-                alert("Create failed. Please try again.");
+                toast.error("Create failed. Please try again.");
             }
         }
     };
@@ -160,9 +160,9 @@ function NewCasePage({ onPageChange }) {
             console.error("Project Generation Failed:", err);
 
             if (err?.status === 400) {
-                alert(err?.data?.error || "Something went wrong.");
+                toast.error(err?.data?.error || "Something went wrong.");
             } else {
-                alert("Project generation failed. Please try again.");
+                toast.error("Project generation failed. Please try again.");
             }
         }
 
