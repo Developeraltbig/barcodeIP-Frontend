@@ -3,16 +3,19 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from "./ProductCard";
-import DownloadIcon from "../../../assets/icons/download.svg";
+import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 import { useParams } from 'react-router-dom';
 import ActionButton from "./ActionButton";
+import {
+  useStartProcessMutation,
+} from "../../../features/userApi";
 
 function ProductTab({ results, onViewProductDetails, onDownload }) {
   const { id } = useParams();
   const { token } = useSelector((state) => state.auth);
   const [downloading, setDownloading] = useState(false);
+  const [startProcess, { isLoading: isStartingProcess }] = useStartProcessMutation();
 
-  console.log('results --', results)
   const handleDownload = async () => {
     try {
       setDownloading(true)
@@ -60,6 +63,27 @@ function ProductTab({ results, onViewProductDetails, onDownload }) {
 
     }
   };
+
+  const handleRegenerate = async () => {
+    try {
+      const data = {
+        project_id: id,
+        checked: ["product"], // regenerate only Product module
+      };
+
+      const response = await startProcess(data).unwrap();
+
+      if (response.success) {
+        toast.success("Product regeneration started successfully.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(
+        err?.data?.error || "Failed to regenerate product report."
+      );
+    }
+  };
+
   return (
     <section className="rr-product-panel">
       <div className="rr-tab-page-head">
@@ -86,13 +110,33 @@ function ProductTab({ results, onViewProductDetails, onDownload }) {
         </ActionButton>
       </div>
       <div className="rr-product-list">
-        {results.map((item) => (
-          <ProductCard
-            key={item.id}
-            item={item}
-            onViewDetails={() => onViewProductDetails?.(item)}
-          />
-        ))}
+        {results?.length > 0 ? (
+          results.map((item, index) => (
+            <ProductCard
+              key={item.id}
+              item={item}
+              onViewDetails={() => onViewProductDetails?.(item)}
+            />
+          ))
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              padding: "40px",
+              textAlign: "center",
+              color: "#666",
+              fontSize: "16px",
+            }}
+          >
+            No product comparison found.
+            <br />
+            Click <strong><ActionButton
+              onClick={handleRegenerate}
+            >
+              {"Regenerate Product"}
+            </ActionButton></strong> to generate product matches.
+          </div>
+        )}
       </div>
     </section>
   );

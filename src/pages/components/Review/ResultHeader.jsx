@@ -24,6 +24,7 @@ function ResultHeader({
       setDownloading(true)
       await handlePatentDownload(project._id)
       await handlePublicationDownload(project._id)
+      await handleProductDownload(project._id)
       await handleProvisionalDownload(project._id)
       await handleNonProvisionalDownload(project._id)
       toast.success("All Report Generated is Successfully");
@@ -204,6 +205,51 @@ function ResultHeader({
         "PDF download error:",
         error
       );
+    }
+  };
+
+  const handleProductDownload = async (projectId) => {
+    try {
+      const projectId = projectId;
+      if (!projectId) {
+        console.error("Project ID missing");
+        return;
+      }
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/v1/projects/product/download-pdf/${projectId}`,
+        {
+          responseType: "arraybuffer",
+
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/pdf",
+          },
+        }
+      );
+      const pdfBlob = new Blob(
+        [response.data],
+        {
+          type: "application/pdf",
+        }
+      );
+      const url = window.URL.createObjectURL(pdfBlob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Product.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+      }, 1000);
+      toast.success("Product Generated is Successfully");
+    } catch (error) {
+      toast.error("PDF download error: Contact administration");
+      console.error(
+        "PDF download error:",
+        error
+      );
+
     }
   };
 

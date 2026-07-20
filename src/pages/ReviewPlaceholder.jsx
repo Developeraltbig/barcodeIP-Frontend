@@ -134,17 +134,19 @@ const getProgressFromPayload = (payload) => {
 // Helper to determine the default active tab from the project data properties
 const getFirstAvailableTab = (project) => {
     if (!project) return TAB_KEYS.PATENT;
+    // console.log('project.module', project.module)
+    // console.log('project.module first ', project.module[0])
+    // const firstMatchingTab = OUTPUT_TABS.find((tab) => {
+    //     const key = normalizeTabToModuleKey(tab.key);
+    //     return (
+    //         project[key] !== undefined ||
+    //         project[tab.key] !== undefined ||
+    //         (Array.isArray(project.module) && project.module.includes(key))
+    //     );
+    // });
 
-    const firstMatchingTab = OUTPUT_TABS.find((tab) => {
-        const key = normalizeTabToModuleKey(tab.key);
-        return (
-            project[key] !== undefined ||
-            project[tab.key] !== undefined ||
-            (Array.isArray(project.modules) && project.modules.includes(key))
-        );
-    });
-
-    return firstMatchingTab ? firstMatchingTab.key : (OUTPUT_TABS[0]?.key || TAB_KEYS.PATENT);
+    // return firstMatchingTab ? firstMatchingTab.key : (OUTPUT_TABS[0]?.key || TAB_KEYS.PATENT);
+    return project.module[0];
 };
 
 function ReviewPlaceholder({ onPageChange, projectId }) {
@@ -174,6 +176,8 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
     const projectProvisional = useSelector((state) => state.userDashboard.projectProvisional);
     const projectNonProvisional = useSelector((state) => state.userDashboard.projectNonProvisional);
 
+    console.log('DashboardData', DashboardData);
+
     const currentProjectId = useMemo(() => {
         return projectId || DashboardData?._id || DashboardData?.project_id || DashboardData?.id || id || null;
     }, [projectId, DashboardData, id]);
@@ -185,6 +189,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
             if (defaultTab && defaultTab !== activeTab) {
                 setActiveTab(defaultTab);
             }
+            console.log('defaultTab', defaultTab)
         }
     }, [DashboardData]);
 
@@ -233,7 +238,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
 
     const productResults = useMemo(() => {
         const data = toArray(projectProduct);
-        return data.length > 0 ? data : PRODUCT_RESULTS;
+        return data.length > 0 ? data : null;
     }, [projectProduct]);
 
     const provisionalSections = useMemo(() => {

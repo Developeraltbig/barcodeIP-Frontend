@@ -74,7 +74,7 @@ function NewCasePage({ onPageChange }) {
         ];
 
         if (!allowedTypes.includes(file.type)) {
-            alert("Please upload a PDF or DOCX file.");
+            toast.error("Please upload a PDF or DOCX file.");
             e.target.value = "";
             return;
         }
