@@ -425,7 +425,7 @@ const Login = () => {
                         mb: "26px"
                       }}
                     >
-                      <FormControlLabel
+                      {/* <FormControlLabel
                         control={
                           <Checkbox
                             size="small"
@@ -449,7 +449,7 @@ const Login = () => {
                             Remember me
                           </Typography>
                         }
-                      />
+                      /> */}
 
                       <Link
                         component="button"
