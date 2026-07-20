@@ -8,7 +8,8 @@ import KeyFeaturesReview from "../views/Home/KeyFeaturesReview";
 import {
     useCreateProjectMutation,
     useFetchAllProjectsQuery,
-    useStartProcessMutation
+    useStartProcessMutation,
+    useGetWalletDetailsQuery
 } from "../features/userApi";
 import SearchIcon from "../assets/icons/searchIcon.svg";
 import UploadIcon from "../assets/icons/uploadIcon.svg";
@@ -30,6 +31,7 @@ function NewCasePage({ onPageChange }) {
     const { data: projectsData } = useFetchAllProjectsQuery();
     const [createProject, { isLoading: isCreatingProject }] = useCreateProjectMutation();
     const [startProcess, { isLoading: isStartingProcess }] = useStartProcessMutation();
+    const { data: walletDetails, refetch } = useGetWalletDetailsQuery();
 
     const projects = useMemo(() => {
         if (!projectsData) return null;
@@ -121,6 +123,8 @@ function NewCasePage({ onPageChange }) {
                 setShowKeyFeatures(true);
             } else {
                 onPageChange(PAGES.REVIEW, newProjectId);
+                // Fetch wallet details
+                await refetch();
             }
         } catch (err) {
             console.error("Create Project is failed", err);
@@ -149,6 +153,8 @@ function NewCasePage({ onPageChange }) {
             console.log("response:", response);
             if (response.success) {
                 onPageChange(PAGES.REVIEW, SelectedProject?.project_id);
+                // Fetch wallet details
+                await refetch();
             }
         } catch (err) {
             console.error("Project Generation Failed:", err);
