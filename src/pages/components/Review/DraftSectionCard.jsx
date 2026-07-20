@@ -15,12 +15,13 @@ import {
 function DraftIconButton({
   children,
   label,
-  onClick
+  onClick,
+  disabled = false,
 }) {
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
+    if (disabled) return;
     onClick?.(e);
   };
 
@@ -31,6 +32,12 @@ function DraftIconButton({
       aria-label={label}
       className="draft-card-action-btn"
       onClick={handleClick}
+      disabled={disabled}
+      style={{
+        pointerEvents: disabled ? "none" : "auto",
+        opacity: disabled ? 0.6 : 1,
+        cursor: disabled ? "not-allowed" : "pointer",
+      }}
     >
       {children}
     </button>
@@ -58,6 +65,9 @@ function DraftSectionCard({
   const [draftContent, setDraftContent] =
     useState("");
 
+  const [editingSection, setEditingSection] = useState(false);
+  const [regenerating, setRegenerating] = useState(false);
+
   useEffect(() => {
     const value = section?.content || "";
 
@@ -81,7 +91,7 @@ function DraftSectionCard({
     // Update this section
     setContent(data.content);
     setDraftContent(data.content);
-
+    setRegenerating(false);
     // console.log("Updated:", section.id);
   };
 
@@ -123,7 +133,7 @@ function DraftSectionCard({
 
   const handleSave = async () => {
     try {
-
+      setEditingSection(true);
       await updateSection({
         projectId: section._id,
         field: section.id,
@@ -132,10 +142,12 @@ function DraftSectionCard({
 
       setContent(draftContent);
       setIsEditing(false);
-
+      setEditingSection(false);
       console.log("Section Updated");
 
     } catch (error) {
+      setEditingSection(false);
+
       console.error(
         "Update Failed:",
         error
@@ -151,6 +163,7 @@ function DraftSectionCard({
   const regenerateSection = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+    setRegenerating(true);
 
     try {
 
@@ -165,6 +178,7 @@ function DraftSectionCard({
       );
 
     } catch (error) {
+      setRegenerating(false);
       console.error(
         "Regenerate Failed:",
         error
@@ -223,23 +237,25 @@ function DraftSectionCard({
           <DraftIconButton
             label="Edit"
             onClick={handleEdit}
+            disabled={regenerating || editingSection}
           >
-            <img
-              src={EditIcon}
-              alt="Edit"
-              draggable={false}
-            />
+            {editingSection ? (
+              <span className="spinner" />
+            ) : (
+              <img src={EditIcon} alt="Edit" />
+            )}
           </DraftIconButton>
 
           <DraftIconButton
             label="Regenerate"
             onClick={regenerateSection}
+            disabled={regenerating}
           >
-            <img
-              src={RegenerateIcon}
-              alt="Regenerate"
-              draggable={false}
-            />
+            {regenerating ? (
+              <span className="spinner" />
+            ) : (
+              <img src={RegenerateIcon} alt="Regenerate" />
+            )}
           </DraftIconButton>
         </div>
       </header>

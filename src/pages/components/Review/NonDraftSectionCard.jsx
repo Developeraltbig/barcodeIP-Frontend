@@ -21,7 +21,8 @@ import {
 function DraftIconButton({
   children,
   label,
-  onClick
+  onClick,
+  disabled = false,
 }) {
   return (
     <button
@@ -32,7 +33,14 @@ function DraftIconButton({
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (disabled) return;
         onClick?.(e);
+      }}
+      disabled={disabled}
+      style={{
+        pointerEvents: disabled ? "none" : "auto",
+        opacity: disabled ? 0.6 : 1,
+        cursor: disabled ? "not-allowed" : "pointer",
       }}
     >
       {children}
@@ -69,6 +77,10 @@ function NonDraftSectionCard({
     { isLoading: isRegenerating }
   ] = useRegenerateNonProvisionalSectionMutation();
 
+  const [editingSection, setEditingSection] = useState(false);
+  const [regenerating, setRegenerating] = useState(false);
+
+
   useEffect(() => {
     const value = section?.content || "";
 
@@ -102,6 +114,7 @@ function NonDraftSectionCard({
     // Update this section
     setContent(data.content);
     setDraftContent(data.content);
+    setRegenerating(false);
 
     // console.log("Updated:", section.id);
   };
@@ -155,7 +168,7 @@ function NonDraftSectionCard({
 
   const handleSave = async () => {
     try {
-
+      setEditingSection(true);
       await updateSection({
         projectId: section._id,
         field: section.id,
@@ -166,8 +179,9 @@ function NonDraftSectionCard({
       setIsEditing(false);
 
       console.log("Updated Successfully");
-
+      setEditingSection(false);
     } catch (error) {
+      setEditingSection(false);
       console.error(error);
     }
   };
@@ -180,7 +194,7 @@ function NonDraftSectionCard({
   const regenerateSection = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
+    setRegenerating(true);
     try {
 
       await regenerateSectionApi({
@@ -194,6 +208,7 @@ function NonDraftSectionCard({
       );
 
     } catch (error) {
+      setRegenerating(false);
       console.error(error);
     }
   };
@@ -255,32 +270,31 @@ function NonDraftSectionCard({
                 />
               </button>
 
-              <button
-                type="button"
-                className="draft-card-action-btn"
+              <DraftIconButton
+                label="Edit"
                 onClick={handleEdit}
+                disabled={regenerating || editingSection}
               >
-                <img
-                  src={EditIcon}
-                  alt="Edit"
-                  draggable={false}
-                />
-              </button>
+                {editingSection ? (
+                  <span className="spinner" />
+                ) : (
+                  <img src={EditIcon} alt="Edit" />
+                )}
+              </DraftIconButton>
             </>
           )}
 
-          <button
-            type="button"
-            className="draft-card-action-btn"
+          <DraftIconButton
+            label="Regenerate"
             onClick={regenerateSection}
-            disabled={isRegenerating}
+            disabled={regenerating}
           >
-            <img
-              src={RegenerateIcon}
-              alt="Regenerate"
-              draggable={false}
-            />
-          </button>
+            {regenerating ? (
+              <span className="spinner" />
+            ) : (
+              <img src={RegenerateIcon} alt="Regenerate" />
+            )}
+          </DraftIconButton>
         </div>
       </header>
 
