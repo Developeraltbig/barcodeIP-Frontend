@@ -145,7 +145,7 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                                             key={project?._id || project?.project_id || index}
                                             type="button"
                                             className="recent-project-item"
-                                            onClick={() => onPageChange(PAGES.PROJECTS)}
+                                            onClick={() => onPageChange(PAGES.REVIEW, project?._id)}
                                         >
                                             <span>{getProjectTitle(project)}</span>
                                             <small>CASE ID : {getProjectCaseId(project)}</small>
