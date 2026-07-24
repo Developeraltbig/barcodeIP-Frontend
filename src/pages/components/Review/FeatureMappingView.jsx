@@ -295,7 +295,14 @@ function FeatureMappingView({
           <h1>Feature Mapping</h1>
 
           <p>
-            <span>{patentId}</span> · {patentTitle}
+            <a
+              href={`https://patents.google.com/${patentId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <span>{patentId}</span> · {patentTitle}
+            </a>
           </p>
         </div>
 
@@ -395,14 +402,16 @@ function FeatureMappingView({
                     </td>
 
                     <td>
-                      <span
-                        className={`rr-where-pill ${row.whereFound === "Not found"
-                          ? "not-found"
-                          : ""
+                      <a
+                        href={`https://patents.google.com/${patentId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`rr-where-pill ${row.whereFound === "Not found" ? "not-found" : ""
                           }`}
+                        style={{ textDecoration: "none", cursor: "pointer" }}
                       >
                         {row.whereFound}
-                      </span>
+                      </a>
                     </td>
 
                     <td>

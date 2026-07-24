@@ -12,7 +12,14 @@ function PatentResultCard({ count, result, onViewMapping, onViewDetails, onViewO
       <div className="rr-result-left">
         <div className="rr-result-meta">
           <strong>{count}</strong>
-          <span>{result.patent_id}</span>
+
+          <span><a
+            href={`https://patents.google.com/${result.patent_id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            {result.patent_id}</a></span>
           <em>{result.publication_date}</em>
           <b>Mapping Ready</b>
         </div>
