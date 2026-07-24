@@ -8,6 +8,7 @@ import CopyIcon from "../../assets/icons/copy.svg";
 import ArrowRightIconIcon from "../../assets/icons/arrowright-filled.svg";
 import RequestOoltoComment1Icon from "../../assets/icons/requestOoltoComment1.svg";
 import PlusIcon from "../../assets/icons/plus.svg";
+import { toast } from "react-toastify";
 
 
 const INITIAL_PRIMARY_FEATURES = [
@@ -591,8 +592,9 @@ function GeneratedKeyFeatures({ inventionText, selectedModules, modules, onBack,
     const copyText = async (text) => {
         try {
             await navigator.clipboard.writeText(text);
+            toast.success("String Query is Copied successfully!");
         } catch (error) {
-            console.error("Copy failed:", error);
+            toast.error("Failed to copy text:");
         }
     };
 
@@ -633,6 +635,24 @@ function GeneratedKeyFeatures({ inventionText, selectedModules, modules, onBack,
         });
     };
 
+    const copyAllText = (queriesArray) => {
+        // 1. Extract only the 'string' values and ignore empty ones
+        const formattedText = queriesArray
+            .map((item) => item.string)
+            .filter((str) => str && str.trim() !== '')
+            .join('\n\n'); // Joins them with a blank line in between
+
+        if (!formattedText) return;
+
+        // 2. Copy to clipboard using the Clipboard API
+        navigator.clipboard.writeText(formattedText)
+            .then(() => {
+                toast.success("All String Query is Copied successfully!");
+            })
+            .catch((err) => {
+                toast.error("Failed to copy text:");
+            });
+    };
 
     return (
         <>
@@ -709,7 +729,7 @@ function GeneratedKeyFeatures({ inventionText, selectedModules, modules, onBack,
                             <button
                                 type="button"
                                 className="kf-copy-all-btn"
-                                onClick={() => copyText("allKeyStringsText")}
+                                onClick={() => copyAllText(queries)}
                             >
                                 <img src={CopyIcon} alt="" className="copy-icon" /> Copy All
                             </button>

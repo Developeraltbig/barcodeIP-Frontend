@@ -61,7 +61,9 @@ function ProjectTableRow({ project, onOpen, openModal }) {
             <td>
                 <div className="table-tags">
                     {tags.map((tag) => (
-                        <span key={tag}>{tag}</span>
+                        <span key={tag}>
+                            {tag.charAt(0).toUpperCase() + tag.slice(1)}
+                        </span>
                     ))}
                 </div>
             </td>

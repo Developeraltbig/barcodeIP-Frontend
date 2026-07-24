@@ -43,7 +43,7 @@ export const modules = [
     },
     {
         id: "publish",
-        title: "Publications Search",
+        title: "Publication Search",
         desc: "Find papers and references",
         icon: PublicationSearchIcon,
     },
