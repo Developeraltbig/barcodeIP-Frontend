@@ -102,7 +102,7 @@ function PatentTab({
         <div className="rr-results-summary-head">
           <div>
             <h2>Patent Search Results</h2>
-            <p>Top 100 results are shown. The first 10 have mapping and overlap summary ready.</p>
+            <p>The Top 10 have mapping and overlap summary ready.</p>
           </div>
 
           <div className="rr-results-actions">
@@ -146,6 +146,7 @@ function PatentTab({
         {results[0]?.novelty_analysis?.selectedPatentIds?.map((result, index) => (
           <PatentResultCard
             key={index}
+            count={index + 1}
             result={result}
             onViewMapping={() => onViewMapping(result)}
             onViewDetails={() => onViewDetails(result)}

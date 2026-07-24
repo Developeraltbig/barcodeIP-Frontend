@@ -5,14 +5,13 @@ import overlapSummaryIcon from "../../../assets/icons/overlapSummary.svg";
 import viewMappingIcon from "../../../assets/icons/viewMapping.svg";
 import carbonViewIcon from "../../../assets/icons/carbon_view.svg";
 
-function PatentResultCard({ result, onViewMapping, onViewDetails, onViewOverlap }) {
+function PatentResultCard({ count, result, onViewMapping, onViewDetails, onViewOverlap }) {
 
-  console.log('result---', result)
   return (
     <article className="rr-patent-card">
       <div className="rr-result-left">
         <div className="rr-result-meta">
-          <strong>#{result.id}</strong>
+          <strong>{count}</strong>
           <span>{result.patent_id}</span>
           <em>{result.publication_date}</em>
           <b>Mapping Ready</b>

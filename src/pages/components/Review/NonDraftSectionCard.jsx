@@ -17,6 +17,7 @@ import {
   useUpdateNonProvisionalSectionMutation,
   useRegenerateNonProvisionalSectionMutation
 } from "../../../features/nonProvisionalDraftApi";
+import { toast } from "react-toastify";
 
 function DraftIconButton({
   children,
@@ -136,7 +137,6 @@ function NonDraftSectionCard({
   }, [id, section.id]);
 
   const copySection = async (e) => {
-    console.log("COPY CLICKED");
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -153,13 +153,12 @@ function NonDraftSectionCard({
 
       await navigator.clipboard.writeText(text);
 
-      console.log("Copied");
+      toast.success("Copied successfully!");
     } catch (error) {
-      console.error(error);
+      toast.error("Failed to copy text:");
     }
   };
   const handleEdit = (e) => {
-    console.log("EDIT CLICKED");
     e.preventDefault();
     e.stopPropagation();
 
@@ -178,11 +177,11 @@ function NonDraftSectionCard({
       setContent(draftContent);
       setIsEditing(false);
 
-      console.log("Updated Successfully");
       setEditingSection(false);
+      toast.success("Updated Successfully");
     } catch (error) {
       setEditingSection(false);
-      console.error(error);
+      toast.error("Failed to update contact adminstration:");
     }
   };
 
@@ -206,10 +205,10 @@ function NonDraftSectionCard({
         "Regeneration Started:",
         section.id
       );
-
+      toast.success("Regenerate Process Start Successfully");
     } catch (error) {
       setRegenerating(false);
-      console.error(error);
+      toast.error("Failed to regenerate contact adminstration:");
     }
   };
 
@@ -258,17 +257,17 @@ function NonDraftSectionCard({
         }}>
           {!isDiagramSection && (
             <>
-              <button
-                type="button"
-                className="draft-card-action-btn"
+              <DraftIconButton
+                label="Copy"
                 onClick={copySection}
+
               >
                 <img
                   src={CopyFilesIcon}
                   alt="Copy"
                   draggable={false}
                 />
-              </button>
+              </DraftIconButton>
 
               <DraftIconButton
                 label="Edit"

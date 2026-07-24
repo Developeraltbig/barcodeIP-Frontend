@@ -26,8 +26,6 @@ export const patentApi = baseApi.injectEndpoints({
         url: `/api/v1/patents/description?url=${encodeURIComponent(url)}`,
         method: "GET",
       }),
-      // 🌟 ADD THIS: Forces RTK Query to treat the response data as raw text/HTML
-      responseHandler: (response) => response.text(),
     }),
     // GET: GenerateAll
     generateAllPatent: builder.query({

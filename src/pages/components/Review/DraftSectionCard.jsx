@@ -6,7 +6,7 @@ import RegenerateIcon from "../../../assets/icons/regenerate_icon.svg";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import { socket } from "../../../utils/socket";
-
+import { toast } from "react-toastify";
 import {
   useUpdateProposalDraftSectionMutation,
   useRegenerateProposalDraftSectionMutation,
@@ -117,14 +117,13 @@ function DraftSectionCard({
 
       await navigator.clipboard.writeText(plainText);
 
-      console.log("Copied successfully");
+      toast.success("Copied successfully!");
     } catch (error) {
-      console.error("Copy failed:", error);
+      toast.error("Failed to copy text:");
     }
   };
 
   const handleEdit = (e) => {
-    console.log("EDIT CLICKED");
     e.preventDefault();
     e.stopPropagation();
 
@@ -143,15 +142,10 @@ function DraftSectionCard({
       setContent(draftContent);
       setIsEditing(false);
       setEditingSection(false);
-      console.log("Section Updated");
-
+      toast.success("Updated Successfully");
     } catch (error) {
       setEditingSection(false);
-
-      console.error(
-        "Update Failed:",
-        error
-      );
+      toast.error("Failed to update contact adminstration:");
     }
   };
 
@@ -172,17 +166,11 @@ function DraftSectionCard({
         field: section.id,
       }).unwrap();
 
-      console.log(
-        "Regeneration Started:",
-        section.id
-      );
+      toast.success("Regenerate Process Start Successfully");
 
     } catch (error) {
       setRegenerating(false);
-      console.error(
-        "Regenerate Failed:",
-        error
-      );
+      toast.error("Failed to regenerate contact adminstration:");
     }
   };
 

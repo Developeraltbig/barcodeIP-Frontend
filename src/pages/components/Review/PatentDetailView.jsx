@@ -1,13 +1,11 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import ActionButton from "./ActionButton";
-// 🌟 1. IMPORT skipToken FROM REDUX TOOLKIT
 import { skipToken } from "@reduxjs/toolkit/query";
 import {
   BIBLIOGRAPHIC_DATA,
   CLASSIFICATIONS,
   PATENT_CITATIONS
 } from "../../data/reviewResultsData";
-
 import viewMappingIcon from "../../../assets/icons/carbon_view1.svg";
 import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 import LeftArrowIcon from "../../../assets/icons/leftArrow.svg";
@@ -54,20 +52,17 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
 
   console.log("Patent:", patent);
   const images = data?.data?.data[0]?.images || [];
-
   const biblioRows = [
     ["Publication Number", data?.data?.data[0]?.publication_number || "-"],
     ["Publication Date", data?.data?.data[0]?.publication_date || "-"],
     ["Application Number", data?.data?.data[0]?.application_number || "-"],
-    ["Inventor", data?.data?.data[0]?.inventors?.join(", ") || "-"],
+    ["Inventor", data?.data?.data[0]?.inventors?.map(i => i.name).join(", ") || "-"],
     ["Assignee", data?.data?.data[0]?.assignees?.join(", ") || "-"],
     ["Patent", data?.data?.patent_id || "-"],
   ];
 
   const descriptionUrl = data?.data?.data?.[0]?.description_link;
-  console.log('descriptionUrl --', descriptionUrl);
-
-  // 🌟 2. USE skipToken SO IT NEVER FIRES AN EMPTY OR "UNDEFINED" REQ
+  const [selectedImage, setSelectedImage] = useState(null);
   const {
     data: descriptionHtml,
     isLoading: isDescLoading,
@@ -107,7 +102,7 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
       <div className="rr-figure-tabs">
         {images.length > 0 ? (
           images.map((image, index) => (
-            <button key={index} type="button" className="rr-figure-tab">
+            <button key={index} type="button" className="rr-figure-tab" onClick={() => setSelectedImage(image)}>
               <img src={image} alt={`Patent Figure ${index + 1}`} loading="lazy" />
               <span>Patent Figure {index + 1}</span>
             </button>
@@ -116,6 +111,21 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
           <div className="rr-no-images">No patent figures available.</div>
         )}
       </div>
+
+      {selectedImage && (
+        <div className="rr-image-modal-overlay" onClick={() => setSelectedImage(null)}>
+          <div className="rr-image-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="rr-modal-close-btn"
+              onClick={() => setSelectedImage(null)}
+            >
+              &times;
+            </button>
+            <img src={selectedImage} alt="Patent Figure Expanded" />
+          </div>
+        </div>
+      )}
 
       <div className="rr-detail-grid">
         <section className="rr-detail-card">
@@ -138,7 +148,7 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
         {descriptionHtml ? (
           <div
             className="rr-description-text"
-            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+            dangerouslySetInnerHTML={{ __html: descriptionHtml.data }}
           />
         ) : (
           !isDescLoading && !descError && <p>No description available.</p>
