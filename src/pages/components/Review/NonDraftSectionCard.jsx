@@ -208,7 +208,11 @@ function NonDraftSectionCard({
       toast.success("Regenerate Process Start Successfully");
     } catch (error) {
       setRegenerating(false);
-      toast.error("Failed to regenerate contact adminstration:");
+      if (error.status == 403 && error.data.status == "error") {
+        toast.error(error.data.message);
+      } else {
+        toast.error("Failed to regenerate contact adminstration:");
+      }
     }
   };
 
