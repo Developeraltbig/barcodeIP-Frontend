@@ -15,7 +15,7 @@ import { LinearProgress, Typography } from "@mui/material";
 
 const DraftSection = Loadable(lazy(() => import('./DraftSection')));
 const DiagramSection = Loadable(lazy(() => import('./DiagramSection')));
-const useAuthStore = Loadable(lazy(() => import('../../../store/authStore')));
+// const useAuthStore = Loadable(lazy(() => import('../../../store/authStore')));
 
 const DraftMasterResult = ({ data, progress }) => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const DraftMasterResult = ({ data, progress }) => {
   const { projectId } = useParams();
   const [draftData, setDraftData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { toggleConsultModal, socket } = useAuthStore();
+  // const { toggleConsultModal, socket } = useAuthStore();
   const [inventionData, setInventionData] = useState(null);
   const [generatingSections, setGeneratingSections] = useState({});
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
