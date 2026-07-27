@@ -462,7 +462,7 @@ function OverlapSummaryView({
                 View Mapping
               </ActionButton>
 
-              <ActionButton
+              {/* <ActionButton
                 onClick={onDownloadMapping}
               >
                 <img
@@ -472,7 +472,7 @@ function OverlapSummaryView({
                 />
 
                 Download Mapping
-              </ActionButton>
+              </ActionButton> */}
             </div>
           </div>
 

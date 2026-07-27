@@ -92,10 +92,10 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
             View Mapping
           </ActionButton>
 
-          <ActionButton onClick={onDownloadMapping}>
+          {/* <ActionButton onClick={onDownloadMapping}>
             <img src={DownloadIcon} alt="" className="download-icon" />
             Download Mapping
-          </ActionButton>
+          </ActionButton> */}
         </div>
       </div>
 
