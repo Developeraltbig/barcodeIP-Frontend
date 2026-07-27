@@ -14,8 +14,8 @@ const RecentSearch = Loadable(lazy(() => import('../views/search/RecentSearch'))
 const UserProfile = Loadable(lazy(() => import('../views/profile/UserProfile')));
 const AccountPage = Loadable(lazy(() => import('../views/account/AccountPage')));
 const OverlapMatrix = Loadable(lazy(() => import('../views/components/OverlapMatrix')));
-const DraftMasterResult = Loadable(lazy(() => import('../views/Result/non_provisional/DraftMasterResult')));
-const ProvisionalDraftResult = Loadable(lazy(() => import('../views/Result/provisional/ProvisionalDraftResult')));
+// const DraftMasterResult = Loadable(lazy(() => import('../views/Result/non_provisional/DraftMasterResult')));
+// const ProvisionalDraftResult = Loadable(lazy(() => import('../views/Result/provisional/ProvisionalDraftResult')));
 const Product = Loadable(lazy(() => import('../views/Result/product')));
 const PatentDetail = Loadable(lazy(() => import('../views/Result/patent/PatentDetail')));
 const NotFound = Loadable(lazy(() => import('../components/NotFound')));
@@ -58,14 +58,14 @@ const MainRoutes = {
       path: '/overlap/:id',
       element: <OverlapMatrix />
     },
-    {
-      path: '/non-provisional',
-      element: <DraftMasterResult />
-    },
-    {
-      path: '/provisional',
-      element: <ProvisionalDraftResult />
-    },
+    // {
+    //   path: '/non-provisional',
+    //   element: <DraftMasterResult />
+    // },
+    // {
+    //   path: '/provisional',
+    //   element: <ProvisionalDraftResult />
+    // },
     {
       path: '/product',
       element: <Product />

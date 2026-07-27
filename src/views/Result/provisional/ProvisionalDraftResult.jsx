@@ -18,16 +18,10 @@ import { saveAs } from "file-saver";
 import { toast } from "react-toastify";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-// Ensure these paths match your project structure
-// import useAuthStore from "../../../store/authStore"; 
-// import DraftSection from "../Shared/DraftSection";
-// import CustomLoader from "../Shared/CustomLoader";
 import { getSafeFilename } from "../../../utils/formatUtils";
 import { htmlToDocxParagraphs } from "../../../utils/docxUtils";
 
 import "../../../assets/css/style.css";
-import useAuthStore from "../../../store/authStore";
 import DraftSection from "../non_provisional/DraftSection";
 import { LinearProgress, Typography } from "@mui/material";
 
@@ -84,7 +78,7 @@ const ProvisionalDraftResult = ({ data, progress }) => {
   const { projectId } = useParams();
   const [draftData, setDraftData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { toggleConsultModal, socket } = useAuthStore();
+  // const { toggleConsultModal, socket } = useAuthStore();
   const [inventionData, setInventionData] = useState(null);
   const [generatingSections, setGeneratingSections] = useState({});
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
