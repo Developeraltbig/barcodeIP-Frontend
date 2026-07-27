@@ -334,14 +334,14 @@ function FeatureMappingView({
             Overlap Summary
           </ActionButton>
 
-          <ActionButton onClick={onDownload}>
+          {/* <ActionButton onClick={onDownload}>
             <img
               src={DownloadIcon}
               alt=""
               className="download-icon"
             />
             Download Mapping
-          </ActionButton>
+          </ActionButton> */}
         </div>
       </div>
 
