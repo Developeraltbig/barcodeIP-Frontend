@@ -38,7 +38,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: '8px',
-          height: '64px',
+          height: {
+            xs: 48,
+            sm: 54,
+            md: 62,
+          },
           backgroundColor: '#fff',
           fontSize: '16px',
           boxShadow: '0 12px 28px rgba(0, 0, 0, 0.06)',
@@ -58,7 +62,10 @@ const theme = createTheme({
         },
 
         input: {
-          padding: '18px 16px'
+          padding: {
+            xs: "15px 14px",
+            md: "18px 16px",
+          },
         }
       }
     },
@@ -76,8 +83,15 @@ const theme = createTheme({
           borderRadius: '8px',
           textTransform: 'none',
           fontWeight: 700,
-          fontSize: '18px',
-          height: '64px',
+          fontSize: {
+            xs: "16px",
+            md: "18px",
+          },
+          height: {
+            xs: 48,
+            sm: 52,
+            md: 56
+          },
           boxShadow: 'none'
         }
       }
@@ -177,34 +191,59 @@ const Register = () => {
             padding: 0,
             backgroundColor: '#ffffff'
           },
-
+          '@media(max-width:600px)': {
+            body: {
+              overflowX: 'hidden'
+            }
+          },
           '*': {
             boxSizing: 'border-box'
           }
         }}
       />
 
+      {isLoading && (
+        <FullPageLoader
+          colors={["#D94130", "#D94130", "#D94130"]}
+          label="Connecting to Dashboard..."
+        />
+      )}
       <Box
         sx={{
           width: '100%',
           minHeight: '100vh',
           display: 'flex',
           backgroundColor: '#ffffff',
-          p: { xs: 0, md: '28px 34px' }
+          p: {
+            xs: 0,
+            sm: 2,
+            md: 3.5
+          }
         }}
       >
         {/* LEFT PANEL */}
         <Box
           sx={{
-            width: '56%',
+            width: {
+              md: '48%',
+              lg: '56%'
+            },
             minHeight: 'calc(100vh - 56px)',
-            display: { xs: 'none', md: 'flex' },
+            display: {
+              xs: 'none',
+              md: 'flex'
+            },
             flexDirection: 'column',
             justifyContent: 'space-between',
             borderRadius: '20px',
             overflow: 'hidden',
-            p: { md: '58px 92px 82px' },
+            p: {
+              md: '45px 55px',
+              lg: '58px 92px 82px'
+            },
             background: `url(${Logo})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
             position: 'relative'
           }}
         >
@@ -259,18 +298,37 @@ const Register = () => {
         <Box
           sx={{
             flex: 1,
-            minHeight: { xs: '100vh', md: 'calc(100vh - 56px)' },
+
+            minHeight: {
+              xs: '100vh',
+              md: 'calc(100vh - 56px)'
+            },
+
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            px: { xs: 3, sm: 5, md: 8 },
-            py: { xs: 5, md: 3 }
+
+            px: {
+              xs: 2.5,
+              sm: 5,
+              md: 6,
+              lg: 10
+            },
+
+            py: {
+              xs: 4,
+              md: 3
+            }
           }}
         >
           <Box
             sx={{
               width: '100%',
-              maxWidth: '590px'
+              maxWidth: {
+                xs: '100%',
+                sm: '520px',
+                md: '590px'
+              }
             }}
           >
             {/* <Box
@@ -290,12 +348,19 @@ const Register = () => {
             <Typography
               component="h2"
               sx={{
-                fontSize: { xs: '49px', sm: '49px' },
+                fontSize: {
+                  xs: '34px',
+                  sm: '42px',
+                  md: '49px'
+                },
                 color: '#050505',
                 lineHeight: 1,
                 fontWeight: 600,
                 letterSpacing: '-1.6px',
-                mb: 1.5,
+                mb: {
+                  xs: 1,
+                  md: 1.5
+                },
                 fontFamily: 'Figtree',
               }}
             >
@@ -305,10 +370,17 @@ const Register = () => {
             <Typography
               sx={{
                 color: '#666666',
-                fontSize: '18.6px',
+                fontSize: {
+                  xs: '15px',
+                  sm: '17px',
+                  md: '18.6px'
+                },
                 lineHeight: 1.25,
                 maxWidth: '570px',
-                mb: 6,
+                mb: {
+                  xs: 3,
+                  md: 6
+                },
                 fontWeight: "400",
                 fontFamily: 'Figtree',
               }}
@@ -330,7 +402,11 @@ const Register = () => {
                   component="label"
                   sx={{
                     display: 'block',
-                    fontSize: '22px',
+                    fontSize: {
+                      xs: '16px',
+                      sm: '18px',
+                      md: '22px'
+                    },
                     fontWeight: 500,
                     color: '#3E3E3E',
                     mb: 1.3,

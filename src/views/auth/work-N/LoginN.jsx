@@ -54,8 +54,14 @@ const theme = createTheme({
           textTransform: "none",
           fontWeight: 700,
           boxShadow: "none",
-          height: "56px",
-          fontSize: "18px",
+          height: {
+            xs: 50,
+            md: 56,
+          },
+          fontSize: {
+            xs: "16px",
+            md: "18px",
+          },
           "&:hover": {
             boxShadow: "none"
           }
@@ -65,7 +71,11 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          height: "62px",
+          height: {
+            xs: 54,
+            sm: 58,
+            md: 62,
+          },
           borderRadius: "7px",
           backgroundColor: "#ffffff",
           boxShadow: "0 12px 26px rgba(0, 0, 0, 0.07)",
@@ -82,7 +92,10 @@ const theme = createTheme({
         },
         input: {
           fontSize: "16px",
-          padding: "18px 16px"
+          padding: {
+            xs: "15px 14px",
+            md: "18px 16px",
+          },
         }
       }
     }
@@ -190,10 +203,11 @@ const Login = () => {
           display: "grid",
           gridTemplateColumns: {
             xs: "1fr",
-            md: "55% 45%"
+            md: "1fr",
+            lg: "55% 45%",
           },
           backgroundColor: "#ffffff",
-          overflow: "hidden"
+          overflow: "hidden",
         }}
       >
         {/* Left Side */}
@@ -201,10 +215,10 @@ const Login = () => {
           sx={{
             display: {
               xs: "none",
-              md: "block"
+              lg: "block"
             },
             p: {
-              md: "20px 0 20px 32px"
+              lg: "20px 0 20px 32px"
             }
           }}
         >
@@ -212,60 +226,13 @@ const Login = () => {
             sx={{
               width: "100%",
               height: "calc(100vh - 40px)",
+              minHeight: 700,
               borderRadius: "18px",
               position: "relative",
               overflow: "hidden",
               backgroundImage: `url(${Logo})`
             }}
           >
-            {/* <Box
-              component="img"
-              src={Logo}
-              alt="logo"
-              sx={{
-                width: "105px",
-                position: "absolute",
-                top: "50px",
-                left: "85px",
-                filter: "brightness(0)"
-              }}
-            /> */}
-
-            {/* <Box
-              sx={{
-                position: "absolute",
-                left: "85px",
-                bottom: "78px",
-                maxWidth: "520px"
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: "30px",
-                  lineHeight: 1.2,
-                  fontWeight: 400,
-                  color: "#25313b",
-                  mb: "22px"
-                }}
-              >
-                You can easily
-              </Typography>
-
-              <Typography
-                sx={{
-                  fontSize: {
-                    md: "40px",
-                    lg: "46px"
-                  },
-                  lineHeight: 1.18,
-                  fontWeight: 800,
-                  letterSpacing: "-0.04em",
-                  color: "#000000"
-                }}
-              >
-                Get access your personal hub for clarity and productivity.
-              </Typography>
-            </Box> */}
           </Box>
         </Box>
 
@@ -277,9 +244,10 @@ const Login = () => {
             alignItems: "center",
             justifyContent: "center",
             px: {
-              xs: 3,
-              sm: 5,
-              md: 7
+              xs: 2,
+              sm: 4,
+              md: 5,
+              lg: 7,
             },
             py: 5,
             backgroundColor: "#ffffff"
@@ -289,7 +257,12 @@ const Login = () => {
             <Box
               sx={{
                 width: "100%",
-                maxWidth: "520px"
+                maxWidth: {
+                  xs: "100%",
+                  sm: "420px",
+                  md: "500px",
+                  lg: "520px",
+                }
               }}
             >
               {view === "login" ? (
@@ -309,11 +282,16 @@ const Login = () => {
                     <Typography
                       sx={{
                         fontSize: {
-                          xs: "49.6px",
-                          md: "49.6px"
+                          xs: "34px",
+                          sm: "42px",
+                          md: "48px",
+                          lg: "50px",
                         },
                         lineHeight: 1.05,
-                        fontWeight: 600,
+                        fontWeight: {
+                          xs: 700,
+                          md: 600,
+                        },
                         letterSpacing: "-0.045em",
                         color: "#050505",
                         mb: "12px",
@@ -325,7 +303,11 @@ const Login = () => {
 
                     <Typography
                       sx={{
-                        fontSize: "18.6px",
+                        fontSize: {
+                          xs: "15px",
+                          sm: "16px",
+                          md: "18px",
+                        },
                         lineHeight: 1.35,
                         color: "#666666",
                         maxWidth: "520px",
@@ -359,7 +341,10 @@ const Login = () => {
                       <Typography
                         sx={{
                           color: "#3E3E3E",
-                          fontSize: "22px",
+                          fontSize: {
+                            xs: "18px",
+                            md: "22px",
+                          },
                           fontWeight: 500,
                           mb: "10px",
                           fontFamily: "Figtree"
@@ -382,7 +367,10 @@ const Login = () => {
                       <Typography
                         sx={{
                           color: "#3E3E3E",
-                          fontSize: "22px",
+                          fontSize: {
+                            xs: "18px",
+                            md: "22px",
+                          },
                           fontWeight: 500,
                           mb: "10px",
                           fontFamily: "Figtree"
@@ -420,8 +408,17 @@ const Login = () => {
                     <Box
                       sx={{
                         display: "flex",
-                        alignItems: "center",
+                        display: "flex",
+                        flexDirection: {
+                          xs: "column",
+                          sm: "row",
+                        },
+                        alignItems: {
+                          xs: "flex-start",
+                          sm: "center",
+                        },
                         justifyContent: "space-between",
+                        gap: 1,
                         mb: "26px"
                       }}
                     >
@@ -516,8 +513,8 @@ const Login = () => {
             </Box>
           </Fade>
         </Box>
-      </Box>
-    </ThemeProvider>
+      </Box >
+    </ThemeProvider >
   );
 };
 

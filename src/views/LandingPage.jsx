@@ -900,7 +900,7 @@ function LandingPage() {
                         </div>
 
                         {/* Duplicated Set for Seamless Loop Wrapping */}
-                        <div className="marquee-group" aria-hidden="true">
+                        {/* <div className="marquee-group" aria-hidden="true">
                             {[1, 2, 3, 4].map((item) => (
                                 <div className="testimonial-card card-small" key={`dup-${item}`}>
                                     <div className="star-rating">⭐⭐⭐⭐⭐</div>
@@ -916,7 +916,7 @@ function LandingPage() {
                                     </div>
                                 </div>
                             ))}
-                        </div>
+                        </div> */}
 
                     </div>
                 </div>
