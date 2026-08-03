@@ -295,7 +295,7 @@ const InputSectionN = () => {
                   borderRadius: 1,
                   display: 'flex',
                   alignItems: 'center',
-                  bgcolor: '#fff'
+                  background: #FCF5F5,
                 }}
               >
                 <Checkbox checked={selectedFilters.includes(f.value)} sx={{ color: '#E94E34', '&.Mui-checked': { color: '#E94E34' } }} />

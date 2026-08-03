@@ -248,6 +248,7 @@ function KeyStringCard({
                             src={CopyIcon}
                             alt=""
                             className="copy-icon"
+                            style={{ width: "16px", marginRight: "1px" }}
                         />
                         Copy
                     </button>

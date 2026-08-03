@@ -5,6 +5,12 @@ import ProductSearchIcon from '../../assets/icons/productSearchIcon.svg';
 import ProvisionalDraftIcon from '../../assets/icons/provisionalDraftIcon.svg';
 import PublicationSearchIcon from '../../assets/icons/publicationSearchIcon.svg';
 
+import PatentSearchIconFilled from '../../assets/icons/patentSearchIconFilled.svg';
+import NonProvisionalDraftIconFilled from '../../assets/icons/nonProvisionalDraftIconFilled.svg';
+import ProductSearchIconFilled from '../../assets/icons/productSearchIconFilled.svg';
+import ProvisionalDraftIconFilled from '../../assets/icons/provisionalDraftIconFilled.svg';
+import PublicationSearchIconFilled from '../../assets/icons/publicationSearchIconFilled.svg';
+
 import DownloadIcon from "../../assets/icons/download.svg";
 import MyProjectIcon from "../../assets/icons/myProject.svg";
 import NewCaseIcon from "../../assets/icons/newCase.svg";
@@ -40,30 +46,35 @@ export const modules = [
         title: "Patent Search",
         desc: "Find patents and mappings",
         icon: PatentSearchIcon,
+        iconFilled: PatentSearchIconFilled
     },
     {
         id: "publish",
         title: "Publication Search",
         desc: "Find papers and references",
         icon: PublicationSearchIcon,
+        iconFilled: PublicationSearchIconFilled
     },
     {
         id: "product",
         title: "Product Comparison",
         desc: "Compare market products",
         icon: ProductSearchIcon,
+        iconFilled: ProductSearchIconFilled
     },
     {
         id: "provisional",
         title: "Provisional Draft",
         desc: "Create draft sections",
         icon: ProvisionalDraftIcon,
+        iconFilled: ProvisionalDraftIconFilled
     },
     {
         id: "nonProvisional",
         title: "Non-Provisional Draft",
         desc: "Create claims and diagrams",
         icon: NonProvisionalDraftIcon,
+        iconFilled: NonProvisionalDraftIconFilled
     },
 ];
 

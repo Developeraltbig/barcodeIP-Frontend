@@ -693,6 +693,7 @@ svg {
     border-color: #c9362d;
     box-shadow: 0 8px 18px rgba(180, 48, 40, 0.1);
     transform: none;
+    background-color: #FCF5F5;
 }
 
 .checkbox {
