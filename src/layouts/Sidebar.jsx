@@ -148,7 +148,7 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                                             onClick={() => onPageChange(PAGES.REVIEW, project?._id)}
                                         >
                                             <span>{getProjectTitle(project)}</span>
-                                            <small>CASE ID : {getProjectCaseId(project)}</small>
+                                            <small>CASE ID : {getProjectCaseId(project).split('-')[1]}</small>
                                         </button>
                                     ))}
 

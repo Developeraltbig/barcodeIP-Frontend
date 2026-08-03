@@ -23,7 +23,7 @@ export const navItems = [
     },
     {
         id: PAGES.COMMENTS,
-        label: "Barcode Comments",
+        label: "Oolto Comments",
         icon: OoltoCommentsIcon,
         badge: 1,
     },

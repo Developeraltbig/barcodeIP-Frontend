@@ -33,7 +33,7 @@ function KeyFeaturesSection({ primaryFeatures, secondaryFeatures }) {
           items={primaryFeatures}
           variant="primary"
         />
-        <FeaturePanel title="Secondary Features" items={secondaryFeatures} />
+        <FeaturePanel title="Secondary Features" items={secondaryFeatures} variant="primary" />
       </div>
     </section>
   );

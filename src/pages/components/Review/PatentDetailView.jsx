@@ -155,7 +155,7 @@ function PatentDetailView({ patent, onBack, onViewMapping, onDownloadMapping }) 
         )}
       </section>
 
-      <section className="rr-detail-card">
+      <section style={{ backgroundColor: "white", border: "1px solid #d7d7d7", borderRadius: "4px", padding: "22px 25px" }}>
         <h2>Patent Citations</h2>
         <table className="rr-citation-table">
           <thead>
