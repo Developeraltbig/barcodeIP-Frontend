@@ -345,12 +345,12 @@ function FeatureMappingView({
         </div>
       </div>
 
-      {selectedComparison?.foundSummary && (
+      {/* {selectedComparison?.foundSummary && (
         <section className="rr-mapping-summary">
           <strong>Overlap Summary</strong>
           <p>{selectedComparison.foundSummary}</p>
         </section>
-      )}
+      )} */}
 
       <section className="rr-mapping-table-card">
         {!hasDataLoaded ? (
@@ -375,59 +375,61 @@ function FeatureMappingView({
             </p>
           </div>
         ) : (
-          <div className="rr-mapping-table-wrapper">
-            <table className="rr-mapping-table">
-              <thead>
-                <tr>
-                  <th>Your Feature</th>
-                  <th>Patent Evidence</th>
-                  <th>Where Found</th>
-                  <th>Level</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {mappingRows.map((row) => (
-                  <tr key={row.id}>
-                    <td>
-                      <span className="rr-feature-type">
-                        {row.featureType}
-                      </span>
-
-                      <strong>{row.feature}</strong>
-                    </td>
-
-                    <td>
-                      {row.evidence || "No evidence available"}
-                    </td>
-
-                    <td>
-                      <a
-                        href={`https://patents.google.com/${patentId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`rr-where-pill ${row.whereFound === "Not found" ? "not-found" : ""
-                          }`}
-                        style={{ textDecoration: "none", cursor: "pointer" }}
-                      >
-                        {row.whereFound}
-                      </a>
-                    </td>
-
-                    <td>
-                      <span
-                        className={`rr-level-pill ${getLevelClassName(
-                          row.level
-                        )}`}
-                      >
-                        {row.level}
-                      </span>
-                    </td>
+          <section style={{ backgroundColor: "white", border: "1px solid #d7d7d7", borderRadius: "4px", padding: "22px 25px" }}>
+            <div className="rr-mapping-table-wrapper">
+              <table className="rr-mapping-table">
+                <thead>
+                  <tr>
+                    <th>Your Feature</th>
+                    <th>Patent Evidence</th>
+                    <th>Where Found</th>
+                    <th>Level</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+
+                <tbody>
+                  {mappingRows.map((row) => (
+                    <tr key={row.id}>
+                      <td>
+                        <span className="rr-feature-type">
+                          {row.featureType}
+                        </span>
+
+                        <strong>{row.feature}</strong>
+                      </td>
+
+                      <td>
+                        {row.evidence || "No evidence available"}
+                      </td>
+
+                      <td>
+                        <a
+                          href={`https://patents.google.com/${patentId}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`rr-where-pill ${row.whereFound === "Not found" ? "not-found" : ""
+                            }`}
+                          style={{ textDecoration: "none", cursor: "pointer" }}
+                        >
+                          {row.whereFound}
+                        </a>
+                      </td>
+
+                      <td>
+                        <span
+                          className={`rr-level-pill ${getLevelClassName(
+                            row.level
+                          )}`}
+                        >
+                          {row.level}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
         )}
       </section>
     </>
