@@ -408,7 +408,6 @@ const Login = () => {
                     <Box
                       sx={{
                         display: "flex",
-                        display: "flex",
                         flexDirection: {
                           xs: "column",
                           sm: "row",

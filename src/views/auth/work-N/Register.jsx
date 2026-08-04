@@ -16,7 +16,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import FullPageLoader from "../../../components/FullPageLoader";
 import { useRegisterMutation } from '../../../features/slice/auth/authApi';
 
 // assets
