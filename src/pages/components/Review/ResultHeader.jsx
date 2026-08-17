@@ -21,23 +21,51 @@ function ResultHeader({
   console.log('project eee--', project)
   const handleDownloadAllReport = async () => {
     try {
-      setDownloading(true)
-      await handlePatentDownload(project._id)
-      await handlePublicationDownload(project._id)
-      await handleProductDownload(project._id)
-      await handleProvisionalDownload(project._id)
-      await handleNonProvisionalDownload(project._id)
-      toast.success("All Report Generated is Successfully");
-      setDownloading(false)
+      setDownloading(true);
+
+      const modules = project?.module || [];
+      const projectId = project?._id;
+
+      if (!projectId) {
+        throw new Error("Project ID is missing");
+      }
+
+      // Patent
+      if (modules.includes("patent")) {
+        await handlePatentDownload(projectId);
+      }
+
+      // Publications
+      if (modules.includes("publish")) {
+        await handlePublicationDownload(projectId);
+      }
+
+      // Products
+      if (modules.includes("product")) {
+        await handleProductDownload(projectId);
+      }
+
+      // Provisional
+      if (modules.includes("provisional")) {
+        await handleProvisionalDownload(projectId);
+      }
+
+      // Non-Provisional
+      if (modules.includes("nonProvisional")) {
+        await handleNonProvisionalDownload(projectId);
+      }
+
+      toast.success("Selected reports generated successfully.");
     } catch (error) {
-      setDownloading(false)
-      toast.error("All PDF download error: Contact administration");
-      console.error(
-        "All PDF download error:",
-        error
+      console.error("All PDF download error:", error);
+
+      toast.error(
+        "PDF download error: Contact administration"
       );
+    } finally {
+      setDownloading(false);
     }
-  }
+  };
 
   const handlePublicationDownload = async (projectId) => {
     try {
@@ -210,7 +238,6 @@ function ResultHeader({
 
   const handleProductDownload = async (projectId) => {
     try {
-      const projectId = projectId;
       if (!projectId) {
         console.error("Project ID missing");
         return;

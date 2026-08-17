@@ -5,7 +5,9 @@ import DownloadIcon from "../../../assets/icons/DownloadIcon1.svg";
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from "react-toastify";
 import axios from "axios";
-
+import {
+  useStartProcessMutation,
+} from "../../../features/userApi";
 
 function ProcessingSteps({ steps }) {
   if (!steps?.length) return null;
@@ -44,6 +46,7 @@ function PatentTab({
 
   const { token } = useSelector((state) => state.auth);
   const [downloading, setDownloading] = useState(false)
+  const [startProcess, { isLoading: isStartingProcess }] = useStartProcessMutation();
 
   if (!results) {
     return null;
@@ -96,17 +99,38 @@ function PatentTab({
     }
   };
 
+  const handleRegenerate = async () => {
+    try {
+      const data = {
+        project_id: results[0].project_id,
+        checked: ["patent"], // regenerate only patent module
+      };
+
+      const response = await startProcess(data).unwrap();
+
+      if (response.success) {
+        toast.success("Patent regeneration started successfully.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(
+        err?.data?.error || "Failed to regenerate patent report."
+      );
+    }
+  };
+
   return (
     <>
-      <section className="rr-results-summary">
-        <div className="rr-results-summary-head">
-          <div>
-            <h2>Patent Search Results</h2>
-            <p>The Top 10 have mapping and overlap summary ready.</p>
-          </div>
+      {results[0]?.novelty_analysis?.selectedPatentIds.length > 0 ? (
+        <section className="rr-results-summary">
+          <div className="rr-results-summary-head">
+            <div>
+              <h2>Patent Search Results</h2>
+              <p>The Top 10 have mapping and overlap summary ready.</p>
+            </div>
 
-          <div className="rr-results-actions">
-            {/* <button
+            <div className="rr-results-actions">
+              {/* <button
               type="button"
               className="rr-strict-toggle"
               onClick={() => onStrictModeChange((prev) => !prev)}
@@ -117,42 +141,70 @@ function PatentTab({
               Strict Mode
             </button> */}
 
-            <ActionButton
-              onClick={handleDownload}
-              disabled={downloading}
-            >
-              {downloading ? (
-                "Loading..."
-              ) : (
-                <>
-                  <img
-                    src={DownloadIcon}
-                    alt=""
-                    className="download-icon"
-                  />
-                  Patent Report
-                </>
-              )}
-            </ActionButton>
+              <ActionButton
+                onClick={handleDownload}
+                disabled={downloading}
+              >
+                {downloading ? (
+                  "Loading..."
+                ) : (
+                  <>
+                    <img
+                      src={DownloadIcon}
+                      alt=""
+                      className="download-icon"
+                    />
+                    Patent Report
+                  </>
+                )}
+              </ActionButton>
 
 
+            </div>
           </div>
-        </div>
 
-        <PatentProcessingCard runtime={runtime} />
-      </section>
+          <PatentProcessingCard runtime={runtime} />
+        </section>
+      ) : (
+        <></>
+      )}
 
       <section className="rr-results-list-panel">
-        {results[0]?.novelty_analysis?.selectedPatentIds?.map((result, index) => (
-          <PatentResultCard
-            key={index}
-            count={index + 1}
-            result={result}
-            onViewMapping={() => onViewMapping(result)}
-            onViewDetails={() => onViewDetails(result)}
-            onViewOverlap={() => onViewOverlap(result)}
-          />
-        ))}
+        {results[0]?.novelty_analysis?.selectedPatentIds.length > 0 ?
+          (results[0]?.novelty_analysis?.selectedPatentIds?.map((result, index) => (
+            <PatentResultCard
+              key={index}
+              count={index + 1}
+              result={result}
+              onViewMapping={() =>
+                onViewMapping?.(result)
+              }
+              onViewDetails={() =>
+                onViewDetails?.(result)
+              }
+              onViewOverlap={() =>
+                onViewOverlap?.(result)
+              }
+            />
+          ))) :
+          <div
+            style={{
+              width: "100%",
+              padding: "40px",
+              textAlign: "center",
+              color: "#666",
+              fontSize: "16px",
+            }}
+          >
+            No Patent found.
+            <br />
+            <strong><ActionButton
+              onClick={handleRegenerate}
+            >
+              {"Regenerate Patent"}
+            </ActionButton></strong>
+          </div>
+        }
       </section>
     </>
   );

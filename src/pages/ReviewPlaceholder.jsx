@@ -34,6 +34,7 @@ import {
     useLazyGetPublicationByProjectIdQuery,
     useLazyGetProvisionalByProjectIdQuery,
     useLazyGetNonProvisionalByProjectIdQuery,
+    useStartProcessMutation
 } from "../features/userApi";
 
 import {
@@ -99,35 +100,138 @@ const toArray = (value) => {
 
 const getProgressFromPayload = (payload) => {
     if (!payload) {
-        return { progress: 0, status: "running" };
+        return {
+            progress: 0,
+            status: "running",
+            message: "",
+        };
+    }
+    // --------------------------------------------------
+    // 1. Check API status FIRST
+    // --------------------------------------------------
+    const rawStatus = String(
+        payload.status ||
+        payload.job_status ||
+        payload.execution_status ||
+        ""
+    )
+        .trim()
+        .toLowerCase();
+
+    const message =
+        payload.message ||
+        payload.error ||
+        payload.error_message ||
+        "";
+
+    // FAILED
+    if (
+        rawStatus === "Failed" ||
+        rawStatus === "failure" ||
+        rawStatus === "failed" ||
+        rawStatus === "error"
+    ) {
+        return {
+            progress: Number(
+                payload.status_progress ??
+                payload.progress ??
+                0
+            ),
+            status: "failed",
+            message: message || "Execution Failed",
+        };
     }
 
-    const rawProgress = payload.status_progress !== undefined
-        ? payload.status_progress
-        : (payload.progress !== undefined ? payload.progress : null);
+    // COMPLETED
+    if (
+        rawStatus === "completed" ||
+        rawStatus === "complete" ||
+        rawStatus === "success" ||
+        rawStatus === "successful"
+    ) {
+        return {
+            progress: 100,
+            status: "completed",
+            message: "",
+        };
+    }
+
+    // RUNNING
+    if (
+        rawStatus === "running" ||
+        rawStatus === "processing" ||
+        rawStatus === "in_progress" ||
+        rawStatus === "pending"
+    ) {
+        return {
+            progress: Number(
+                payload.status_progress ??
+                payload.progress ??
+                0
+            ),
+            status: "running",
+            message: "",
+        };
+    }
+
+    // --------------------------------------------------
+    // 2. If status doesn't exist, fall back to progress
+    // --------------------------------------------------
+    const rawProgress =
+        payload.status_progress !== undefined
+            ? payload.status_progress
+            : payload.progress !== undefined
+                ? payload.progress
+                : null;
 
     if (rawProgress !== null) {
         const progressNumber = Number(rawProgress);
-        if (progressNumber < 100) {
-            return { progress: progressNumber, status: "running" };
+
+        if (progressNumber >= 100) {
+            return {
+                progress: 100,
+                status: "completed",
+                message: "",
+            };
         }
-        return { progress: 100, status: "completed" };
+
+        return {
+            progress: progressNumber,
+            status: "running",
+            message: "",
+        };
     }
 
+    // --------------------------------------------------
+    // 3. Check whether actual result data exists
+    // --------------------------------------------------
     const hasSubstantialContent =
-        (Array.isArray(payload.scholarResults) && payload.scholarResults.length > 0) ||
-        (Array.isArray(payload.patents) && payload.patents.length > 0) ||
-        (payload.sections && Object.keys(payload.sections).length > 0) ||
-        (payload.claims && payload.claims.length > 0) ||
-        (Array.isArray(payload) && payload.length > 0);
+        (Array.isArray(payload.scholarResults) &&
+            payload.scholarResults.length > 0) ||
+        (Array.isArray(payload.patents) &&
+            payload.patents.length > 0) ||
+        (payload.sections &&
+            Object.keys(payload.sections).length > 0) ||
+        (payload.claims &&
+            payload.claims.length > 0) ||
+        (Array.isArray(payload) &&
+            payload.length > 0);
 
     if (hasSubstantialContent) {
-        return { progress: 100, status: "completed" };
+        return {
+            progress: 100,
+            status: "completed",
+            message: "",
+        };
     }
 
+    // --------------------------------------------------
+    // 4. Default
+    // --------------------------------------------------
     return {
         progress: 0,
-        status: "running"
+        status: "running",
+        message: "",
     };
 };
 
@@ -168,7 +272,8 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         [MODULE_KEYS.PROVISIONAL]: { progress: 0, status: "running", message: "" },
         [MODULE_KEYS.NON_PROVISIONAL]: { progress: 0, status: "running", message: "" },
     });
-
+    const [startProcess, { isLoading: isRegenerating }] =
+        useStartProcessMutation();
     const DashboardData = useSelector((state) => state.userDashboard.selectedProject);
     const projectPatent = useSelector((state) => state.userDashboard.projectPatent);
     const projectProduct = useSelector((state) => state.userDashboard.projectProduct);
@@ -223,6 +328,14 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         [MODULE_KEYS.PROVISIONAL]: provLoad,
         [MODULE_KEYS.NON_PROVISIONAL]: nonProvLoad,
     }), [pLoad, pubLoad, prodLoad, provLoad, nonProvLoad]);
+
+    const REGENERATE_CHECKED_KEYS = {
+        [MODULE_KEYS.PATENT]: "patent",
+        [MODULE_KEYS.PUBLICATIONS]: "publication",
+        [MODULE_KEYS.PRODUCTS]: "product",
+        [MODULE_KEYS.PROVISIONAL]: "provisional",
+        [MODULE_KEYS.NON_PROVISIONAL]: "nonProvisional",
+    };
 
     const isActiveTabLoading = Boolean(loadingByModuleKey[activeModuleKey]);
 
@@ -361,7 +474,7 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
                 case "failed":
                     setProgressState((prev) => ({
                         ...prev,
-                        [key]: { progress: 0, status: "failed", message: event.message || "Execution Failed" }
+                        [key]: { progress: 0, status: "Failed", message: event.message || "Execution Failed" }
                     }));
                     break;
 
@@ -392,6 +505,75 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
         setActiveTab(nextTab);
         setActiveView("results");
     }, []);
+
+    const handleRegenerate = useCallback(
+        async (moduleKey) => {
+            if (!currentProjectId) {
+                toast.error("Project ID is missing.");
+                return;
+            }
+
+            const checkedKey = REGENERATE_CHECKED_KEYS[moduleKey];
+
+            if (!checkedKey) {
+                toast.error("Invalid module selected.");
+                return;
+            }
+
+            try {
+                // Immediately change only this module to running
+                setProgressState((prev) => ({
+                    ...prev,
+                    [moduleKey]: {
+                        progress: 0,
+                        status: "running",
+                        message: "",
+                    },
+                }));
+
+                const response = await startProcess({
+                    project_id: currentProjectId,
+                    checked: [checkedKey],
+                }).unwrap();
+
+                if (response?.success) {
+                    toast.success(
+                        `${checkedKey} regeneration started successfully.`
+                    );
+
+                    // Optional: reload current module data
+                    // so the UI gets the latest backend state.
+                    await loadTabData(moduleKey);
+                } else {
+                    throw new Error(
+                        response?.error || "Regeneration failed to start."
+                    );
+                }
+            } catch (err) {
+                console.error("Regeneration error:", err);
+
+                // Only mark THIS module as failed
+                setProgressState((prev) => ({
+                    ...prev,
+                    [moduleKey]: {
+                        progress: 0,
+                        status: "failed",
+                        message:
+                            err?.data?.error ||
+                            err?.message ||
+                            "Regeneration failed.",
+                    },
+                }));
+
+                toast.error(
+                    err?.data?.error ||
+                    err?.message ||
+                    "Failed to regenerate report."
+                );
+            }
+        },
+        [currentProjectId, startProcess, loadTabData]
+    );
 
     if (activeView !== "results") {
         return (
@@ -434,9 +616,10 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
             />
 
             {showKeyFeature && activeModuleKey === MODULE_KEYS.PATENT && (
-                <KeyFeaturesSection
+                < KeyFeaturesSection
                     primaryFeatures={PRIMARY_FEATURES}
                     secondaryFeatures={SECONDARY_FEATURES}
+                    patentResults={patentResults[0]}
                 />
             )}
 
@@ -459,6 +642,8 @@ function ReviewPlaceholder({ onPageChange, projectId }) {
                     openMapping,
                     openDetails,
                     openOverlap,
+                    onRegenerate: handleRegenerate,
+                    isRegenerating,
                 }}
             />
 

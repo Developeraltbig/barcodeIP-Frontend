@@ -46,18 +46,19 @@ function PatentResultCard({ count, result, onViewMapping, onViewDetails, onViewO
           <em>{result.overall} overall</em>
         </div>
 
-        <button type="button" className="rr-view-mapping-btn" onClick={onViewMapping}>
-          <img src={viewMappingIcon} alt="" className="viewMapping-icon" />
-          View Mapping
-        </button>
-
         <button type="button" className="rr-light-result-btn" onClick={onViewOverlap}>
           <img src={overlapSummaryIcon} alt="" className="overlapSummary-icon" />
           Overlap Summary
         </button>
 
+        <button type="button" className="rr-view-mapping-btn" onClick={onViewMapping}>
+          <img src={viewMappingIcon} alt="" className="viewMapping-icon" />
+          View Mapping
+        </button>
+
+
         <button type="button" className="rr-light-result-btn" onClick={onViewDetails}>
-          <img src={carbonViewIcon} alt="" className="carbon_view-icon" /> Details
+          <img src={carbonViewIcon} alt="" className="carbon_view-icon" /> Read Document
         </button>
       </div>
     </article>

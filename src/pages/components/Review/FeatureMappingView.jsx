@@ -172,7 +172,6 @@ function FeatureMappingView({
   onDownload,
 }) {
   const [strictMode, setStrictMode] = useState(false);
-
   /**
    * Get all comparison objects from the API result.
    */

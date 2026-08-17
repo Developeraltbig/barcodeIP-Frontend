@@ -1,3 +1,115 @@
+.rr-patent-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(15, 23, 42, 0.65);
+
+  backdrop-filter: blur(4px);
+}
+
+.rr-patent-modal {
+  width: min(1250px, 100%);
+  height: min(90vh, 900px);
+
+  display: flex;
+  flex-direction: column;
+
+  background: #fff;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.3);
+}
+
+.rr-patent-modal-header {
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px 24px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  flex-shrink: 0;
+}
+
+.rr-patent-modal-title {
+  min-width: 0;
+}
+
+.rr-patent-modal-title h2 {
+  margin: 0;
+
+  font-size: 21px;
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.rr-patent-modal-title p {
+  margin: 4px 0 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  max-width: 900px;
+}
+
+.rr-patent-modal-close {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: none;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #374151;
+
+  font-size: 28px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.rr-patent-modal-close:hover {
+  background: #f3f4f6;
+}
+
+.rr-patent-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #fff;
+  margin: 10px
+}
+
 /* Review Results + clean child components */
 .rr-page {
   width: min(1320px, calc(100% - 48px));
