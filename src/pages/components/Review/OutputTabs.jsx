@@ -3,7 +3,7 @@ import React, { memo } from "react";
 const TAB_LABELS = {
   patent: "Patent Search",
   publish: "Publication Search",
-  product: "Product Comparison",
+  product: "Product Search",
   provisional: "Provisional Patent Draft",
   nonProvisional: "Non-Provisional Patent Draft",
 };

@@ -112,6 +112,7 @@ const getPublicationDate = (item) => {
 };
 
 function PublicationCard({
+  index,
   item,
   onViewMore,
 }) {
@@ -160,7 +161,7 @@ function PublicationCard({
         <span
           className={`rr-publication-relevance ${relevanceClassName}`}
         >
-          {relevance}
+          Sr. No. {index}
 
           {Number.isFinite(
             Number(safeItem.relevance_score)

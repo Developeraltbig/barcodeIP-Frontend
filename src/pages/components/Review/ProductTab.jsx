@@ -88,8 +88,22 @@ function ProductTab({ results, onViewProductDetails, onDownload }) {
     <section className="rr-product-panel">
       <div className="rr-tab-page-head">
         <div>
-          <h2>Product Comparison</h2>
+          <h2>Product Search</h2>
           <p>Commercial product matches ranked against the invention requirements.</p>
+          <p>
+            <span style={{ color: "#d32f2f", fontWeight: 600 }}>
+              8–10: Significant Overlap
+            </span>
+            ,{" "}
+            <span style={{ color: "#f57c00", fontWeight: 600 }}>
+              5–7: Partial Overlap
+            </span>
+            ,{" "}
+            <span style={{ color: "#388e3c", fontWeight: 600 }}>
+              1–4: Low Overlap
+            </span>
+          </p>
+
         </div>
         <ActionButton
           onClick={handleDownload}
@@ -114,6 +128,7 @@ function ProductTab({ results, onViewProductDetails, onDownload }) {
           results.map((item, index) => (
             <ProductCard
               key={item.id}
+              index={index + 1}
               item={item}
               onViewDetails={() => onViewProductDetails?.(item)}
             />

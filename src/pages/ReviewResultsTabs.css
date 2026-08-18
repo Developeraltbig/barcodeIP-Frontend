@@ -2171,7 +2171,7 @@
 .rr-draft-head h2 {
   margin: 0 0 5px;
   color: #3E3E3E;
-  font-size: 25px;
+  font-size: 20px;
   line-height: 1.1;
   letter-spacing: -0.035em;
   font-weight: 600;
@@ -2181,7 +2181,7 @@
 .rr-draft-head p {
   margin: 0;
   color: #676B6D;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   font-family: 'Inter';
   line-height: 1.35;
@@ -2230,7 +2230,7 @@
 .rr-draft-section-card header h3 {
   margin: 0;
   color: #3E3E3E;
-  font-size: 18px;
+  font-size: 15px;
   font-family: 'Inter';
   line-height: 1.2;
   font-weight: 500;

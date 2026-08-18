@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useMemo, useRef, useState } from "react";
-import { ChevronDown, Clock, UserRound, LogOut, Wallet as WalletIcon } from "lucide-react";
+import { ChevronUp, ChevronDown, Clock, UserRound, LogOut, Wallet as WalletIcon } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { PAGES } from "../views/Home/constants";
@@ -171,7 +171,7 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                                 <Clock size={15} />
                                 Recent Projects
                             </span>
-                            <ChevronDown
+                            <ChevronUp
                                 size={16}
                                 className={showRecent ? "recent-chevron open" : "recent-chevron"}
                             />

@@ -136,7 +136,7 @@ const featureGroups = [
 const outputCards = [
     "Patent Search",
     "Publication Search",
-    "Product Comparison",
+    "Product Search",
     "Provisional Draft",
     "Non-Provisional Draft"
 ];
@@ -309,7 +309,7 @@ function LandingPage() {
                             Get Started
                         </button>
                         <button className="secondary-btn" type="button">
-                            See how it works
+                            <a href="#key-Feature">  See how it works</a>
                         </button>
                     </div>
                     <p>
@@ -362,7 +362,7 @@ function LandingPage() {
 
                     <div className="action-card-item">
                         <div className="action-card-icon"><img src={productVarient2ndSection} alt="product" className="product-img" /></div>
-                        <h3>Product Comparison</h3>
+                        <h3>Product Search</h3>
                         <p>Compare products and key features.</p>
                     </div>
 

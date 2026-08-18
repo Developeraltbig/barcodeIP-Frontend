@@ -90,9 +90,10 @@ function PublicationTab({ results, onViewPublication }) {
         </div>
       ) : (
         <div className="rr-publication-grid">
-          {scholarResults.map((item) => (
+          {scholarResults.map((item, index) => (
             <PublicationCard
               key={item.id || item._id}
+              index={index + 1}
               item={item}
               onViewMore={(selectedPublication) => {
                 if (onViewPublication) {

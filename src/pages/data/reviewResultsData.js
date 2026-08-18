@@ -40,14 +40,15 @@ export const INITIAL_TAB_RUNTIME = {
   patent: {
     status: "processing",
     progress: 58,
-    message: "Patent Search is running",
-    subMessage: "Top results may appear first. Mapping for top 10 may take 5–6 minutes.",
+    message: "Patent search and mapping are completed. Results are now available.",
+    subMessage: "Top results are displayed first, and mapping for the Top 10 results has been completed.",
     steps: [
-      { id: "sources", label: "Searching patent sources", status: "done" },
-      { id: "duplicates", label: "Removing duplicates", status: "done" },
-      { id: "ranking", label: "Ranking references", status: "done" },
-      { id: "mapping", label: "Preparing top 10 mappings", status: "active" },
-      { id: "summary", label: "Preparing overlap summaries", status: "waiting" }
+      { id: "sources", label: "Patent sources searched", status: "done" },
+      { id: "duplicates", label: "Duplicates removed", status: "done" },
+      { id: "ranking", label: "References ranked", status: "done" },
+      { id: "mapping", label: "Top 10 mappings completed", status: "done" },
+      // { id: "mapping", label: "Top 10 mappings completed", status: "active" },
+      { id: "summary", label: "Overlap summaries prepared", status: "done" }
     ]
   },
   publications: {
