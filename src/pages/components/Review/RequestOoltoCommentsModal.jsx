@@ -15,7 +15,7 @@ function RequestOoltoCommentsModal({ project, onClose }) {
 
   const MODULE_LABELS = {
     patent: "Patent Search",
-    publish: "Publication Search",
+    publish: "Non-Patent Search",
     product: "Product Search",
     provisional: "Provisional Draft",
     nonProvisional: "Non-Provisional Draft",

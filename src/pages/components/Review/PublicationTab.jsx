@@ -61,7 +61,7 @@ function PublicationTab({ results, onViewPublication }) {
     <section className="rr-publication-panel">
       <div className="rr-tab-page-head">
         <div>
-          <h2>Publication Search</h2>
+          <h2>Non-Patent Search</h2>
           <p>Related non-patent literature, papers, public disclosures, and technical references.</p>
         </div>
 

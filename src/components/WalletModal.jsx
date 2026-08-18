@@ -168,7 +168,7 @@ function WalletModal({ isOpen, onClose, currentBalance, onPaymentSuccess }) {
 
                                 <div className="rate-row-item">
                                     <span className="module-name">
-                                        Publication Search
+                                        Non-Patent Search
                                     </span>
                                     <span >
                                         <button className="badge-rate-pill">

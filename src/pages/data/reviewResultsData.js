@@ -54,14 +54,14 @@ export const INITIAL_TAB_RUNTIME = {
   publications: {
     status: "completed",
     progress: 100,
-    message: "Publication Search is ready",
+    message: "Non-Patent Search is ready",
     subMessage: "Related non-patent literature, papers, public disclosures, and technical references are ready.",
     steps: []
   },
   products: {
     status: "completed",
     progress: 100,
-    message: "Product comparison is ready",
+    message: "Product Search is ready",
     subMessage: "Commercial product matches ranked against the invention requirements are ready.",
     steps: []
   },

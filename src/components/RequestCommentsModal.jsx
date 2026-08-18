@@ -6,7 +6,7 @@ import RequestOoltoCommentIcon from "../assets/icons/requestOoltoComment.svg";
 
 const MODULE_OPTIONS = [
     "Patent Search",
-    "Publication Search",
+    "Non-Patent Search",
     "Product Search",
     "Provisional Draft",
     "Non-Provisional Draft"

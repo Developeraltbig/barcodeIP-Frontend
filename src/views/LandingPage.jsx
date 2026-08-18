@@ -135,7 +135,7 @@ const featureGroups = [
 
 const outputCards = [
     "Patent Search",
-    "Publication Search",
+    "Non-Patent Search",
     "Product Search",
     "Provisional Draft",
     "Non-Provisional Draft"
@@ -356,7 +356,7 @@ function LandingPage() {
 
                     <div className="action-card-item">
                         <div className="action-card-icon"><img src={guidance2ndSection} alt="publication" className="publication-img" /></div>
-                        <h3>Publication Search</h3>
+                        <h3>Non-Patent Search</h3>
                         <p>Find relevant publications.</p>
                     </div>
 
@@ -701,7 +701,7 @@ function LandingPage() {
                             <div className="publication-header">
                                 <span className="search-icon"><img src={publishSearch7thSection} alt="publish search" className="page-search-img" /></span>
                                 <div>
-                                    <h3 className="publication-title">Publication Search</h3>
+                                    <h3 className="publication-title">Non-Patent Search</h3>
                                     <p className="publication-subtitle">
                                         Find technical papers and articles related to your invention and compare key insights.
                                     </p>
