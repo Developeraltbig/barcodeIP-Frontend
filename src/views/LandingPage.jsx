@@ -308,9 +308,9 @@ function LandingPage() {
                         <button className="primary-btn" type="button" onClick={() => navigate("/pages/auth/register")}>
                             Get Started
                         </button>
-                        <button className="secondary-btn" type="button">
-                            <a href="#key-Feature">  See how it works</a>
-                        </button>
+                        <a href="#key-Feature" className="secondary-btn">
+                            See how it works
+                        </a>
                     </div>
                     <p>
                         $25 per invention case. All selected outputs included.
@@ -880,16 +880,33 @@ function LandingPage() {
                 <div className="compact-testimonials-marquee-container">
                     <div className="marquee-track">
 
-                        {/* Originals Set */}
                         <div className="marquee-group">
                             {[1, 2, 3, 4].map((item) => (
-                                <div className="testimonial-card card-small" key={`orig-${item}`}>
-                                    <div className="star-rating"><img src={starReview8thSection} alt="Star Review" className="page-search-img" /></div>
+                                <div
+                                    className="testimonial-card card-small"
+                                    key={`orig-${item}`}
+                                >
+                                    <div className="star-rating">
+                                        <img
+                                            src={starReview8thSection}
+                                            alt="Star Review"
+                                            className="page-search-img"
+                                        />
+                                    </div>
+
                                     <p className="testimonial-quote">
-                                        "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
+                                        "Oolto helped us turn a rough invention note into
+                                        clear key features, a patent search direction,
+                                        and a provisional draft path in one clean flow."
                                     </p>
+
                                     <div className="author-row-compact">
-                                        <img src={personReview8thSection} alt="Ananya Avatar" className="page-search-img" />
+                                        <img
+                                            src={personReview8thSection}
+                                            alt="Ananya Avatar"
+                                            className="page-search-img"
+                                        />
+
                                         <div className="testimonial-author">
                                             <h4>Ananya Rao</h4>
                                             <span>Founder @ MedTech Startup</span>
@@ -899,16 +916,34 @@ function LandingPage() {
                             ))}
                         </div>
 
-                        {/* Duplicated Set for Seamless Loop Wrapping */}
-                        {/* <div className="marquee-group" aria-hidden="true">
+                        {/* Duplicate group for seamless loop */}
+                        <div className="marquee-group" aria-hidden="true">
                             {[1, 2, 3, 4].map((item) => (
-                                <div className="testimonial-card card-small" key={`dup-${item}`}>
-                                    <div className="star-rating">⭐⭐⭐⭐⭐</div>
+                                <div
+                                    className="testimonial-card card-small"
+                                    key={`duplicate-${item}`}
+                                >
+                                    <div className="star-rating">
+                                        <img
+                                            src={starReview8thSection}
+                                            alt=""
+                                            className="page-search-img"
+                                        />
+                                    </div>
+
                                     <p className="testimonial-quote">
-                                        "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
+                                        "Oolto helped us turn a rough invention note into
+                                        clear key features, a patent search direction,
+                                        and a provisional draft path in one clean flow."
                                     </p>
+
                                     <div className="author-row-compact">
-                                        <img src="/path-to-profile-sm.jpg" alt="Ananya Rao" className="author-avatar-sm" />
+                                        <img
+                                            src={personReview8thSection}
+                                            alt=""
+                                            className="page-search-img"
+                                        />
+
                                         <div className="testimonial-author">
                                             <h4>Ananya Rao</h4>
                                             <span>Founder @ MedTech Startup</span>
@@ -916,7 +951,7 @@ function LandingPage() {
                                     </div>
                                 </div>
                             ))}
-                        </div> */}
+                        </div>
 
                     </div>
                 </div>
@@ -1026,110 +1061,186 @@ function LandingPage() {
             {/* 10th Section */}
             <section id="contact" className="contact-requirement-section">
                 <div className="layout-split-grid">
-                    {/* Left Column: Contact Copy & Details */}
+
+                    {/* Left Column */}
                     <div className="content-side-left">
-                        <h2 className="main-section-title">Let's talk about your invention work.</h2>
+                        <h2 className="main-section-title">
+                            Let's talk about your invention work.
+                        </h2>
+
                         <p className="main-section-desc">
-                            Share your idea, patent document, or project requirement with us. Our team will help you understand the next best step clearly.
+                            Share your idea, patent document, or project requirement with us.
+                            Our team will help you understand the next best step clearly.
                         </p>
 
                         <div className="contact-info-list">
-                            {/* Phone Item */}
+
+                            {/* Phone */}
                             <div className="contact-info-item">
                                 <div className="icon-circle">
-                                    <span className="info-icon"><img src={phoneIconSection} alt="phone icon" className="page-search-img" /></span>
+                                    <span className="info-icon">
+                                        <img
+                                            src={phoneIconSection}
+                                            alt="Phone"
+                                            className="page-search-img"
+                                        />
+                                    </span>
                                 </div>
+
                                 <div className="info-text">
                                     <span className="info-label">PHONE</span>
-                                    <a href="tel:+919876543210" className="info-value">+91 98765 43210</a>
+                                    <a
+                                        href="tel:+919876543210"
+                                        className="info-value"
+                                    >
+                                        +91 98765 43210
+                                    </a>
                                 </div>
                             </div>
 
-                            {/* Email Item */}
+                            {/* Email */}
                             <div className="contact-info-item">
                                 <div className="icon-circle">
-                                    <span className="info-icon"><img src={emailIconSection} alt="email icon" className="page-search-img" /></span>
+                                    <span className="info-icon">
+                                        <img
+                                            src={emailIconSection}
+                                            alt="Email"
+                                            className="page-search-img"
+                                        />
+                                    </span>
                                 </div>
+
                                 <div className="info-text">
                                     <span className="info-label">EMAIL</span>
-                                    <a href="mailto:oolto@gmail.com" className="info-value">oolto@gmail.com</a>
+                                    <a
+                                        href="mailto:oolto@gmail.com"
+                                        className="info-value"
+                                    >
+                                        oolto@gmail.com
+                                    </a>
                                 </div>
                             </div>
 
-                            {/* Location Item */}
+                            {/* Location */}
                             <div className="contact-info-item">
                                 <div className="icon-circle">
-                                    <span className="info-icon"><img src={locationIconSection} alt="location icon" className="page-search-img" /></span>
+                                    <span className="info-icon">
+                                        <img
+                                            src={locationIconSection}
+                                            alt="Location"
+                                            className="page-search-img"
+                                        />
+                                    </span>
                                 </div>
+
                                 <div className="info-text">
                                     <span className="info-label">LOCATION</span>
-                                    <span className="info-value">New Delhi, India</span>
+                                    <span className="info-value">
+                                        New Delhi, India
+                                    </span>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
-                    {/* Right Column: Floating Requirement Form Card */}
+                    {/* Right Column */}
                     <div className="form-side-right">
                         <div className="requirement-form-panel">
-                            <h3 className="form-title">Send your requirement</h3>
+
+                            <h3 className="form-title">
+                                Send your requirement
+                            </h3>
+
                             <p className="form-subtitle">
-                                Tell us what you want to create, review, search, or file. We will get back with a clear next step.
+                                Tell us what you want to create, review, search, or file.
+                                We will get back with a clear next step.
                             </p>
 
-                            <form className="requirement-form" onSubmit={handleSubmit}>
+                            <form
+                                className="requirement-form"
+                                onSubmit={handleSubmit}
+                            >
+
+                                {/* Name + Email */}
                                 <div className="form-row-twin">
+
                                     <div className="form-group">
-                                        <label>Name</label>
+                                        <label htmlFor="name">Name</label>
+
                                         <input
+                                            id="name"
                                             type="text"
                                             name="name"
                                             value={formData.name}
                                             onChange={handleChange}
                                         />
+
                                         {errors.name && (
-                                            <small className="text-danger">{errors.name}</small>
+                                            <small className="text-danger">
+                                                {errors.name}
+                                            </small>
                                         )}
                                     </div>
 
                                     <div className="form-group">
-                                        <label>Email</label>
+                                        <label htmlFor="email">Email</label>
+
                                         <input
+                                            id="email"
                                             type="email"
                                             name="email"
                                             value={formData.email}
                                             onChange={handleChange}
                                         />
+
                                         {errors.email && (
-                                            <small className="text-danger">{errors.email}</small>
+                                            <small className="text-danger">
+                                                {errors.email}
+                                            </small>
                                         )}
                                     </div>
+
                                 </div>
 
+                                {/* Number + Project Type */}
                                 <div className="form-row-twin">
+
                                     <div className="form-group">
-                                        <label>Number</label>
+                                        <label htmlFor="number">Number</label>
+
                                         <input
-                                            type="number"
+                                            id="number"
+                                            type="tel"
                                             name="number"
                                             value={formData.number}
                                             onChange={handleChange}
-                                            maxLength={14}
+                                            maxLength={10}
+                                            inputMode="numeric"
+                                            placeholder="Enter 10 digit number"
                                         />
+
                                         {errors.number && (
-                                            <small className="text-danger">{errors.number}</small>
+                                            <small className="text-danger">
+                                                {errors.number}
+                                            </small>
                                         )}
                                     </div>
 
                                     <div className="form-group">
-                                        <label>Project Type</label>
+                                        <label htmlFor="projectType">
+                                            Project Type
+                                        </label>
 
                                         <select
+                                            id="projectType"
                                             name="projectType"
                                             value={formData.projectType}
                                             onChange={handleChange}
                                         >
-                                            <option value="">Select Project Type</option>
+                                            <option value="">
+                                                Select Project Type
+                                            </option>
 
                                             {projectTypes.map((item) => (
                                                 <option key={item} value={item}>
@@ -1144,12 +1255,15 @@ function LandingPage() {
                                             </small>
                                         )}
                                     </div>
+
                                 </div>
 
+                                {/* Message */}
                                 <div className="form-group">
-                                    <label>Message</label>
+                                    <label htmlFor="message">Message</label>
 
                                     <textarea
+                                        id="message"
                                         rows="5"
                                         name="message"
                                         value={formData.message}
@@ -1157,7 +1271,9 @@ function LandingPage() {
                                     />
 
                                     {errors.message && (
-                                        <small className="text-danger">{errors.message}</small>
+                                        <small className="text-danger">
+                                            {errors.message}
+                                        </small>
                                     )}
                                 </div>
 
@@ -1168,9 +1284,11 @@ function LandingPage() {
                                 >
                                     {loading ? "Sending..." : "Send"}
                                 </button>
+
                             </form>
                         </div>
                     </div>
+
                 </div>
             </section>
 
@@ -1178,61 +1296,132 @@ function LandingPage() {
             {/* Footer Section */}
             <footer id="footer" className="site-footer-section">
                 <div className="footer-dark-card-panel">
+
                     <div className="footer-main-layout">
 
-                        {/* Left Column: Brand, Tagline, & Newsletter */}
+                        {/* Left: Brand + Newsletter */}
                         <div className="footer-brand-column">
+
                             <div className="footer-logo-area">
-                                {/* Infinite Logo Symbol Mockup */}
-                                <img src={footerLogo10thSection} alt="footer logo" className="page-search-img" />
+                                <img
+                                    src={footerLogo10thSection}
+                                    alt="Oolto footer logo"
+                                    className="footer-logo-img"
+                                />
                             </div>
 
                             <p className="footer-tagline-text">
-                                Receive the latest articles, tips <br />
-                                and offers from Longevity
+                                Receive the latest articles, tips and offers from Longevity
                             </p>
 
-                            <form className="footer-newsletter-form" onSubmit={(e) => e.preventDefault()}>
+                            <form
+                                className="footer-newsletter-form"
+                                onSubmit={(e) => e.preventDefault()}
+                            >
                                 <div className="input-with-button-wrapper">
+
                                     <input
                                         type="email"
                                         placeholder="Enter your email address"
                                         className="newsletter-input"
                                         required
                                     />
-                                    <button type="submit" className="newsletter-submit-btn" aria-label="Submit">
-                                        <span className="arrow-icon"><img src={footerRightArrow10thSection} alt="footer line" className="page-search-img" /></span>
+
+                                    <button
+                                        type="submit"
+                                        className="newsletter-submit-btn"
+                                        aria-label="Submit newsletter"
+                                    >
+                                        <span className="arrow-icon">
+                                            <img
+                                                src={footerRightArrow10thSection}
+                                                alt=""
+                                                className="page-search-img"
+                                            />
+                                        </span>
                                     </button>
+
                                 </div>
                             </form>
+
                         </div>
 
-                        {/* Right Column: Multi-Column Link Navigation lists */}
+                        {/* Right: Navigation */}
                         <div className="footer-nav-links-wrapper">
-                            {/* Column 1 */}
+
                             <div className="nav-links-column">
-                                <a className="footer-link" href="#draft-ready-section">Product</a>
-                                <a className="footer-link" href="#home">How it works</a>
-                                <a className="footer-link" href="#key-Feature">Modules</a>
-                                <a className="footer-link" href="#team-report">Reports</a>
+                                <a className="footer-link" href="#draft-ready-section">
+                                    Product
+                                </a>
+
+                                <a className="footer-link" href="#home">
+                                    How it works
+                                </a>
+
+                                <a className="footer-link" href="#key-Feature">
+                                    Modules
+                                </a>
+
+                                <a className="footer-link" href="#team-report">
+                                    Reports
+                                </a>
                             </div>
 
                             <div className="nav-links-column">
-                                <a className="footer-link" href="#pricing">Pricing</a>
-                                <a className="footer-link" onClick={() => navigate("/auth/login")}>Sign in</a>
-                                <a className="footer-link" onClick={() => navigate("/auth/register")}>Sign up</a>
-                                <a className="footer-link" href="#terms">Terms & conditions</a>
-                                <a className="footer-link" onClick={() => navigate("/auth/register")}>Request a demo</a>
+                                <a className="footer-link" href="#pricing">
+                                    Pricing
+                                </a>
+
+                                <button
+                                    type="button"
+                                    className="footer-link footer-button-link"
+                                    onClick={() => navigate("/auth/login")}
+                                >
+                                    Sign in
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="footer-link footer-button-link"
+                                    onClick={() => navigate("/auth/register")}
+                                >
+                                    Sign up
+                                </button>
+
+                                <a className="footer-link" href="#terms">
+                                    Terms & conditions
+                                </a>
+
+                                <button
+                                    type="button"
+                                    className="footer-link footer-button-link"
+                                    onClick={() => navigate("/auth/register")}
+                                >
+                                    Request a demo
+                                </button>
                             </div>
+
                         </div>
+
                     </div>
 
-                    {/* Bottom Horizontal Row: Dividers & Meta Text */}
-                    <img src={footerLine10thSection} alt="footer arrow" className="page-search-img" />
+                    {/* Divider */}
+                    <div className="footer-divider">
+                        <img
+                            src={footerLine10thSection}
+                            alt=""
+                            className="footer-divider-img"
+                        />
+                    </div>
 
+                    {/* Copyright */}
                     <div className="footer-copyright-row">
-                        <p>© 2026 Barcode IP. Oolto is a product by Barcode IP. Built for structured invention review.</p>
+                        <p>
+                            © 2026 Barcode IP. Oolto is a product by Barcode IP.
+                            Built for structured invention review.
+                        </p>
                     </div>
+
                 </div>
             </footer>
         </main>
