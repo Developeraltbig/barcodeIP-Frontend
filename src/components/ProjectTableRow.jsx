@@ -22,7 +22,7 @@ function ProjectTableRow({ project, onOpen, openModal }) {
             return project.module;
         }
 
-        return ["Patent", "Publication", "Product", "Provisional", "Non-Provisional"];
+        return ["Patent", "Non-Patent Search", "Product", "Provisional", "Non-Provisional"];
     }, [project?.module]);
 
     const isReviewNotRequested = project?.analyst_status === "notRequested";
@@ -60,11 +60,23 @@ function ProjectTableRow({ project, onOpen, openModal }) {
 
             <td>
                 <div className="table-tags">
-                    {tags.map((tag) => (
+                    {/* {tags.map((tag) => (
                         <span key={tag}>
                             {tag.charAt(0).toUpperCase() + tag.slice(1)}
                         </span>
-                    ))}
+                    ))} */}
+                    {tags.map((tag) => {
+                        // Check if tag is 'publish' (case-insensitive)
+                        const displayTag = tag.toLowerCase() === 'publish'
+                            ? 'non patent search'
+                            : tag.charAt(0).toUpperCase() + tag.slice(1);
+
+                        return (
+                            <span key={tag}>
+                                {displayTag}
+                            </span>
+                        );
+                    })}
                 </div>
             </td>
 
@@ -92,7 +104,7 @@ function ProjectTableRow({ project, onOpen, openModal }) {
                     View More
                 </button>
             </td>
-        </tr>
+        </tr >
     );
 }
 

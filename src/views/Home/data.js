@@ -29,7 +29,7 @@ export const navItems = [
     },
     {
         id: PAGES.COMMENTS,
-        label: "Oolto Comments",
+        label: "Patdots Comments",
         icon: OoltoCommentsIcon,
         badge: 1,
     },
@@ -50,7 +50,7 @@ export const modules = [
     },
     {
         id: "publish",
-        title: "Publication Search",
+        title: "Non Patent Search",
         desc: "Find papers and references",
         icon: PublicationSearchIcon,
         iconFilled: PublicationSearchIconFilled

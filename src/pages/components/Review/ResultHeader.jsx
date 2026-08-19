@@ -305,7 +305,7 @@ function ResultHeader({
           )}
           {project.analyst_status === "notRequested" ? (
             <ActionButton variant="outline" onClick={onRequestComments}>
-              <img src={requestOoltoCommentIcon} alt="" className="requestOolto-icon" /> Request Oolto Comments
+              <img src={requestOoltoCommentIcon} alt="" className="requestOolto-icon" /> Request Patdots Comments
             </ActionButton>
           ) : <></>}
 

@@ -38,7 +38,7 @@ function BarcodeCommentsPage() {
         <section className="content-wrap oc-page">
             <div className="oc-page-hero">
                 <div>
-                    <h1>Oolto Comments</h1>
+                    <h1>Patdots Comments</h1>
                     <p>Requests sent for product, patent, publication, and draft comments.</p>
                 </div>
 

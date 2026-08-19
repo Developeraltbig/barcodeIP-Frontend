@@ -37,7 +37,7 @@ function RequestCommentsModal({ onClose, data }) {
             note
         };
 
-        console.log("Oolto comments request payload:", payload);
+        console.log("Patdots comments request payload:", payload);
         onClose();
     };
 
@@ -51,7 +51,7 @@ function RequestCommentsModal({ onClose, data }) {
                         </span>
 
                         <div>
-                            <h2>Request Oolto Comments</h2>
+                            <h2>Request Patdots Comments</h2>
                             <p>Send selected generated outputs for review comments.</p>
                         </div>
                     </div>

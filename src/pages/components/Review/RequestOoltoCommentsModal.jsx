@@ -71,7 +71,7 @@ function RequestOoltoCommentsModal({ project, onClose }) {
               <img src={RequestOoltoComment1Icon} alt="" className="requestOolto-icon" />
             </span>
             <div>
-              <h2>Request Oolto Comments</h2>
+              <h2>Request Patdots Comments</h2>
               <p>Send selected generated outputs for review comments.</p>
             </div>
           </div>

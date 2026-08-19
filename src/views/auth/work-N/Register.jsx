@@ -385,7 +385,7 @@ const Register = () => {
                 fontFamily: 'Figtree',
               }}
             >
-              Enter your invention once. Oolto helps organize the idea, search relevant
+              Enter your invention once. Patdots helps organize the idea, search relevant
               references, compare related products, and prepare reports and draft-ready
               sections.
             </Typography>

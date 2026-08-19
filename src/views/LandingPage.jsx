@@ -151,7 +151,7 @@ const testimonials = [
     {
         name: "Amit R.",
         role: "Founder",
-        text: "Oolto helped us convert our rough invention notes into a cleaner review-ready case."
+        text: "Patdots helped us convert our rough invention notes into a cleaner review-ready case."
     },
     {
         name: "Neha S.",
@@ -180,7 +180,7 @@ function LandingPage() {
 
     const projectTypes = [
         "Patent Search",
-        "Publication Search",
+        "Non-Patent Search",
         "Product Search",
         "Provisional Draft",
         "Nonprovisional Draft",
@@ -277,7 +277,7 @@ function LandingPage() {
 
             }}>
                 <header className="landing-header">
-                    <a href="#home" className="landing-logo" aria-label="Oolto home">
+                    <a href="#home" className="landing-logo" aria-label="Patdots home">
                         <img src={logo} alt="Logo Feature" />
                     </a>
 
@@ -301,7 +301,7 @@ function LandingPage() {
                     </h1>
 
                     <p>
-                        Enter your invention once. Oolto helps organize the idea, search relevant references, compare related products, and prepare reports and draft-ready sections.
+                        Enter your invention once. Patdots helps organize the idea, search relevant references, compare related products, and prepare reports and draft-ready sections.
                     </p>
 
                     <div className="hero-actions">
@@ -334,7 +334,7 @@ function LandingPage() {
                                 Every result starts with a clear invention structure
                             </h2>
                             <p className="structure-description-dark">
-                                Before creating reports, Oolto identifies the important technical features in your invention.
+                                Before creating reports, Patdots identifies the important technical features in your invention.
                                 You can review and edit them before moving ahead.
                             </p>
                         </div>
@@ -391,7 +391,7 @@ function LandingPage() {
                             Patent search built for review, not just result lists.
                         </h2>
                         <p className="review-subtitle">
-                            Oolto searches relevant patent references, ranks the results, prepares mapped comparisons, and creates a report that is easier to review.
+                            Patdots searches relevant patent references, ranks the results, prepares mapped comparisons, and creates a report that is easier to review.
                         </p>
                     </div>
 
@@ -462,7 +462,7 @@ function LandingPage() {
                                 Move from invention text <br /> to draft-ready sections.
                             </h2>
                             <p className="draft-subtitle">
-                                Oolto can generate editable patent-style content from the same invention description and reviewed features.
+                                Patdots can generate editable patent-style content from the same invention description and reviewed features.
                             </p>
                         </div>
 
@@ -501,7 +501,7 @@ function LandingPage() {
                     {/* RIGHT COLUMN: Interactive Modal Mockup Image */}
                     <div className="draft-image-right">
                         <div className="draft-mockup-wrapper">
-                            <img src={background4thSection} alt="Request Oolto Comments Panel" className="draft-mockup-img" />
+                            <img src={background4thSection} alt="Request Patdots Comments Panel" className="draft-mockup-img" />
                         </div>
                     </div>
 
@@ -655,7 +655,7 @@ function LandingPage() {
                                 <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Non-Provisional Draft
                             </div>
                             <div className="feature-check-item">
-                                <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Publication Search
+                                <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Non-Patent Search
                             </div>
                             <div className="feature-check-item">
                                 <span className="check-icon"><img src={circleCheck6thSection} alt="circle checked" className="mockup-img" /></span> Reports and downloads
@@ -755,7 +755,7 @@ function LandingPage() {
                     <div className="content-side-right">
                         <h2 className="main-section-title">See the market, not only the patent database.</h2>
                         <p className="main-section-desc">
-                            Some inventions may be close to existing products. Oolto can surface related products and show why they matter through ranked product cards and feature breakdowns.
+                            Some inventions may be close to existing products. Patdots can surface related products and show why they matter through ranked product cards and feature breakdowns.
                         </p>
 
                         <div className="ranked-product-cards">
@@ -833,9 +833,9 @@ function LandingPage() {
             <section id="testimonial-section" className="testimonials-section">
                 {/* Section Header */}
                 <div className="section-header-centered">
-                    <h2 className="main-section-title">Why innovators choose Oolto</h2>
+                    <h2 className="main-section-title">Why innovators choose Patdots</h2>
                     <p className="main-section-desc">
-                        Inventors, startups, and IP teams use Oolto to move from raw ideas to patent search, novelty analysis, and draft-ready outputs with more clarity.
+                        Inventors, startups, and IP teams use Patdots to move from raw ideas to patent search, novelty analysis, and draft-ready outputs with more clarity.
                     </p>
                 </div>
 
@@ -848,7 +848,7 @@ function LandingPage() {
                         <div className="card-content-wrapper">
                             <div className="star-rating"><img src={starReview8thSection} alt="Star Review" className="page-search-img" /></div>
                             <p className="testimonial-quote">
-                                "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
+                                "Patdots helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
                             </p>
                             <div className="testimonial-author">
                                 <h4>Ananya Rao</h4>
@@ -864,7 +864,7 @@ function LandingPage() {
                         <div className="card-content-wrapper">
                             <div className="star-rating"><img src={starReview8thSection} alt="Star Review" className="page-search-img" /></div>
                             <p className="testimonial-quote">
-                                "Oolto helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
+                                "Patdots helped us turn a rough invention note into clear key features, a patent search direction, and a provisional draft path in one clean flow."
                             </p>
                             <div className="testimonial-author">
                                 <h4>Ananya Rao</h4>
@@ -895,7 +895,7 @@ function LandingPage() {
                                     </div>
 
                                     <p className="testimonial-quote">
-                                        "Oolto helped us turn a rough invention note into
+                                        "Patdots helped us turn a rough invention note into
                                         clear key features, a patent search direction,
                                         and a provisional draft path in one clean flow."
                                     </p>
@@ -932,7 +932,7 @@ function LandingPage() {
                                     </div>
 
                                     <p className="testimonial-quote">
-                                        "Oolto helped us turn a rough invention note into
+                                        "Patdots helped us turn a rough invention note into
                                         clear key features, a patent search direction,
                                         and a provisional draft path in one clean flow."
                                     </p>
@@ -1049,7 +1049,7 @@ function LandingPage() {
                     <div className="disclaimer-text">
                         <strong>Built to support review, not replace professional judgment.</strong>
                         <p>
-                            Oolto helps organize invention information, search evidence, compare references, generate draft-ready sections, and prepare reports. For legal decisions, users should consult qualified professionals.
+                            Patdots helps organize invention information, search evidence, compare references, generate draft-ready sections, and prepare reports. For legal decisions, users should consult qualified professionals.
                         </p>
                     </div>
                 </div>
@@ -1113,10 +1113,10 @@ function LandingPage() {
                                 <div className="info-text">
                                     <span className="info-label">EMAIL</span>
                                     <a
-                                        href="mailto:oolto@gmail.com"
+                                        href="mailto:Patdots@gmail.com"
                                         className="info-value"
                                     >
-                                        oolto@gmail.com
+                                        Patdots@gmail.com
                                     </a>
                                 </div>
                             </div>
@@ -1305,7 +1305,7 @@ function LandingPage() {
                             <div className="footer-logo-area">
                                 <img
                                     src={footerLogo10thSection}
-                                    alt="Oolto footer logo"
+                                    alt="Patdots footer logo"
                                     className="footer-logo-img"
                                 />
                             </div>
@@ -1417,7 +1417,7 @@ function LandingPage() {
                     {/* Copyright */}
                     <div className="footer-copyright-row">
                         <p>
-                            © 2026 Barcode IP. Oolto is a product by Barcode IP.
+                            © 2026 Barcode IP. Patdots is a product by Barcode IP.
                             Built for structured invention review.
                         </p>
                     </div>

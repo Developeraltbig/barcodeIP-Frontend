@@ -7,6 +7,7 @@ import { navItems } from "../views/Home/data";
 import { useGetRecentThreeProjectsQuery, useGetWalletDetailsQuery } from "../features/userApi";
 import { useLazyLogoutQuery } from '../features/slice/auth/authApi';
 import WalletModal from "../components/WalletModal";
+import logo from 'assets/images/barcodeip-logo.png';
 
 function Sidebar({ activePage, onPageChange, onLogout }) {
     const dispatch = useDispatch();
@@ -99,9 +100,9 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                         onClick={() => onPageChange(PAGES.NEW_CASE)}
                         aria-label="Go to new case"
                     >
-                        <span className="brand-red">barcode</span>
-                        <span className="brand-dark">IP</span>
-                        <span className="brand-dot">.</span>
+                        <img src={logo}
+                            alt="logo"
+                            className="logo" />
                     </button>
                 </div>
 
