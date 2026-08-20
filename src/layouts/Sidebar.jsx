@@ -65,10 +65,25 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
     };
 
     const handleLogoutClick = async () => {
-        const dataLogout = await LogoutTriggered().unwrap();
-        setShowProfileMenu(false);
-        localStorage.clear();
-        window.location.href = "/login";
+        try {
+            setShowProfileMenu(false);
+
+            // Call logout API first
+            await LogoutTriggered().unwrap();
+
+        } catch (error) {
+            console.error("Logout API error:", error);
+        } finally {
+            // Clear client-side authentication data
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // Prevent the current page from being restored from browser history
+            window.history.replaceState(null, "", "/login");
+
+            // Force navigation to login
+            window.location.replace("/login");
+        }
     };
 
     const getProjectTitle = (project) => {
